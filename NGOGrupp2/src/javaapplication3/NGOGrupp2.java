@@ -8,7 +8,7 @@ package javaapplication3;
  *
  * @author WDM
  */
-public class JavaApplication3 {
+public class NGOGrupp2 {
 
     /**
      * @param args the command line arguments
