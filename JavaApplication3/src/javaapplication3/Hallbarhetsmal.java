@@ -47,6 +47,7 @@ public class Hallbarhetsmal extends javax.swing.JFrame {
         jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -91,24 +92,29 @@ public class Hallbarhetsmal extends javax.swing.JFrame {
         jPanel11.setLayout(new javax.swing.BoxLayout(jPanel11, javax.swing.BoxLayout.X_AXIS));
 
         jLabel16.setText("[namn]");
+        jLabel16.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 0, 1, 4));
         jLabel16.setMaximumSize(new java.awt.Dimension(150, 16));
         jLabel16.setMinimumSize(new java.awt.Dimension(150, 16));
         jLabel16.setPreferredSize(new java.awt.Dimension(150, 16));
         jPanel11.add(jLabel16);
 
         jLabel17.setText("[målnummer]");
+        jLabel17.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 0, 1, 4));
         jLabel17.setMaximumSize(new java.awt.Dimension(80, 16));
         jLabel17.setMinimumSize(new java.awt.Dimension(80, 16));
         jLabel17.setPreferredSize(new java.awt.Dimension(80, 16));
         jPanel11.add(jLabel17);
 
         jLabel18.setText("[beskrivning]");
+        jLabel18.setAlignmentX(0.5F);
+        jLabel18.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 0, 1, 4));
         jLabel18.setMaximumSize(new java.awt.Dimension(270, 16));
         jLabel18.setMinimumSize(new java.awt.Dimension(270, 16));
         jLabel18.setPreferredSize(new java.awt.Dimension(270, 16));
         jPanel11.add(jLabel18);
 
         jLabel19.setText("[prioritet]");
+        jLabel19.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 0, 1, 4));
         jLabel19.setMaximumSize(new java.awt.Dimension(180, 16));
         jLabel19.setPreferredSize(new java.awt.Dimension(180, 16));
         jPanel11.add(jLabel19);
@@ -121,24 +127,28 @@ public class Hallbarhetsmal extends javax.swing.JFrame {
         jPanel12.setLayout(new javax.swing.BoxLayout(jPanel12, javax.swing.BoxLayout.X_AXIS));
 
         jLabel20.setText("[namn]");
+        jLabel20.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 0, 1, 4));
         jLabel20.setMaximumSize(new java.awt.Dimension(150, 16));
         jLabel20.setMinimumSize(new java.awt.Dimension(150, 16));
         jLabel20.setPreferredSize(new java.awt.Dimension(150, 16));
         jPanel12.add(jLabel20);
 
         jLabel21.setText("[målnummer]");
+        jLabel21.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 0, 1, 4));
         jLabel21.setMaximumSize(new java.awt.Dimension(80, 16));
         jLabel21.setMinimumSize(new java.awt.Dimension(80, 16));
         jLabel21.setPreferredSize(new java.awt.Dimension(80, 16));
         jPanel12.add(jLabel21);
 
         jLabel22.setText("[beskrivning]");
+        jLabel22.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 0, 1, 4));
         jLabel22.setMaximumSize(new java.awt.Dimension(270, 16));
         jLabel22.setMinimumSize(new java.awt.Dimension(270, 16));
         jLabel22.setPreferredSize(new java.awt.Dimension(270, 16));
         jPanel12.add(jLabel22);
 
         jLabel23.setText("[prioritet]");
+        jLabel23.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 0, 1, 4));
         jLabel23.setMaximumSize(new java.awt.Dimension(180, 16));
         jLabel23.setPreferredSize(new java.awt.Dimension(180, 16));
         jPanel12.add(jLabel23);
@@ -147,31 +157,34 @@ public class Hallbarhetsmal extends javax.swing.JFrame {
 
         jScrollPane1.setViewportView(jPanel6);
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setText("Hållbarhetsmål");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1)
-                .addContainerGap(502, Short.MAX_VALUE))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 615, Short.MAX_VALUE)
-                    .addContainerGap()))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addGap(122, 122, 122)
+                        .addComponent(jLabel1)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 615, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1)
-                .addContainerGap(385, Short.MAX_VALUE))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(73, 73, 73)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(120, Short.MAX_VALUE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jLabel1))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 357, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -204,6 +217,7 @@ public class Hallbarhetsmal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
