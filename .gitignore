@@ -1,4 +1,32 @@
-/JavaApplication3/nbproject/private/
-/JavaApplication3/build/
-/JavaApplication3/dist/
-/NGOGrupp2/nbproject/private/
+# Java
+*.class
+*.war
+*.ear
+*.logs
+.mtj.tmp/
+hs_err_pid*
+target/
+build/
+dist/
+
+# NetBeans
+nbproject/private/
+
+# Common
+.DS_Store
+Thumbs.db
+*.log
+*.bak
+*.tmp
+*.swp
+*~
+
+# IDE and editor generated files
+.idea/
+*.sublime-*
+
+# Local environment files
+.env
+.env.local
+.env.*.local
+
