@@ -35,7 +35,6 @@ public class AdministratörMeny extends javax.swing.JFrame {
         BtnHanteraPartner = new javax.swing.JButton();
         BtnHanteraLand = new javax.swing.JButton();
         BtnHanteraHmål = new javax.swing.JButton();
-        BtnAterstallLosenord = new javax.swing.JButton();
         JLblEpost = new javax.swing.JLabel();
         JLblinformationInloggad = new javax.swing.JLabel();
 
@@ -59,8 +58,6 @@ public class AdministratörMeny extends javax.swing.JFrame {
         BtnHanteraHmål.setText("Hantera Hållbarhetsmål");
         BtnHanteraHmål.addActionListener(this::BtnHanteraHmålActionPerformed);
 
-        BtnAterstallLosenord.setText("Återställ Lösenord");
-
         JLblEpost.setText("[Epost]");
 
         JLblinformationInloggad.setText("Avdelning: [Namn + ID]");
@@ -83,8 +80,7 @@ public class AdministratörMeny extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 167, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(JLblEpost)
-                            .addComponent(JLblinformationInloggad)
-                            .addComponent(BtnAterstallLosenord))
+                            .addComponent(JLblinformationInloggad))
                         .addGap(28, 28, 28))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(BtnHanteraHmål)
@@ -111,9 +107,7 @@ public class AdministratörMeny extends javax.swing.JFrame {
                         .addComponent(BtnHanteraProjekt))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(JLblinformationInloggad)
-                        .addGap(18, 18, 18)
-                        .addComponent(BtnAterstallLosenord)))
+                        .addComponent(JLblinformationInloggad)))
                 .addGap(18, 18, 18)
                 .addComponent(BtnHanteraHmål)
                 .addContainerGap(28, Short.MAX_VALUE))
@@ -160,7 +154,6 @@ public class AdministratörMeny extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BtnAterstallLosenord;
     private javax.swing.JButton BtnHanteraAnst;
     private javax.swing.JButton BtnHanteraAvd;
     private javax.swing.JButton BtnHanteraHmål;
