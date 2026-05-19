@@ -99,11 +99,17 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Hantera anst&#xe4;lld"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnHanteraAnstActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="BtnHanteraProjekt">
       <Properties>
         <Property name="text" type="java.lang.String" value="Hantera Projekt"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnHanteraProjektActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="BtnHanteraAvd">
       <Properties>

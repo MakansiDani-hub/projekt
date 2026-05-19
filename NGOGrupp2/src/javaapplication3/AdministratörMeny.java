@@ -45,8 +45,10 @@ public class AdministratörMeny extends javax.swing.JFrame {
         RubrikAdmin.setText("Meny");
 
         BtnHanteraAnst.setText("Hantera anställd");
+        BtnHanteraAnst.addActionListener(this::BtnHanteraAnstActionPerformed);
 
         BtnHanteraProjekt.setText("Hantera Projekt");
+        BtnHanteraProjekt.addActionListener(this::BtnHanteraProjektActionPerformed);
 
         BtnHanteraAvd.setText("Hantera avdelning");
 
@@ -123,6 +125,14 @@ public class AdministratörMeny extends javax.swing.JFrame {
     private void BtnHanteraHmålActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHanteraHmålActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_BtnHanteraHmålActionPerformed
+
+    private void BtnHanteraAnstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHanteraAnstActionPerformed
+        // Överlappande funktionalitet med både handläggare och projektchef
+    }//GEN-LAST:event_BtnHanteraAnstActionPerformed
+
+    private void BtnHanteraProjektActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHanteraProjektActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BtnHanteraProjektActionPerformed
 
     /**
      * @param args the command line arguments
