@@ -49,6 +49,11 @@ public class inloggningsfonster extends javax.swing.JFrame {
 
         lblLösenord.setText("Lösenord");
 
+        tfEPost.setText("maria.g@example.com");
+
+        tfLösenord.setText("password123");
+        tfLösenord.addActionListener(this::tfLösenordActionPerformed);
+
         lblFelmeddelande.setForeground(new java.awt.Color(255, 0, 0));
         lblFelmeddelande.setText("Felaktig epost eller lösenord");
 
@@ -115,7 +120,6 @@ public class inloggningsfonster extends javax.swing.JFrame {
 
         try{
             String sqlFråga = "SELECT losenord FROM anstalld where epost = '" + ePost+"'";
-            //System.out.println(sqlFråga);
             String dblosen = idb.fetchSingle(sqlFråga);
             if (losen.equals(dblosen)){
                 String anvandaresNamn = "SELECT fornamn FROM anstalld where epost = '" + ePost+"'";
@@ -125,23 +129,52 @@ public class inloggningsfonster extends javax.swing.JFrame {
                 String dbEfternamn = idb.fetchSingle(anvandaresEfternamn);
                 
                 String anvandaresAnstallningsdatum = "SELECT anstallningsdatum FROM anstalld where epost = '" + ePost+"'";
-                String dbAnstallningsdatum = anvandaresAnstallningsdatum;
+                String dbAnstallningsdatum = idb.fetchSingle (anvandaresAnstallningsdatum);
                 
                 String anvandaresID = "SELECT aid FROM anstalld where epost = '" + ePost+"'";
-                String dbAnvandaresID = anvandaresID;
+                String dbAnvandaresID = idb.fetchSingle (anvandaresID);
                 
                 String anvandaresAdress = "SELECT adress FROM anstalld where epost = '" + ePost+"'";
-                String dbAnvandaresAdress = anvandaresAdress;
+                String dbAnvandaresAdress = idb.fetchSingle (anvandaresAdress);
                 
                 String anvandaresTelefon = "SELECT telefon FROM anstalld where epost = '" + ePost+"'";
-                String dbAnvandaresTelefon = anvandaresTelefon;
+                String dbAnvandaresTelefon = idb.fetchSingle (anvandaresTelefon);
                 
                 String anvandareslosenord = "SELECT losenord FROM anstalld where epost = '" + ePost+"'";
-                String dbAnvandareslosenord = anvandareslosenord;
+                String dbAnvandareslosenord = idb.fetchSingle (anvandareslosenord);
                 
+                String adminCheck = idb.fetchSingle("SELECT aid FROM admin WHERE aid = " + dbAnvandaresID);
+                String handlaggareCheck = idb.fetchSingle("SELECT aid FROM handlaggare WHERE aid = " + dbAnvandaresID);
+                String projektchefCheck = idb.fetchSingle("SELECT aid FROM projektchef WHERE aid = " + dbAnvandaresID);
+
+                boolean arAdmin = adminCheck != null;
+                boolean arHandlaggare = handlaggareCheck != null;
+                boolean arProjektchef = projektchefCheck != null;
                 
-                
-                new UppgifterHandlaggare().setVisible(true);
+                if (arAdmin) {
+
+                    String behorighetsniva = idb.fetchSingle("SELECT behorighetsniva FROM admin WHERE aid = " + dbAnvandaresID);
+
+                    if (behorighetsniva.equals("1")) {
+                        new AdministratörMeny().setVisible(true);
+                    } 
+                    else if (behorighetsniva.equals("2")) {
+                        new AdministratorMeny2().setVisible(true); // byt namn 
+                    }
+
+                } 
+                else if (arHandlaggare && arProjektchef) {
+                    new MenyHandlaggareProjektchef().setVisible(true); // GUI ej klart
+                } 
+                else if (arProjektchef) {
+                    new MenyProjektchef().setVisible(true); // GUI ej klart 
+                } 
+                else if (arHandlaggare) {
+                    new MenyHandlaggare().setVisible(true);
+                } 
+                else {
+                    lblFelmeddelande.setVisible(true);
+                }               
                 this.setVisible(false);
             }
             else{
@@ -153,30 +186,28 @@ public class inloggningsfonster extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnLoggainActionPerformed
 
+    private void tfLösenordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfLösenordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfLösenordActionPerformed
+
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+       try {
 
-        /* Create and display the form */
-        //java.awt.EventQueue.invokeLater(() -> new inloggningsfonster().setVisible(true));
+        InfDB idb = new InfDB("sdgsweden","3306","root","masterkey");
+
+        java.awt.EventQueue.invokeLater(() -> {
+            new inloggningsfonster(idb).setVisible(true);
+        });
+
+    } catch (InfException ex) {
+
+        System.out.println(ex.getMessage());
     }
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLoggain;
