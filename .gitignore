@@ -1,5 +1,3 @@
-/JavaApplication3/nbproject/private/
-/JavaApplication3/dist/
 # Java
 *.class
 *.war
@@ -12,7 +10,7 @@ build/
 dist/
 
 # NetBeans
-nbproject/private/
+NGOGrupp2/nbproject/private/
 
 # Common
 .DS_Store
