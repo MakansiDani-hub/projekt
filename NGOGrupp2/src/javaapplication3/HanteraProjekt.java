@@ -96,7 +96,7 @@ public class HanteraProjekt extends javax.swing.JFrame {
 
         JTxtFieldProjektNamn.setText("[Projektnamn]");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Planerad", "Aktiv", "Pausad", "Avslutat" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Planerad", "Aktiv", "Pausad", "Avslutat", "Avbrutet" }));
 
         JBtnLaggTillProjekt.setText("Lägg till");
         JBtnLaggTillProjekt.addActionListener(this::JBtnLaggTillProjektActionPerformed);
