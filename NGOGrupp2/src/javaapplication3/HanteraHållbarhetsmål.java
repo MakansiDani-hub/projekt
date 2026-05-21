@@ -17,15 +17,15 @@ import javax.swing.JOptionPane;
 
 public class HanteraHållbarhetsmål extends javax.swing.JFrame {
     
-    private InfDB db; // Variabeln heter nu db istället för idb
+    private InfDB idb; // Variabeln heter nu db istället för idb
     private DefaultTableModel bordsModell;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(HanteraHållbarhetsmål.class.getName());
 
     /**
      * Creates new form HanteraHållbarhetsmål
      */
-    public HanteraHållbarhetsmål(InfDB db) {
-        this.db = db;
+    public HanteraHållbarhetsmål(InfDB idb) {
+        this.idb = idb;
         initComponents();
         
         // Kopplar din JTable till en hanterbar modell och sätter kolumnnamn
@@ -43,7 +43,7 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
         String fråga = "SELECT mal_id, namn, malnummer, beskrivning, prioritet FROM hallbarhetsmal";
         
         try {
-            ArrayList<HashMap<String, String>> rader = db.fetchRows(fråga);
+            ArrayList<HashMap<String, String>> rader = idb.fetchRows(fråga);
             
             if (rader != null) {
                 for (HashMap<String, String> rad : rader) {
@@ -258,13 +258,12 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
             return; // Avbryt metoden om något saknas
         }
         try {
-            // 3. Skapa SQL-frågan. 
-            // OBS! Kontrollera att kolumnnamnen (mal_id, namn, etc.) matchar exakt vad tabellen heter i din databas.
+            // Sqlfråga
             String sqlFråga = "INSERT INTO hallbarhetsmal (mal_id, namn, malnummer, beskrivning, prioritet) " +
                   "VALUES ('" + id + "', '" + namn + "', '" + malnr + "', '" + beskrivning + "', '" + prioritet + "')";
 
             // 4. Skicka frågan till databasen
-            db.insert(sqlFråga);
+            idb.insert(sqlFråga);
 
             // 5. Meddela användaren att det lyckades
             JOptionPane.showMessageDialog(this, "Hållbarhetsmålet har lagts till framgångsrikt!");
@@ -283,7 +282,20 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Kunde inte lägga till målet. Kontrollera att ID inte redan finns.\nFelmeddelande: " + e.getMessage());
         }
     }//GEN-LAST:event_JBtnLaggTillHallbarhetsmalActionPerformed
-
+    public static void main(String args[]) {
+        try {
+            // OBS! Ändra sökvägen nedanför till din egen .podb-fil
+            InfDB testDb = new InfDB("C:\\db\\NGO_2024.podb"); 
+            
+            java.awt.EventQueue.invokeLater(new Runnable() {
+                public void run() {
+                    new HanteraHållbarhetsmål(testDb).setVisible(true);
+                }
+            });
+        } catch (InfException e) {
+            System.out.println("Kunde inte starta test-databasen: " + e.getMessage());
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton JBtnAndraHallbarhetsmal;

@@ -27,9 +27,6 @@ public class Start {
                 System.out.println("kostnad " + i + ": " + kostnader.get(i));
             }
             
-            // skapar fönster och skickar med db objektet i konstruktorn
-            new HanteraHållbarhetsmål(db).setVisible(true);
-            
         } catch (InfException e) {
             System.out.println("Fel vid instansiering av InfDB\n"
                                +e.getMessage());
