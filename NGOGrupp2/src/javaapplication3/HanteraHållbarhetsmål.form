@@ -215,7 +215,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="JTxtFieldBeskrivning">
           <Properties>
-            <Property name="text" type="java.lang.String" value="[Berskrivning]"/>
+            <Property name="text" type="java.lang.String" value="[Beskrivning]"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="JTxtFieldPrioritet">
@@ -227,6 +227,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="L&#xe4;gg till"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JBtnLaggTillHallbarhetsmalActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="JBtnAndraHallbarhetsmal">
           <Properties>

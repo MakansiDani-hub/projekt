@@ -6,19 +6,60 @@ package javaapplication3;
 
 /**
  *
- * @author Krist
+ * @author Kristoffer Kolkowski
  */
+import oru.inf.InfDB;
+import oru.inf.InfException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.JOptionPane;
+
 public class HanteraHållbarhetsmål extends javax.swing.JFrame {
     
+    private InfDB db; // Variabeln heter nu db istället för idb
+    private DefaultTableModel bordsModell;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(HanteraHållbarhetsmål.class.getName());
 
     /**
      * Creates new form HanteraHållbarhetsmål
      */
-    public HanteraHållbarhetsmål() {
+    public HanteraHållbarhetsmål(InfDB db) {
+        this.db = db;
         initComponents();
+        
+        // Kopplar din JTable till en hanterbar modell och sätter kolumnnamn
+        bordsModell = (DefaultTableModel) JTableHallberhetsmal.getModel();
+        bordsModell.setColumnIdentifiers(new Object[]{"ID", "Namn", "Målnummer", "Beskrivning", "Prioritet"});
+        
+        // Hämtar data automatiskt vid uppstart
+        laddaHållbarhetsmål();
     }
 
+    private void laddaHållbarhetsmål() {
+        bordsModell.setRowCount(0); // Tömmer testrader
+        
+        // SQL-fråga (anpassa kolumnnamnen om de heter något annat i din MySQL-databas)
+        String fråga = "SELECT mal_id, namn, malnummer, beskrivning, prioritet FROM hallbarhetsmal";
+        
+        try {
+            ArrayList<HashMap<String, String>> rader = db.fetchRows(fråga);
+            
+            if (rader != null) {
+                for (HashMap<String, String> rad : rader) {
+                    bordsModell.addRow(new Object[]{
+                        rad.get("mal_id"),
+                        rad.get("namn"),
+                        rad.get("malnummer"),
+                        rad.get("beskrivning"),
+                        rad.get("prioritet")
+                    });
+                }
+            }
+        } catch (InfException e) {
+            JOptionPane.showMessageDialog(this, "Kunde inte ladda data: " + e.getMessage());
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -83,11 +124,12 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
 
         JTxtFieldMalNr.setText("[Malnummer]");
 
-        JTxtFieldBeskrivning.setText("[Berskrivning]");
+        JTxtFieldBeskrivning.setText("[Beskrivning]");
 
         JTxtFieldPrioritet.setText("[Prioritet]");
 
         JBtnLaggTillHallbarhetsmal.setText("Lägg till");
+        JBtnLaggTillHallbarhetsmal.addActionListener(this::JBtnLaggTillHallbarhetsmalActionPerformed);
 
         JBtnAndraHallbarhetsmal.setText("Ändra");
 
@@ -199,30 +241,49 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void JBtnLaggTillHallbarhetsmalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnLaggTillHallbarhetsmalActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new HanteraHållbarhetsmål().setVisible(true));
-    }
+    // 1. Hämta texten som användaren skrivit in i textfälten
+        String id = JTxtFieldHID.getText().trim();
+        String namn = JTxtFieldNamn.getText().trim();
+        String malnr = JTxtFieldMalNr.getText().trim();
+        String beskrivning = JTxtFieldBeskrivning.getText().trim();
+        String prioritet = JTxtFieldPrioritet.getText().trim();
+
+        // 2. Validering – Kontrollera att användaren inte har glömt att fylla i något fält
+        if (id.isEmpty() || namn.isEmpty() || malnr.isEmpty() || beskrivning.isEmpty() || prioritet.isEmpty() ||
+            id.equals("[HID]") || namn.equals("[Namn]") || malnr.equals("[Malnummer]")) {
+            
+            JOptionPane.showMessageDialog(this, "Vänligen fyll i alla fält innan du lägger till");
+            return; // Avbryt metoden om något saknas
+        }
+        try {
+            // 3. Skapa SQL-frågan. 
+            // OBS! Kontrollera att kolumnnamnen (mal_id, namn, etc.) matchar exakt vad tabellen heter i din databas.
+            String sqlFråga = "INSERT INTO hallbarhetsmal (mal_id, namn, malnummer, beskrivning, prioritet) " +
+                  "VALUES ('" + id + "', '" + namn + "', '" + malnr + "', '" + beskrivning + "', '" + prioritet + "')";
+
+            // 4. Skicka frågan till databasen
+            db.insert(sqlFråga);
+
+            // 5. Meddela användaren att det lyckades
+            JOptionPane.showMessageDialog(this, "Hållbarhetsmålet har lagts till framgångsrikt!");
+
+            // 6. Uppdatera tabellen på skärmen direkt så att det nya målet syns
+            laddaHållbarhetsmål();
+
+            // 7. Töm textfälten så att de är redo för nästa inmatning
+            JTxtFieldHID.setText("");
+            JTxtFieldNamn.setText("");
+            JTxtFieldMalNr.setText("");
+            JTxtFieldBeskrivning.setText("");
+            JTxtFieldPrioritet.setText("");
+
+        } catch (InfException e) {
+            JOptionPane.showMessageDialog(this, "Kunde inte lägga till målet. Kontrollera att ID inte redan finns.\nFelmeddelande: " + e.getMessage());
+        }
+    }//GEN-LAST:event_JBtnLaggTillHallbarhetsmalActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton JBtnAndraHallbarhetsmal;
