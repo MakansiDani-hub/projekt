@@ -30,7 +30,7 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
         
         // Kopplar din JTable till en hanterbar modell och sätter kolumnnamn
         bordsModell = (DefaultTableModel) JTableHallberhetsmal.getModel();
-        bordsModell.setColumnIdentifiers(new Object[]{"ID", "Namn", "Målnummer", "Beskrivning", "Prioritet"});
+        bordsModell.setColumnIdentifiers(new Object[]{"hid", "Namn", "Målnummer", "Beskrivning", "Prioritet"});
         
         // Hämtar data automatiskt vid uppstart
         laddaHållbarhetsmål();
@@ -40,7 +40,7 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
         bordsModell.setRowCount(0); // Tömmer testrader
         
         // SQL-fråga (anpassa kolumnnamnen om de heter något annat i din MySQL-databas)
-        String fråga = "SELECT mal_id, namn, malnummer, beskrivning, prioritet FROM hallbarhetsmal";
+        String fråga = "SELECT hid, namn, malnummer, beskrivning, prioritet FROM hallbarhetsmal";
         
         try {
             ArrayList<HashMap<String, String>> rader = idb.fetchRows(fråga);
@@ -48,7 +48,7 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
             if (rader != null) {
                 for (HashMap<String, String> rad : rader) {
                     bordsModell.addRow(new Object[]{
-                        rad.get("mal_id"),
+                        rad.get("hid"),
                         rad.get("namn"),
                         rad.get("malnummer"),
                         rad.get("beskrivning"),
@@ -259,7 +259,7 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
         }
         try {
             // Sqlfråga
-            String sqlFråga = "INSERT INTO hallbarhetsmal (mal_id, namn, malnummer, beskrivning, prioritet) " +
+            String sqlFråga = "INSERT INTO hallbarhetsmal (hid, namn, malnummer, beskrivning, prioritet) " +
                   "VALUES ('" + id + "', '" + namn + "', '" + malnr + "', '" + beskrivning + "', '" + prioritet + "')";
 
             // 4. Skicka frågan till databasen
@@ -308,8 +308,8 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
     //Tillfällig main metod för att kunna provköra klassen
     public static void main(String args[]) {
         try {
-            // OBS! Ändra sökvägen nedanför till din egen .podb-fils faktiska placering
-            InfDB testDb = new InfDB("C:\\db\\NGO_2024.podb"); 
+            // Här startar vi anslutningen mot er lokala MySQL-server istället för en fil!
+            InfDB testDb = new InfDB("sdgsweden", "3306", "root", "masterkey"); 
             
             java.awt.EventQueue.invokeLater(new Runnable() {
                 public void run() {
@@ -317,7 +317,7 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
                 }
             });
         } catch (InfException e) {
-            System.out.println("Kunde inte starta test-databasen: " + e.getMessage());
+            System.out.println("Kunde inte ansluta till MySQL-servern: " + e.getMessage());
         }
     }
 }
