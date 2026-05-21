@@ -282,20 +282,7 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Kunde inte lägga till målet. Kontrollera att ID inte redan finns.\nFelmeddelande: " + e.getMessage());
         }
     }//GEN-LAST:event_JBtnLaggTillHallbarhetsmalActionPerformed
-    public static void main(String args[]) {
-        try {
-            // OBS! Ändra sökvägen nedanför till din egen .podb-fil
-            InfDB testDb = new InfDB("C:\\db\\NGO_2024.podb"); 
-            
-            java.awt.EventQueue.invokeLater(new Runnable() {
-                public void run() {
-                    new HanteraHållbarhetsmål(testDb).setVisible(true);
-                }
-            });
-        } catch (InfException e) {
-            System.out.println("Kunde inte starta test-databasen: " + e.getMessage());
-        }
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton JBtnAndraHallbarhetsmal;
@@ -317,4 +304,20 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
     private javax.swing.JTextField JTxtFieldPrioritet;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
+
+    //Tillfällig main metod för att kunna provköra klassen
+    public static void main(String args[]) {
+        try {
+            // OBS! Ändra sökvägen nedanför till din egen .podb-fils faktiska placering
+            InfDB testDb = new InfDB("C:\\db\\NGO_2024.podb"); 
+            
+            java.awt.EventQueue.invokeLater(new Runnable() {
+                public void run() {
+                    new HanteraHållbarhetsmål(testDb).setVisible(true);
+                }
+            });
+        } catch (InfException e) {
+            System.out.println("Kunde inte starta test-databasen: " + e.getMessage());
+        }
+    }
 }
