@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
 
 public class HanteraHållbarhetsmål extends javax.swing.JFrame {
     
-    private InfDB idb; // Variabeln heter nu db istället för idb
+    private InfDB idb; 
     private DefaultTableModel bordsModell;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(HanteraHållbarhetsmål.class.getName());
 
@@ -28,7 +28,7 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
         this.idb = idb;
         initComponents();
         
-        // Kopplar din JTable till en hanterbar modell och sätter kolumnnamn
+        // Kopplar JTable till en hanterbar modell och sätter kolumnnamn
         bordsModell = (DefaultTableModel) JTableHallberhetsmal.getModel();
         bordsModell.setColumnIdentifiers(new Object[]{"hid", "Namn", "Målnummer", "Beskrivning", "Prioritet"});
         
@@ -39,7 +39,7 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
     private void laddaHållbarhetsmål() {
         bordsModell.setRowCount(0); // Tömmer testrader
         
-        // SQL-fråga (anpassa kolumnnamnen om de heter något annat i din MySQL-databas)
+        // sqlfråga
         String fråga = "SELECT hid, namn, malnummer, beskrivning, prioritet FROM hallbarhetsmal";
         
         try {
@@ -243,35 +243,35 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
 
     private void JBtnLaggTillHallbarhetsmalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnLaggTillHallbarhetsmalActionPerformed
 
-    // 1. Hämta texten som användaren skrivit in i textfälten
+    // 1. Hämtar texten som användaren skrivit in i textfälten
         String id = JTxtFieldHID.getText().trim();
         String namn = JTxtFieldNamn.getText().trim();
         String malnr = JTxtFieldMalNr.getText().trim();
         String beskrivning = JTxtFieldBeskrivning.getText().trim();
         String prioritet = JTxtFieldPrioritet.getText().trim();
 
-        // 2. Validering – Kontrollera att användaren inte har glömt att fylla i något fält
+        // 2. Validering, Kontrollerar att användaren inte har glömt att fylla i något fält
         if (id.isEmpty() || namn.isEmpty() || malnr.isEmpty() || beskrivning.isEmpty() || prioritet.isEmpty() ||
             id.equals("[HID]") || namn.equals("[Namn]") || malnr.equals("[Malnummer]")) {
             
             JOptionPane.showMessageDialog(this, "Vänligen fyll i alla fält innan du lägger till");
-            return; // Avbryt metoden om något saknas
+            return; // Avbryter metoden om något saknas
         }
         try {
             // Sqlfråga
             String sqlFråga = "INSERT INTO hallbarhetsmal (hid, namn, malnummer, beskrivning, prioritet) " +
                   "VALUES ('" + id + "', '" + namn + "', '" + malnr + "', '" + beskrivning + "', '" + prioritet + "')";
 
-            // 4. Skicka frågan till databasen
+            // 4. Skickar frågan till databasen
             idb.insert(sqlFråga);
 
-            // 5. Meddela användaren att det lyckades
-            JOptionPane.showMessageDialog(this, "Hållbarhetsmålet har lagts till framgångsrikt!");
+            // 5. Meddelar användaren att hållbarhetsmålet har lagts till
+            JOptionPane.showMessageDialog(this, "Hållbarhetsmålet har lagts till!");
 
-            // 6. Uppdatera tabellen på skärmen direkt så att det nya målet syns
+            // 6. Uppdaterar tabellen på skärmen så att det nya målet syns
             laddaHållbarhetsmål();
 
-            // 7. Töm textfälten så att de är redo för nästa inmatning
+            // 
             JTxtFieldHID.setText("");
             JTxtFieldNamn.setText("");
             JTxtFieldMalNr.setText("");
@@ -308,7 +308,7 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
     //Tillfällig main metod för att kunna provköra klassen
     public static void main(String args[]) {
         try {
-            // Här startar vi anslutningen mot er lokala MySQL-server istället för en fil!
+            // upprättar anslutning mot mot sql-servern
             InfDB testDb = new InfDB("sdgsweden", "3306", "root", "masterkey"); 
             
             java.awt.EventQueue.invokeLater(new Runnable() {
