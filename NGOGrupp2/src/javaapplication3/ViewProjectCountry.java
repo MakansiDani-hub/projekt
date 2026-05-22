@@ -11,16 +11,14 @@ package javaapplication3;
 public class ViewProjectCountry extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ViewProjectCountry.class.getName());
-    private String fornamn;
-    private String efternamn;
+   
 
     /**
      * Creates new form ViewProjectCountry
      */
     public ViewProjectCountry() {
         initComponents();
-        this.fornamn = fornamn;
-        this.efternamn = efternamn;
+        
     }
 
     /**
@@ -130,7 +128,7 @@ public class ViewProjectCountry extends javax.swing.JFrame {
     }//GEN-LAST:event_textProjektLandActionPerformed
 
     private void lblTillbakaTillMenyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblTillbakaTillMenyActionPerformed
-        new MenyHandlaggareProjektchef(fornamn,efternamn).setVisible(true);
+        new MenyHandlaggareProjektchef().setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_lblTillbakaTillMenyActionPerformed
 

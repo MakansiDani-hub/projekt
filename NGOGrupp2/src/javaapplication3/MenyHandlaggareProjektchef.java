@@ -4,6 +4,8 @@
  */
 package javaapplication3;
 
+import oru.inf.InfException;
+
 /**
  *
  * @author WDM
@@ -11,19 +13,21 @@ package javaapplication3;
 public class MenyHandlaggareProjektchef extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MenyHandlaggareProjektchef.class.getName());
-    private String fornamn;
-    private String efternamn;
+    
 
     /**
      * Creates new form MenyHandlaggareProjektchef
      */
-    public MenyHandlaggareProjektchef(String fornamn,String efternamn) {
+    public MenyHandlaggareProjektchef() {
         initComponents();
-        this.fornamn = fornamn;
-        this.efternamn = efternamn;
+       try{
+        lblFörnamn.setText(inloggningsfonster.getDB().fetchSingle("SELECT fornamn FROM anstalld where aid = '"+ inloggningsfonster.getAid()+"'"));
+       }catch(InfException ex){
+           
+       }
         
-        lblFörnamn.setText(fornamn);
-        lblEfternamn.setText(efternamn);
+        
+       
     }
 
     /**
@@ -229,7 +233,7 @@ public class MenyHandlaggareProjektchef extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVisaProjektKostnaderActionPerformed
 
     private void btnMinaUppgifterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMinaUppgifterActionPerformed
-        new UppgifterHandlaggare(fornamn,efternamn).setVisible(true);
+        new UppgifterHandlaggare().setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnMinaUppgifterActionPerformed
 

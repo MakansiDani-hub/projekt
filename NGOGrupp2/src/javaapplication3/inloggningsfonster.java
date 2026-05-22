@@ -14,7 +14,8 @@ import oru.inf.InfException;
 public class inloggningsfonster extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(inloggningsfonster.class.getName());
-    private InfDB idb;
+    private static InfDB idb;
+    private static int aid;
     /**
      * Creates new form inloggningsfonster
      */
@@ -22,7 +23,16 @@ public class inloggningsfonster extends javax.swing.JFrame {
         this.idb = idb;
         initComponents();
         lblFelmeddelande.setVisible(false);
+        
     }
+    
+    public static int getAid(){
+        return aid;
+    }
+    
+    public static InfDB getDB(){
+    return idb;
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -134,6 +144,7 @@ public class inloggningsfonster extends javax.swing.JFrame {
                 
                 String anvandaresID = "SELECT aid FROM anstalld where epost = '" + ePost+"'";
                 String dbAnvandaresID = idb.fetchSingle (anvandaresID);
+                aid = Integer.parseInt(dbAnvandaresID);
                 
                 String anvandaresAdress = "SELECT adress FROM anstalld where epost = '" + ePost+"'";
                 String dbAnvandaresAdress = idb.fetchSingle (anvandaresAdress);
@@ -157,7 +168,7 @@ public class inloggningsfonster extends javax.swing.JFrame {
                     new AdministratörMeny().setVisible(true);
                 }
                 else if (arHandlaggare && arProjektchef) {
-                    new MenyHandlaggareProjektchef(dbNamn, dbEfternamn).setVisible(true);
+                    new MenyHandlaggareProjektchef().setVisible(true);
                 }
                 else if (arProjektchef) {
                     new ProjectleaderMenu().setVisible(true);

@@ -11,16 +11,14 @@ package javaapplication3;
 public class HanteraProjekt extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(HanteraProjekt.class.getName());
-    private String fornamn;
-    private String efternamn;
+    
 
     /**
      * Creates new form HanteraProjekt
      */
     public HanteraProjekt() {
         initComponents();
-        this.fornamn = fornamn;
-        this.efternamn = efternamn;
+        
         
         
     }
@@ -355,7 +353,7 @@ public class HanteraProjekt extends javax.swing.JFrame {
     }//GEN-LAST:event_JBtnLaggTillProjektActionPerformed
 
     private void lblTillbakaTillMenyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblTillbakaTillMenyActionPerformed
-        new MenyHandlaggareProjektchef(fornamn,efternamn).setVisible(true);
+        new MenyHandlaggareProjektchef().setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_lblTillbakaTillMenyActionPerformed
 

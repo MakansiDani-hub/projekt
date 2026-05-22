@@ -19,8 +19,7 @@ public class HanteraHandläggare extends javax.swing.JFrame {
      */
     public HanteraHandläggare() {
         initComponents();
-        this.fornamn = fornamn;
-        this.efternamn = efternamn;
+        
         
         
     }
@@ -186,7 +185,7 @@ public class HanteraHandläggare extends javax.swing.JFrame {
     }//GEN-LAST:event_textPartnerNamnActionPerformed
 
     private void lblTillbakaTillMenyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblTillbakaTillMenyActionPerformed
-        new MenyHandlaggareProjektchef(fornamn,efternamn).setVisible(true);
+        new MenyHandlaggareProjektchef().setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_lblTillbakaTillMenyActionPerformed
 

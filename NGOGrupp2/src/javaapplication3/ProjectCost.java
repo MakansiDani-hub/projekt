@@ -11,16 +11,13 @@ package javaapplication3;
 public class ProjectCost extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ProjectCost.class.getName());
-    private String fornamn;
-    private String efternamn;
-
+    
     /**
      * Creates new form ProjectCost
      */
     public ProjectCost() {
         initComponents();
-        this.fornamn = fornamn;
-        this.efternamn = efternamn;
+        
     }
 
     /**
@@ -135,7 +132,7 @@ public class ProjectCost extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void lblTillbakaTillMenyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblTillbakaTillMenyActionPerformed
-        new MenyHandlaggareProjektchef(fornamn,efternamn).setVisible(true);
+        new MenyHandlaggareProjektchef().setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_lblTillbakaTillMenyActionPerformed
 

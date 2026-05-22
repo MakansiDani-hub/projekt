@@ -11,16 +11,16 @@ package javaapplication3;
 public class UppgifterHandlaggare extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(UppgifterHandlaggare.class.getName());
-    private String fornamn;
-    private String efternamn;
+    
 
     /**
      * Creates new form Uppgifter_Handläggare
      */
-    public UppgifterHandlaggare(String fornamn, String efternamn) {
+    public UppgifterHandlaggare() {
         initComponents();
-        this.fornamn = fornamn;
-        this.efternamn = efternamn;
+        int AidNummer = inloggningsfonster.getAid();
+        lblAid.setText("AnställningsID: " + AidNummer);
+        
     }
 
     /**
@@ -43,7 +43,7 @@ public class UppgifterHandlaggare extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
+        lblAid = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
@@ -90,7 +90,7 @@ public class UppgifterHandlaggare extends javax.swing.JFrame {
 
         jLabel6.setText("Epost");
 
-        jLabel7.setText("AnställningsID: [aid]");
+        lblAid.setText("AnställningsID: [aid]");
 
         jLabel9.setText("Avdelning");
 
@@ -143,7 +143,7 @@ public class UppgifterHandlaggare extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING))
+                            .addComponent(lblAid, javax.swing.GroupLayout.Alignment.LEADING))
                         .addGap(17, 17, 17))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -186,7 +186,7 @@ public class UppgifterHandlaggare extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel7)
+                        .addComponent(lblAid)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel12))
                     .addComponent(lblTillbakaTillMeny))
@@ -251,7 +251,7 @@ public class UppgifterHandlaggare extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void lblTillbakaTillMenyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblTillbakaTillMenyActionPerformed
-        new MenyHandlaggareProjektchef(fornamn,efternamn).setVisible(true);
+        //new MenyHandlaggareProjektchef().setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_lblTillbakaTillMenyActionPerformed
 
@@ -331,7 +331,6 @@ public class UppgifterHandlaggare extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JTextField jTextField1;
@@ -342,6 +341,7 @@ public class UppgifterHandlaggare extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
+    private javax.swing.JLabel lblAid;
     private javax.swing.JButton lblTillbakaTillMeny;
     // End of variables declaration//GEN-END:variables
 }
