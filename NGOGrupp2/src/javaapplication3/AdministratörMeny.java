@@ -4,6 +4,8 @@
  */
 package javaapplication3;
 
+import oru.inf.InfDB;
+
 /**
  *
  * @author Krist
@@ -12,11 +14,15 @@ public class AdministratörMeny extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AdministratörMeny.class.getName());
 
+    private InfDB idb;
+    private int aid;
     /**
      * Creates new form Administratör
      */
-    public AdministratörMeny() {
+    public AdministratörMeny(InfDB idb, int aid) {
         initComponents();
+        this.idb = idb;
+        this.aid = aid;
     }
 
     /**
@@ -142,7 +148,7 @@ public class AdministratörMeny extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new AdministratörMeny().setVisible(true));
+        //java.awt.EventQueue.invokeLater(() -> new AdministratörMeny().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

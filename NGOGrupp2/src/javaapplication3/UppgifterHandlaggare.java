@@ -8,18 +8,23 @@ package javaapplication3;
  *
  * @author alexander.willen
  */
+import oru.inf.InfDB;
+
 public class UppgifterHandlaggare extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(UppgifterHandlaggare.class.getName());
     
+    private InfDB idb;
+    private int aid;
 
     /**
      * Creates new form Uppgifter_Handläggare
      */
-    public UppgifterHandlaggare() {
+    public UppgifterHandlaggare(InfDB idb, int aid) {
         initComponents();
-        int AidNummer = inloggningsfonster.getAid();
-        lblAid.setText("AnställningsID: " + AidNummer);
+        this.idb = idb;
+        this.aid = aid;
+        lblAid.setText("AnställningsID: " + aid);
         
     }
 

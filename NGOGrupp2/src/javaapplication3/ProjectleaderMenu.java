@@ -4,6 +4,8 @@
  */
 package javaapplication3;
 
+import oru.inf.InfDB;
+
 /**
  *
  * @author Big Dick J
@@ -12,10 +14,14 @@ public class ProjectleaderMenu extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ProjectleaderMenu.class.getName());
 
+    private InfDB idb;
+    private int aid;
     /**
      * Creates new form ProjectleaderMenu
      */
-    public ProjectleaderMenu() {
+    public ProjectleaderMenu(InfDB idb, int aid) {
+        this.idb = idb;
+        this.aid = aid;
         initComponents();
     }
 
@@ -173,7 +179,7 @@ public class ProjectleaderMenu extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new ProjectleaderMenu().setVisible(true));
+        //java.awt.EventQueue.invokeLater(() -> new ProjectleaderMenu().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

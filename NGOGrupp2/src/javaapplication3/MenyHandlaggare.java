@@ -4,6 +4,8 @@
  */
 package javaapplication3;
 
+import oru.inf.InfDB;
+
 /**
  *
  * @author alexander.willen
@@ -12,10 +14,14 @@ public class MenyHandlaggare extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MenyHandlaggare.class.getName());
 
+    private InfDB idb;
+    private int aid;
     /**
      * Creates new form MenyHandlaggare
      */
-    public MenyHandlaggare() {
+    public MenyHandlaggare(InfDB idb, int aid) {
+        this.idb = idb;
+        this.aid = aid;
         initComponents();
     }
 
@@ -145,7 +151,7 @@ public class MenyHandlaggare extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new MenyHandlaggare().setVisible(true));
+        //java.awt.EventQueue.invokeLater(() -> new MenyHandlaggare().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

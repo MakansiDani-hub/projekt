@@ -14,25 +14,17 @@ import oru.inf.InfException;
 public class inloggningsfonster extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(inloggningsfonster.class.getName());
-    private static InfDB idb;
-    private static int aid;
+    private InfDB idb;
     /**
      * Creates new form inloggningsfonster
      */
     public inloggningsfonster(InfDB idb) {
         this.idb = idb;
+        
         initComponents();
         lblFelmeddelande.setVisible(false);
         
     }
-    
-    public static int getAid(){
-        return aid;
-    }
-    
-    public static InfDB getDB(){
-    return idb;
-}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -127,7 +119,7 @@ public class inloggningsfonster extends javax.swing.JFrame {
     private void btnLoggainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoggainActionPerformed
 
         String ePost = tfEPost.getText();
-        String losen = tfLösenord.getText();
+        String losen = tfLösenord.getText(); 
 
         try{
             String sqlFråga = "SELECT losenord FROM anstalld where epost = '" + ePost+"'";
@@ -144,7 +136,7 @@ public class inloggningsfonster extends javax.swing.JFrame {
                 
                 String anvandaresID = "SELECT aid FROM anstalld where epost = '" + ePost+"'";
                 String dbAnvandaresID = idb.fetchSingle (anvandaresID);
-                aid = Integer.parseInt(dbAnvandaresID);
+                int aid = Integer.parseInt(dbAnvandaresID);
                 
                 String anvandaresAdress = "SELECT adress FROM anstalld where epost = '" + ePost+"'";
                 String dbAnvandaresAdress = idb.fetchSingle (anvandaresAdress);
@@ -165,16 +157,16 @@ public class inloggningsfonster extends javax.swing.JFrame {
                 boolean arProjektchef = !projektchefCheck.equals("0"); // i fall en projektchef kan vara chef för flera projekter
                 
                 if (arAdmin) {
-                    new AdministratörMeny().setVisible(true);
+                    new AdministratörMeny(idb, aid).setVisible(true);
                 }
                 else if (arHandlaggare && arProjektchef) {
-                    new MenyHandlaggareProjektchef().setVisible(true);
+                    new MenyHandlaggareProjektchef(idb, aid).setVisible(true);
                 }
                 else if (arProjektchef) {
-                    new ProjectleaderMenu().setVisible(true);
+                    new ProjectleaderMenu(idb, aid).setVisible(true);
                 }
                 else if (arHandlaggare) {
-                    new MenyHandlaggare().setVisible(true);
+                    new MenyHandlaggare(idb, aid).setVisible(true);
                 }
                 else {
                     lblFelmeddelande.setVisible(true);

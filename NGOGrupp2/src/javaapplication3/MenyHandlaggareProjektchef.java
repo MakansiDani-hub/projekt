@@ -5,6 +5,7 @@
 package javaapplication3;
 
 import oru.inf.InfException;
+import oru.inf.InfDB;
 
 /**
  *
@@ -14,14 +15,18 @@ public class MenyHandlaggareProjektchef extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MenyHandlaggareProjektchef.class.getName());
     
+    private InfDB idb;
+    private int aid;
 
     /**
      * Creates new form MenyHandlaggareProjektchef
      */
-    public MenyHandlaggareProjektchef() {
+    public MenyHandlaggareProjektchef(InfDB idb, int aid) {
         initComponents();
+        this.idb = idb;
+        this.aid = aid;
        try{
-        lblFörnamn.setText(inloggningsfonster.getDB().fetchSingle("SELECT fornamn FROM anstalld where aid = '"+ inloggningsfonster.getAid()+"'"));
+        lblFörnamn.setText(idb.fetchSingle("SELECT fornamn FROM anstalld where aid = '"+ aid+"'"));
        }catch(InfException ex){
            
        }
@@ -233,7 +238,7 @@ public class MenyHandlaggareProjektchef extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVisaProjektKostnaderActionPerformed
 
     private void btnMinaUppgifterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMinaUppgifterActionPerformed
-        new UppgifterHandlaggare().setVisible(true);
+        new UppgifterHandlaggare(idb, aid).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnMinaUppgifterActionPerformed
 

@@ -132,7 +132,7 @@ public class ProjectCost extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void lblTillbakaTillMenyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblTillbakaTillMenyActionPerformed
-        new MenyHandlaggareProjektchef().setVisible(true);
+        //new MenyHandlaggareProjektchef().setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_lblTillbakaTillMenyActionPerformed
 
