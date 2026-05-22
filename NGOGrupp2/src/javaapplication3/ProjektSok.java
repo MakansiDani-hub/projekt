@@ -8,14 +8,14 @@ package javaapplication3;
  *
  * @author alexander.willen
  */
-public class ProjektSokHandlaggareAdmin extends javax.swing.JFrame {
+public class ProjektSok extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ProjektSokHandlaggareAdmin.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ProjektSok.class.getName());
 
     /**
      * Creates new form ProjektHandlaggare
      */
-    public ProjektSokHandlaggareAdmin() {
+    public ProjektSok() {
         initComponents();
     }
 
@@ -261,7 +261,7 @@ public class ProjektSokHandlaggareAdmin extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new ProjektSokHandlaggareAdmin().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new ProjektSok().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
