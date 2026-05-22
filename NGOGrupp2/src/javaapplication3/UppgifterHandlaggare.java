@@ -11,12 +11,16 @@ package javaapplication3;
 public class UppgifterHandlaggare extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(UppgifterHandlaggare.class.getName());
+    private String fornamn;
+    private String efternamn;
 
     /**
      * Creates new form Uppgifter_Handläggare
      */
-    public UppgifterHandlaggare() {
+    public UppgifterHandlaggare(String fornamn, String efternamn) {
         initComponents();
+        this.fornamn = fornamn;
+        this.efternamn = efternamn;
     }
 
     /**
@@ -49,7 +53,7 @@ public class UppgifterHandlaggare extends javax.swing.JFrame {
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
+        lblTillbakaTillMeny = new javax.swing.JButton();
         jTextField2 = new javax.swing.JTextField();
         jTextField3 = new javax.swing.JTextField();
         jTextField4 = new javax.swing.JTextField();
@@ -104,8 +108,8 @@ public class UppgifterHandlaggare extends javax.swing.JFrame {
 
         jLabel18.setText("jLabel18");
 
-        jButton4.setText("Tillbaka till Meny");
-        jButton4.addActionListener(this::jButton4ActionPerformed);
+        lblTillbakaTillMeny.setText("Tillbaka till Meny");
+        lblTillbakaTillMeny.addActionListener(this::lblTillbakaTillMenyActionPerformed);
 
         jTextField2.addActionListener(this::jTextField2ActionPerformed);
 
@@ -135,7 +139,7 @@ public class UppgifterHandlaggare extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton4)
+                        .addComponent(lblTillbakaTillMeny)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.LEADING)
@@ -185,7 +189,7 @@ public class UppgifterHandlaggare extends javax.swing.JFrame {
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel12))
-                    .addComponent(jButton4))
+                    .addComponent(lblTillbakaTillMeny))
                 .addGap(12, 12, 12)
                 .addComponent(jLabel4)
                 .addGap(18, 18, 18)
@@ -246,9 +250,10 @@ public class UppgifterHandlaggare extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+    private void lblTillbakaTillMenyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblTillbakaTillMenyActionPerformed
+        new MenyHandlaggareProjektchef(fornamn,efternamn).setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_lblTillbakaTillMenyActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
@@ -304,14 +309,13 @@ public class UppgifterHandlaggare extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new UppgifterHandlaggare().setVisible(true));
+        //java.awt.EventQueue.invokeLater(() -> new UppgifterHandlaggare().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -338,5 +342,6 @@ public class UppgifterHandlaggare extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
+    private javax.swing.JButton lblTillbakaTillMeny;
     // End of variables declaration//GEN-END:variables
 }

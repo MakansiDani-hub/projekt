@@ -49,9 +49,10 @@ public class inloggningsfonster extends javax.swing.JFrame {
 
         lblLösenord.setText("Lösenord");
 
-        tfEPost.setText("maria.g@example.com");
+        tfEPost.setText("chen.wei@example.com");
+        tfEPost.addActionListener(this::tfEPostActionPerformed);
 
-        tfLösenord.setText("password123");
+        tfLösenord.setText("passwordabc");
         tfLösenord.addActionListener(this::tfLösenordActionPerformed);
 
         lblFelmeddelande.setForeground(new java.awt.Color(255, 0, 0));
@@ -143,19 +144,20 @@ public class inloggningsfonster extends javax.swing.JFrame {
                 String anvandareslosenord = "SELECT losenord FROM anstalld where epost = '" + ePost+"'";
                 String dbAnvandareslosenord = idb.fetchSingle (anvandareslosenord);
                 
-                String adminCheck = idb.fetchSingle("SELECT COUNT(*) FROM admin WHERE aid = " + dbAnvandaresID);
-                String handlaggareCheck = idb.fetchSingle("SELECT COUNT(*) FROM handlaggare WHERE aid = " + dbAnvandaresID);
-                String projektchefCheck = idb.fetchSingle("SELECT COUNT(*) FROM projekt WHERE projektchef = " + dbAnvandaresID);
+                //här kollar man om en sådan ID finns i en tabell 
+                String adminCheck = idb.fetchSingle("SELECT COUNT(*) FROM admin WHERE aid = " + dbAnvandaresID); //admin tabellen har inga upprepningar så en admin kan vara en gång(0-1)
+                String handlaggareCheck = idb.fetchSingle("SELECT COUNT(*) FROM handlaggare WHERE aid = " + dbAnvandaresID);// en handläggare kan vara en handläggare(0-1)
+                String projektchefCheck = idb.fetchSingle("SELECT COUNT(*) FROM projekt WHERE projektchef = " + dbAnvandaresID);//projektchef kan vara chef för flera projekt(0-INF)
 
-                boolean arAdmin = adminCheck.equals("1");
+                boolean arAdmin = adminCheck.equals("1"); // konvertera till boolean
                 boolean arHandlaggare = handlaggareCheck.equals("1");
-                boolean arProjektchef = projektchefCheck.equals("1");
+                boolean arProjektchef = !projektchefCheck.equals("0"); // i fall en projektchef kan vara chef för flera projekter
                 
                 if (arAdmin) {
                     new AdministratörMeny().setVisible(true);
                 }
                 else if (arHandlaggare && arProjektchef) {
-                    new MenyHandlaggareProjektchef().setVisible(true);
+                    new MenyHandlaggareProjektchef(dbNamn, dbEfternamn).setVisible(true);
                 }
                 else if (arProjektchef) {
                     new ProjectleaderMenu().setVisible(true);
@@ -182,6 +184,10 @@ public class inloggningsfonster extends javax.swing.JFrame {
     private void tfLösenordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfLösenordActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tfLösenordActionPerformed
+
+    private void tfEPostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfEPostActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfEPostActionPerformed
 
     /**
      * @param args the command line arguments
