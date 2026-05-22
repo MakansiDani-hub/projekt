@@ -8,14 +8,14 @@ package javaapplication3;
  *
  * @author Big Dick J
  */
-public class EditProject extends javax.swing.JFrame {
+public class ÄndraProject extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(EditProject.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ÄndraProject.class.getName());
 
     /**
      * Creates new form EditProject
      */
-    public EditProject() {
+    public ÄndraProject() {
         initComponents();
     }
 
@@ -216,7 +216,7 @@ public class EditProject extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new EditProject().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new ÄndraProject().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

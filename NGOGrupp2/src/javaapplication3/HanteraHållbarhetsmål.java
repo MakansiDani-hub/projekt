@@ -28,6 +28,7 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        JBtnLaggTillHallbarhetsmal = new javax.swing.JButton();
         JLblRubrik = new javax.swing.JLabel();
         JPanelHållbarhetsmål = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -42,10 +43,12 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
         JTxtFieldMalNr = new javax.swing.JTextField();
         JTxtFieldBeskrivning = new javax.swing.JTextField();
         JTxtFieldPrioritet = new javax.swing.JTextField();
-        JBtnLaggTillHallbarhetsmal = new javax.swing.JButton();
         JBtnAndraHallbarhetsmal = new javax.swing.JButton();
         JBtnTaBortHallbarhetsmal = new javax.swing.JButton();
         JPanelProjektMotMal = new javax.swing.JPanel();
+        lblTillbakaTillMeny = new javax.swing.JButton();
+
+        JBtnLaggTillHallbarhetsmal.setText("Lägg till");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -87,8 +90,6 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
 
         JTxtFieldPrioritet.setText("[Prioritet]");
 
-        JBtnLaggTillHallbarhetsmal.setText("Lägg till");
-
         JBtnAndraHallbarhetsmal.setText("Ändra");
 
         JBtnTaBortHallbarhetsmal.setText("Ta bort");
@@ -106,8 +107,7 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
                     .addComponent(JLblNamn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(JLblMalNr, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(JLblBeskrivning, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(JLblPrioritet, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(JBtnLaggTillHallbarhetsmal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(JLblPrioritet, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(JPanelHållbarhetsmålLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(JTxtFieldHID)
@@ -148,7 +148,6 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
                             .addComponent(JTxtFieldPrioritet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(JPanelHållbarhetsmålLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(JBtnLaggTillHallbarhetsmal, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
                             .addComponent(JBtnAndraHallbarhetsmal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(JBtnTaBortHallbarhetsmal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
         );
@@ -165,6 +164,9 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
             JPanelProjektMotMalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 193, Short.MAX_VALUE)
         );
+
+        lblTillbakaTillMeny.setText("Tillbaka till Meny");
+        lblTillbakaTillMeny.addActionListener(this::lblTillbakaTillMenyActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -183,6 +185,11 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(JPanelProjektMotMal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(347, 347, 347)
+                    .addComponent(lblTillbakaTillMeny)
+                    .addContainerGap(348, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -194,10 +201,19 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(JPanelProjektMotMal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(246, 246, 246)
+                    .addComponent(lblTillbakaTillMeny)
+                    .addContainerGap(246, Short.MAX_VALUE)))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void lblTillbakaTillMenyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblTillbakaTillMenyActionPerformed
+        //l'gg till
+    }//GEN-LAST:event_lblTillbakaTillMenyActionPerformed
 
     /**
      * @param args the command line arguments
@@ -243,5 +259,6 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
     private javax.swing.JTextField JTxtFieldNamn;
     private javax.swing.JTextField JTxtFieldPrioritet;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton lblTillbakaTillMeny;
     // End of variables declaration//GEN-END:variables
 }
