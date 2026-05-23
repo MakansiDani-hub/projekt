@@ -112,6 +112,7 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
         JBtnAndraHallbarhetsmal = new javax.swing.JButton();
         JBtnTaBortHallbarhetsmal = new javax.swing.JButton();
         JPanelProjektMotMal = new javax.swing.JPanel();
+        JBtnTillbakaTillMeny = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -225,6 +226,8 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
             .addGap(0, 193, Short.MAX_VALUE)
         );
 
+        JBtnTillbakaTillMeny.setText("Tillbaka Till Meny");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -232,13 +235,13 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(269, 269, 269)
+                                .addComponent(JBtnTillbakaTillMeny)
+                                .addGap(140, 140, 140)
                                 .addComponent(JLblRubrik))
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(JPanelHållbarhetsmål, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(JPanelHållbarhetsmål, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(JPanelProjektMotMal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -247,7 +250,9 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(JLblRubrik)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(JLblRubrik)
+                    .addComponent(JBtnTillbakaTillMeny))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(JPanelHållbarhetsmål, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -370,6 +375,7 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
     private javax.swing.JButton JBtnAndraHallbarhetsmal;
     private javax.swing.JButton JBtnLaggTillHallbarhetsmal;
     private javax.swing.JButton JBtnTaBortHallbarhetsmal;
+    private javax.swing.JButton JBtnTillbakaTillMeny;
     private javax.swing.JLabel JLblBeskrivning;
     private javax.swing.JLabel JLblLID;
     private javax.swing.JLabel JLblMalNr;
