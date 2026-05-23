@@ -199,29 +199,14 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="JTxtFieldHID">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="[HID]"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="JTxtFieldNamn">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="[Namn]"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="JTxtFieldMalNr">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="[Malnummer]"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="JTxtFieldBeskrivning">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="[Beskrivning]"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="JTxtFieldPrioritet">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="[Prioritet]"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="JBtnLaggTillHallbarhetsmal">
           <Properties>
@@ -235,11 +220,17 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="&#xc4;ndra"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JBtnAndraHallbarhetsmalActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="JBtnTaBortHallbarhetsmal">
           <Properties>
             <Property name="text" type="java.lang.String" value="Ta bort"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JBtnTaBortHallbarhetsmalActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

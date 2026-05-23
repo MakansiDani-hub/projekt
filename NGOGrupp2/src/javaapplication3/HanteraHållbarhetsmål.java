@@ -34,6 +34,31 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
         
         // Hämtar data automatiskt vid uppstart
         laddaHållbarhetsmål();
+        
+        JTableHallberhetsmal.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                // Ta reda på vilken rad användaren klickade på
+                int valdRad = JTableHallberhetsmal.getSelectedRow();
+                
+                //  Om en rad faktiskt är valdr
+                if (valdRad >= 0) {
+                    // 3. Hämtar datan från kolumnerna på den valda raden
+                    String id = bordsModell.getValueAt(valdRad, 0).toString();
+                    String namn = bordsModell.getValueAt(valdRad, 1).toString();
+                    String malnr = bordsModell.getValueAt(valdRad, 2).toString();
+                    String beskrivning = bordsModell.getValueAt(valdRad, 3).toString();
+                    String prioritet = bordsModell.getValueAt(valdRad, 4).toString();
+                    
+                    // 4. Sätter in datan i JTextFields
+                    JTxtFieldHID.setText(id);
+                    JTxtFieldNamn.setText(namn);
+                    JTxtFieldMalNr.setText(malnr);
+                    JTxtFieldBeskrivning.setText(beskrivning);
+                    JTxtFieldPrioritet.setText(prioritet);
+                }
+            }
+        });
     }
 
     private void laddaHållbarhetsmål() {
@@ -118,22 +143,14 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
 
         JLblPrioritet.setText("Prioritet");
 
-        JTxtFieldHID.setText("[HID]");
-
-        JTxtFieldNamn.setText("[Namn]");
-
-        JTxtFieldMalNr.setText("[Malnummer]");
-
-        JTxtFieldBeskrivning.setText("[Beskrivning]");
-
-        JTxtFieldPrioritet.setText("[Prioritet]");
-
         JBtnLaggTillHallbarhetsmal.setText("Lägg till");
         JBtnLaggTillHallbarhetsmal.addActionListener(this::JBtnLaggTillHallbarhetsmalActionPerformed);
 
         JBtnAndraHallbarhetsmal.setText("Ändra");
+        JBtnAndraHallbarhetsmal.addActionListener(this::JBtnAndraHallbarhetsmalActionPerformed);
 
         JBtnTaBortHallbarhetsmal.setText("Ta bort");
+        JBtnTaBortHallbarhetsmal.addActionListener(this::JBtnTaBortHallbarhetsmalActionPerformed);
 
         javax.swing.GroupLayout JPanelHållbarhetsmålLayout = new javax.swing.GroupLayout(JPanelHållbarhetsmål);
         JPanelHållbarhetsmål.setLayout(JPanelHållbarhetsmålLayout);
@@ -279,9 +296,74 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
             JTxtFieldPrioritet.setText("");
 
         } catch (InfException e) {
-            JOptionPane.showMessageDialog(this, "Kunde inte lägga till målet. Kontrollera att ID inte redan finns.\nFelmeddelande: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Kunde inte lägga till målet. Kontrollera att HID inte redan finns.\nFelmeddelande: " + e.getMessage());
         }
     }//GEN-LAST:event_JBtnLaggTillHallbarhetsmalActionPerformed
+
+    private void JBtnAndraHallbarhetsmalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnAndraHallbarhetsmalActionPerformed
+        String id = JTxtFieldHID.getText().trim();
+        String namn = JTxtFieldNamn.getText().trim();
+        String malnr = JTxtFieldMalNr.getText().trim();
+        String beskrivning = JTxtFieldBeskrivning.getText().trim();
+        String prioritet = JTxtFieldPrioritet.getText().trim();
+
+        // Kontrollerar att ett hid är ifyllt
+        if (id.isEmpty() || id.equals("[HID]")) {
+            JOptionPane.showMessageDialog(this, "Välj ett hållbarhetsmål i tabellen att ändra.");
+            return;
+        }
+
+        try {
+            // SQLfråga för att uppdatera alla fält baserat på hid
+            String sqlFråga = "UPDATE hallbarhetsmal SET " +
+                              "namn = '" + namn + "', " +
+                              "malnummer = '" + malnr + "', " +
+                              "beskrivning = '" + beskrivning + "', " +
+                              "prioritet = '" + prioritet + "' " +
+                              "WHERE hid = '" + id + "'";
+
+            idb.update(sqlFråga);
+            JOptionPane.showMessageDialog(this, "Hållbarhetsmålet har uppdateras!");
+            
+            laddaHållbarhetsmål(); // Laddar om tabellen
+        } catch (InfException e) {
+            JOptionPane.showMessageDialog(this, "Kunde inte uppdatera hållbarhetsmålet: " + e.getMessage());
+        }
+    }//GEN-LAST:event_JBtnAndraHallbarhetsmalActionPerformed
+
+    private void JBtnTaBortHallbarhetsmalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnTaBortHallbarhetsmalActionPerformed
+        
+        String id = JTxtFieldHID.getText().trim();
+
+        if (id.isEmpty() || id.equals("[HID]")) {
+            JOptionPane.showMessageDialog(this, "Välj ett hållbarhetsmål i tabellen att ta bort.");
+            return;
+        }
+
+        // En kontroll så användaren inte råkar ta bort fel hållbarhetsmål
+        int svar = JOptionPane.showConfirmDialog(this, "Är du säker på att du vill ta bort hållbarhetsmål med hid " + id + "?", "Bekräfta borttagning", JOptionPane.YES_NO_OPTION);
+        
+        if (svar == JOptionPane.YES_OPTION) {
+            try {
+                String sqlFråga = "DELETE FROM hallbarhetsmal WHERE hid = '" + id + "'";
+                idb.delete(sqlFråga);
+                
+                JOptionPane.showMessageDialog(this, "Hållbarhetsmålet har tagits bort.");
+                
+                // Rensar fälten efter borttagning
+                JTxtFieldHID.setText("");
+                JTxtFieldNamn.setText("");
+                JTxtFieldMalNr.setText("");
+                JTxtFieldBeskrivning.setText("");
+                JTxtFieldPrioritet.setText("");
+                
+                laddaHållbarhetsmål(); // Laddar om tabellen
+            } catch (InfException e) {
+                JOptionPane.showMessageDialog(this, "Kunde inte ta bort målet: " + e.getMessage());
+            }
+        }
+        
+    }//GEN-LAST:event_JBtnTaBortHallbarhetsmalActionPerformed
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
