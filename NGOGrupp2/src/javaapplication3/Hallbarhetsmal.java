@@ -155,7 +155,7 @@ public class Hallbarhetsmal extends javax.swing.JFrame {
             logger.log(java.util.logging.Level.SEVERE, null, ex);
         }
 
-        /* Skapa en testanslutning och visa fönstret */
+        /* Skapar en testanslutning och visar fönstret */
         java.awt.EventQueue.invokeLater(() -> {
             try {
                 InfDB testDb = new InfDB("sdgsweden", "3306", "root", "masterkey");
