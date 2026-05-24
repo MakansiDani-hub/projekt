@@ -9,22 +9,85 @@ package javaapplication3;
  * @author alexander.willen
  */
 import oru.inf.InfDB;
+import java.awt.Color;
 
 public class UppgifterHandlaggare extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(UppgifterHandlaggare.class.getName());
+    private Anvandare anvandare;
     
     private InfDB idb;
+    private String dbNamn;
+    private String dbEfternamn;
+    private String dbAnstallningsdatum;      
     private int aid;
+    private String dbAnvandaresAdress;
+    private String dbAnvandaresTelefon;
+    private String dbAnvandareslosenord;
 
     /**
      * Creates new form Uppgifter_Handläggare
      */
-    public UppgifterHandlaggare(InfDB idb, int aid) {
+    public UppgifterHandlaggare(Anvandare anvandare) {
         initComponents();
-        this.idb = idb;
-        this.aid = aid;
+
+        this.anvandare = anvandare;
+
+        this.idb = anvandare.getIdb();
+
+        this.aid = anvandare.getAid();
+
+        this.dbNamn = anvandare.getDbNamn();
+        this.dbEfternamn = anvandare.getDbEfternamn();
+
+        this.dbAnstallningsdatum = anvandare.getDbAnstallningsdatum();
+
+        this.dbAnvandaresAdress = anvandare.getDbAnvandaresAdress();
+
+        this.dbAnvandaresTelefon = anvandare.getDbAnvandaresTelefon();
+
+        this.dbAnvandareslosenord = anvandare.getDbAnvandareslosenord();
+        
         lblAid.setText("AnställningsID: " + aid);
+        lblAnställdSedan.setText("Anställd sedan: " + dbAnstallningsdatum);
+        try{
+        lblAvdelningsNamnOchID.setText(idb.fetchSingle("SELECT namn,avdid FROM avdelning where chef = '"+ aid+"'"));
+        txtHandläggaresEfternamn.setText(idb.fetchSingle("SELECT efternamn FROM anstalld where aid = '"+ aid+"'"));
+        txtHandläggaresNamn.setText(idb.fetchSingle("SELECT fornamn FROM anstalld where aid = '"+ aid+"'"));
+        txtHandläggaresTelefon.setText(idb.fetchSingle("SELECT telefon FROM anstalld where aid = '"+ aid+"'"));
+        txtHandläggaresAdress.setText(idb.fetchSingle("SELECT adress FROM anstalld where aid = '"+ aid+"'"));
+        txtHandläggaresEpost.setText(idb.fetchSingle("SELECT epost FROM anstalld where aid = '"+ aid+"'"));
+        
+        txtAnsvarsområde.setText(idb.fetchSingle("SELECT ansvarighetsomrade FROM handlaggare where aid = '"+ aid+"'"));
+        txtMentor.setText(idb.fetchSingle("SELECT CONCAT(fornamn, ' ', efternamn) FROM anstalld " + "WHERE aid = (SELECT mentor FROM handlaggare " + "WHERE aid = '" + aid + "')"));
+        txtMentorFör.setText(idb.fetchSingle("SELECT GROUP_CONCAT(CONCAT(fornamn, ' ', efternamn) SEPARATOR ', ') " + "FROM anstalld " + "WHERE aid IN (SELECT aid FROM handlaggare " + "WHERE mentor = '" + aid + "')"));
+
+        
+        
+        
+        txtHandläggaresNamn.setEditable(false);
+        txtHandläggaresEfternamn.setEditable(false);
+        txtHandläggaresTelefon.setEditable(false);
+        txtHandläggaresAdress.setEditable(false);
+        txtHandläggaresEpost.setEditable(false);
+        
+        txtAnsvarsområde.setEditable(false);
+        txtMentor.setEditable(false);
+        txtMentorFör.setEditable(false);
+
+        txtHandläggaresNamn.setBackground(Color.LIGHT_GRAY);
+        txtHandläggaresEfternamn.setBackground(Color.LIGHT_GRAY);
+        txtHandläggaresTelefon.setBackground(Color.LIGHT_GRAY);
+        txtHandläggaresAdress.setBackground(Color.LIGHT_GRAY);
+        txtHandläggaresEpost.setBackground(Color.LIGHT_GRAY);
+        
+        txtAnsvarsområde.setBackground(Color.LIGHT_GRAY);
+        txtMentor.setBackground(Color.LIGHT_GRAY);
+        txtMentorFör.setBackground(Color.LIGHT_GRAY);
+        
+        }catch(Exception ex){
+            
+        }
         
     }
 
@@ -44,29 +107,27 @@ public class UppgifterHandlaggare extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        btnÄndra = new javax.swing.JButton();
+        btnSpara = new javax.swing.JButton();
+        txtHandläggaresNamn = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         lblAid = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
+        lblAnställdSedan = new javax.swing.JLabel();
+        lblAvdelningsNamnOchID = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         lblTillbakaTillMeny = new javax.swing.JButton();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
-        jTextField7 = new javax.swing.JTextField();
-        jTextField8 = new javax.swing.JTextField();
-        jLabel17 = new javax.swing.JLabel();
+        txtHandläggaresEfternamn = new javax.swing.JTextField();
+        txtHandläggaresAdress = new javax.swing.JTextField();
+        txtHandläggaresEpost = new javax.swing.JTextField();
+        txtHandläggaresTelefon = new javax.swing.JTextField();
+        txtAnsvarsområde = new javax.swing.JTextField();
+        txtMentor = new javax.swing.JTextField();
+        txtMentorFör = new javax.swing.JTextField();
 
         jButton2.setText("jButton2");
 
@@ -85,13 +146,13 @@ public class UppgifterHandlaggare extends javax.swing.JFrame {
 
         jLabel5.setText("Adress");
 
-        jButton1.setText("Ändra");
-        jButton1.addActionListener(this::jButton1ActionPerformed);
+        btnÄndra.setText("Ändra");
+        btnÄndra.addActionListener(this::btnÄndraActionPerformed);
 
-        jButton3.setText("Spara");
-        jButton3.addActionListener(this::jButton3ActionPerformed);
+        btnSpara.setText("Spara");
+        btnSpara.addActionListener(this::btnSparaActionPerformed);
 
-        jTextField1.addActionListener(this::jTextField1ActionPerformed);
+        txtHandläggaresNamn.addActionListener(this::txtHandläggaresNamnActionPerformed);
 
         jLabel6.setText("Epost");
 
@@ -103,86 +164,82 @@ public class UppgifterHandlaggare extends javax.swing.JFrame {
 
         jLabel11.setText("Mentor för");
 
-        jLabel12.setText("Sedan [AnstDatum] ");
+        lblAnställdSedan.setText("Sedan [AnstDatum] ");
 
-        jLabel13.setText("[Namn+ID]");
+        lblAvdelningsNamnOchID.setText("[Namn+ID]");
 
         jLabel15.setText("Ansvarsområde");
-
-        jLabel16.setText("Chef för");
 
         jLabel18.setText("jLabel18");
 
         lblTillbakaTillMeny.setText("Tillbaka till Meny");
         lblTillbakaTillMeny.addActionListener(this::lblTillbakaTillMenyActionPerformed);
 
-        jTextField2.addActionListener(this::jTextField2ActionPerformed);
+        txtHandläggaresEfternamn.addActionListener(this::txtHandläggaresEfternamnActionPerformed);
 
-        jTextField3.addActionListener(this::jTextField3ActionPerformed);
+        txtHandläggaresAdress.addActionListener(this::txtHandläggaresAdressActionPerformed);
 
-        jTextField4.addActionListener(this::jTextField4ActionPerformed);
+        txtHandläggaresEpost.addActionListener(this::txtHandläggaresEpostActionPerformed);
 
-        jTextField5.addActionListener(this::jTextField5ActionPerformed);
+        txtHandläggaresTelefon.addActionListener(this::txtHandläggaresTelefonActionPerformed);
 
-        jTextField6.addActionListener(this::jTextField6ActionPerformed);
+        txtAnsvarsområde.addActionListener(this::txtAnsvarsområdeActionPerformed);
 
-        jTextField7.addActionListener(this::jTextField7ActionPerformed);
+        txtMentor.addActionListener(this::txtMentorActionPerformed);
 
-        jTextField8.addActionListener(this::jTextField8ActionPerformed);
-
-        jLabel17.setText("[avNamn+avid]");
+        txtMentorFör.addActionListener(this::txtMentorFörActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(251, Short.MAX_VALUE)
+                .addContainerGap(428, Short.MAX_VALUE)
                 .addComponent(jLabel8)
                 .addGap(107, 107, 107))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(lblTillbakaTillMeny)
+                .addComponent(lblTillbakaTillMeny)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblAnställdSedan, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblAid, javax.swing.GroupLayout.Alignment.LEADING))
+                .addGap(17, 17, 17))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(55, 55, 55)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnÄndra)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblAid, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addGap(17, 17, 17))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton3))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel10)
-                                    .addComponent(jLabel11)
-                                    .addComponent(jLabel9)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel15)
-                                    .addComponent(jLabel16))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel13)
-                                    .addComponent(jTextField7)
-                                    .addComponent(jTextField8)
-                                    .addComponent(jLabel17)
-                                    .addComponent(jTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
-                                    .addComponent(jTextField2)
-                                    .addComponent(jTextField1)
-                                    .addComponent(jTextField3)
-                                    .addComponent(jTextField5)
-                                    .addComponent(jTextField6)))
-                            .addComponent(jLabel4))
-                        .addGap(60, 60, 60))))
+                        .addComponent(btnSpara))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel10)
+                            .addComponent(jLabel11)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel15))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblAvdelningsNamnOchID)
+                            .addComponent(txtMentor, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
+                            .addComponent(txtMentorFör, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
+                            .addComponent(txtHandläggaresEpost, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
+                            .addComponent(txtHandläggaresEfternamn, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
+                            .addComponent(txtHandläggaresAdress, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
+                            .addComponent(txtHandläggaresTelefon, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
+                            .addComponent(txtAnsvarsområde, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtHandläggaresNamn, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabel4))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {txtAnsvarsområde, txtHandläggaresAdress, txtHandläggaresEfternamn, txtHandläggaresEpost, txtHandläggaresTelefon, txtMentor, txtMentorFör});
+
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
@@ -193,104 +250,175 @@ public class UppgifterHandlaggare extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblAid)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel12))
+                        .addComponent(lblAnställdSedan))
                     .addComponent(lblTillbakaTillMeny))
-                .addGap(12, 12, 12)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel4)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtHandläggaresNamn))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtHandläggaresEfternamn))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtHandläggaresTelefon))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtHandläggaresAdress))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtHandläggaresEpost))
                 .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel15)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtAnsvarsområde))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
-                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtMentor))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel11)
-                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtMentorFör))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(jLabel13))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel16)
-                    .addComponent(jLabel17))
-                .addGap(18, 18, 18)
+                    .addComponent(lblAvdelningsNamnOchID))
+                .addGap(46, 46, 46)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton3))
-                .addContainerGap(27, Short.MAX_VALUE))
+                    .addComponent(btnÄndra)
+                    .addComponent(btnSpara))
+                .addGap(21, 21, 21))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btnÄndraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnÄndraActionPerformed
+        // Jag tycker att bara admin kan ändra namn och efternamn på anställda.
+        
+        //txtHandläggaresNamn.setEditable(true);
+        //txtHandläggaresEfternamn.setEditable(true);
+        txtHandläggaresTelefon.setEditable(true);
+        txtHandläggaresAdress.setEditable(true);
+        txtHandläggaresEpost.setEditable(true);
+        
+        txtAnsvarsområde.setEditable(true);
+        txtMentor.setEditable(true);
+        // aid ändring RISK!!!!
+        //txtMentorFör.setEditable(true);
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+        //txtHandläggaresNamn.setBackground(Color.WHITE);
+        //txtHandläggaresEfternamn.setBackground(Color.WHITE);
+        txtHandläggaresTelefon.setBackground(Color.WHITE);
+        txtHandläggaresAdress.setBackground(Color.WHITE);
+        txtHandläggaresEpost.setBackground(Color.WHITE);
+        
+        txtAnsvarsområde.setBackground(Color.WHITE);
+        txtMentor.setBackground(Color.WHITE);
+       // txtMentorFör.setBackground(Color.WHITE);
+        
+    }//GEN-LAST:event_btnÄndraActionPerformed
+
+    private void btnSparaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSparaActionPerformed
+        try{
+            
+        String nyttTelefonnummer = txtHandläggaresTelefon.getText();
+        String nyAdress = txtHandläggaresAdress.getText();
+        String nyEpost = txtHandläggaresEpost.getText();
+        
+        String nyAnsvarsområde = txtAnsvarsområde.getText();
+        String nyMentor = txtMentor.getText();
+        
+        String nyMentorFör = txtMentorFör.getText();
+        
+        String sqlFråga1 = "UPDATE anstalld SET "
+                + "telefon = '" + nyttTelefonnummer + "', "
+                + "adress = '" + nyAdress + "', "
+                + "epost = '" + nyEpost + "' "
+                + "WHERE aid = '" + aid + "'";
+        idb.update(sqlFråga1);
+        
+        String sqlFråga2 ="UPDATE handlaggare SET "
+                + "ansvarighetsomrade = '" + nyAnsvarsområde + "'"
+                + "WHERE aid = '" + aid + "'";
+        
+        idb.update(sqlFråga2);
+        
+        String sqlFråga3 ="UPDATE handlaggare SET "
+                + "mentor = '" + nyMentor + "'"
+                + "WHERE aid = '" + aid + "'";
+        
+        idb.update(sqlFråga3);
+        // tycker inte att en handläggare eller projektchef ska kunna ändra vem de är mentorer för då riskerar vi ändra aid i hela projektet
+       // String sqlFråga4 ="UPDATE handlaggare SET "
+              //  + "aid = '" + nyMentorFör + "'";
+        
+        //idb.update(sqlFråga4);
+        
+        txtHandläggaresTelefon.setEditable(false);
+        txtHandläggaresAdress.setEditable(false);
+        txtHandläggaresEpost.setEditable(false);
+        
+        txtAnsvarsområde.setEditable(false);
+        txtMentor.setEditable(false);
+        txtMentorFör.setEditable(false);
+        
+        txtHandläggaresTelefon.setBackground(Color.LIGHT_GRAY);
+        txtHandläggaresAdress.setBackground(Color.LIGHT_GRAY);
+        txtHandläggaresEpost.setBackground(Color.LIGHT_GRAY);
+        
+        txtAnsvarsområde.setBackground(Color.LIGHT_GRAY);
+        txtMentor.setBackground(Color.LIGHT_GRAY);
+        txtMentorFör.setBackground(Color.LIGHT_GRAY);
+        }
+        catch(Exception ex){
+            
+        }
+    }//GEN-LAST:event_btnSparaActionPerformed
 
     private void lblTillbakaTillMenyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblTillbakaTillMenyActionPerformed
-        //new MenyHandlaggareProjektchef().setVisible(true);
+        new MenyHandlaggareProjektchef(anvandare).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_lblTillbakaTillMenyActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void txtHandläggaresNamnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtHandläggaresNamnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_txtHandläggaresNamnActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void txtHandläggaresEfternamnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtHandläggaresEfternamnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_txtHandläggaresEfternamnActionPerformed
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void txtHandläggaresAdressActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtHandläggaresAdressActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_txtHandläggaresAdressActionPerformed
 
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+    private void txtHandläggaresEpostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtHandläggaresEpostActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
+    }//GEN-LAST:event_txtHandläggaresEpostActionPerformed
 
-    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
+    private void txtHandläggaresTelefonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtHandläggaresTelefonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField5ActionPerformed
+    }//GEN-LAST:event_txtHandläggaresTelefonActionPerformed
 
-    private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
+    private void txtAnsvarsområdeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAnsvarsområdeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField6ActionPerformed
+    }//GEN-LAST:event_txtAnsvarsområdeActionPerformed
 
-    private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
+    private void txtMentorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMentorActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField7ActionPerformed
+    }//GEN-LAST:event_txtMentorActionPerformed
 
-    private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
+    private void txtMentorFörActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMentorFörActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField8ActionPerformed
+    }//GEN-LAST:event_txtMentorFörActionPerformed
 
     /**
      * @param args the command line arguments
@@ -318,18 +446,14 @@ public class UppgifterHandlaggare extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnSpara;
+    private javax.swing.JButton btnÄndra;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -338,15 +462,17 @@ public class UppgifterHandlaggare extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
     private javax.swing.JLabel lblAid;
+    private javax.swing.JLabel lblAnställdSedan;
+    private javax.swing.JLabel lblAvdelningsNamnOchID;
     private javax.swing.JButton lblTillbakaTillMeny;
+    private javax.swing.JTextField txtAnsvarsområde;
+    private javax.swing.JTextField txtHandläggaresAdress;
+    private javax.swing.JTextField txtHandläggaresEfternamn;
+    private javax.swing.JTextField txtHandläggaresEpost;
+    private javax.swing.JTextField txtHandläggaresNamn;
+    private javax.swing.JTextField txtHandläggaresTelefon;
+    private javax.swing.JTextField txtMentor;
+    private javax.swing.JTextField txtMentorFör;
     // End of variables declaration//GEN-END:variables
 }

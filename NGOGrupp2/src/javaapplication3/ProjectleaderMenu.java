@@ -14,14 +14,12 @@ public class ProjectleaderMenu extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ProjectleaderMenu.class.getName());
 
-    private InfDB idb;
-    private int aid;
+    private Anvandare anvandare;
     /**
      * Creates new form ProjectleaderMenu
      */
-    public ProjectleaderMenu(InfDB idb, int aid) {
-        this.idb = idb;
-        this.aid = aid;
+    public ProjectleaderMenu(Anvandare anvandare) {
+        this.anvandare = anvandare;
         initComponents();
     }
 

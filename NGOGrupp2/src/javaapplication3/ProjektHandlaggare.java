@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package javaapplication3;
-
+import oru.inf.InfDB;
 /**
  *
  * @author alexander.willen
@@ -11,13 +11,16 @@ package javaapplication3;
 public class ProjektHandlaggare extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ProjektHandlaggare.class.getName());
+    private Anvandare anvandare;
     
     /**
      * Creates new form Projekt
      */
-    public ProjektHandlaggare() {
+    public ProjektHandlaggare(Anvandare anvandare) {
         initComponents();
+        this.anvandare = anvandare;
         pnlPartners.setVisible(false);
+        
         
 
     }
@@ -78,7 +81,7 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
         pnlPartners = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
-        lblTillbakaTillMeny = new javax.swing.JButton();
+        lblTillbakaTillMeny1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -328,8 +331,8 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
 
         jScrollPane3.setViewportView(jPanel7);
 
-        lblTillbakaTillMeny.setText("Tillbaka till Meny");
-        lblTillbakaTillMeny.addActionListener(this::lblTillbakaTillMenyActionPerformed);
+        lblTillbakaTillMeny1.setText("Tillbaka till Meny");
+        lblTillbakaTillMeny1.addActionListener(this::lblTillbakaTillMeny1ActionPerformed);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -341,7 +344,7 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
                         .addContainerGap()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(lblTillbakaTillMeny)
+                                .addComponent(lblTillbakaTillMeny1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel2))
                             .addGroup(jPanel4Layout.createSequentialGroup()
@@ -355,7 +358,7 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGap(86, 86, 86)
+                                .addGap(126, 126, 126)
                                 .addComponent(lblProjektnamn, javax.swing.GroupLayout.PREFERRED_SIZE, 526, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addGap(217, 217, 217)
@@ -376,7 +379,7 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(lblTillbakaTillMeny)))
+                        .addComponent(lblTillbakaTillMeny1)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblProjektnamn)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -448,10 +451,10 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
 
-    private void lblTillbakaTillMenyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblTillbakaTillMenyActionPerformed
-        //new MenyHandlaggareProjektchef().setVisible(true);
+    private void lblTillbakaTillMeny1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblTillbakaTillMeny1ActionPerformed
+        new MenyHandlaggareProjektchef(anvandare).setVisible(true);
         this.setVisible(false);
-    }//GEN-LAST:event_lblTillbakaTillMenyActionPerformed
+    }//GEN-LAST:event_lblTillbakaTillMeny1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -526,7 +529,7 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JLabel lblProjektnamn;
-    private javax.swing.JButton lblTillbakaTillMeny;
+    private javax.swing.JButton lblTillbakaTillMeny1;
     private javax.swing.JPanel pnlPartners;
     // End of variables declaration//GEN-END:variables
 }

@@ -15,11 +15,13 @@ public class inloggningsfonster extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(inloggningsfonster.class.getName());
     private InfDB idb;
+    private Anvandare anvandare;
     /**
      * Creates new form inloggningsfonster
      */
     public inloggningsfonster(InfDB idb) {
         this.idb = idb;
+        this.anvandare = anvandare;
         
         initComponents();
         lblFelmeddelande.setVisible(false);
@@ -147,6 +149,17 @@ public class inloggningsfonster extends javax.swing.JFrame {
                 String anvandareslosenord = "SELECT losenord FROM anstalld where epost = '" + ePost+"'";
                 String dbAnvandareslosenord = idb.fetchSingle (anvandareslosenord);
                 
+                Anvandare anvandare = new Anvandare(
+                idb,
+                dbNamn,
+                dbEfternamn,
+                dbAnstallningsdatum,
+                Integer.parseInt(dbAnvandaresID),
+                dbAnvandaresAdress,
+                dbAnvandaresTelefon,
+                dbAnvandareslosenord
+                );
+                
                 //här kollar man om en sådan ID finns i en tabell 
                 String adminCheck = idb.fetchSingle("SELECT COUNT(*) FROM admin WHERE aid = " + dbAnvandaresID); //admin tabellen har inga upprepningar så en admin kan vara en gång(0-1)
                 String handlaggareCheck = idb.fetchSingle("SELECT COUNT(*) FROM handlaggare WHERE aid = " + dbAnvandaresID);// en handläggare kan vara en handläggare(0-1)
@@ -157,16 +170,14 @@ public class inloggningsfonster extends javax.swing.JFrame {
                 boolean arProjektchef = !projektchefCheck.equals("0"); // i fall en projektchef kan vara chef för flera projekter
                 
                 if (arAdmin) {
-                    new AdministratörMeny(idb, aid).setVisible(true);
+                    new AdministratörMeny(anvandare).setVisible(true);
                 }
                 else if (arHandlaggare && arProjektchef) {
-                    new MenyHandlaggareProjektchef(idb, aid).setVisible(true);
+                    new MenyHandlaggareProjektchef(anvandare).setVisible(true);
                 }
-                else if (arProjektchef) {
-                    new ProjectleaderMenu(idb, aid).setVisible(true);
-                }
+                
                 else if (arHandlaggare) {
-                    new MenyHandlaggare(idb, aid).setVisible(true);
+                    new MenyHandlaggare(anvandare).setVisible(true);
                 }
                 else {
                     lblFelmeddelande.setVisible(true);

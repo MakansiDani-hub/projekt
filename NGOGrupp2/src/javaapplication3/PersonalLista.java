@@ -11,14 +11,14 @@ package javaapplication3;
 public class PersonalLista extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(PersonalLista.class.getName());
-    
+    private Anvandare anvandare;
 
     /**
      * Creates new form Personer
      */
-    public PersonalLista() {
+    public PersonalLista(Anvandare anvandare) {
         initComponents();
-        
+        this.anvandare = anvandare;
     }
 
     /**
@@ -198,7 +198,7 @@ public class PersonalLista extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void lblTillbakaTillMenyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblTillbakaTillMenyActionPerformed
-        //new MenyHandlaggareProjektchef().setVisible(true);
+        new MenyHandlaggareProjektchef(anvandare).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_lblTillbakaTillMenyActionPerformed
 

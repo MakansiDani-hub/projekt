@@ -13,16 +13,16 @@ import oru.inf.InfDB;
 public class MenyHandlaggare extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MenyHandlaggare.class.getName());
-
+    private Anvandare anvandare;
     private InfDB idb;
     private int aid;
     /**
      * Creates new form MenyHandlaggare
      */
-    public MenyHandlaggare(InfDB idb, int aid) {
-        this.idb = idb;
-        this.aid = aid;
+    public MenyHandlaggare(Anvandare anvandare) {
         initComponents();
+        this.anvandare = anvandare;
+        
     }
 
     /**
@@ -34,7 +34,6 @@ public class MenyHandlaggare extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -42,11 +41,9 @@ public class MenyHandlaggare extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
+        btnMinaUppgifter = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jButton1.setText("Mina uppgifter");
-        jButton1.addActionListener(this::jButton1ActionPerformed);
 
         jLabel1.setText("Avdelning: [Namn + ID]");
 
@@ -67,6 +64,9 @@ public class MenyHandlaggare extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel3.setText("Handläggare Meny");
 
+        btnMinaUppgifter.setText("Mina uppgifter");
+        btnMinaUppgifter.addActionListener(this::btnMinaUppgifterActionPerformed);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -78,11 +78,11 @@ public class MenyHandlaggare extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addComponent(jLabel1)))
-            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jButton5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnMinaUppgifter, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -94,7 +94,7 @@ public class MenyHandlaggare extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel1)))
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
+                .addComponent(btnMinaUppgifter)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -125,9 +125,10 @@ public class MenyHandlaggare extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btnMinaUppgifterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMinaUppgifterActionPerformed
+        new UppgifterHandlaggare(anvandare).setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnMinaUppgifterActionPerformed
 
     /**
      * @param args the command line arguments
@@ -155,7 +156,7 @@ public class MenyHandlaggare extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnMinaUppgifter;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;

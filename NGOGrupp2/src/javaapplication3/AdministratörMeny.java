@@ -13,16 +13,15 @@ import oru.inf.InfDB;
 public class AdministratörMeny extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AdministratörMeny.class.getName());
-
+    private Anvandare anvandare;
     private InfDB idb;
     private int aid;
     /**
      * Creates new form Administratör
      */
-    public AdministratörMeny(InfDB idb, int aid) {
+    public AdministratörMeny(Anvandare anvandare) {
         initComponents();
-        this.idb = idb;
-        this.aid = aid;
+        this.anvandare = anvandare;
     }
 
     /**

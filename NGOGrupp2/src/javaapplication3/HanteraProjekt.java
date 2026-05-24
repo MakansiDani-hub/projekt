@@ -11,14 +11,14 @@ package javaapplication3;
 public class HanteraProjekt extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(HanteraProjekt.class.getName());
-    
+    private Anvandare anvandare;
 
     /**
      * Creates new form HanteraProjekt
      */
-    public HanteraProjekt() {
+    public HanteraProjekt(Anvandare anvandare) {
         initComponents();
-        
+        this.anvandare = anvandare;
         
         
     }
@@ -319,27 +319,24 @@ public class HanteraProjekt extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(JPanelUppgifterValtProjekt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(JPanelProjekt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblTillbakaTillMeny)
-                                .addGap(160, 160, 160)
-                                .addComponent(JLblRubrik)
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                .addContainerGap()
+                .addComponent(lblTillbakaTillMeny)
+                .addGap(160, 160, 160)
+                .addComponent(JLblRubrik)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(JPanelUppgifterValtProjekt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
+            .addComponent(JPanelProjekt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(JLblRubrik)
                     .addComponent(lblTillbakaTillMeny))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(JPanelProjekt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(JPanelUppgifterValtProjekt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -353,7 +350,7 @@ public class HanteraProjekt extends javax.swing.JFrame {
     }//GEN-LAST:event_JBtnLaggTillProjektActionPerformed
 
     private void lblTillbakaTillMenyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblTillbakaTillMenyActionPerformed
-        //new MenyHandlaggareProjektchef().setVisible(true);
+        new MenyHandlaggareProjektchef(anvandare).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_lblTillbakaTillMenyActionPerformed
 
@@ -379,7 +376,7 @@ public class HanteraProjekt extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new HanteraProjekt().setVisible(true));
+        //java.awt.EventQueue.invokeLater(() -> new HanteraProjekt().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

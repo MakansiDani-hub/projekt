@@ -23,10 +23,18 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="btnMinaProjekt" alignment="0" max="32767" attributes="0"/>
           <Component id="btnMinaUppgifter" alignment="1" max="32767" attributes="0"/>
           <Component id="btnHållbarhetsmålen" alignment="1" max="32767" attributes="0"/>
-          <Group type="102" attributes="0">
+          <Component id="btnSökPersonal" alignment="0" max="32767" attributes="0"/>
+          <Group type="102" alignment="0" attributes="0">
+              <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
+              <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+          </Group>
+          <Component id="btnMinaProjekt" alignment="0" max="32767" attributes="0"/>
+          <Component id="jButton1" alignment="0" max="32767" attributes="0"/>
+          <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="79" max="-2" attributes="0"/>
@@ -35,14 +43,7 @@
               <Component id="lblEfternamn" min="-2" pref="34" max="-2" attributes="0"/>
               <EmptySpace pref="27" max="32767" attributes="0"/>
           </Group>
-          <Component id="btnSökPersonal" alignment="0" max="32767" attributes="0"/>
-          <Component id="btnSökProjekt" alignment="0" max="32767" attributes="0"/>
-          <Group type="102" alignment="0" attributes="0">
-              <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
-              <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
-          </Group>
+          <Component id="btnSökProjekt" alignment="1" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -54,27 +55,29 @@
                   <Component id="lblFörnamn" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblEfternamn" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="53" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
               <Component id="btnMinaUppgifter" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="btnMinaProjekt" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="btnHållbarhetsmålen" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="btnSökPersonal" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
               <Component id="btnSökProjekt" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="12" max="32767" attributes="0"/>
+              <Component id="btnHållbarhetsmålen" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="btnSökPersonal" min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                       <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="224" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -114,7 +117,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnS&#xf6;kPersonal">
       <Properties>
-        <Property name="text" type="java.lang.String" value="S&#xf6;k personal"/>
+        <Property name="text" type="java.lang.String" value="Personal List"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnS&#xf6;kPersonalActionPerformed"/>
@@ -122,7 +125,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnS&#xf6;kProjekt">
       <Properties>
-        <Property name="text" type="java.lang.String" value="S&#xf6;k projekt"/>
+        <Property name="text" type="java.lang.String" value="Projekt p&#xe5; min avdelning"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnS&#xf6;kProjektActionPerformed"/>
@@ -156,11 +159,11 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="btnÄndraProjektUppgifter" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="btnHanterHandläggare" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="btnManagePartners" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="btnHanterHandläggare" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="26" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -186,6 +189,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Hantera partners"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnManagePartnersActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -234,7 +240,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnVisaProjektland">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Visa projektland"/>
+            <Property name="text" type="java.lang.String" value="Visa projektland (L&#xc5;G)"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnVisaProjektlandActionPerformed"/>
@@ -250,6 +256,11 @@
     <Component class="javax.swing.JLabel" name="lblEfternamn">
       <Properties>
         <Property name="text" type="java.lang.String" value="efternamn"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButton1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="partners"/>
       </Properties>
     </Component>
   </SubComponents>
