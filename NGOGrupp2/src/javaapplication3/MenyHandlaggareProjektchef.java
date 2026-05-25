@@ -202,7 +202,7 @@ public class MenyHandlaggareProjektchef extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnMinaProjektActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMinaProjektActionPerformed
-        new ProjektHandlaggare().setVisible(true);
+        //new ProjektHandlaggare().setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnMinaProjektActionPerformed
 
@@ -218,7 +218,7 @@ public class MenyHandlaggareProjektchef extends javax.swing.JFrame {
 
     private void btnSökProjektActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSökProjektActionPerformed
 
-        new ProjektSokHandlaggareAdmin().setVisible(true);
+        //new ProjektSokHandlaggareAdmin().setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnSökProjektActionPerformed
 
