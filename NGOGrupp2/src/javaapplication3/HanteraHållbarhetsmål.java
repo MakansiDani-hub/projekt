@@ -6,85 +6,19 @@ package javaapplication3;
 
 /**
  *
- * @author Kristoffer Kolkowski
+ * @author Krist
  */
-import oru.inf.InfDB;
-import oru.inf.InfException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.JOptionPane;
-
 public class HanteraHållbarhetsmål extends javax.swing.JFrame {
     
-    private InfDB idb; 
-    private DefaultTableModel bordsModell;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(HanteraHållbarhetsmål.class.getName());
 
     /**
      * Creates new form HanteraHållbarhetsmål
      */
-    public HanteraHållbarhetsmål(InfDB idb) {
-        this.idb = idb;
+    public HanteraHållbarhetsmål() {
         initComponents();
-        
-        // Kopplar JTable till en hanterbar modell och sätter kolumnnamn
-        bordsModell = (DefaultTableModel) JTableHallberhetsmal.getModel();
-        bordsModell.setColumnIdentifiers(new Object[]{"hid", "Namn", "Målnummer", "Beskrivning", "Prioritet"});
-        
-        // Hämtar data automatiskt vid uppstart
-        laddaHållbarhetsmål();
-        
-        JTableHallberhetsmal.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                // Ta reda på vilken rad användaren klickade på
-                int valdRad = JTableHallberhetsmal.getSelectedRow();
-                
-                // kollar om en rad är vald Om en rad faktiskt är valdr
-                if (valdRad >= 0) {
-                    // Hämtar datan från kolumnerna på den valda raden
-                    String id = bordsModell.getValueAt(valdRad, 0).toString();
-                    String namn = bordsModell.getValueAt(valdRad, 1).toString();
-                    String malnr = bordsModell.getValueAt(valdRad, 2).toString();
-                    String beskrivning = bordsModell.getValueAt(valdRad, 3).toString();
-                    String prioritet = bordsModell.getValueAt(valdRad, 4).toString();
-                    
-                    // Sätter in datan i JTextFields
-                    JTxtFieldHID.setText(id);
-                    JTxtFieldNamn.setText(namn);
-                    JTxtFieldMalNr.setText(malnr);
-                    JTxtFieldBeskrivning.setText(beskrivning);
-                    JTxtFieldPrioritet.setText(prioritet);
-                }
-            }
-        });
     }
 
-    private void laddaHållbarhetsmål() {
-        bordsModell.setRowCount(0); // Tömmer testrader
-        
-        // sqlfråga
-        String fråga = "SELECT hid, namn, malnummer, beskrivning, prioritet FROM hallbarhetsmal";
-        
-        try {
-            ArrayList<HashMap<String, String>> rader = idb.fetchRows(fråga);
-            
-            if (rader != null) {
-                for (HashMap<String, String> rad : rader) {
-                    bordsModell.addRow(new Object[]{
-                        rad.get("hid"),
-                        rad.get("namn"),
-                        rad.get("malnummer"),
-                        rad.get("beskrivning"),
-                        rad.get("prioritet")
-                    });
-                }
-            }
-        } catch (InfException e) {
-            JOptionPane.showMessageDialog(this, "Kunde inte ladda data: " + e.getMessage());
-        }
-    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -94,6 +28,7 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        JBtnLaggTillHallbarhetsmal = new javax.swing.JButton();
         JLblRubrik = new javax.swing.JLabel();
         JPanelHållbarhetsmål = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -108,11 +43,12 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
         JTxtFieldMalNr = new javax.swing.JTextField();
         JTxtFieldBeskrivning = new javax.swing.JTextField();
         JTxtFieldPrioritet = new javax.swing.JTextField();
-        JBtnLaggTillHallbarhetsmal = new javax.swing.JButton();
         JBtnAndraHallbarhetsmal = new javax.swing.JButton();
         JBtnTaBortHallbarhetsmal = new javax.swing.JButton();
         JPanelProjektMotMal = new javax.swing.JPanel();
-        JBtnTillbakaTillMeny = new javax.swing.JButton();
+        lblTillbakaTillMeny = new javax.swing.JButton();
+
+        JBtnLaggTillHallbarhetsmal.setText("Lägg till");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -144,14 +80,19 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
 
         JLblPrioritet.setText("Prioritet");
 
-        JBtnLaggTillHallbarhetsmal.setText("Lägg till");
-        JBtnLaggTillHallbarhetsmal.addActionListener(this::JBtnLaggTillHallbarhetsmalActionPerformed);
+        JTxtFieldHID.setText("[HID]");
+
+        JTxtFieldNamn.setText("[Namn]");
+
+        JTxtFieldMalNr.setText("[Malnummer]");
+
+        JTxtFieldBeskrivning.setText("[Berskrivning]");
+
+        JTxtFieldPrioritet.setText("[Prioritet]");
 
         JBtnAndraHallbarhetsmal.setText("Ändra");
-        JBtnAndraHallbarhetsmal.addActionListener(this::JBtnAndraHallbarhetsmalActionPerformed);
 
         JBtnTaBortHallbarhetsmal.setText("Ta bort");
-        JBtnTaBortHallbarhetsmal.addActionListener(this::JBtnTaBortHallbarhetsmalActionPerformed);
 
         javax.swing.GroupLayout JPanelHållbarhetsmålLayout = new javax.swing.GroupLayout(JPanelHållbarhetsmål);
         JPanelHållbarhetsmål.setLayout(JPanelHållbarhetsmålLayout);
@@ -166,8 +107,7 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
                     .addComponent(JLblNamn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(JLblMalNr, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(JLblBeskrivning, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(JLblPrioritet, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(JBtnLaggTillHallbarhetsmal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(JLblPrioritet, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(JPanelHållbarhetsmålLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(JTxtFieldHID)
@@ -208,7 +148,6 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
                             .addComponent(JTxtFieldPrioritet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(JPanelHållbarhetsmålLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(JBtnLaggTillHallbarhetsmal, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
                             .addComponent(JBtnAndraHallbarhetsmal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(JBtnTaBortHallbarhetsmal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
         );
@@ -226,7 +165,8 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
             .addGap(0, 193, Short.MAX_VALUE)
         );
 
-        JBtnTillbakaTillMeny.setText("Tillbaka Till Meny");
+        lblTillbakaTillMeny.setText("Tillbaka till Meny");
+        lblTillbakaTillMeny.addActionListener(this::lblTillbakaTillMenyActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -235,147 +175,75 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(JBtnTillbakaTillMeny)
-                                .addGap(140, 140, 140)
+                                .addGap(269, 269, 269)
                                 .addComponent(JLblRubrik))
-                            .addComponent(JPanelHållbarhetsmål, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(JPanelHållbarhetsmål, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(JPanelProjektMotMal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(347, 347, 347)
+                    .addComponent(lblTillbakaTillMeny)
+                    .addContainerGap(348, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(JLblRubrik)
-                    .addComponent(JBtnTillbakaTillMeny))
+                .addComponent(JLblRubrik)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(JPanelHållbarhetsmål, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(JPanelProjektMotMal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(246, 246, 246)
+                    .addComponent(lblTillbakaTillMeny)
+                    .addContainerGap(246, Short.MAX_VALUE)))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void JBtnLaggTillHallbarhetsmalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnLaggTillHallbarhetsmalActionPerformed
+    private void lblTillbakaTillMenyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblTillbakaTillMenyActionPerformed
+        //l'gg till
+    }//GEN-LAST:event_lblTillbakaTillMenyActionPerformed
 
-    //  Hämtar texten som användaren skrivit in i textfälten
-        String id = JTxtFieldHID.getText().trim();
-        String namn = JTxtFieldNamn.getText().trim();
-        String malnr = JTxtFieldMalNr.getText().trim();
-        String beskrivning = JTxtFieldBeskrivning.getText().trim();
-        String prioritet = JTxtFieldPrioritet.getText().trim();
-
-        //  Validering, Kontrollerar att användaren inte har glömt att fylla i något fält
-        if (id.isEmpty() || namn.isEmpty() || malnr.isEmpty() || beskrivning.isEmpty() || prioritet.isEmpty() ||
-            id.equals("[HID]") || namn.equals("[Namn]") || malnr.equals("[Malnummer]")) {
-            
-            JOptionPane.showMessageDialog(this, "Vänligen fyll i alla fält innan du lägger till");
-            return; // Avbryter metoden om något saknas
-        }
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
         try {
-            // Sqlfråga
-            String sqlFråga = "INSERT INTO hallbarhetsmal (hid, namn, malnummer, beskrivning, prioritet) " +
-                  "VALUES ('" + id + "', '" + namn + "', '" + malnr + "', '" + beskrivning + "', '" + prioritet + "')";
-
-            //  Skickar frågan till databasen
-            idb.insert(sqlFråga);
-
-            //  Meddelar användaren att hållbarhetsmålet har lagts till
-            JOptionPane.showMessageDialog(this, "Hållbarhetsmålet har lagts till!");
-
-            //  Uppdaterar tabellen på skärmen så att det nya målet syns
-            laddaHållbarhetsmål();
-
-            // 
-            JTxtFieldHID.setText("");
-            JTxtFieldNamn.setText("");
-            JTxtFieldMalNr.setText("");
-            JTxtFieldBeskrivning.setText("");
-            JTxtFieldPrioritet.setText("");
-
-        } catch (InfException e) {
-            JOptionPane.showMessageDialog(this, "Kunde inte lägga till målet. Kontrollera att HID inte redan finns.\nFelmeddelande: " + e.getMessage());
-        }
-    }//GEN-LAST:event_JBtnLaggTillHallbarhetsmalActionPerformed
-
-    private void JBtnAndraHallbarhetsmalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnAndraHallbarhetsmalActionPerformed
-        String id = JTxtFieldHID.getText().trim();
-        String namn = JTxtFieldNamn.getText().trim();
-        String malnr = JTxtFieldMalNr.getText().trim();
-        String beskrivning = JTxtFieldBeskrivning.getText().trim();
-        String prioritet = JTxtFieldPrioritet.getText().trim();
-
-        // Kontrollerar att ett hid är ifyllt
-        if (id.isEmpty() || id.equals("[HID]")) {
-            JOptionPane.showMessageDialog(this, "Välj ett hållbarhetsmål i tabellen att ändra.");
-            return;
-        }
-
-        try {
-            // SQLfråga för att uppdatera alla fält baserat på hid
-            String sqlFråga = "UPDATE hallbarhetsmal SET " +
-                              "namn = '" + namn + "', " +
-                              "malnummer = '" + malnr + "', " +
-                              "beskrivning = '" + beskrivning + "', " +
-                              "prioritet = '" + prioritet + "' " +
-                              "WHERE hid = '" + id + "'";
-
-            idb.update(sqlFråga);
-            JOptionPane.showMessageDialog(this, "Hållbarhetsmålet har uppdateras!");
-            
-            laddaHållbarhetsmål(); // Laddar om tabellen
-        } catch (InfException e) {
-            JOptionPane.showMessageDialog(this, "Kunde inte uppdatera hållbarhetsmålet: " + e.getMessage());
-        }
-    }//GEN-LAST:event_JBtnAndraHallbarhetsmalActionPerformed
-
-    private void JBtnTaBortHallbarhetsmalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnTaBortHallbarhetsmalActionPerformed
-        
-        String id = JTxtFieldHID.getText().trim();
-
-        if (id.isEmpty() || id.equals("[HID]")) {
-            JOptionPane.showMessageDialog(this, "Välj ett hållbarhetsmål i tabellen att ta bort.");
-            return;
-        }
-
-        // En kontroll så användaren inte råkar ta bort fel hållbarhetsmål
-        int svar = JOptionPane.showConfirmDialog(this, "Är du säker på att du vill ta bort hållbarhetsmål med hid " + id + "?", "Bekräfta borttagning", JOptionPane.YES_NO_OPTION);
-        
-        if (svar == JOptionPane.YES_OPTION) {
-            try {
-                String sqlFråga = "DELETE FROM hallbarhetsmal WHERE hid = '" + id + "'";
-                idb.delete(sqlFråga);
-                
-                JOptionPane.showMessageDialog(this, "Hållbarhetsmålet har tagits bort.");
-                
-                // Rensar fälten efter borttagning
-                JTxtFieldHID.setText("");
-                JTxtFieldNamn.setText("");
-                JTxtFieldMalNr.setText("");
-                JTxtFieldBeskrivning.setText("");
-                JTxtFieldPrioritet.setText("");
-                
-                laddaHållbarhetsmål(); // Laddar om tabellen
-            } catch (InfException e) {
-                JOptionPane.showMessageDialog(this, "Kunde inte ta bort målet: " + e.getMessage());
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
             }
+        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
+            logger.log(java.util.logging.Level.SEVERE, null, ex);
         }
-        
-    }//GEN-LAST:event_JBtnTaBortHallbarhetsmalActionPerformed
-    
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(() -> new HanteraHållbarhetsmål().setVisible(true));
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton JBtnAndraHallbarhetsmal;
     private javax.swing.JButton JBtnLaggTillHallbarhetsmal;
     private javax.swing.JButton JBtnTaBortHallbarhetsmal;
-    private javax.swing.JButton JBtnTillbakaTillMeny;
     private javax.swing.JLabel JLblBeskrivning;
     private javax.swing.JLabel JLblLID;
     private javax.swing.JLabel JLblMalNr;
@@ -391,21 +259,6 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
     private javax.swing.JTextField JTxtFieldNamn;
     private javax.swing.JTextField JTxtFieldPrioritet;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton lblTillbakaTillMeny;
     // End of variables declaration//GEN-END:variables
-
-    //Tillfällig main metod för att kunna provköra klassen
-    public static void main(String args[]) {
-        try {
-            // upprättar anslutning mot mot sql-servern
-            InfDB testDb = new InfDB("sdgsweden", "3306", "root", "masterkey"); 
-            
-            java.awt.EventQueue.invokeLater(new Runnable() {
-                public void run() {
-                    new HanteraHållbarhetsmål(testDb).setVisible(true);
-                }
-            });
-        } catch (InfException e) {
-            System.out.println("Kunde inte ansluta till MySQL-servern: " + e.getMessage());
-        }
-    }
 }
