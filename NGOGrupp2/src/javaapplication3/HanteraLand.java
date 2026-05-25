@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author Krist
+ * @author Kristoffer Kolkowski
  */
 
     public class HanteraLand extends javax.swing.JFrame {
