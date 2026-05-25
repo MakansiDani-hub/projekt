@@ -401,13 +401,13 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         pnlHoger.setLayout(new javax.swing.BoxLayout(pnlHoger, javax.swing.BoxLayout.Y_AXIS));
 
         jPanel8.setMaximumSize(new java.awt.Dimension(32767, 30));
-        jPanel8.setPreferredSize(new java.awt.Dimension(456, 30));
+        jPanel8.setPreferredSize(new java.awt.Dimension(456, 35));
 
         btnDeltagare.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnDeltagare.setLabel("▼ Deltagare");
         btnDeltagare.setMaximumSize(new java.awt.Dimension(200, 160));
         btnDeltagare.setMinimumSize(new java.awt.Dimension(93, 30));
-        btnDeltagare.setPreferredSize(new java.awt.Dimension(93, 30));
+        btnDeltagare.setPreferredSize(new java.awt.Dimension(93, 35));
         btnDeltagare.addActionListener(this::btnDeltagareActionPerformed);
 
         lblDeltagareTips.setForeground(new java.awt.Color(204, 204, 0));
@@ -428,7 +428,7 @@ public class ProjektProjektchef extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnDeltagare, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnDeltagare, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblDeltagareTips)))
         );
 
@@ -649,7 +649,6 @@ public class ProjektProjektchef extends javax.swing.JFrame {
                         .addComponent(lblAvslutad)
                         .addGap(19, 19, 19))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlTopLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblStartar)
                         .addGap(20, 20, 20)))
                 .addGroup(pnlTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
