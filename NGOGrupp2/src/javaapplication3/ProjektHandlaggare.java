@@ -106,6 +106,7 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
         spnlTop.setPreferredSize(new java.awt.Dimension(730, 577));
 
         pnlTop.setMaximumSize(new java.awt.Dimension(700, 2000));
+        pnlTop.setPreferredSize(new java.awt.Dimension(764, 516));
 
         lblPid.setText("Projektid: [pid]");
         lblPid.setMaximumSize(new java.awt.Dimension(150, 16));
@@ -445,13 +446,13 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
+                .addComponent(pnlAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlHandlaggare, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)
+                .addComponent(pnlHandlaggare, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
                 .addGap(26, 26, 26))
         );
 
@@ -479,7 +480,7 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
-                .addGap(0, 11, Short.MAX_VALUE)
+                .addGap(0, 7, Short.MAX_VALUE)
                 .addComponent(btnPartnersPopup, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -490,7 +491,7 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
         spnlPartners.setMinimumSize(new java.awt.Dimension(16, 100));
         spnlPartners.setPreferredSize(new java.awt.Dimension(375, 100));
 
-        pnlPartners.setMaximumSize(null);
+        pnlPartners.setMaximumSize(new java.awt.Dimension(350, 1000));
         pnlPartners.setMinimumSize(new java.awt.Dimension(350, 60));
         pnlPartners.setPreferredSize(new java.awt.Dimension(350, 60));
         pnlPartners.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
@@ -610,7 +611,7 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(spnlTop, javax.swing.GroupLayout.PREFERRED_SIZE, 757, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 6, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
