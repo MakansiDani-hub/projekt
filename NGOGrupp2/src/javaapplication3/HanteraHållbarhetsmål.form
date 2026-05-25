@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
-  <NonVisualComponents>
-    <Component class="javax.swing.JButton" name="JBtnLaggTillHallbarhetsmal">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="L&#xe4;gg till"/>
-      </Properties>
-    </Component>
-  </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
   </Properties>
@@ -33,15 +26,14 @@
           <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <EmptySpace min="-2" pref="269" max="-2" attributes="0"/>
+                              <Component id="JBtnTillbakaTillMeny" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="140" max="-2" attributes="0"/>
                               <Component id="JLblRubrik" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="JPanelHållbarhetsmål" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="JPanelHållbarhetsmål" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
@@ -49,32 +41,21 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
-          <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="347" max="-2" attributes="0"/>
-                  <Component id="lblTillbakaTillMeny" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="348" max="32767" attributes="0"/>
-              </Group>
-          </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="JLblRubrik" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="JLblRubrik" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="JBtnTillbakaTillMeny" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="JPanelHållbarhetsmål" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="JPanelProjektMotMal" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
-          </Group>
-          <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="246" max="-2" attributes="0"/>
-                  <Component id="lblTillbakaTillMeny" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="246" max="32767" attributes="0"/>
-              </Group>
           </Group>
       </Group>
     </DimensionLayout>
@@ -112,6 +93,7 @@
                       <Component id="JLblMalNr" alignment="0" max="32767" attributes="0"/>
                       <Component id="JLblBeskrivning" alignment="0" max="32767" attributes="0"/>
                       <Component id="JLblPrioritet" alignment="0" max="32767" attributes="0"/>
+                      <Component id="JBtnLaggTillHallbarhetsmal" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -161,6 +143,7 @@
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="JBtnLaggTillHallbarhetsmal" pref="33" max="32767" attributes="0"/>
                               <Component id="JBtnAndraHallbarhetsmal" max="32767" attributes="0"/>
                               <Component id="JBtnTaBortHallbarhetsmal" max="32767" attributes="0"/>
                           </Group>
@@ -218,39 +201,38 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="JTxtFieldHID">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="[HID]"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="JTxtFieldNamn">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="[Namn]"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="JTxtFieldMalNr">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="[Malnummer]"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="JTxtFieldBeskrivning">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="[Berskrivning]"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="JTxtFieldPrioritet">
+        </Component>
+        <Component class="javax.swing.JButton" name="JBtnLaggTillHallbarhetsmal">
           <Properties>
-            <Property name="text" type="java.lang.String" value="[Prioritet]"/>
+            <Property name="text" type="java.lang.String" value="L&#xe4;gg till"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JBtnLaggTillHallbarhetsmalActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="JBtnAndraHallbarhetsmal">
           <Properties>
             <Property name="text" type="java.lang.String" value="&#xc4;ndra"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JBtnAndraHallbarhetsmalActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="JBtnTaBortHallbarhetsmal">
           <Properties>
             <Property name="text" type="java.lang.String" value="Ta bort"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JBtnTaBortHallbarhetsmalActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -278,13 +260,10 @@
         </DimensionLayout>
       </Layout>
     </Container>
-    <Component class="javax.swing.JButton" name="lblTillbakaTillMeny">
+    <Component class="javax.swing.JButton" name="JBtnTillbakaTillMeny">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Tillbaka till Meny"/>
+        <Property name="text" type="java.lang.String" value="Tillbaka Till Meny"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="lblTillbakaTillMenyActionPerformed"/>
-      </Events>
     </Component>
   </SubComponents>
 </Form>

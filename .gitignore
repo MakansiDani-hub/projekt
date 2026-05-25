@@ -10,7 +10,7 @@ build/
 dist/
 
 # NetBeans
-NGOGrupp2/nbproject/private/
+nbproject/private/
 
 # Common
 .DS_Store
