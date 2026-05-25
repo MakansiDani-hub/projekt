@@ -41,16 +41,16 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
                 // Ta reda på vilken rad användaren klickade på
                 int valdRad = JTableHallberhetsmal.getSelectedRow();
                 
-                // kollar om en rad är vald Om en rad faktiskt är valdr
+                //  Om en rad faktiskt är valdr
                 if (valdRad >= 0) {
-                    // Hämtar datan från kolumnerna på den valda raden
+                    // 3. Hämtar datan från kolumnerna på den valda raden
                     String id = bordsModell.getValueAt(valdRad, 0).toString();
                     String namn = bordsModell.getValueAt(valdRad, 1).toString();
                     String malnr = bordsModell.getValueAt(valdRad, 2).toString();
                     String beskrivning = bordsModell.getValueAt(valdRad, 3).toString();
                     String prioritet = bordsModell.getValueAt(valdRad, 4).toString();
                     
-                    // Sätter in datan i JTextFields
+                    // 4. Sätter in datan i JTextFields
                     JTxtFieldHID.setText(id);
                     JTxtFieldNamn.setText(namn);
                     JTxtFieldMalNr.setText(malnr);
@@ -323,14 +323,14 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
     private void JBtnLaggTillHallbarhetsmalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnLaggTillHallbarhetsmalActionPerformed
 >>>>>>> Kristoffers-branch
 
-    //  Hämtar texten som användaren skrivit in i textfälten
+    // 1. Hämtar texten som användaren skrivit in i textfälten
         String id = JTxtFieldHID.getText().trim();
         String namn = JTxtFieldNamn.getText().trim();
         String malnr = JTxtFieldMalNr.getText().trim();
         String beskrivning = JTxtFieldBeskrivning.getText().trim();
         String prioritet = JTxtFieldPrioritet.getText().trim();
 
-        //  Validering, Kontrollerar att användaren inte har glömt att fylla i något fält
+        // 2. Validering, Kontrollerar att användaren inte har glömt att fylla i något fält
         if (id.isEmpty() || namn.isEmpty() || malnr.isEmpty() || beskrivning.isEmpty() || prioritet.isEmpty() ||
             id.equals("[HID]") || namn.equals("[Namn]") || malnr.equals("[Malnummer]")) {
             
@@ -342,13 +342,13 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
             String sqlFråga = "INSERT INTO hallbarhetsmal (hid, namn, malnummer, beskrivning, prioritet) " +
                   "VALUES ('" + id + "', '" + namn + "', '" + malnr + "', '" + beskrivning + "', '" + prioritet + "')";
 
-            //  Skickar frågan till databasen
+            // 4. Skickar frågan till databasen
             idb.insert(sqlFråga);
 
-            //  Meddelar användaren att hållbarhetsmålet har lagts till
+            // 5. Meddelar användaren att hållbarhetsmålet har lagts till
             JOptionPane.showMessageDialog(this, "Hållbarhetsmålet har lagts till!");
 
-            //  Uppdaterar tabellen på skärmen så att det nya målet syns
+            // 6. Uppdaterar tabellen på skärmen så att det nya målet syns
             laddaHållbarhetsmål();
 
             // 
