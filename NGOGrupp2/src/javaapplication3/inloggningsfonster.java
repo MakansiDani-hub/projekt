@@ -159,7 +159,7 @@ public class inloggningsfonster extends javax.swing.JFrame {
                         new AdministratörMeny().setVisible(true);
                     } 
                     else if (behorighetsniva.equals("2")) {
-                        new AdministratorMeny2().setVisible(true); // byt namn 
+                        //new AdministratorMeny2().setVisible(true); // byt namn 
                     }
 
                 } 
