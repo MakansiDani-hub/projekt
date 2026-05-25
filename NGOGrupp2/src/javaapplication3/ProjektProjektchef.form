@@ -94,37 +94,34 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jButton8" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
-                              <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblPid" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
+                      <Component id="pnlProjektnamn" min="-2" pref="623" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <EmptySpace min="-2" pref="312" max="-2" attributes="0"/>
-                                      <Component id="lblStartar" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="lblAvslutad" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="pnlSlutDatum" pref="134" max="32767" attributes="0"/>
-                                  <Component id="pnlStartDatum" max="32767" attributes="0"/>
-                              </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="lblAvslutad" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="-2" pref="120" max="-2" attributes="0"/>
-                              <Component id="txtfProjektnamn" min="-2" pref="509" max="-2" attributes="0"/>
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="lblStartar" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="pnlSlutDatum" max="32767" attributes="0"/>
+                          <Component id="pnlStartDatum" min="-2" pref="134" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="280" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -134,39 +131,42 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jButton8" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="txtfProjektnamn" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="lblStartar" min="-2" max="-2" attributes="0"/>
-                                  <Component id="pnlStartDatum" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" max="-2" attributes="0"/>
-                              <Component id="pnlSlutDatum" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
-                              <Component id="lblAvslutad" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="lblPid" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="pnlProjektnamn" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                              <Component id="pnlStartDatum" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="pnlSlutDatum" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                              <Component id="lblStartar" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="lblAvslutad" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="pnlVanster" max="-2" attributes="0"/>
                           <Component id="pnlHoger" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="66" max="32767" attributes="0"/>
+                      <EmptySpace pref="254" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JLabel" name="jLabel2">
+            <Component class="javax.swing.JLabel" name="lblPid">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Projektid: [pid]"/>
+                <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[150, 16]"/>
+                </Property>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lblStartar">
@@ -195,9 +195,6 @@
                 <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[200, 260]"/>
                 </Property>
-                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="null"/>
-                </Property>
               </Properties>
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout">
@@ -223,8 +220,8 @@
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="btnMal" min="-2" pref="149" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="btnMal" min="-2" pref="137" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="lblMalTips" min="-2" pref="114" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="31" max="32767" attributes="0"/>
                           </Group>
@@ -247,7 +244,7 @@
                         <Property name="text" type="java.lang.String" value="&#x25b6; H&#xe5;llbarhetsm&#xe5;l"/>
                         <Property name="horizontalAlignment" type="int" value="2"/>
                         <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[86, 23]"/>
+                          <Dimension value="[160, 160]"/>
                         </Property>
                         <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                           <Dimension value="[86, 23]"/>
@@ -313,29 +310,6 @@
                         <Property name="alignment" type="int" value="0"/>
                       </Layout>
                       <SubComponents>
-                        <Component class="javax.swing.JButton" name="jButton27">
-                          <Properties>
-                            <Property name="text" type="java.lang.String" value="[H&#xe5;llbarhetsm&#xe5;l]"/>
-                          </Properties>
-                          <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton27ActionPerformed"/>
-                          </Events>
-                        </Component>
-                        <Component class="javax.swing.JButton" name="jButton28">
-                          <Properties>
-                            <Property name="text" type="java.lang.String" value="[H&#xe5;llbarhetsm&#xe5;l]"/>
-                          </Properties>
-                        </Component>
-                        <Component class="javax.swing.JButton" name="jButton30">
-                          <Properties>
-                            <Property name="text" type="java.lang.String" value="[H&#xe5;llbarhetsm&#xe5;l]"/>
-                          </Properties>
-                        </Component>
-                        <Component class="javax.swing.JButton" name="jButton31">
-                          <Properties>
-                            <Property name="text" type="java.lang.String" value="[H&#xe5;llbarhetsm&#xe5;l]"/>
-                          </Properties>
-                        </Component>
                         <Component class="javax.swing.JButton" name="btnAddMal">
                           <Properties>
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -383,8 +357,8 @@
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="btnBeskrivning" min="-2" pref="144" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="156" max="32767" attributes="0"/>
+                              <Component id="btnBeskrivning" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="175" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -407,7 +381,7 @@
                           <Insets value="[0, 0, 0, 14]"/>
                         </Property>
                         <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[123, 30]"/>
+                          <Dimension value="[160, 160]"/>
                         </Property>
                         <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                           <Dimension value="[123, 30]"/>
@@ -450,14 +424,11 @@
                           <Dimension value="[220, 100]"/>
                         </Property>
                         <Property name="name" type="java.lang.String" value="" noResource="true"/>
-                        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="null"/>
-                        </Property>
                       </Properties>
 
                       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
                       <SubComponents>
-                        <Component class="javax.swing.JTextArea" name="txarBesrkivning">
+                        <Component class="javax.swing.JTextArea" name="txarBeskrivning">
                           <Properties>
                             <Property name="columns" type="int" value="5"/>
                             <Property name="lineWrap" type="boolean" value="true"/>
@@ -497,29 +468,30 @@
                       <Dimension value="[310, 32]"/>
                     </Property>
                     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                      <Dimension value="[200, 32]"/>
+                      <Dimension value="[200, 36]"/>
                     </Property>
                   </Properties>
 
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
                               <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="44" max="32767" attributes="0"/>
-                              <Component id="jButton12" min="-2" pref="172" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
+                              <Component id="btnLand" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="jLabel12" alignment="3" min="-2" pref="21" max="-2" attributes="0"/>
-                                  <Component id="jButton12" alignment="3" min="-2" pref="21" max="-2" attributes="0"/>
+                                  <Component id="btnLand" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel12" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -530,7 +502,7 @@
                         <Property name="text" type="java.lang.String" value="Land"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JButton" name="jButton12">
+                    <Component class="javax.swing.JButton" name="btnLand">
                       <Properties>
                         <Property name="text" type="java.lang.String" value=" [Land]"/>
                         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -543,14 +515,17 @@
                           <Insets value="[0, 0, 0, 0]"/>
                         </Property>
                         <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[100, 23]"/>
+                          <Dimension value="[180, 30]"/>
+                        </Property>
+                        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                          <Dimension value="[43, 30]"/>
                         </Property>
                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[100, 23]"/>
+                          <Dimension value="[50, 30]"/>
                         </Property>
                       </Properties>
                       <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton12ActionPerformed"/>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLandActionPerformed"/>
                       </Events>
                     </Component>
                   </SubComponents>
@@ -566,26 +541,26 @@
                       <Dimension value="[310, 32]"/>
                     </Property>
                     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                      <Dimension value="[200, 32]"/>
+                      <Dimension value="[200, 36]"/>
                     </Property>
                   </Properties>
 
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
                               <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
-                              <Component id="jTextField1" min="-2" pref="104" max="-2" attributes="0"/>
+                              <Component id="txtfStatus" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="103" groupAlignment="3" attributes="0">
+                          <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                               <Component id="jLabel13" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
-                              <Component id="jTextField1" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                              <Component id="txtfStatus" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -596,12 +571,23 @@
                         <Property name="text" type="java.lang.String" value="Status"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="jTextField1">
+                    <Component class="javax.swing.JTextField" name="txtfStatus">
                       <Properties>
+                        <Property name="editable" type="boolean" value="false"/>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="df" green="d9" red="d4" type="rgb"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="[Status]"/>
+                        <Property name="focusable" type="boolean" value="false"/>
+                        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                          <Dimension value="[160, 30]"/>
+                        </Property>
+                        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                          <Dimension value="[45, 30]"/>
+                        </Property>
+                        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                          <Dimension value="[60, 30]"/>
+                        </Property>
                       </Properties>
                     </Component>
                   </SubComponents>
@@ -617,26 +603,26 @@
                       <Dimension value="[310, 32]"/>
                     </Property>
                     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                      <Dimension value="[200, 32]"/>
+                      <Dimension value="[200, 36]"/>
                     </Property>
                   </Properties>
 
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
                               <Component id="jLabel15" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
-                              <Component id="jTextField2" min="-2" pref="104" max="-2" attributes="0"/>
+                              <Component id="txtfPrioritet" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="103" groupAlignment="3" attributes="0">
+                          <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                               <Component id="jLabel15" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
-                              <Component id="jTextField2" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                              <Component id="txtfPrioritet" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -647,16 +633,24 @@
                         <Property name="text" type="java.lang.String" value="Prioritet"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="jTextField2">
+                    <Component class="javax.swing.JTextField" name="txtfPrioritet">
                       <Properties>
+                        <Property name="editable" type="boolean" value="false"/>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="df" green="d9" red="d4" type="rgb"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="[Prioritet]"/>
+                        <Property name="focusable" type="boolean" value="false"/>
+                        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                          <Dimension value="[185, 30]"/>
+                        </Property>
+                        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                          <Dimension value="[45, 30]"/>
+                        </Property>
+                        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                          <Dimension value="[70, 30]"/>
+                        </Property>
                       </Properties>
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField2ActionPerformed"/>
-                      </Events>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -671,26 +665,26 @@
                       <Dimension value="[310, 32]"/>
                     </Property>
                     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                      <Dimension value="[200, 32]"/>
+                      <Dimension value="[200, 36]"/>
                     </Property>
                   </Properties>
 
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
                               <Component id="jLabel17" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                              <Component id="jTextField3" min="-2" pref="149" max="-2" attributes="0"/>
+                              <Component id="txtfKostnad" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="103" groupAlignment="3" attributes="0">
+                          <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                               <Component id="jLabel17" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
-                              <Component id="jTextField3" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                              <Component id="txtfKostnad" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -701,12 +695,23 @@
                         <Property name="text" type="java.lang.String" value="Kostnad"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="jTextField3">
+                    <Component class="javax.swing.JTextField" name="txtfKostnad">
                       <Properties>
+                        <Property name="editable" type="boolean" value="false"/>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="df" green="d9" red="d4" type="rgb"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="[Kostnad]"/>
+                        <Property name="focusable" type="boolean" value="false"/>
+                        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                          <Dimension value="[200, 30]"/>
+                        </Property>
+                        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                          <Dimension value="[64, 30]"/>
+                        </Property>
+                        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                          <Dimension value="[70, 30]"/>
+                        </Property>
                       </Properties>
                     </Component>
                   </SubComponents>
@@ -714,11 +719,6 @@
               </SubComponents>
             </Container>
             <Container class="javax.swing.JPanel" name="pnlHoger">
-              <Properties>
-                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="null"/>
-                </Property>
-              </Properties>
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout">
                 <Property name="axis" type="int" value="1"/>
@@ -727,10 +727,10 @@
                 <Container class="javax.swing.JPanel" name="jPanel8">
                   <Properties>
                     <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                      <Dimension value="[32767, 27]"/>
+                      <Dimension value="[32767, 30]"/>
                     </Property>
                     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                      <Dimension value="[456, 27]"/>
+                      <Dimension value="[456, 30]"/>
                     </Property>
                   </Properties>
 
@@ -738,29 +738,20 @@
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="btnDeltagare" min="-2" pref="123" max="-2" attributes="0"/>
-                              <EmptySpace pref="253" max="32767" attributes="0"/>
-                          </Group>
-                          <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="145" max="-2" attributes="0"/>
-                                  <Component id="lblDeltagareTips" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="130" max="32767" attributes="0"/>
-                              </Group>
+                              <Component id="btnDeltagare" min="-2" pref="106" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
+                              <Component id="lblDeltagareTips" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="132" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace min="0" pref="1" max="32767" attributes="0"/>
-                              <Component id="btnDeltagare" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="1" attributes="0">
-                                  <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="lblDeltagareTips" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="btnDeltagare" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
+                                  <Component id="lblDeltagareTips" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -772,13 +763,13 @@
                         <Property name="horizontalAlignment" type="int" value="2"/>
                         <Property name="label" type="java.lang.String" value="&#x25bc; Deltagare"/>
                         <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[93, 27]"/>
+                          <Dimension value="[200, 160]"/>
                         </Property>
                         <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[93, 27]"/>
+                          <Dimension value="[93, 30]"/>
                         </Property>
                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[93, 27]"/>
+                          <Dimension value="[93, 30]"/>
                         </Property>
                       </Properties>
                       <Events>
@@ -829,35 +820,25 @@
                       <Layout>
                         <DimensionLayout dim="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Component id="jPanel3" pref="358" max="32767" attributes="0"/>
+                              <Component id="pnlAdmin" alignment="0" max="32767" attributes="0"/>
+                              <Group type="102" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Component id="jPanel2" max="32767" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="1" attributes="0">
                                   <Group type="103" groupAlignment="1" attributes="0">
-                                      <Group type="102" attributes="0">
-                                          <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="jSeparator2" alignment="0" max="32767" attributes="0"/>
+                                      <Group type="102" alignment="0" attributes="0">
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Component id="jLabel9" alignment="0" min="-2" max="-2" attributes="0"/>
                                               <Component id="jLabel8" alignment="0" min="-2" max="-2" attributes="0"/>
                                               <Component id="jLabel7" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              <Group type="102" alignment="0" attributes="0">
-                                                  <Component id="jButton3" min="-2" pref="72" max="-2" attributes="0"/>
-                                                  <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
-                                                  <Component id="btnAddProjektchef" min="-2" max="-2" attributes="0"/>
-                                              </Group>
                                           </Group>
-                                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                          <EmptySpace min="0" pref="261" max="32767" attributes="0"/>
                                       </Group>
-                                      <Component id="jSeparator1" alignment="1" max="32767" attributes="0"/>
-                                      <Component id="jSeparator2" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="jSeparator1" alignment="0" max="32767" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                               </Group>
+                              <Component id="pnlHandlaggare" alignment="0" pref="364" max="32767" attributes="0"/>
+                              <Component id="pnlProjektchef" alignment="0" max="32767" attributes="0"/>
                           </Group>
                         </DimensionLayout>
                         <DimensionLayout dim="1">
@@ -865,30 +846,21 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" attributes="0">
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="jButton3" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
-                                          <Component id="jSeparator1" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="jPanel2" pref="73" max="32767" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="jSeparator2" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="jPanel3" pref="73" max="32767" attributes="0"/>
-                                          <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
-                                          <Component id="btnAddProjektchef" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace max="32767" attributes="0"/>
-                                      </Group>
-                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="pnlProjektchef" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
+                                  <Component id="jSeparator1" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="pnlAdmin" pref="75" max="32767" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jSeparator2" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="pnlHandlaggare" pref="75" max="32767" attributes="0"/>
+                                  <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -899,14 +871,6 @@
                             <Property name="text" type="java.lang.String" value="Projektchef"/>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JButton" name="jButton3">
-                          <Properties>
-                            <Property name="text" type="java.lang.String" value="[namn]"/>
-                          </Properties>
-                          <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
-                          </Events>
-                        </Component>
                         <Component class="javax.swing.JSeparator" name="jSeparator1">
                         </Component>
                         <Component class="javax.swing.JLabel" name="jLabel8">
@@ -914,26 +878,13 @@
                             <Property name="text" type="java.lang.String" value="Administrat&#xf6;rer"/>
                           </Properties>
                         </Component>
-                        <Container class="javax.swing.JPanel" name="jPanel2">
+                        <Container class="javax.swing.JPanel" name="pnlAdmin">
 
                           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout">
                             <Property name="alignment" type="int" value="0"/>
                             <Property name="verticalGap" type="int" value="0"/>
                           </Layout>
                           <SubComponents>
-                            <Component class="javax.swing.JButton" name="jButton4">
-                              <Properties>
-                                <Property name="text" type="java.lang.String" value="[namn]"/>
-                              </Properties>
-                              <Events>
-                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton4ActionPerformed"/>
-                              </Events>
-                            </Component>
-                            <Component class="javax.swing.JButton" name="jButton5">
-                              <Properties>
-                                <Property name="text" type="java.lang.String" value="[namn]"/>
-                              </Properties>
-                            </Component>
                             <Component class="javax.swing.JButton" name="btnAddAdmin">
                               <Properties>
                                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -958,26 +909,13 @@
                         </Container>
                         <Component class="javax.swing.JSeparator" name="jSeparator2">
                         </Component>
-                        <Container class="javax.swing.JPanel" name="jPanel3">
+                        <Container class="javax.swing.JPanel" name="pnlHandlaggare">
 
                           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout">
                             <Property name="alignment" type="int" value="0"/>
                             <Property name="verticalGap" type="int" value="0"/>
                           </Layout>
                           <SubComponents>
-                            <Component class="javax.swing.JButton" name="jButton7">
-                              <Properties>
-                                <Property name="text" type="java.lang.String" value="[namn]"/>
-                              </Properties>
-                            </Component>
-                            <Component class="javax.swing.JButton" name="jButton6">
-                              <Properties>
-                                <Property name="text" type="java.lang.String" value="[namn]"/>
-                              </Properties>
-                              <Events>
-                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton6ActionPerformed"/>
-                              </Events>
-                            </Component>
                             <Component class="javax.swing.JButton" name="btnAddHandlaggare">
                               <Properties>
                                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -1005,26 +943,35 @@
                             <Property name="text" type="java.lang.String" value="Handl&#xe4;ggare"/>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JButton" name="btnAddProjektchef">
-                          <Properties>
-                            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                              <Font name="Segoe UI" size="8" style="1"/>
-                            </Property>
-                            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                              <Image iconType="3" name="/Ikoner/plusikon.png"/>
-                            </Property>
-                            <Property name="iconTextGap" type="int" value="0"/>
-                            <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-                              <Insets value="[2, 13, 3, 14]"/>
-                            </Property>
-                            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                              <Dimension value="[19, 19]"/>
-                            </Property>
-                          </Properties>
-                          <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddProjektchefActionPerformed"/>
-                          </Events>
-                        </Component>
+                        <Container class="javax.swing.JPanel" name="pnlProjektchef">
+
+                          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout">
+                            <Property name="alignment" type="int" value="0"/>
+                            <Property name="verticalGap" type="int" value="0"/>
+                          </Layout>
+                          <SubComponents>
+                            <Component class="javax.swing.JButton" name="btnAddProjektchef">
+                              <Properties>
+                                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                  <Font name="Segoe UI" size="8" style="1"/>
+                                </Property>
+                                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                                  <Image iconType="3" name="/Ikoner/plusikon.png"/>
+                                </Property>
+                                <Property name="iconTextGap" type="int" value="0"/>
+                                <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+                                  <Insets value="[2, 13, 3, 14]"/>
+                                </Property>
+                                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                                  <Dimension value="[19, 19]"/>
+                                </Property>
+                              </Properties>
+                              <Events>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddProjektchefActionPerformed"/>
+                              </Events>
+                            </Component>
+                          </SubComponents>
+                        </Container>
                       </SubComponents>
                     </Container>
                   </SubComponents>
@@ -1043,8 +990,8 @@
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="btnPartners" min="-2" pref="119" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                              <Component id="btnPartners" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
                               <Component id="lblPartnersTips" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="130" max="32767" attributes="0"/>
                           </Group>
@@ -1067,6 +1014,9 @@
                       <Properties>
                         <Property name="horizontalAlignment" type="int" value="2"/>
                         <Property name="label" type="java.lang.String" value="&#x25bc; Partners"/>
+                        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                          <Dimension value="[160, 160]"/>
+                        </Property>
                         <Property name="verifyInputWhenFocusTarget" type="boolean" value="false"/>
                       </Properties>
                       <Events>
@@ -1118,16 +1068,6 @@
                         <Property name="alignment" type="int" value="0"/>
                       </Layout>
                       <SubComponents>
-                        <Component class="javax.swing.JButton" name="jButton1">
-                          <Properties>
-                            <Property name="text" type="java.lang.String" value="[partner]"/>
-                          </Properties>
-                        </Component>
-                        <Component class="javax.swing.JButton" name="jButton9">
-                          <Properties>
-                            <Property name="text" type="java.lang.String" value="[partner]"/>
-                          </Properties>
-                        </Component>
                         <Component class="javax.swing.JButton" name="btnAddPartner">
                           <Properties>
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -1151,32 +1091,13 @@
                 </Container>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JTextField" name="txtfProjektnamn">
-              <Properties>
-                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="df" green="d9" red="d4" type="rgb"/>
-                </Property>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Segoe UI" size="18" style="1"/>
-                </Property>
-                <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="[Projektnamn]"/>
-                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                  <Border info="null"/>
-                </Property>
-                <Property name="opaque" type="boolean" value="true"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtfProjektnamnActionPerformed"/>
-              </Events>
-            </Component>
             <Container class="javax.swing.JPanel" name="pnlStartDatum">
               <Properties>
                 <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[20, 20]"/>
+                  <Dimension value="[20, 30]"/>
                 </Property>
                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[20, 22]"/>
+                  <Dimension value="[20, 30]"/>
                 </Property>
               </Properties>
 
@@ -1208,14 +1129,14 @@
                   </Events>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="0" y="0" width="-1" height="20"/>
+                      <AbsoluteConstraints x="0" y="0" width="-1" height="30"/>
                     </Constraint>
                   </Constraints>
                 </Component>
                 <Component class="com.toedter.calendar.JDateChooser" name="dateStartDatum">
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="0" y="0" width="130" height="20"/>
+                      <AbsoluteConstraints x="0" y="0" width="130" height="30"/>
                     </Constraint>
                   </Constraints>
                 </Component>
@@ -1224,10 +1145,10 @@
             <Container class="javax.swing.JPanel" name="pnlSlutDatum">
               <Properties>
                 <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[20, 20]"/>
+                  <Dimension value="[20, 30]"/>
                 </Property>
                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[20, 22]"/>
+                  <Dimension value="[20, 30]"/>
                 </Property>
               </Properties>
 
@@ -1259,16 +1180,54 @@
                   </Events>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="0" y="0" width="-1" height="20"/>
+                      <AbsoluteConstraints x="0" y="0" width="-1" height="30"/>
                     </Constraint>
                   </Constraints>
                 </Component>
                 <Component class="com.toedter.calendar.JDateChooser" name="dateSlutDatum">
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="0" y="0" width="130" height="20"/>
+                      <AbsoluteConstraints x="0" y="0" width="130" height="30"/>
                     </Constraint>
                   </Constraints>
+                </Component>
+              </SubComponents>
+            </Container>
+            <Container class="javax.swing.JPanel" name="pnlProjektnamn">
+
+              <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout"/>
+              <SubComponents>
+                <Component class="javax.swing.JTextField" name="txtfProjektnamn">
+                  <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="df" green="d9" red="d4" type="rgb"/>
+                    </Property>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Segoe UI" size="18" style="1"/>
+                    </Property>
+                    <Property name="horizontalAlignment" type="int" value="0"/>
+                    <Property name="text" type="java.lang.String" value="[Projektnamn]"/>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                        <EmptyBorder/>
+                      </Border>
+                    </Property>
+                    <Property name="focusable" type="boolean" value="false"/>
+                    <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[500, 25]"/>
+                    </Property>
+                    <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[80, 25]"/>
+                    </Property>
+                    <Property name="opaque" type="boolean" value="true"/>
+                    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[150, 25]"/>
+                    </Property>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtfProjektnamnActionPerformed"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>

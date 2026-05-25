@@ -4,6 +4,8 @@
  */
 package javaapplication3;
 
+import oru.inf.InfDB;
+
 /**
  *
  * @author alexander.willen
@@ -15,7 +17,7 @@ public class ProjektSok extends javax.swing.JFrame {
     /**
      * Creates new form ProjektHandlaggare
      */
-    public ProjektSok() {
+    public ProjektSok(InfDB idb, int aid) {
         initComponents();
 
     }
@@ -267,8 +269,6 @@ public class ProjektSok extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new ProjektSok().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

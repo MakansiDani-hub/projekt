@@ -5,54 +5,47 @@
 package javaapplication3;
 
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Date;
+import java.util.ArrayList;
+import java.util.HashMap;
+import static javaapplication3.ProjektHandlaggare.Instanstyp.*;
 import javax.swing.*;
+import oru.inf.InfDB;
+import oru.inf.InfException;
 
 /**
  *
  * @author alexander.willen
  */
-public class ProjektUppgifter extends javax.swing.JFrame {
+public class ProjektProjektchef extends javax.swing.JFrame {
 
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ProjektUppgifter.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ProjektProjektchef.class.getName());
 
     //Bakgrundsfärgen som används av vårt valda "tema" i NetBeans
     private static final Color bakgrundsfarg = new Color(212, 217, 223);
 
+    //Session
+    private InfDB idb; //databas
+    private int aid; //användarens id
+    private int pid; //det valda projektet vars uppgifter visas
+  
+
     //Redigeringsläge
     private boolean redigerar;
 
-    /**
-     * Creates new form Projekt
-     */
-    public ProjektUppgifter() {
-        initComponents();
-
-        //Fält
+    public ProjektProjektchef(InfDB idb, int aid, int pid)
+    {
+        this.idb = idb;
+        this.aid = aid;
+        this.pid = pid;
         redigerar = false;
-
-        //Pop-up rutor---------------------
-        spnlMal.setVisible(false);
-        spnlBeskrivning.setVisible(false);
-        spnlDeltagare.setVisible(false);
-        spnlPartners.setVisible(false);
-
-        //Redigerings-läget----------------
-        //...Datum rutor
-        dateStartDatum.setVisible(false);
-        dateSlutDatum.setVisible(false);
-        //...Adderingsknappar
-        btnAddMal.setVisible(false);
-        btnAddProjektchef.setVisible(false);
-        btnAddAdmin.setVisible(false);
-        btnAddHandlaggare.setVisible(false);
-        btnAddPartner.setVisible(false);
-        //...Tipsrutor
-        lblMalTips.setVisible(false);
-        lblDeltagareTips.setVisible(false);
-        lblPartnersTips.setVisible(false);
-        //...Felmeddelande
-        lblFelmeddelande.setVisible(false);
-
+        
+        initComponents();
+        laddaInfo();
+        startlageGUI(); //lägg till pluss knapparna sist
     }
 
     /**
@@ -66,7 +59,7 @@ public class ProjektUppgifter extends javax.swing.JFrame {
 
         spnlTop = new javax.swing.JScrollPane();
         pnlTop = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
+        lblPid = new javax.swing.JLabel();
         lblStartar = new javax.swing.JLabel();
         lblAvslutad = new javax.swing.JLabel();
         jButton8 = new javax.swing.JButton();
@@ -76,28 +69,24 @@ public class ProjektUppgifter extends javax.swing.JFrame {
         lblMalTips = new javax.swing.JLabel();
         spnlMal = new javax.swing.JScrollPane();
         pnlMal = new javax.swing.JPanel();
-        jButton27 = new javax.swing.JButton();
-        jButton28 = new javax.swing.JButton();
-        jButton30 = new javax.swing.JButton();
-        jButton31 = new javax.swing.JButton();
         btnAddMal = new javax.swing.JButton();
         jPanel13 = new javax.swing.JPanel();
         btnBeskrivning = new javax.swing.JButton();
         spnlBeskrivning = new javax.swing.JScrollPane();
         pnlBeskrivning = new javax.swing.JPanel();
-        txarBesrkivning = new javax.swing.JTextArea();
+        txarBeskrivning = new javax.swing.JTextArea();
         jPanel10 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
-        jButton12 = new javax.swing.JButton();
+        btnLand = new javax.swing.JButton();
         jPanel12 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtfStatus = new javax.swing.JTextField();
         jPanel14 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        txtfPrioritet = new javax.swing.JTextField();
         jPanel15 = new javax.swing.JPanel();
         jLabel17 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        txtfKostnad = new javax.swing.JTextField();
         pnlHoger = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         btnDeltagare = new javax.swing.JButton();
@@ -105,35 +94,30 @@ public class ProjektUppgifter extends javax.swing.JFrame {
         spnlDeltagare = new javax.swing.JScrollPane();
         pnlDeltagare = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel8 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        pnlAdmin = new javax.swing.JPanel();
         btnAddAdmin = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
-        jPanel3 = new javax.swing.JPanel();
-        jButton7 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        pnlHandlaggare = new javax.swing.JPanel();
         btnAddHandlaggare = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
+        pnlProjektchef = new javax.swing.JPanel();
         btnAddProjektchef = new javax.swing.JButton();
         jPanel11 = new javax.swing.JPanel();
         btnPartners = new javax.swing.JButton();
         lblPartnersTips = new javax.swing.JLabel();
         spnlPartners = new javax.swing.JScrollPane();
         pnlPartners = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
         btnAddPartner = new javax.swing.JButton();
-        txtfProjektnamn = new javax.swing.JTextField();
         pnlStartDatum = new javax.swing.JPanel();
         txtfStartDatum = new javax.swing.JTextField();
         dateStartDatum = new com.toedter.calendar.JDateChooser();
         pnlSlutDatum = new javax.swing.JPanel();
         txtfSlutDatum = new javax.swing.JTextField();
         dateSlutDatum = new com.toedter.calendar.JDateChooser();
+        pnlProjektnamn = new javax.swing.JPanel();
+        txtfProjektnamn = new javax.swing.JTextField();
         btnAndra = new javax.swing.JButton();
         btnSpara = new javax.swing.JButton();
         lblFelmeddelande = new javax.swing.JLabel();
@@ -145,7 +129,8 @@ public class ProjektUppgifter extends javax.swing.JFrame {
 
         pnlTop.setMaximumSize(new java.awt.Dimension(700, 2000));
 
-        jLabel2.setText("Projektid: [pid]");
+        lblPid.setText("Projektid: [pid]");
+        lblPid.setMaximumSize(new java.awt.Dimension(150, 16));
 
         lblStartar.setText("Startad");
 
@@ -156,7 +141,6 @@ public class ProjektUppgifter extends javax.swing.JFrame {
 
         pnlVanster.setMaximumSize(new java.awt.Dimension(385, 30000));
         pnlVanster.setMinimumSize(new java.awt.Dimension(200, 260));
-        pnlVanster.setPreferredSize(null);
         pnlVanster.setLayout(new javax.swing.BoxLayout(pnlVanster, javax.swing.BoxLayout.Y_AXIS));
 
         jPanel9.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
@@ -165,7 +149,7 @@ public class ProjektUppgifter extends javax.swing.JFrame {
 
         btnMal.setText("▶ Hållbarhetsmål");
         btnMal.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        btnMal.setMaximumSize(new java.awt.Dimension(86, 23));
+        btnMal.setMaximumSize(new java.awt.Dimension(160, 160));
         btnMal.setMinimumSize(new java.awt.Dimension(86, 23));
         btnMal.setPreferredSize(new java.awt.Dimension(86, 23));
         btnMal.addActionListener(this::btnMalActionPerformed);
@@ -180,8 +164,8 @@ public class ProjektUppgifter extends javax.swing.JFrame {
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
-                .addComponent(btnMal, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnMal, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(lblMalTips, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 31, Short.MAX_VALUE))
         );
@@ -208,19 +192,6 @@ public class ProjektUppgifter extends javax.swing.JFrame {
         pnlMal.setPreferredSize(new java.awt.Dimension(200, 90));
         pnlMal.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        jButton27.setText("[Hållbarhetsmål]");
-        jButton27.addActionListener(this::jButton27ActionPerformed);
-        pnlMal.add(jButton27);
-
-        jButton28.setText("[Hållbarhetsmål]");
-        pnlMal.add(jButton28);
-
-        jButton30.setText("[Hållbarhetsmål]");
-        pnlMal.add(jButton30);
-
-        jButton31.setText("[Hållbarhetsmål]");
-        pnlMal.add(jButton31);
-
         btnAddMal.setFont(new java.awt.Font("Segoe UI", 1, 8)); // NOI18N
         btnAddMal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Ikoner/plusikon.png"))); // NOI18N
         btnAddMal.setIconTextGap(0);
@@ -242,7 +213,7 @@ public class ProjektUppgifter extends javax.swing.JFrame {
         btnBeskrivning.setText("▶ Beskrivning");
         btnBeskrivning.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnBeskrivning.setMargin(new java.awt.Insets(0, 0, 0, 14));
-        btnBeskrivning.setMaximumSize(new java.awt.Dimension(123, 30));
+        btnBeskrivning.setMaximumSize(new java.awt.Dimension(160, 160));
         btnBeskrivning.setMinimumSize(new java.awt.Dimension(123, 30));
         btnBeskrivning.setPreferredSize(new java.awt.Dimension(125, 30));
         btnBeskrivning.setVerifyInputWhenFocusTarget(false);
@@ -253,8 +224,8 @@ public class ProjektUppgifter extends javax.swing.JFrame {
         jPanel13Layout.setHorizontalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel13Layout.createSequentialGroup()
-                .addComponent(btnBeskrivning, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 156, Short.MAX_VALUE))
+                .addComponent(btnBeskrivning, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 175, Short.MAX_VALUE))
         );
         jPanel13Layout.setVerticalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -275,18 +246,17 @@ public class ProjektUppgifter extends javax.swing.JFrame {
 
         pnlBeskrivning.setMinimumSize(new java.awt.Dimension(220, 100));
         pnlBeskrivning.setName(""); // NOI18N
-        pnlBeskrivning.setPreferredSize(null);
         pnlBeskrivning.setLayout(new java.awt.BorderLayout());
 
-        txarBesrkivning.setColumns(5);
-        txarBesrkivning.setLineWrap(true);
-        txarBesrkivning.setRows(5);
-        txarBesrkivning.setText("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        txarBesrkivning.setWrapStyleWord(true);
-        txarBesrkivning.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        txarBesrkivning.setMaximumSize(new java.awt.Dimension(200, 84));
-        txarBesrkivning.setMinimumSize(new java.awt.Dimension(200, 20));
-        pnlBeskrivning.add(txarBesrkivning, java.awt.BorderLayout.PAGE_START);
+        txarBeskrivning.setColumns(5);
+        txarBeskrivning.setLineWrap(true);
+        txarBeskrivning.setRows(5);
+        txarBeskrivning.setText("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        txarBeskrivning.setWrapStyleWord(true);
+        txarBeskrivning.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        txarBeskrivning.setMaximumSize(new java.awt.Dimension(200, 84));
+        txarBeskrivning.setMinimumSize(new java.awt.Dimension(200, 20));
+        pnlBeskrivning.add(txarBeskrivning, java.awt.BorderLayout.PAGE_START);
 
         spnlBeskrivning.setViewportView(pnlBeskrivning);
 
@@ -294,17 +264,18 @@ public class ProjektUppgifter extends javax.swing.JFrame {
 
         jPanel10.setBorder(javax.swing.BorderFactory.createEmptyBorder(4, 0, 4, 0));
         jPanel10.setMaximumSize(new java.awt.Dimension(310, 32));
-        jPanel10.setPreferredSize(new java.awt.Dimension(200, 32));
+        jPanel10.setPreferredSize(new java.awt.Dimension(200, 36));
 
         jLabel12.setText("Land");
 
-        jButton12.setText(" [Land]");
-        jButton12.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 1));
-        jButton12.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jButton12.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        jButton12.setMaximumSize(new java.awt.Dimension(100, 23));
-        jButton12.setPreferredSize(new java.awt.Dimension(100, 23));
-        jButton12.addActionListener(this::jButton12ActionPerformed);
+        btnLand.setText(" [Land]");
+        btnLand.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 1));
+        btnLand.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnLand.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnLand.setMaximumSize(new java.awt.Dimension(180, 30));
+        btnLand.setMinimumSize(new java.awt.Dimension(43, 30));
+        btnLand.setPreferredSize(new java.awt.Dimension(50, 30));
+        btnLand.addActionListener(this::btnLandActionPerformed);
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
@@ -312,29 +283,35 @@ public class ProjektUppgifter extends javax.swing.JFrame {
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addComponent(jLabel12)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
-                .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(58, 58, 58))
+                .addGap(43, 43, 43)
+                .addComponent(btnLand, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
+                .addGap(0, 0, 0)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(1, 1, 1))
+                    .addComponent(btnLand, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel12))
+                .addContainerGap())
         );
 
         pnlVanster.add(jPanel10);
 
         jPanel12.setBorder(javax.swing.BorderFactory.createEmptyBorder(4, 0, 4, 0));
         jPanel12.setMaximumSize(new java.awt.Dimension(310, 32));
-        jPanel12.setPreferredSize(new java.awt.Dimension(200, 32));
+        jPanel12.setPreferredSize(new java.awt.Dimension(200, 36));
 
         jLabel13.setText("Status");
 
-        jTextField1.setBackground(new java.awt.Color(212, 217, 223));
-        jTextField1.setText("[Status]");
+        txtfStatus.setEditable(false);
+        txtfStatus.setBackground(new java.awt.Color(212, 217, 223));
+        txtfStatus.setText("[Status]");
+        txtfStatus.setFocusable(false);
+        txtfStatus.setMaximumSize(new java.awt.Dimension(160, 30));
+        txtfStatus.setMinimumSize(new java.awt.Dimension(45, 30));
+        txtfStatus.setPreferredSize(new java.awt.Dimension(60, 30));
 
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
@@ -343,27 +320,31 @@ public class ProjektUppgifter extends javax.swing.JFrame {
             .addGroup(jPanel12Layout.createSequentialGroup()
                 .addComponent(jLabel13)
                 .addGap(36, 36, 36)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtfStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(txtfStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pnlVanster.add(jPanel12);
 
         jPanel14.setBorder(javax.swing.BorderFactory.createEmptyBorder(4, 0, 4, 0));
         jPanel14.setMaximumSize(new java.awt.Dimension(310, 32));
-        jPanel14.setPreferredSize(new java.awt.Dimension(200, 32));
+        jPanel14.setPreferredSize(new java.awt.Dimension(200, 36));
 
         jLabel15.setText("Prioritet");
 
-        jTextField2.setBackground(new java.awt.Color(212, 217, 223));
-        jTextField2.setText("[Prioritet]");
-        jTextField2.addActionListener(this::jTextField2ActionPerformed);
+        txtfPrioritet.setEditable(false);
+        txtfPrioritet.setBackground(new java.awt.Color(212, 217, 223));
+        txtfPrioritet.setText("[Prioritet]");
+        txtfPrioritet.setFocusable(false);
+        txtfPrioritet.setMaximumSize(new java.awt.Dimension(185, 30));
+        txtfPrioritet.setMinimumSize(new java.awt.Dimension(45, 30));
+        txtfPrioritet.setPreferredSize(new java.awt.Dimension(70, 30));
 
         javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
         jPanel14.setLayout(jPanel14Layout);
@@ -372,26 +353,31 @@ public class ProjektUppgifter extends javax.swing.JFrame {
             .addGroup(jPanel14Layout.createSequentialGroup()
                 .addComponent(jLabel15)
                 .addGap(29, 29, 29)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtfPrioritet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel14Layout.setVerticalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(txtfPrioritet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pnlVanster.add(jPanel14);
 
         jPanel15.setBorder(javax.swing.BorderFactory.createEmptyBorder(4, 0, 4, 0));
         jPanel15.setMaximumSize(new java.awt.Dimension(310, 32));
-        jPanel15.setPreferredSize(new java.awt.Dimension(200, 32));
+        jPanel15.setPreferredSize(new java.awt.Dimension(200, 36));
 
         jLabel17.setText("Kostnad");
 
-        jTextField3.setBackground(new java.awt.Color(212, 217, 223));
-        jTextField3.setText("[Kostnad]");
+        txtfKostnad.setEditable(false);
+        txtfKostnad.setBackground(new java.awt.Color(212, 217, 223));
+        txtfKostnad.setText("[Kostnad]");
+        txtfKostnad.setFocusable(false);
+        txtfKostnad.setMaximumSize(new java.awt.Dimension(200, 30));
+        txtfKostnad.setMinimumSize(new java.awt.Dimension(64, 30));
+        txtfKostnad.setPreferredSize(new java.awt.Dimension(70, 30));
 
         javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
         jPanel15.setLayout(jPanel15Layout);
@@ -400,29 +386,28 @@ public class ProjektUppgifter extends javax.swing.JFrame {
             .addGroup(jPanel15Layout.createSequentialGroup()
                 .addComponent(jLabel17)
                 .addGap(26, 26, 26)
-                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtfKostnad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel15Layout.setVerticalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(txtfKostnad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pnlVanster.add(jPanel15);
 
-        pnlHoger.setPreferredSize(null);
         pnlHoger.setLayout(new javax.swing.BoxLayout(pnlHoger, javax.swing.BoxLayout.Y_AXIS));
 
-        jPanel8.setMaximumSize(new java.awt.Dimension(32767, 27));
-        jPanel8.setPreferredSize(new java.awt.Dimension(456, 27));
+        jPanel8.setMaximumSize(new java.awt.Dimension(32767, 30));
+        jPanel8.setPreferredSize(new java.awt.Dimension(456, 30));
 
         btnDeltagare.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnDeltagare.setLabel("▼ Deltagare");
-        btnDeltagare.setMaximumSize(new java.awt.Dimension(93, 27));
-        btnDeltagare.setMinimumSize(new java.awt.Dimension(93, 27));
-        btnDeltagare.setPreferredSize(new java.awt.Dimension(93, 27));
+        btnDeltagare.setMaximumSize(new java.awt.Dimension(200, 160));
+        btnDeltagare.setMinimumSize(new java.awt.Dimension(93, 30));
+        btnDeltagare.setPreferredSize(new java.awt.Dimension(93, 30));
         btnDeltagare.addActionListener(this::btnDeltagareActionPerformed);
 
         lblDeltagareTips.setForeground(new java.awt.Color(204, 204, 0));
@@ -433,24 +418,18 @@ public class ProjektUppgifter extends javax.swing.JFrame {
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
-                .addComponent(btnDeltagare, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(253, Short.MAX_VALUE))
-            .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel8Layout.createSequentialGroup()
-                    .addGap(145, 145, 145)
-                    .addComponent(lblDeltagareTips)
-                    .addContainerGap(130, Short.MAX_VALUE)))
+                .addComponent(btnDeltagare, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(37, 37, 37)
+                .addComponent(lblDeltagareTips)
+                .addGap(0, 132, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                .addGap(0, 1, Short.MAX_VALUE)
-                .addComponent(btnDeltagare, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblDeltagareTips)
-                    .addContainerGap()))
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnDeltagare, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblDeltagareTips)))
         );
 
         pnlHoger.add(jPanel8);
@@ -466,19 +445,9 @@ public class ProjektUppgifter extends javax.swing.JFrame {
 
         jLabel7.setText("Projektchef");
 
-        jButton3.setText("[namn]");
-        jButton3.addActionListener(this::jButton3ActionPerformed);
-
         jLabel8.setText("Administratörer");
 
-        jPanel2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 5, 0));
-
-        jButton4.setText("[namn]");
-        jButton4.addActionListener(this::jButton4ActionPerformed);
-        jPanel2.add(jButton4);
-
-        jButton5.setText("[namn]");
-        jPanel2.add(jButton5);
+        pnlAdmin.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 5, 0));
 
         btnAddAdmin.setFont(new java.awt.Font("Segoe UI", 1, 8)); // NOI18N
         btnAddAdmin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Ikoner/plusikon.png"))); // NOI18N
@@ -486,16 +455,9 @@ public class ProjektUppgifter extends javax.swing.JFrame {
         btnAddAdmin.setMargin(new java.awt.Insets(2, 13, 3, 14));
         btnAddAdmin.setPreferredSize(new java.awt.Dimension(19, 19));
         btnAddAdmin.addActionListener(this::btnAddAdminActionPerformed);
-        jPanel2.add(btnAddAdmin);
+        pnlAdmin.add(btnAddAdmin);
 
-        jPanel3.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 5, 0));
-
-        jButton7.setText("[namn]");
-        jPanel3.add(jButton7);
-
-        jButton6.setText("[namn]");
-        jButton6.addActionListener(this::jButton6ActionPerformed);
-        jPanel3.add(jButton6);
+        pnlHandlaggare.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 5, 0));
 
         btnAddHandlaggare.setFont(new java.awt.Font("Segoe UI", 1, 8)); // NOI18N
         btnAddHandlaggare.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Ikoner/plusikon.png"))); // NOI18N
@@ -503,9 +465,11 @@ public class ProjektUppgifter extends javax.swing.JFrame {
         btnAddHandlaggare.setMargin(new java.awt.Insets(2, 13, 3, 14));
         btnAddHandlaggare.setPreferredSize(new java.awt.Dimension(19, 19));
         btnAddHandlaggare.addActionListener(this::btnAddHandlaggareActionPerformed);
-        jPanel3.add(btnAddHandlaggare);
+        pnlHandlaggare.add(btnAddHandlaggare);
 
         jLabel9.setText("Handläggare");
+
+        pnlProjektchef.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 5, 0));
 
         btnAddProjektchef.setFont(new java.awt.Font("Segoe UI", 1, 8)); // NOI18N
         btnAddProjektchef.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Ikoner/plusikon.png"))); // NOI18N
@@ -513,60 +477,48 @@ public class ProjektUppgifter extends javax.swing.JFrame {
         btnAddProjektchef.setMargin(new java.awt.Insets(2, 13, 3, 14));
         btnAddProjektchef.setPreferredSize(new java.awt.Dimension(19, 19));
         btnAddProjektchef.addActionListener(this::btnAddProjektchefActionPerformed);
+        pnlProjektchef.add(btnAddProjektchef);
 
         javax.swing.GroupLayout pnlDeltagareLayout = new javax.swing.GroupLayout(pnlDeltagare);
         pnlDeltagare.setLayout(pnlDeltagareLayout);
         pnlDeltagareLayout.setHorizontalGroup(
             pnlDeltagareLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDeltagareLayout.createSequentialGroup()
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 358, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDeltagareLayout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDeltagareLayout.createSequentialGroup()
+            .addComponent(pnlAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(pnlDeltagareLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(pnlDeltagareLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(pnlDeltagareLayout.createSequentialGroup()
-                        .addContainerGap()
+                    .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlDeltagareLayout.createSequentialGroup()
                         .addGroup(pnlDeltagareLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel9)
                             .addComponent(jLabel8)
-                            .addComponent(jLabel7)
-                            .addGroup(pnlDeltagareLayout.createSequentialGroup()
-                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(7, 7, 7)
-                                .addComponent(btnAddProjektchef, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jSeparator1)
-                    .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.LEADING))
+                            .addComponent(jLabel7))
+                        .addGap(0, 261, Short.MAX_VALUE))
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING))
                 .addGap(14, 14, 14))
+            .addComponent(pnlHandlaggare, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
+            .addComponent(pnlProjektchef, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         pnlDeltagareLayout.setVerticalGroup(
             pnlDeltagareLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDeltagareLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel7)
-                .addGroup(pnlDeltagareLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlDeltagareLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3)
-                        .addGap(7, 7, 7)
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE)
-                        .addGap(26, 26, 26))
-                    .addGroup(pnlDeltagareLayout.createSequentialGroup()
-                        .addGap(8, 8, 8)
-                        .addComponent(btnAddProjektchef, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pnlProjektchef, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(7, 7, 7)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pnlAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pnlHandlaggare, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
+                .addGap(26, 26, 26))
         );
 
         spnlDeltagare.setViewportView(pnlDeltagare);
@@ -578,6 +530,7 @@ public class ProjektUppgifter extends javax.swing.JFrame {
 
         btnPartners.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnPartners.setLabel("▼ Partners");
+        btnPartners.setMaximumSize(new java.awt.Dimension(160, 160));
         btnPartners.setVerifyInputWhenFocusTarget(false);
         btnPartners.addActionListener(this::btnPartnersActionPerformed);
 
@@ -589,8 +542,8 @@ public class ProjektUppgifter extends javax.swing.JFrame {
         jPanel11Layout.setHorizontalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel11Layout.createSequentialGroup()
-                .addComponent(btnPartners, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addComponent(btnPartners, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(59, 59, 59)
                 .addComponent(lblPartnersTips)
                 .addGap(0, 130, Short.MAX_VALUE))
         );
@@ -615,12 +568,6 @@ public class ProjektUppgifter extends javax.swing.JFrame {
         pnlPartners.setPreferredSize(new java.awt.Dimension(350, 60));
         pnlPartners.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        jButton1.setText("[partner]");
-        pnlPartners.add(jButton1);
-
-        jButton9.setText("[partner]");
-        pnlPartners.add(jButton9);
-
         btnAddPartner.setFont(new java.awt.Font("Segoe UI", 1, 8)); // NOI18N
         btnAddPartner.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Ikoner/plusikon.png"))); // NOI18N
         btnAddPartner.setIconTextGap(0);
@@ -632,16 +579,8 @@ public class ProjektUppgifter extends javax.swing.JFrame {
 
         pnlHoger.add(spnlPartners);
 
-        txtfProjektnamn.setBackground(new java.awt.Color(212, 217, 223));
-        txtfProjektnamn.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        txtfProjektnamn.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtfProjektnamn.setText("[Projektnamn]");
-        txtfProjektnamn.setBorder(null);
-        txtfProjektnamn.setOpaque(true);
-        txtfProjektnamn.addActionListener(this::txtfProjektnamnActionPerformed);
-
-        pnlStartDatum.setMinimumSize(new java.awt.Dimension(20, 20));
-        pnlStartDatum.setPreferredSize(new java.awt.Dimension(20, 22));
+        pnlStartDatum.setMinimumSize(new java.awt.Dimension(20, 30));
+        pnlStartDatum.setPreferredSize(new java.awt.Dimension(20, 30));
         pnlStartDatum.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtfStartDatum.setEditable(false);
@@ -651,11 +590,11 @@ public class ProjektUppgifter extends javax.swing.JFrame {
         txtfStartDatum.setMargin(new java.awt.Insets(0, 0, 0, 0));
         txtfStartDatum.setPreferredSize(new java.awt.Dimension(86, 16));
         txtfStartDatum.addActionListener(this::txtfStartDatumActionPerformed);
-        pnlStartDatum.add(txtfStartDatum, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 20));
-        pnlStartDatum.add(dateStartDatum, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 130, 20));
+        pnlStartDatum.add(txtfStartDatum, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 30));
+        pnlStartDatum.add(dateStartDatum, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 130, 30));
 
-        pnlSlutDatum.setMinimumSize(new java.awt.Dimension(20, 20));
-        pnlSlutDatum.setPreferredSize(new java.awt.Dimension(20, 22));
+        pnlSlutDatum.setMinimumSize(new java.awt.Dimension(20, 30));
+        pnlSlutDatum.setPreferredSize(new java.awt.Dimension(20, 30));
         pnlSlutDatum.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtfSlutDatum.setEditable(false);
@@ -665,8 +604,22 @@ public class ProjektUppgifter extends javax.swing.JFrame {
         txtfSlutDatum.setMargin(new java.awt.Insets(0, 0, 0, 0));
         txtfSlutDatum.setPreferredSize(new java.awt.Dimension(86, 16));
         txtfSlutDatum.addActionListener(this::txtfSlutDatumActionPerformed);
-        pnlSlutDatum.add(txtfSlutDatum, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 20));
-        pnlSlutDatum.add(dateSlutDatum, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 130, 20));
+        pnlSlutDatum.add(txtfSlutDatum, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 30));
+        pnlSlutDatum.add(dateSlutDatum, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 130, 30));
+
+        txtfProjektnamn.setEditable(false);
+        txtfProjektnamn.setBackground(new java.awt.Color(212, 217, 223));
+        txtfProjektnamn.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        txtfProjektnamn.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtfProjektnamn.setText("[Projektnamn]");
+        txtfProjektnamn.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        txtfProjektnamn.setFocusable(false);
+        txtfProjektnamn.setMaximumSize(new java.awt.Dimension(500, 25));
+        txtfProjektnamn.setMinimumSize(new java.awt.Dimension(80, 25));
+        txtfProjektnamn.setOpaque(true);
+        txtfProjektnamn.setPreferredSize(new java.awt.Dimension(150, 25));
+        txtfProjektnamn.addActionListener(this::txtfProjektnamnActionPerformed);
+        pnlProjektnamn.add(txtfProjektnamn);
 
         javax.swing.GroupLayout pnlTopLayout = new javax.swing.GroupLayout(pnlTop);
         pnlTop.setLayout(pnlTopLayout);
@@ -683,27 +636,26 @@ public class ProjektUppgifter extends javax.swing.JFrame {
                     .addGroup(pnlTopLayout.createSequentialGroup()
                         .addComponent(jButton8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel2)))
+                        .addComponent(lblPid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(52, 52, 52))
             .addGroup(pnlTopLayout.createSequentialGroup()
+                .addGap(51, 51, 51)
+                .addComponent(pnlProjektnamn, javax.swing.GroupLayout.PREFERRED_SIZE, 623, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlTopLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(pnlTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlTopLayout.createSequentialGroup()
-                        .addGroup(pnlTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlTopLayout.createSequentialGroup()
-                                .addGap(312, 312, 312)
-                                .addComponent(lblStartar)
-                                .addGap(18, 18, 18))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlTopLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(lblAvslutad)
-                                .addGap(17, 17, 17)))
-                        .addGroup(pnlTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(pnlSlutDatum, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
-                            .addComponent(pnlStartDatum, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(pnlTopLayout.createSequentialGroup()
-                        .addGap(120, 120, 120)
-                        .addComponent(txtfProjektnamn, javax.swing.GroupLayout.PREFERRED_SIZE, 509, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(lblAvslutad)
+                        .addGap(19, 19, 19))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlTopLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblStartar)
+                        .addGap(20, 20, 20)))
+                .addGroup(pnlTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(pnlSlutDatum, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlStartDatum, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(280, 280, 280))
         );
         pnlTopLayout.setVerticalGroup(
             pnlTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -711,25 +663,26 @@ public class ProjektUppgifter extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(pnlTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton8)
-                    .addComponent(jLabel2))
-                .addGap(12, 12, 12)
-                .addGroup(pnlTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlTopLayout.createSequentialGroup()
-                        .addComponent(txtfProjektnamn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(pnlTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lblStartar)
-                            .addComponent(pnlStartDatum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(pnlSlutDatum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlTopLayout.createSequentialGroup()
-                        .addGap(61, 61, 61)
-                        .addComponent(lblAvslutad)))
+                    .addComponent(lblPid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(pnlProjektnamn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pnlTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(pnlTopLayout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(pnlStartDatum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(pnlSlutDatum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18))
+                    .addGroup(pnlTopLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(lblStartar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblAvslutad)
+                        .addGap(23, 23, 23)))
                 .addGroup(pnlTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(pnlVanster, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(pnlHoger, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(66, Short.MAX_VALUE))
+                .addContainerGap(254, Short.MAX_VALUE))
         );
 
         spnlTop.setViewportView(pnlTop);
@@ -779,105 +732,155 @@ public class ProjektUppgifter extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnDeltagareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeltagareActionPerformed
-        vaxlaSynlighet(spnlDeltagare);
-    }//GEN-LAST:event_btnDeltagareActionPerformed
+    private void startlageGUI() {
+        //Gömmer pop-up paneler
+        spnlMal.setVisible(false);
+        spnlBeskrivning.setVisible(false);
+        spnlDeltagare.setVisible(false);
+        spnlPartners.setVisible(false);        
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+        //----NYTT FÖR PROJEKTCHEF----------------------------------------
+        
+        //---Redigerings-läget---
+        //...Datum rutor
+        dateStartDatum.setVisible(false);
+        dateSlutDatum.setVisible(false);
+        //...Adderingsknappar
+        btnAddMal.setVisible(false);
+        btnAddProjektchef.setVisible(false);
+        btnAddAdmin.setVisible(false);
+        btnAddHandlaggare.setVisible(false);
+        btnAddPartner.setVisible(false);
+        //...Tipsrutor
+        lblMalTips.setVisible(false);
+        lblDeltagareTips.setVisible(false);
+        lblPartnersTips.setVisible(false);
+        //...Felmeddelande
+        lblFelmeddelande.setVisible(false);
+    }
+    
+  
+    private void laddaInfo(){
+        
+        try{
+            //---Hämtar projektinfo---
+            HashMap<String, String> projektinfoEnskilda = idb.fetchRow(
+                    "SELECT projektnamn, startdatum, slutdatum, Projekt.beskrivning, "+
+                    "status, Projekt.prioritet, kostnad, Land.namn as landnamn, "+
+                    "CONCAT(fornamn, ' ', efternamn) as chefnamn, projektchef "+
+                    "FROM Projekt "+
+                    "JOIN Land ON land = lid "+
+                    "JOIN Anstalld ON projektchef = aid "+
+                    "WHERE pid = "+pid);
+            
+            ArrayList<HashMap<String, String>> projektinfoMal = idb.fetchRows(
+                    "SELECT malnummer, namn, h.hid as id "+
+                    "FROM Hallbarhetsmal h "+ 
+                    "JOIN Proj_Hallbarhet ph on h.hid = ph.hid "+
+                    "WHERE ph.pid = "+pid);
+            
+            ArrayList<HashMap<String, String>> projektinfoAdmin = idb.fetchRows(
+                    "SELECT CONCAT(fornamn, ' ', efternamn) as namn, a.aid as id "+
+                    "FROM Anstalld a "+ 
+                    "JOIN Admin ad on a.aid = ad.aid "+
+                    "JOIN Ans_Proj ap on a.aid = ap.aid "+
+                    "WHERE ap.pid = "+pid);
+            
+            ArrayList<HashMap<String, String>> projektinfoHandlaggare = idb.fetchRows(
+                    "SELECT CONCAT(fornamn, ' ', efternamn) as namn, a.aid as id "+
+                    "FROM Anstalld a "+ 
+                    "JOIN Handlaggare h on a.aid = h.aid "+
+                    "JOIN Ans_Proj ap on a.aid = ap.aid "+
+                    "WHERE ap.pid = "+pid);
+            
+            ArrayList<HashMap<String, String>> projektinfoPartners = idb.fetchRows(
+                    "SELECT namn, p.pid as id "+
+                    "FROM Partner p "+ 
+                    "JOIN Projekt_Partner pp on p.pid = pp.partner_pid "+
+                    "WHERE pp.pid = "+pid);
+            
+            
+            //---Visar hämtad projektInfo---
+            //...ändrar text
+            lblPid.setText("Projektid: " + pid);
+            txtfProjektnamn.setText(projektinfoEnskilda.get("projektnamn"));
+            txarBeskrivning.setText(projektinfoEnskilda.get("beskrivning"));
+            txtfStatus.setText(projektinfoEnskilda.get("status"));
+            txtfPrioritet.setText(projektinfoEnskilda.get("prioritet"));
+            txtfKostnad.setText(projektinfoEnskilda.get("kostnad"));
+            //-----NYTT FÖR PROJEKTCHEF-----
+            String startdatum = projektinfoEnskilda.get("startdatum");
+            String slutdatum = projektinfoEnskilda.get("slutdatum");
+            txtfStartDatum.setText(startdatum);
+            txtfSlutDatum.setText(slutdatum);
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
-
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
-
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton8ActionPerformed
-
-    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton12ActionPerformed
-
-    private void btnMalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMalActionPerformed
-        vaxlaSynlighet(spnlMal);
-    }//GEN-LAST:event_btnMalActionPerformed
-
-    private void btnPartnersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPartnersActionPerformed
-        vaxlaSynlighet(spnlPartners);
-
-    }//GEN-LAST:event_btnPartnersActionPerformed
-
-    private void btnBeskrivningActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBeskrivningActionPerformed
-        vaxlaSynlighet(spnlBeskrivning);
-    }//GEN-LAST:event_btnBeskrivningActionPerformed
-
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
-
-    private void btnAddHandlaggareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddHandlaggareActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAddHandlaggareActionPerformed
-
-    private void txtfProjektnamnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtfProjektnamnActionPerformed
-        // TODO add your handling code here:
-        txtfProjektnamn.setBackground(bakgrundsfarg);
-    }//GEN-LAST:event_txtfProjektnamnActionPerformed
-
-    private void btnAddAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddAdminActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAddAdminActionPerformed
-
-    private void btnAddMalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddMalActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAddMalActionPerformed
-
-    private void jButton27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton27ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton27ActionPerformed
-
-    private void btnAndraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAndraActionPerformed
-        vaxlaRedigeringslage();
-    }//GEN-LAST:event_btnAndraActionPerformed
-
-    private void btnAddProjektchefActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddProjektchefActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAddProjektchefActionPerformed
-
-    private void txtfStartDatumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtfStartDatumActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtfStartDatumActionPerformed
-
-    private void txtfSlutDatumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtfSlutDatumActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtfSlutDatumActionPerformed
-
-    //LÄGG I EN UTILITY-KLASS?
-    private void vaxlaSynlighet(JScrollPane popUpRuta)//gör mer "generell"? Passar namnet bättre. JComponent kan downcastas?
+            Date startdatumDate = java.sql.Date.valueOf(startdatum); //Upcasting
+            Date slutdatumDate =  java.sql.Date.valueOf(slutdatum);
+            dateStartDatum.setDate(startdatumDate);
+            dateSlutDatum.setDate(slutdatumDate);
+            //-------------------------------
+            
+            
+            //---Skapar "instansknappar"---
+            //...Hållbarhetsmålen
+            skapaInstansknappar(projektinfoMal, ProjektHandlaggare.Instanstyp.HALLBARHETSMAL);
+            //...Admin
+            skapaInstansknappar(projektinfoAdmin, ProjektHandlaggare.Instanstyp.ADMIN);
+            //...Handläggare
+            skapaInstansknappar(projektinfoHandlaggare, ProjektHandlaggare.Instanstyp.HANDLAGGARE);
+            //...Partners
+            skapaInstansknappar(projektinfoPartners, ProjektHandlaggare.Instanstyp.PARTNERS);
+            //...Projektchef
+            if(projektinfoEnskilda.get("projektchef") != null){
+                JButton btnProjektchef = new JButton(projektinfoEnskilda.get("chefnamn"));
+                pnlProjektchef.add(btnProjektchef, 0);
+                btnProjektchef.setMinimumSize(new Dimension(70, 23));
+                btnProjektchef.setMaximumSize(new Dimension(200, 23));
+                skapaActionBtnProjektchef(btnProjektchef);
+            }
+            //...Land
+            if(projektinfoEnskilda.get("namn") != null){
+                 btnLand.setText(projektinfoEnskilda.get("namn"));
+                 skapaActionBtnLand();
+            }
+        }
+        catch(InfException e){
+            System.out.println("Info kunde ej laddas. "+e.getMessage());
+        }
+        
+        pnlTop.revalidate();
+    }
+    
+    private void sparaAndradInfo(){
+        //pid är projektid
+        //andradProjektinfo är en samling som sparar ändrad projektinfo. Nyckeln i 
+        //denna HashMap sparar attribut-identifierare på samma sätt som FetchRow() i InfDB
+        HashMap<String, String> andradProjektinfo = new HashMap<>();
+        andradProjektinfo.put("projektnamn", txtfProjektnamn.getText());
+        andradProjektinfo.put("startdatum", new java.sql.Date(dateStartDatum.getDate().getTime()).toString()); 
+                //projektnamn, startdatum, slutdatum, Projekt.beskrivning, "+
+                    //"status, Projekt.prioritet, kostnad, Land.namn as landnamn, "+
+                    //"CONCAT(fornamn, ' ', efternamn) as chefnamn, projektchef
+    }
+        
+    private void vaxlaPopupSynlighet(JScrollPane popUpRuta)
     {
         Boolean rutaNySynlighet = !popUpRuta.isVisible();
-
         popUpRuta.setVisible(rutaNySynlighet);
 
-        //Uppdaterar layout för allt inom pupUpRutans parent-container
+        //Uppdaterar layout
         popUpRuta.getParent().revalidate();
-        //pnlVanster.repaint();  -LÄGG TILL VID BEHOV                             
+                            
     }
 
-    private void vaxlaRedigeringslage() {
+    private boolean vaxlaRedigeringslage() 
+    {
         //Växla mellan redigeringslägen 
         redigerar = !redigerar;
 
         if (redigerar) {
-            //Redigeringsläge växlades på
             btnAndra.setText("Ångra");
         } else {
-            //Redigeringsläge växlades av
             btnAndra.setText("Ändra");
 
             //FUNKTIONALITETSUTÖKNING:
@@ -899,25 +902,170 @@ public class ProjektUppgifter extends javax.swing.JFrame {
         btnAddAdmin.setVisible(nySynlighet);
         btnAddHandlaggare.setVisible(nySynlighet);
         btnAddPartner.setVisible(nySynlighet);
-        //...Tipsrutor
-        lblMalTips.setVisible(nySynlighet);
-        lblDeltagareTips.setVisible(nySynlighet);
-        lblPartnersTips.setVisible(nySynlighet);
-        //...Öppna pop-ups
-        if (redigerar) {
-            spnlMal.setVisible(true);
-            spnlBeskrivning.setVisible(true);
-            spnlDeltagare.setVisible(true);
-            spnlPartners.setVisible(true);
-        }
 
         //Uppdatera layout
         pnlTop.revalidate();
+        
+        //returnerar det nya redigeringsläget
+        return redigerar;
+    }
+    
+    private void skapaInstansknappar(ArrayList<HashMap<String, String>> instanser, ProjektHandlaggare.Instanstyp instanstyp) {
+        for (HashMap<String, String> instans : instanser){             
+            //---Endast dessa attributer sparas per instans---
+            //...namm --> används som text på knappen
+            String namn = instans.get("namn");
+            //...id --> skickas vidare vid knapptryckning till nya fönstret
+            String id = instans.get("id");
+
+            JButton btnInstans = new JButton(namn);
+            btnInstans.setMinimumSize(new Dimension(70, 23));
+            btnInstans.setMaximumSize(new Dimension(200, 23));
+
+            switch (instanstyp) {
+                case HALLBARHETSMAL:
+                    //Lägger till malnummer i knappens text om det finns
+                    if(instans.containsKey("malnummer")){
+                        btnInstans.setText(btnInstans.getText() + " [" + instans.get("malnummer") + "]");
+                    }
+                    
+                    //Lägger till metod vid knapp-tryck (genom klassen ActionListener)
+                    btnInstans.addActionListener(new ActionListener() { //implementerar abstrakt klass i ny anonymklass
+                        @Override //override av abstrkt metod
+                        public void actionPerformed(ActionEvent e) {
+                            System.out.println("Öppnar HallbarhetsmålHandläggare");
+                            //new Hallbarhetsmal(idb, aid, hid) som (idb, aid, id)
+                            //behöver inte skicka med användarens roll eftersom vi vet att vi är ett handläggar-fönster
+                        }
+                    });
+                    pnlMal.add(btnInstans, 0); //lägger knappen i början av panelen för mål
+                    System.out.println("Knapp för hållbarhetsmål har laddats");
+                    break;
+
+                case ADMIN:
+                    btnInstans.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            System.out.println("Öppnar personallistaHandläggare");
+                            //new PersonalListaAdmin(idb, this.aid, aid) som (idb, aid, id)                              
+                        }
+                    });
+                    pnlAdmin.add(btnInstans, 0);
+                    System.out.println("Knapp för admin har laddats");
+                    break;
+
+                case HANDLAGGARE:
+                    btnInstans.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            System.out.println("Öppnar personallistaHandläggare");
+                            //new PersonalListaAdmin(idb, this.aid, aid) som (idb, aid, id)                              
+                        }
+                    });
+                    pnlHandlaggare.add(btnInstans, 0);
+                    System.out.println("Knapp för handläggare har laddats");
+                    break;
+
+                case PARTNERS:
+                    btnInstans.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            System.out.println("Öppnar PartnersHandläggare");
+                            //new PartnersHandlaggare(idb, aid, pid) (idb, aid, id)
+                        }
+                    });
+                    pnlPartners.add(btnInstans, 0);
+                    System.out.println("Knapp för partners har laddats");
+                    break;
+
+                default:
+                    throw new IllegalStateException();
+            }
+        }
+    }
+    
+    private void skapaActionBtnLand(){
+        btnLand.addActionListener(new ActionListener(){
+            @Override    //BEHÖVER DENNA METOD VARA PUBLIC? VARFÖR?
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Öppnar land");   
+                //new LandHandlaggare(idb, lid)
+            }        
+        });
+    }
+    
+    private void skapaActionBtnProjektchef(JButton knapp){
+        knapp.addActionListener(new ActionListener(){
+            @Override 
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Öppnar projektchef");   
+                //new Personalista(idb, aid)
+            }        
+        });
     }
 
-    /**
-     * @param args the command line arguments
-     */
+    private void btnDeltagareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeltagareActionPerformed
+        vaxlaPopupSynlighet(spnlDeltagare);
+
+    }//GEN-LAST:event_btnDeltagareActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void btnMalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMalActionPerformed
+        vaxlaPopupSynlighet(spnlMal);
+    }//GEN-LAST:event_btnMalActionPerformed
+
+    private void btnPartnersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPartnersActionPerformed
+        vaxlaPopupSynlighet(spnlPartners);
+
+    }//GEN-LAST:event_btnPartnersActionPerformed
+
+    private void btnBeskrivningActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBeskrivningActionPerformed
+        vaxlaPopupSynlighet(spnlBeskrivning);
+    }//GEN-LAST:event_btnBeskrivningActionPerformed
+
+    private void btnAddHandlaggareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddHandlaggareActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAddHandlaggareActionPerformed
+
+    private void btnAddAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddAdminActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAddAdminActionPerformed
+
+    private void btnAddMalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddMalActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAddMalActionPerformed
+
+    private void btnAndraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAndraActionPerformed
+        //---Om användaren trycker på samma knapp i redigeringsläget (ångra knappen)---
+        if(vaxlaRedigeringslage() == false){ 
+            //laddar om infon, eventuella ändringar som gjordes i redigeringsläget försvinner
+            laddaInfo(); 
+        }
+    }//GEN-LAST:event_btnAndraActionPerformed
+
+    private void txtfStartDatumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtfStartDatumActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtfStartDatumActionPerformed
+
+    private void txtfSlutDatumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtfSlutDatumActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtfSlutDatumActionPerformed
+
+    private void txtfProjektnamnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtfProjektnamnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtfProjektnamnActionPerformed
+
+    private void btnAddProjektchefActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddProjektchefActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAddProjektchefActionPerformed
+
+    private void btnLandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLandActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnLandActionPerformed
+
     public static void main(String args[]) { //TA BORT MAIN METODEN TILLSLUT. NI SKA ENDAST ANVÄNDA MAIN METODEN I Startklassen
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -935,10 +1083,15 @@ public class ProjektUppgifter extends javax.swing.JFrame {
             logger.log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new ProjektUppgifter().setVisible(true));
-
+        
+        
+        try {
+            InfDB idb = new InfDB("sdgsweden", "3306", "root", "masterkey");
+            new ProjektProjektchef(idb, 3, 2).setVisible(true);
+            System.out.println("Databaskoppling skapad");
+        } catch (InfException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
 
@@ -951,29 +1104,17 @@ public class ProjektUppgifter extends javax.swing.JFrame {
     private javax.swing.JButton btnAndra;
     private javax.swing.JButton btnBeskrivning;
     private javax.swing.JButton btnDeltagare;
+    private javax.swing.JButton btnLand;
     private javax.swing.JButton btnMal;
     private javax.swing.JButton btnPartners;
     private javax.swing.JButton btnSpara;
     private com.toedter.calendar.JDateChooser dateSlutDatum;
     private com.toedter.calendar.JDateChooser dateStartDatum;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton12;
-    private javax.swing.JButton jButton27;
-    private javax.swing.JButton jButton28;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton30;
-    private javax.swing.JButton jButton31;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -983,26 +1124,26 @@ public class ProjektUppgifter extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JLabel lblAvslutad;
     private javax.swing.JLabel lblDeltagareTips;
     private javax.swing.JLabel lblFelmeddelande;
     private javax.swing.JLabel lblMalTips;
     private javax.swing.JLabel lblPartnersTips;
+    private javax.swing.JLabel lblPid;
     private javax.swing.JLabel lblStartar;
+    private javax.swing.JPanel pnlAdmin;
     private javax.swing.JPanel pnlBeskrivning;
     private javax.swing.JPanel pnlDeltagare;
+    private javax.swing.JPanel pnlHandlaggare;
     private javax.swing.JPanel pnlHoger;
     private javax.swing.JPanel pnlMal;
     private javax.swing.JPanel pnlPartners;
+    private javax.swing.JPanel pnlProjektchef;
+    private javax.swing.JPanel pnlProjektnamn;
     private javax.swing.JPanel pnlSlutDatum;
     private javax.swing.JPanel pnlStartDatum;
     private javax.swing.JPanel pnlTop;
@@ -1012,9 +1153,12 @@ public class ProjektUppgifter extends javax.swing.JFrame {
     private javax.swing.JScrollPane spnlMal;
     private javax.swing.JScrollPane spnlPartners;
     private javax.swing.JScrollPane spnlTop;
-    private javax.swing.JTextArea txarBesrkivning;
+    private javax.swing.JTextArea txarBeskrivning;
+    private javax.swing.JTextField txtfKostnad;
+    private javax.swing.JTextField txtfPrioritet;
     private javax.swing.JTextField txtfProjektnamn;
     private javax.swing.JTextField txtfSlutDatum;
     private javax.swing.JTextField txtfStartDatum;
+    private javax.swing.JTextField txtfStatus;
     // End of variables declaration//GEN-END:variables
 }
