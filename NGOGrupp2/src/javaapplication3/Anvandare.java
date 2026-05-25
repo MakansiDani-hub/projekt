@@ -16,6 +16,7 @@ public class Anvandare {
     private String dbAnvandaresAdress;
     private String dbAnvandaresTelefon;
     private String dbAnvandareslosenord;
+    private String roll;
 
     // Constructor
     public Anvandare(
