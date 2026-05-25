@@ -41,16 +41,16 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
                 // Ta reda på vilken rad användaren klickade på
                 int valdRad = JTableHallberhetsmal.getSelectedRow();
                 
-                //  Om en rad faktiskt är valdr
+                // kollar om en rad är vald Om en rad faktiskt är valdr
                 if (valdRad >= 0) {
-                    // 3. Hämtar datan från kolumnerna på den valda raden
+                    // Hämtar datan från kolumnerna på den valda raden
                     String id = bordsModell.getValueAt(valdRad, 0).toString();
                     String namn = bordsModell.getValueAt(valdRad, 1).toString();
                     String malnr = bordsModell.getValueAt(valdRad, 2).toString();
                     String beskrivning = bordsModell.getValueAt(valdRad, 3).toString();
                     String prioritet = bordsModell.getValueAt(valdRad, 4).toString();
                     
-                    // 4. Sätter in datan i JTextFields
+                    // Sätter in datan i JTextFields
                     JTxtFieldHID.setText(id);
                     JTxtFieldNamn.setText(namn);
                     JTxtFieldMalNr.setText(malnr);
@@ -94,7 +94,6 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        JBtnLaggTillHallbarhetsmal = new javax.swing.JButton();
         JLblRubrik = new javax.swing.JLabel();
         JPanelHållbarhetsmål = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -109,16 +108,11 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
         JTxtFieldMalNr = new javax.swing.JTextField();
         JTxtFieldBeskrivning = new javax.swing.JTextField();
         JTxtFieldPrioritet = new javax.swing.JTextField();
+        JBtnLaggTillHallbarhetsmal = new javax.swing.JButton();
         JBtnAndraHallbarhetsmal = new javax.swing.JButton();
         JBtnTaBortHallbarhetsmal = new javax.swing.JButton();
         JPanelProjektMotMal = new javax.swing.JPanel();
-<<<<<<< HEAD
-        lblTillbakaTillMeny = new javax.swing.JButton();
-
-        JBtnLaggTillHallbarhetsmal.setText("Lägg till");
-=======
         JBtnTillbakaTillMeny = new javax.swing.JButton();
->>>>>>> Kristoffers-branch
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -150,20 +144,8 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
 
         JLblPrioritet.setText("Prioritet");
 
-<<<<<<< HEAD
-        JTxtFieldHID.setText("[HID]");
-
-        JTxtFieldNamn.setText("[Namn]");
-
-        JTxtFieldMalNr.setText("[Malnummer]");
-
-        JTxtFieldBeskrivning.setText("[Berskrivning]");
-
-        JTxtFieldPrioritet.setText("[Prioritet]");
-=======
         JBtnLaggTillHallbarhetsmal.setText("Lägg till");
         JBtnLaggTillHallbarhetsmal.addActionListener(this::JBtnLaggTillHallbarhetsmalActionPerformed);
->>>>>>> Kristoffers-branch
 
         JBtnAndraHallbarhetsmal.setText("Ändra");
         JBtnAndraHallbarhetsmal.addActionListener(this::JBtnAndraHallbarhetsmalActionPerformed);
@@ -184,7 +166,8 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
                     .addComponent(JLblNamn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(JLblMalNr, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(JLblBeskrivning, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(JLblPrioritet, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(JLblPrioritet, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(JBtnLaggTillHallbarhetsmal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(JPanelHållbarhetsmålLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(JTxtFieldHID)
@@ -225,6 +208,7 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
                             .addComponent(JTxtFieldPrioritet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(JPanelHållbarhetsmålLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(JBtnLaggTillHallbarhetsmal, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
                             .addComponent(JBtnAndraHallbarhetsmal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(JBtnTaBortHallbarhetsmal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
         );
@@ -242,12 +226,7 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
             .addGap(0, 193, Short.MAX_VALUE)
         );
 
-<<<<<<< HEAD
-        lblTillbakaTillMeny.setText("Tillbaka till Meny");
-        lblTillbakaTillMeny.addActionListener(this::lblTillbakaTillMenyActionPerformed);
-=======
         JBtnTillbakaTillMeny.setText("Tillbaka Till Meny");
->>>>>>> Kristoffers-branch
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -266,11 +245,6 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(JPanelProjektMotMal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(347, 347, 347)
-                    .addComponent(lblTillbakaTillMeny)
-                    .addContainerGap(348, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -284,53 +258,21 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(JPanelProjektMotMal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(246, 246, 246)
-                    .addComponent(lblTillbakaTillMeny)
-                    .addContainerGap(246, Short.MAX_VALUE)))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-<<<<<<< HEAD
-    private void lblTillbakaTillMenyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblTillbakaTillMenyActionPerformed
-        //l'gg till
-    }//GEN-LAST:event_lblTillbakaTillMenyActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-=======
     private void JBtnLaggTillHallbarhetsmalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnLaggTillHallbarhetsmalActionPerformed
->>>>>>> Kristoffers-branch
 
-    // 1. Hämtar texten som användaren skrivit in i textfälten
+    //  Hämtar texten som användaren skrivit in i textfälten
         String id = JTxtFieldHID.getText().trim();
         String namn = JTxtFieldNamn.getText().trim();
         String malnr = JTxtFieldMalNr.getText().trim();
         String beskrivning = JTxtFieldBeskrivning.getText().trim();
         String prioritet = JTxtFieldPrioritet.getText().trim();
 
-        // 2. Validering, Kontrollerar att användaren inte har glömt att fylla i något fält
+        //  Validering, Kontrollerar att användaren inte har glömt att fylla i något fält
         if (id.isEmpty() || namn.isEmpty() || malnr.isEmpty() || beskrivning.isEmpty() || prioritet.isEmpty() ||
             id.equals("[HID]") || namn.equals("[Namn]") || malnr.equals("[Malnummer]")) {
             
@@ -342,13 +284,13 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
             String sqlFråga = "INSERT INTO hallbarhetsmal (hid, namn, malnummer, beskrivning, prioritet) " +
                   "VALUES ('" + id + "', '" + namn + "', '" + malnr + "', '" + beskrivning + "', '" + prioritet + "')";
 
-            // 4. Skickar frågan till databasen
+            //  Skickar frågan till databasen
             idb.insert(sqlFråga);
 
-            // 5. Meddelar användaren att hållbarhetsmålet har lagts till
+            //  Meddelar användaren att hållbarhetsmålet har lagts till
             JOptionPane.showMessageDialog(this, "Hållbarhetsmålet har lagts till!");
 
-            // 6. Uppdaterar tabellen på skärmen så att det nya målet syns
+            //  Uppdaterar tabellen på skärmen så att det nya målet syns
             laddaHållbarhetsmål();
 
             // 
@@ -449,7 +391,6 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
     private javax.swing.JTextField JTxtFieldNamn;
     private javax.swing.JTextField JTxtFieldPrioritet;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JButton lblTillbakaTillMeny;
     // End of variables declaration//GEN-END:variables
 
     //Tillfällig main metod för att kunna provköra klassen

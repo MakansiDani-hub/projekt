@@ -58,14 +58,19 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
+<<<<<<< HEAD
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="lblTillbakaTillMeny1" min="-2" max="-2" attributes="0"/>
+=======
+                                  <Group type="102" attributes="0">
+                                      <Component id="jButton8" min="-2" max="-2" attributes="0"/>
+>>>>>>> c9ce765844caf8906405e9077fe776aa526b53ac
                                       <EmptySpace max="32767" attributes="0"/>
                                       <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" attributes="0">
                                       <Component id="jPanel6" min="-2" pref="257" max="-2" attributes="0"/>
-                                      <EmptySpace pref="187" max="32767" attributes="0"/>
+                                      <EmptySpace pref="43" max="32767" attributes="0"/>
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                           <Component id="jPanel5" min="-2" max="-2" attributes="0"/>
                                           <Group type="102" attributes="0">
@@ -79,8 +84,13 @@
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
+<<<<<<< HEAD
                                       <EmptySpace min="-2" pref="126" max="-2" attributes="0"/>
                                       <Component id="lblProjektnamn" min="-2" pref="526" max="-2" attributes="0"/>
+=======
+                                      <EmptySpace min="-2" pref="86" max="-2" attributes="0"/>
+                                      <Component id="jLabel3" min="-2" pref="526" max="-2" attributes="0"/>
+>>>>>>> c9ce765844caf8906405e9077fe776aa526b53ac
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace min="-2" pref="217" max="-2" attributes="0"/>
@@ -104,14 +114,21 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
+<<<<<<< HEAD
                           <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="lblTillbakaTillMeny1" min="-2" max="-2" attributes="0"/>
+=======
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="-2" max="-2" attributes="0"/>
+                              <Component id="jButton8" min="-2" max="-2" attributes="0"/>
+>>>>>>> c9ce765844caf8906405e9077fe776aa526b53ac
                           </Group>
+                          <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="lblProjektnamn" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
+                      <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -126,7 +143,7 @@
                               <Component id="jPanel5" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jScrollPane3" min="-2" pref="171" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="23" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="14" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -140,7 +157,7 @@
                 <Property name="text" type="java.lang.String" value="Projektid: [pid]"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblProjektnamn">
+            <Component class="javax.swing.JLabel" name="jLabel3">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="18" style="1"/>
@@ -158,6 +175,14 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Avslutad"/>
               </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="jButton8">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Tillbaka till Meny"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton8ActionPerformed"/>
+              </Events>
             </Component>
             <Container class="javax.swing.JPanel" name="jPanel6">
 
@@ -700,6 +725,7 @@
                 </Container>
               </SubComponents>
             </Container>
+<<<<<<< HEAD
             <Component class="javax.swing.JButton" name="lblTillbakaTillMeny1">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Tillbaka till Meny"/>
@@ -708,6 +734,8 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="lblTillbakaTillMeny1ActionPerformed"/>
               </Events>
             </Component>
+=======
+>>>>>>> c9ce765844caf8906405e9077fe776aa526b53ac
           </SubComponents>
         </Container>
       </SubComponents>

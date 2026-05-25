@@ -11,14 +11,59 @@ package javaapplication3;
 public class Hallbarhetsmal extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Hallbarhetsmal.class.getName());
+<<<<<<< HEAD
     private Anvandare anvandare;
    
+=======
+
+>>>>>>> c9ce765844caf8906405e9077fe776aa526b53ac
     /**
      * Creates new form Hallbarhetsmal
      */
     public Hallbarhetsmal(Anvandare anvandare) {
         initComponents();
+<<<<<<< HEAD
         this.anvandare = anvandare;
+=======
+        
+        // Kopplar JTable till modell och sätter samma rubriker som i admin-fönstret
+        bordsModell = (DefaultTableModel) JTableVisaMal.getModel();
+        bordsModell.setColumnIdentifiers(new Object[]{"hid", "Namn", "Målnummer", "Beskrivning", "Prioritet"});
+        
+        // metod för att hämta målen från databasen
+        visaAllaHallbarhetsmal();
+    }
+    /**
+     * Metoden för att hämta hållbarhetsmål från databasen
+     */
+    private void visaAllaHallbarhetsmal() {
+        
+        // Tömmer eventuella testrader
+        bordsModell.setRowCount(0);
+        
+        // SQLfråga för att hämta kolumnerna från tabellen hallbarhetsmal
+        String SQLFraga = "SELECT hid, namn, malnummer, beskrivning, prioritet FROM hallbarhetsmal";
+        
+        try {
+            ArrayList<HashMap<String, String>> rader = idb.fetchRows(SQLFraga);
+            
+            if (rader != null) {
+                // Loopar igenom varje rad i databasen och lägger till i vårat JTable
+                for (HashMap<String, String> rad : rader) {
+                    bordsModell.addRow(new Object[]{
+                        rad.get("hid"),
+                        rad.get("namn"),
+                        rad.get("malnummer"),
+                        rad.get("beskrivning"),
+                        rad.get("prioritet")
+                    });
+                }
+            }
+        } catch (InfException e) {
+            JOptionPane.showMessageDialog(this, "Kunde inte hämta hållbarhetsmål: " + e.getMessage());
+        }
+        
+>>>>>>> c9ce765844caf8906405e9077fe776aa526b53ac
     }
 
     /**
@@ -30,6 +75,7 @@ public class Hallbarhetsmal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+<<<<<<< HEAD
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel6 = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
@@ -54,6 +100,12 @@ public class Hallbarhetsmal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel6.setLayout(new javax.swing.BoxLayout(jPanel6, javax.swing.BoxLayout.Y_AXIS));
+=======
+        JBtnTillbakaTillMeny = new javax.swing.JButton();
+        JScrollPaneHallbarhetsmal = new javax.swing.JScrollPane();
+        JTableVisaMal = new javax.swing.JTable();
+        JLblRubrik = new javax.swing.JLabel();
+>>>>>>> c9ce765844caf8906405e9077fe776aa526b53ac
 
         jPanel10.setBorder(javax.swing.BorderFactory.createEmptyBorder(4, 0, 4, 0));
         jPanel10.setMaximumSize(new java.awt.Dimension(580, 32));
@@ -66,11 +118,26 @@ public class Hallbarhetsmal extends javax.swing.JFrame {
         jLabel12.setPreferredSize(new java.awt.Dimension(150, 16));
         jPanel10.add(jLabel12);
 
+<<<<<<< HEAD
         jLabel13.setText("målnummer");
         jLabel13.setMaximumSize(new java.awt.Dimension(80, 16));
         jLabel13.setMinimumSize(new java.awt.Dimension(80, 16));
         jLabel13.setPreferredSize(new java.awt.Dimension(80, 16));
         jPanel10.add(jLabel13);
+=======
+        JTableVisaMal.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        JScrollPaneHallbarhetsmal.setViewportView(JTableVisaMal);
+>>>>>>> c9ce765844caf8906405e9077fe776aa526b53ac
 
         jLabel14.setText("Beskrivning");
         jLabel14.setMaximumSize(new java.awt.Dimension(270, 16));
@@ -160,9 +227,6 @@ public class Hallbarhetsmal extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Hållbarhetsmål");
 
-        lblTillbakaTillMeny.setText("Tillbaka till Meny");
-        lblTillbakaTillMeny.addActionListener(this::lblTillbakaTillMenyActionPerformed);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -171,7 +235,11 @@ public class Hallbarhetsmal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+<<<<<<< HEAD
                         .addComponent(lblTillbakaTillMeny)
+=======
+                        .addComponent(JBtnTillbakaTillMeny)
+>>>>>>> c9ce765844caf8906405e9077fe776aa526b53ac
                         .addGap(122, 122, 122)
                         .addComponent(jLabel1)
                         .addGap(0, 0, Short.MAX_VALUE))
@@ -183,16 +251,24 @@ public class Hallbarhetsmal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+<<<<<<< HEAD
                     .addComponent(jLabel1)
                     .addComponent(lblTillbakaTillMeny))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 357, Short.MAX_VALUE)
+=======
+                    .addComponent(JBtnTillbakaTillMeny)
+                    .addComponent(JLblRubrik))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(JScrollPaneHallbarhetsmal, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE)
+>>>>>>> c9ce765844caf8906405e9077fe776aa526b53ac
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+<<<<<<< HEAD
     private void lblTillbakaTillMenyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblTillbakaTillMenyActionPerformed
         new MenyHandlaggareProjektchef(anvandare).setVisible(true);
         this.setVisible(false);
@@ -200,6 +276,15 @@ public class Hallbarhetsmal extends javax.swing.JFrame {
 
     /**
      * @param args the command line arguments
+=======
+    private void JBtnTillbakaTillMenyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnTillbakaTillMenyActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JBtnTillbakaTillMenyActionPerformed
+
+
+/**
+     * Tillfällig main metod för att provköra fönstret.
+>>>>>>> c9ce765844caf8906405e9077fe776aa526b53ac
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -219,6 +304,7 @@ public class Hallbarhetsmal extends javax.swing.JFrame {
         }
         //</editor-fold>
 
+<<<<<<< HEAD
         /* Create and display the form */
         //java.awt.EventQueue.invokeLater(() -> new Hallbarhetsmal().setVisible(true));
     }
@@ -244,5 +330,23 @@ public class Hallbarhetsmal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JButton lblTillbakaTillMeny;
+=======
+        /* Skapar en testanslutning och visar fönstret */
+        java.awt.EventQueue.invokeLater(() -> {
+            try {
+                InfDB testDb = new InfDB("sdgsweden", "3306", "root", "masterkey");
+                new Hallbarhetsmal(testDb).setVisible(true);
+            } catch (InfException e) {
+                System.out.println("Kunde inte starta testdatabasen: " + e.getMessage());
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton JBtnTillbakaTillMeny;
+    private javax.swing.JLabel JLblRubrik;
+    private javax.swing.JScrollPane JScrollPaneHallbarhetsmal;
+    private javax.swing.JTable JTableVisaMal;
+>>>>>>> c9ce765844caf8906405e9077fe776aa526b53ac
     // End of variables declaration//GEN-END:variables
 }

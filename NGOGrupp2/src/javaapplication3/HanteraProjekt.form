@@ -24,6 +24,7 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
+<<<<<<< HEAD
               <EmptySpace max="-2" attributes="0"/>
               <Component id="lblTillbakaTillMeny" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="160" max="-2" attributes="0"/>
@@ -32,6 +33,20 @@
           </Group>
           <Group type="102" alignment="1" attributes="0">
               <Component id="JPanelUppgifterValtProjekt" max="32767" attributes="0"/>
+=======
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="JPanelProjekt" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="286" max="-2" attributes="0"/>
+                      <Component id="JLblRubrik" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  </Group>
+                  <Component id="JPanelUppgifterValtProjekt" alignment="1" max="32767" attributes="0"/>
+              </Group>
+>>>>>>> c9ce765844caf8906405e9077fe776aa526b53ac
               <EmptySpace max="-2" attributes="0"/>
           </Group>
           <Component id="JPanelProjekt" alignment="1" max="32767" attributes="0"/>
@@ -40,12 +55,18 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
+<<<<<<< HEAD
               <EmptySpace max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="JLblRubrik" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblTillbakaTillMeny" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
+=======
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="JLblRubrik" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
+>>>>>>> c9ce765844caf8906405e9077fe776aa526b53ac
               <Component id="JPanelProjekt" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="JPanelUppgifterValtProjekt" min="-2" max="-2" attributes="0"/>
@@ -477,13 +498,5 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JButton" name="lblTillbakaTillMeny">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Tillbaka till Meny"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="lblTillbakaTillMenyActionPerformed"/>
-      </Events>
-    </Component>
   </SubComponents>
 </Form>

@@ -11,8 +11,12 @@ import oru.inf.InfDB;
 public class ProjektHandlaggare extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ProjektHandlaggare.class.getName());
+<<<<<<< HEAD
     private Anvandare anvandare;
     
+=======
+
+>>>>>>> c9ce765844caf8906405e9077fe776aa526b53ac
     /**
      * Creates new form Projekt
      */
@@ -20,8 +24,11 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
         initComponents();
         this.anvandare = anvandare;
         pnlPartners.setVisible(false);
+<<<<<<< HEAD
         
         
+=======
+>>>>>>> c9ce765844caf8906405e9077fe776aa526b53ac
 
     }
 
@@ -37,9 +44,10 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel4 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        lblProjektnamn = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        jButton8 = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         jButton14 = new javax.swing.JButton();
@@ -81,7 +89,10 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
         pnlPartners = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
+<<<<<<< HEAD
         lblTillbakaTillMeny1 = new javax.swing.JButton();
+=======
+>>>>>>> c9ce765844caf8906405e9077fe776aa526b53ac
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -92,13 +103,16 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
 
         jLabel2.setText("Projektid: [pid]");
 
-        lblProjektnamn.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        lblProjektnamn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblProjektnamn.setText("[Projektnamn]");
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("[Projektnamn]");
 
         jLabel4.setText("Startad");
 
         jLabel5.setText("Avslutad");
+
+        jButton8.setText("Tillbaka till Meny");
+        jButton8.addActionListener(this::jButton8ActionPerformed);
 
         jPanel6.setLayout(new javax.swing.BoxLayout(jPanel6, javax.swing.BoxLayout.Y_AXIS));
 
@@ -331,9 +345,12 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
 
         jScrollPane3.setViewportView(jPanel7);
 
+<<<<<<< HEAD
         lblTillbakaTillMeny1.setText("Tillbaka till Meny");
         lblTillbakaTillMeny1.addActionListener(this::lblTillbakaTillMeny1ActionPerformed);
 
+=======
+>>>>>>> c9ce765844caf8906405e9077fe776aa526b53ac
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -344,12 +361,16 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
                         .addContainerGap()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel4Layout.createSequentialGroup()
+<<<<<<< HEAD
                                 .addComponent(lblTillbakaTillMeny1)
+=======
+                                .addComponent(jButton8)
+>>>>>>> c9ce765844caf8906405e9077fe776aa526b53ac
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel2))
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 187, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel4Layout.createSequentialGroup()
@@ -358,8 +379,13 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel4Layout.createSequentialGroup()
+<<<<<<< HEAD
                                 .addGap(126, 126, 126)
                                 .addComponent(lblProjektnamn, javax.swing.GroupLayout.PREFERRED_SIZE, 526, javax.swing.GroupLayout.PREFERRED_SIZE))
+=======
+                                .addGap(86, 86, 86)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 526, javax.swing.GroupLayout.PREFERRED_SIZE))
+>>>>>>> c9ce765844caf8906405e9077fe776aa526b53ac
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addGap(217, 217, 217)
                                 .addComponent(jLabel4)
@@ -376,12 +402,18 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addContainerGap()
+<<<<<<< HEAD
                         .addComponent(lblTillbakaTillMeny1)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblProjektnamn)
+=======
+                        .addComponent(jButton8))
+                    .addComponent(jLabel2))
+                .addGap(2, 2, 2)
+                .addComponent(jLabel3)
+>>>>>>> c9ce765844caf8906405e9077fe776aa526b53ac
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -395,7 +427,7 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 23, Short.MAX_VALUE)))
+                        .addGap(0, 14, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -431,6 +463,10 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton6ActionPerformed
 
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton8ActionPerformed
+
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton12ActionPerformed
@@ -451,11 +487,14 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
 
+<<<<<<< HEAD
     private void lblTillbakaTillMeny1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblTillbakaTillMeny1ActionPerformed
         new MenyHandlaggareProjektchef(anvandare).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_lblTillbakaTillMeny1ActionPerformed
 
+=======
+>>>>>>> c9ce765844caf8906405e9077fe776aa526b53ac
     /**
      * @param args the command line arguments
      */
@@ -478,12 +517,13 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        //java.awt.EventQueue.invokeLater(() -> new ProjektHandlaggare().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new ProjektHandlaggare().setVisible(true));
         
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton15;
@@ -494,13 +534,16 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -519,6 +562,7 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -528,8 +572,11 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
+<<<<<<< HEAD
     private javax.swing.JLabel lblProjektnamn;
     private javax.swing.JButton lblTillbakaTillMeny1;
+=======
+>>>>>>> c9ce765844caf8906405e9077fe776aa526b53ac
     private javax.swing.JPanel pnlPartners;
     // End of variables declaration//GEN-END:variables
 }

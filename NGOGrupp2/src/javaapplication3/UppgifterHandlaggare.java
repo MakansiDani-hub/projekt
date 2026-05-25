@@ -8,6 +8,7 @@ package javaapplication3;
  *
  * @author alexander.willen
  */
+<<<<<<< HEAD
 import oru.inf.InfDB;
 import java.awt.Color;
 
@@ -24,10 +25,16 @@ public class UppgifterHandlaggare extends javax.swing.JFrame {
     private String dbAnvandaresAdress;
     private String dbAnvandaresTelefon;
     private String dbAnvandareslosenord;
+=======
+public class UppgifterHandlaggare extends javax.swing.JFrame {
+    
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(UppgifterHandlaggare.class.getName());
+>>>>>>> c9ce765844caf8906405e9077fe776aa526b53ac
 
     /**
      * Creates new form Uppgifter_Handläggare
      */
+<<<<<<< HEAD
     public UppgifterHandlaggare(Anvandare anvandare) {
         initComponents();
 
@@ -89,6 +96,10 @@ public class UppgifterHandlaggare extends javax.swing.JFrame {
             
         }
         
+=======
+    public UppgifterHandlaggare() {
+        initComponents();
+>>>>>>> c9ce765844caf8906405e9077fe776aa526b53ac
     }
 
     /**
@@ -111,7 +122,7 @@ public class UppgifterHandlaggare extends javax.swing.JFrame {
         btnSpara = new javax.swing.JButton();
         txtHandläggaresNamn = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        lblAid = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
@@ -120,6 +131,7 @@ public class UppgifterHandlaggare extends javax.swing.JFrame {
         lblAvdelningsNamnOchID = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
+<<<<<<< HEAD
         lblTillbakaTillMeny = new javax.swing.JButton();
         txtHandläggaresEfternamn = new javax.swing.JTextField();
         txtHandläggaresAdress = new javax.swing.JTextField();
@@ -128,6 +140,17 @@ public class UppgifterHandlaggare extends javax.swing.JFrame {
         txtAnsvarsområde = new javax.swing.JTextField();
         txtMentor = new javax.swing.JTextField();
         txtMentorFör = new javax.swing.JTextField();
+=======
+        jButton4 = new javax.swing.JButton();
+        jTextField2 = new javax.swing.JTextField();
+        jTextField3 = new javax.swing.JTextField();
+        jTextField4 = new javax.swing.JTextField();
+        jTextField5 = new javax.swing.JTextField();
+        jTextField6 = new javax.swing.JTextField();
+        jTextField7 = new javax.swing.JTextField();
+        jTextField8 = new javax.swing.JTextField();
+        jLabel17 = new javax.swing.JLabel();
+>>>>>>> c9ce765844caf8906405e9077fe776aa526b53ac
 
         jButton2.setText("jButton2");
 
@@ -156,7 +179,7 @@ public class UppgifterHandlaggare extends javax.swing.JFrame {
 
         jLabel6.setText("Epost");
 
-        lblAid.setText("AnställningsID: [aid]");
+        jLabel7.setText("AnställningsID: [aid]");
 
         jLabel9.setText("Avdelning");
 
@@ -172,8 +195,8 @@ public class UppgifterHandlaggare extends javax.swing.JFrame {
 
         jLabel18.setText("jLabel18");
 
-        lblTillbakaTillMeny.setText("Tillbaka till Meny");
-        lblTillbakaTillMeny.addActionListener(this::lblTillbakaTillMenyActionPerformed);
+        jButton4.setText("Tillbaka till Meny");
+        jButton4.addActionListener(this::jButton4ActionPerformed);
 
         txtHandläggaresEfternamn.addActionListener(this::txtHandläggaresEfternamnActionPerformed);
 
@@ -199,6 +222,7 @@ public class UppgifterHandlaggare extends javax.swing.JFrame {
                 .addGap(107, 107, 107))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
+<<<<<<< HEAD
                 .addComponent(lblTillbakaTillMeny)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -236,6 +260,48 @@ public class UppgifterHandlaggare extends javax.swing.JFrame {
                             .addComponent(txtHandläggaresNamn, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jLabel4))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+=======
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jButton4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addGap(17, 17, 17))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton3))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel10)
+                                    .addComponent(jLabel11)
+                                    .addComponent(jLabel9)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel15)
+                                    .addComponent(jLabel16))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel13)
+                                    .addComponent(jTextField7)
+                                    .addComponent(jTextField8)
+                                    .addComponent(jLabel17)
+                                    .addComponent(jTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
+                                    .addComponent(jTextField2)
+                                    .addComponent(jTextField1)
+                                    .addComponent(jTextField3)
+                                    .addComponent(jTextField5)
+                                    .addComponent(jTextField6)))
+                            .addComponent(jLabel4))
+                        .addGap(60, 60, 60))))
+>>>>>>> c9ce765844caf8906405e9077fe776aa526b53ac
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {txtAnsvarsområde, txtHandläggaresAdress, txtHandläggaresEfternamn, txtHandläggaresEpost, txtHandläggaresTelefon, txtMentor, txtMentorFör});
@@ -248,11 +314,17 @@ public class UppgifterHandlaggare extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblAid)
+                        .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+<<<<<<< HEAD
                         .addComponent(lblAnställdSedan))
                     .addComponent(lblTillbakaTillMeny))
                 .addGap(18, 18, 18)
+=======
+                        .addComponent(jLabel12))
+                    .addComponent(jButton4))
+                .addGap(12, 12, 12)
+>>>>>>> c9ce765844caf8906405e9077fe776aa526b53ac
                 .addComponent(jLabel4)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -383,10 +455,16 @@ public class UppgifterHandlaggare extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSparaActionPerformed
 
+<<<<<<< HEAD
     private void lblTillbakaTillMenyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblTillbakaTillMenyActionPerformed
         new MenyHandlaggareProjektchef(anvandare).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_lblTillbakaTillMenyActionPerformed
+=======
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
+>>>>>>> c9ce765844caf8906405e9077fe776aa526b53ac
 
     private void txtHandläggaresNamnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtHandläggaresNamnActionPerformed
         // TODO add your handling code here:
@@ -442,13 +520,18 @@ public class UppgifterHandlaggare extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        //java.awt.EventQueue.invokeLater(() -> new UppgifterHandlaggare().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new UppgifterHandlaggare().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSpara;
     private javax.swing.JButton btnÄndra;
     private javax.swing.JButton jButton2;
+<<<<<<< HEAD
+=======
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+>>>>>>> c9ce765844caf8906405e9077fe776aa526b53ac
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -460,8 +543,10 @@ public class UppgifterHandlaggare extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+<<<<<<< HEAD
     private javax.swing.JLabel lblAid;
     private javax.swing.JLabel lblAnställdSedan;
     private javax.swing.JLabel lblAvdelningsNamnOchID;
@@ -474,5 +559,15 @@ public class UppgifterHandlaggare extends javax.swing.JFrame {
     private javax.swing.JTextField txtHandläggaresTelefon;
     private javax.swing.JTextField txtMentor;
     private javax.swing.JTextField txtMentorFör;
+=======
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField jTextField5;
+    private javax.swing.JTextField jTextField6;
+    private javax.swing.JTextField jTextField7;
+    private javax.swing.JTextField jTextField8;
+>>>>>>> c9ce765844caf8906405e9077fe776aa526b53ac
     // End of variables declaration//GEN-END:variables
 }

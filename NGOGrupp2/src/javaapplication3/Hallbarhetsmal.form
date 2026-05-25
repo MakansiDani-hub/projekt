@@ -26,14 +26,9 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-<<<<<<< HEAD
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="lblTillbakaTillMeny" min="-2" max="-2" attributes="0"/>
-=======
                   <Component id="JScrollPaneHallbarhetsmal" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Component id="JBtnTillbakaTillMeny" min="-2" max="-2" attributes="0"/>
->>>>>>> Kristoffers-branch
                       <EmptySpace min="-2" pref="122" max="-2" attributes="0"/>
                       <Component id="JLblRubrik" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="242" max="32767" attributes="0"/>
@@ -48,13 +43,8 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-<<<<<<< HEAD
-                  <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblTillbakaTillMeny" alignment="3" min="-2" max="-2" attributes="0"/>
-=======
                   <Component id="JBtnTillbakaTillMeny" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="JLblRubrik" alignment="3" min="-2" max="-2" attributes="0"/>
->>>>>>> Kristoffers-branch
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="JScrollPaneHallbarhetsmal" pref="369" max="32767" attributes="0"/>
@@ -64,9 +54,6 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-<<<<<<< HEAD
-    <Container class="javax.swing.JScrollPane" name="jScrollPane1">
-=======
     <Component class="javax.swing.JButton" name="JBtnTillbakaTillMeny">
       <Properties>
         <Property name="text" type="java.lang.String" value="Tillbaka till Meny"/>
@@ -76,7 +63,6 @@
       </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="JScrollPaneHallbarhetsmal">
->>>>>>> Kristoffers-branch
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
@@ -101,14 +87,6 @@
         </Property>
         <Property name="text" type="java.lang.String" value="H&#xe5;llbarhetsm&#xe5;l"/>
       </Properties>
-    </Component>
-    <Component class="javax.swing.JButton" name="lblTillbakaTillMeny">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Tillbaka till Meny"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="lblTillbakaTillMenyActionPerformed"/>
-      </Events>
     </Component>
   </SubComponents>
 </Form>

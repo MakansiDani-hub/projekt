@@ -11,14 +11,20 @@ package javaapplication3;
 public class PersonalLista extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(PersonalLista.class.getName());
+<<<<<<< HEAD
     private Anvandare anvandare;
+=======
+>>>>>>> c9ce765844caf8906405e9077fe776aa526b53ac
 
     /**
      * Creates new form Personer
      */
     public PersonalLista(Anvandare anvandare) {
         initComponents();
+<<<<<<< HEAD
         this.anvandare = anvandare;
+=======
+>>>>>>> c9ce765844caf8906405e9077fe776aa526b53ac
     }
 
     /**
@@ -30,6 +36,7 @@ public class PersonalLista extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel6 = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
@@ -51,9 +58,11 @@ public class PersonalLista extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
-        lblTillbakaTillMeny = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jButton1.setText("Tillbaka till Meny");
+        jButton1.addActionListener(this::jButton1ActionPerformed);
 
         jPanel6.setLayout(new javax.swing.BoxLayout(jPanel6, javax.swing.BoxLayout.Y_AXIS));
 
@@ -138,9 +147,6 @@ public class PersonalLista extends javax.swing.JFrame {
 
         jButton3.setText("Se all personal");
 
-        lblTillbakaTillMeny.setText("Tillbaka till Meny");
-        lblTillbakaTillMeny.addActionListener(this::lblTillbakaTillMenyActionPerformed);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -158,19 +164,17 @@ public class PersonalLista extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
+                            .addComponent(jButton1)
                             .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton3))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblTillbakaTillMeny)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(jButton3)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblTillbakaTillMeny)
+                .addComponent(jButton1)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -193,15 +197,22 @@ public class PersonalLista extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
+<<<<<<< HEAD
     private void lblTillbakaTillMenyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblTillbakaTillMenyActionPerformed
         new MenyHandlaggareProjektchef(anvandare).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_lblTillbakaTillMenyActionPerformed
 
+=======
+>>>>>>> c9ce765844caf8906405e9077fe776aa526b53ac
     /**
      * @param args the command line arguments
      */
@@ -224,10 +235,11 @@ public class PersonalLista extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        //java.awt.EventQueue.invokeLater(() -> new PersonalLista().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new PersonalLista().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
@@ -249,6 +261,5 @@ public class PersonalLista extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JButton lblTillbakaTillMeny;
     // End of variables declaration//GEN-END:variables
 }
