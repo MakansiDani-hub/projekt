@@ -282,7 +282,7 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
         try {
             // Sqlfråga
             String sqlFråga = "INSERT INTO hallbarhetsmal (hid, namn, malnummer, beskrivning, prioritet) " +
-                  "VALUES ('" + id + "', '" + namn + "', '" + malnr + "', '" + beskrivning + "', '" + prioritet + "')";
+                  "VALUES (" + id + ", '" + namn + "', '" + malnr + "', '" + beskrivning + "', '" + prioritet + "')";
 
             //  Skickar frågan till databasen
             idb.insert(sqlFråga);
@@ -325,7 +325,7 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
                               "malnummer = '" + malnr + "', " +
                               "beskrivning = '" + beskrivning + "', " +
                               "prioritet = '" + prioritet + "' " +
-                              "WHERE hid = '" + id + "'";
+                              "WHERE hid = " + id +"";
 
             idb.update(sqlFråga);
             JOptionPane.showMessageDialog(this, "Hållbarhetsmålet har uppdateras!");
@@ -350,7 +350,7 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
         
         if (svar == JOptionPane.YES_OPTION) {
             try {
-                String sqlFråga = "DELETE FROM hallbarhetsmal WHERE hid = '" + id + "'";
+                String sqlFråga = "DELETE FROM hallbarhetsmal WHERE hid = " + id + "";
                 idb.delete(sqlFråga);
                 
                 JOptionPane.showMessageDialog(this, "Hållbarhetsmålet har tagits bort.");

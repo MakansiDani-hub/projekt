@@ -213,54 +213,42 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="JTxtLID">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="[LID]"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="JTxtFieldNamn">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="[Namn]"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="JTxtFieldSprak">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="[Sprak]"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="JTxtFieldValuta">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="[Valuta]"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="JTxtFieldTidZon">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="[Tidzon]"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="JTxtFieldPolitiskStruktur">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="[Politisk_struktur]"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="JTxtFieldEkonomi">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="[Ekonomi]"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="JBtnLaggTillLand">
           <Properties>
             <Property name="text" type="java.lang.String" value="L&#xe4;gg Till"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JBtnLaggTillLandActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="JBtn&#xc4;ndraLand">
           <Properties>
             <Property name="text" type="java.lang.String" value="&#xc4;ndra"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JBtn&#xc4;ndraLandActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="JBtnTaBortLand">
           <Properties>
             <Property name="text" type="java.lang.String" value="Ta bort"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JBtnTaBortLandActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

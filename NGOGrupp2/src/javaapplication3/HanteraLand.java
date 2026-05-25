@@ -4,20 +4,165 @@
  */
 package javaapplication3;
 
+import oru.inf.InfDB;
+import oru.inf.InfException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Krist
  */
-public class HanteraLand extends javax.swing.JFrame {
+
+    public class HanteraLand extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(HanteraLand.class.getName());
+        private InfDB idb;
+        private DefaultTableModel bordsModell;
+        private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(HanteraLand.class.getName());
 
     /**
      * Creates new form HanteraLand
      */
-    public HanteraLand() {
+    public HanteraLand(InfDB idb) {
+        this.idb = idb;// Sparar databasanslutningen
         initComponents();
+        
+        //initierar tabellmodellen
+        bordsModell = (DefaultTableModel) JTableListaLand.getModel();
+        //sätter rubriker som matchar databasen
+        bordsModell.setColumnIdentifiers(new Object[]{"lid","namn","sprak","valuta","tidszon","politisk_struktur","ekonomi"});
+        
+        fyllTabell();
+        
+        //Gör så att man kan klicka i tabellen för att fylla textfälten.
+        JTableListaLand.addMouseListener(new java.awt.event.MouseAdapter() {
+        @Override
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            int rad = JTableListaLand.getSelectedRow();
+            if (rad >= 0) {
+                JTxtLID.setText(bordsModell.getValueAt(rad, 0).toString());
+                JTxtFieldNamn.setText(bordsModell.getValueAt(rad, 1).toString());
+                JTxtFieldSprak.setText(bordsModell.getValueAt(rad, 2).toString());
+                JTxtFieldValuta.setText(bordsModell.getValueAt(rad, 3).toString());
+                JTxtFieldTidZon.setText(bordsModell.getValueAt(rad, 4).toString());
+                JTxtFieldPolitiskStruktur.setText(bordsModell.getValueAt(rad, 5).toString());
+                JTxtFieldEkonomi.setText(bordsModell.getValueAt(rad, 6).toString());
+            }
+        }
+    });
     }
+    //metod för att ändra uppgifter om ett land
+    private void andraLand(){
+        
+        try {
+        String id = JTxtLID.getText();
+        String namn = JTxtFieldNamn.getText();
+        String sprak = JTxtFieldSprak.getText();
+        String valuta = JTxtFieldValuta.getText();
+        String tidszon = JTxtFieldTidZon.getText();
+        String politik = JTxtFieldPolitiskStruktur.getText();
+        String ekonomi = JTxtFieldEkonomi.getText();
+
+        if (id.isEmpty()) {
+            //om inget land är valt så får användaren detta meddelande.
+            JOptionPane.showMessageDialog(this, "Välj ett land i tabellen att ändra!");
+            return;
+        }
+        // SQl, Uppdaterar data kopplat på det lid man skrivit in.
+        String fraga = "UPDATE land SET namn='" + namn + "', sprak='" + sprak + 
+                       "', valuta='" + valuta + "', tidszon='" + tidszon + 
+                       "', politisk_struktur='" + politik + "', ekonomi='" + ekonomi + 
+                       "' WHERE lid=" + id;
+
+        idb.update(fraga);
+        fyllTabell();
+        //meddelande ifall det har fungerat
+        JOptionPane.showMessageDialog(this, "Ändringarna sparades!");
+        
+    } catch (InfException e) {
+        //meddelande ifall det inte fungerat
+        JOptionPane.showMessageDialog(this, "Kunde inte ändra: " + e.getMessage());
+        }
+        
+    }
+    
+    private void taBortLand() {
+    try {
+        String id = JTxtLID.getText();
+        if (id.isEmpty()) {
+            //meddelande ber användaren välja ett land att ta bort.
+            JOptionPane.showMessageDialog(this, "Välj ett land i tabellen att ta bort!");
+            return;
+        }
+        //ber användaren att bekräfta innan man tar bort ett land för att undvika att man tar bort data av misstag.
+        int svar = JOptionPane.showConfirmDialog(this, "Är du säker på att du vill ta bort landet?", "Bekräfta", JOptionPane.YES_NO_OPTION);
+        if (svar == JOptionPane.YES_OPTION) {
+            //sql sats var man vill ta bort datan.
+            String fraga = "DELETE FROM land WHERE lid=" + id;
+            idb.delete(fraga);
+            fyllTabell();
+            // bekräftelsemeddelande att det är borttaget.
+            JOptionPane.showMessageDialog(this, "Landet borttaget!");
+        }
+    } catch (InfException e) {
+        JOptionPane.showMessageDialog(this, "Kunde inte ta bort (det kan finnas städer kopplade till landet): " + e.getMessage());
+        }
+    }
+    // Metod som hämtar all data om länderna och lägger de i tabellen
+    private void fyllTabell() {
+        bordsModell.setRowCount(0);// Tömmer tabellen först
+        try {
+            String fraga = "Select * From land ORDER BY lid";
+            ArrayList<HashMap<String, String>> rader = idb.fetchRows(fraga);
+            
+            if (rader != null) {
+                for(HashMap<String, String> rad : rader) {
+                    bordsModell.addRow(new Object[]{
+                        rad.get("lid"),
+                        rad.get("namn"),
+                        rad.get("sprak"),
+                        rad.get("valuta"),
+                        rad.get("tidszon"),
+                        rad.get("politisk_struktur"),
+                        rad.get("ekonomi")
+                });
+                }
+            }
+            
+        } catch (InfException e){
+            JOptionPane.showMessageDialog(null,"fel vid hämtning av data från databasen" + e.getMessage());
+        }
+        
+    }
+    
+    private void LaggTillLand(){
+        try{
+            String id = JTxtLID.getText();
+            String namn = JTxtFieldNamn.getText();
+            String sprak = JTxtFieldSprak.getText();
+            String valuta = JTxtFieldValuta.getText();
+            String tidszon = JTxtFieldTidZon.getText();
+            String politik = JTxtFieldPolitiskStruktur.getText();
+            String ekonomi = JTxtFieldEkonomi.getText();
+            
+            if(id.isEmpty() || namn.isEmpty()){
+                JOptionPane.showMessageDialog(null, "Land ID och Namn måste fyllas i!");
+                return;
+            }
+            
+            String fraga = "INSERT INTO land(lid, namn, sprak, valuta, tidszon, politisk_struktur, ekonomi)" +
+                           "VALUES (" + id + ", '" + namn + "', '" + sprak + "', '" + valuta + "', '" + tidszon + "', '" + politik + "', '" + ekonomi + "')";
+            
+            idb.insert(fraga);
+            fyllTabell();// Uppdaterar listan
+            JOptionPane.showMessageDialog(null, "Landet har lags till!");
+            
+        } catch(InfException e) {
+            JOptionPane.showMessageDialog(null, "Kunde inte lägga till: " + e.getMessage());
+        }
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -84,25 +229,14 @@ public class HanteraLand extends javax.swing.JFrame {
 
         JLblEkonomi.setText("Ekonomi");
 
-        JTxtLID.setText("[LID]");
-
-        JTxtFieldNamn.setText("[Namn]");
-
-        JTxtFieldSprak.setText("[Sprak]");
-
-        JTxtFieldValuta.setText("[Valuta]");
-
-        JTxtFieldTidZon.setText("[Tidzon]");
-
-        JTxtFieldPolitiskStruktur.setText("[Politisk_struktur]");
-
-        JTxtFieldEkonomi.setText("[Ekonomi]");
-
         JBtnLaggTillLand.setText("Lägg Till");
+        JBtnLaggTillLand.addActionListener(this::JBtnLaggTillLandActionPerformed);
 
         JBtnÄndraLand.setText("Ändra");
+        JBtnÄndraLand.addActionListener(this::JBtnÄndraLandActionPerformed);
 
         JBtnTaBortLand.setText("Ta bort");
+        JBtnTaBortLand.addActionListener(this::JBtnTaBortLandActionPerformed);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -203,30 +337,34 @@ public class HanteraLand extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void JBtnLaggTillLandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnLaggTillLandActionPerformed
+        //Kallar på LaggTillLand metoden
+        LaggTillLand();
+        
+    }//GEN-LAST:event_JBtnLaggTillLandActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new HanteraLand().setVisible(true));
-    }
+    private void JBtnÄndraLandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnÄndraLandActionPerformed
+        // Kallar på andraLand metoden
+        andraLand();
+    }//GEN-LAST:event_JBtnÄndraLandActionPerformed
+
+    private void JBtnTaBortLandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnTaBortLandActionPerformed
+        // Kallar på TaBortLand Metoden
+        taBortLand();
+    }//GEN-LAST:event_JBtnTaBortLandActionPerformed
+
+
+//tillfällig main metod för att testa fönstret.
+public static void main(String args[]) {
+    java.awt.EventQueue.invokeLater(() -> {
+        try {
+            InfDB db = new InfDB("sdgsweden", "3306", "root", "masterkey");
+            new HanteraLand(db).setVisible(true);
+        } catch (InfException ex) {
+            System.out.println("Kunde inte starta databasen: " + ex.getMessage());
+        }
+    });
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton JBtnLaggTillLand;

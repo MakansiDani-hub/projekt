@@ -8,7 +8,6 @@ package javaapplication3;
  *
  * @author alexander.willen, Kristoffer Kolkowski
  */
-
 import oru.inf.InfDB;
 import oru.inf.InfException;
 import java.util.ArrayList;
@@ -16,13 +15,11 @@ import java.util.HashMap;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JOptionPane;
 
-
-
 public class Hallbarhetsmal extends javax.swing.JFrame {
-    
-    private InfDB idb; 
+
+    private InfDB idb;
     private DefaultTableModel bordsModell;
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Hallbarhetsmal.class.getName());
 
     /**
@@ -31,28 +28,29 @@ public class Hallbarhetsmal extends javax.swing.JFrame {
     public Hallbarhetsmal(InfDB idb) {
         this.idb = idb;
         initComponents();
-        
+
         // Kopplar JTable till modell och sätter samma rubriker som i admin-fönstret
         bordsModell = (DefaultTableModel) JTableVisaMal.getModel();
         bordsModell.setColumnIdentifiers(new Object[]{"hid", "Namn", "Målnummer", "Beskrivning", "Prioritet"});
-        
+
         // metod för att hämta målen från databasen
         visaAllaHallbarhetsmal();
     }
+
     /**
      * Metoden för att hämta hållbarhetsmål från databasen
      */
     private void visaAllaHallbarhetsmal() {
-        
+
         // Tömmer eventuella testrader
         bordsModell.setRowCount(0);
-        
+
         // SQLfråga för att hämta kolumnerna från tabellen hallbarhetsmal
         String SQLFraga = "SELECT hid, namn, malnummer, beskrivning, prioritet FROM hallbarhetsmal";
-        
+
         try {
             ArrayList<HashMap<String, String>> rader = idb.fetchRows(SQLFraga);
-            
+
             if (rader != null) {
                 // Loopar igenom varje rad i databasen och lägger till i vårat JTable
                 for (HashMap<String, String> rad : rader) {
@@ -68,8 +66,9 @@ public class Hallbarhetsmal extends javax.swing.JFrame {
         } catch (InfException e) {
             JOptionPane.showMessageDialog(this, "Kunde inte hämta hållbarhetsmål: " + e.getMessage());
         }
-        
+
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -139,8 +138,7 @@ public class Hallbarhetsmal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_JBtnTillbakaTillMenyActionPerformed
 
-
-/**
+    /**
      * Tillfällig main metod för att provköra fönstret.
      */
     public static void main(String args[]) {
