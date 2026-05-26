@@ -84,13 +84,13 @@ public class HanteraAvdelning extends javax.swing.JFrame {
             String stad = JTxtFieldStad.getText();
             String chef = JTxtFieldChef.getText();
 
-            if (id.isEmpty() || namn.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Vänligen fyll i avdid och namn!");
+            if (id.isEmpty() || namn.isEmpty() || stad.isEmpty() || chef.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "ID, Namn, Stad och Chef måste fyllas i!");
                 return;
             }
 
             String fraga = "INSERT INTO avdelning VALUES (" + id + ", '" + namn + "', '" + besk + "', '"
-                    + adress + "', '" + epost + "', '" + tel + "', " + stad + ", " + chef + ")";
+                    + adress + "', '" + epost + "', '" + tel + "'," + stad + "," + chef + ")";
 
             idb.insert(fraga);
             fyllTabell();
@@ -114,8 +114,8 @@ public class HanteraAvdelning extends javax.swing.JFrame {
                     + "', beskrivning='" + JTxtFieldBeskrivning.getText()
                     + "', adress='" + JTxtFieldAdress.getText()
                     + "', epost='" + JTxtFieldEpost.getText()
-                    + "', telefon='" + JTxtFieldTelefon.getText()
-                    + "', stad=" + JTxtFieldStad.getText()
+                    + "', telefon='" + JTxtFieldTelefon.getText() + "'"
+                    + ", stad=" + JTxtFieldStad.getText()
                     + ", chef=" + JTxtFieldChef.getText()
                     + " WHERE avdid=" + id;
 
@@ -329,31 +329,23 @@ public class HanteraAvdelning extends javax.swing.JFrame {
         taBortAvdelning();
     }//GEN-LAST:event_JBtnTaBortAvdelningActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+        // Tillfällig main metod för att kunna provköra klassen
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
+            // Upprättar anslutning mot SQL-servern
+            InfDB testDb = new InfDB("sdgsweden", "3306", "root", "masterkey");
+
+            java.awt.EventQueue.invokeLater(new Runnable() {
+                public void run() {
+                    // Startar denna klass och skickar med databaskopplingen
+                    new HanteraAvdelning(testDb).setVisible(true);
                 }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
+            });
+        } catch (InfException e) {
+            System.out.println("Kunde inte ansluta till MySQL-servern: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Anslutningsfel: " + e.getMessage());
         }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new HanteraAvdelning().setVisible(true));
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton JBtnLaggTillAvdelning;
     private javax.swing.JButton JBtnTaBortAvdelning;
