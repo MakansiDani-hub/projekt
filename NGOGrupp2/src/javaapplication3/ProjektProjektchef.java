@@ -8,7 +8,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import static javaapplication3.ProjektHandlaggare.Instanstyp.*;
@@ -30,11 +29,14 @@ public class ProjektProjektchef extends javax.swing.JFrame {
     //Session
     private InfDB idb; //databas
     private int aid; //användarens id
-    private int pid; //det valda projektet vars uppgifter visas
-  
+    private int pid; //det valda projektet vars uppgifter visas  
+    private boolean ArProjektchefForProjekt;
 
     //Redigeringsläge
     private boolean redigerar;
+    
+    //Listeners
+    
 
     public ProjektProjektchef(InfDB idb, int aid, int pid)
     {
@@ -80,10 +82,10 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         btnLand = new javax.swing.JButton();
         jPanel12 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
-        txtfStatus = new javax.swing.JTextField();
+        cbStatus = new javax.swing.JComboBox<>();
         jPanel14 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
-        txtfPrioritet = new javax.swing.JTextField();
+        cbPrioritet = new javax.swing.JComboBox<>();
         jPanel15 = new javax.swing.JPanel();
         jLabel17 = new javax.swing.JLabel();
         txtfKostnad = new javax.swing.JTextField();
@@ -305,13 +307,7 @@ public class ProjektProjektchef extends javax.swing.JFrame {
 
         jLabel13.setText("Status");
 
-        txtfStatus.setEditable(false);
-        txtfStatus.setBackground(new java.awt.Color(212, 217, 223));
-        txtfStatus.setText("[Status]");
-        txtfStatus.setFocusable(false);
-        txtfStatus.setMaximumSize(new java.awt.Dimension(160, 30));
-        txtfStatus.setMinimumSize(new java.awt.Dimension(45, 30));
-        txtfStatus.setPreferredSize(new java.awt.Dimension(60, 30));
+        cbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Planerat", "Pågående", "Avslutad" }));
 
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
@@ -320,14 +316,14 @@ public class ProjektProjektchef extends javax.swing.JFrame {
             .addGroup(jPanel12Layout.createSequentialGroup()
                 .addComponent(jLabel13)
                 .addGap(36, 36, 36)
-                .addComponent(txtfStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(txtfStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(cbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pnlVanster.add(jPanel12);
@@ -338,13 +334,7 @@ public class ProjektProjektchef extends javax.swing.JFrame {
 
         jLabel15.setText("Prioritet");
 
-        txtfPrioritet.setEditable(false);
-        txtfPrioritet.setBackground(new java.awt.Color(212, 217, 223));
-        txtfPrioritet.setText("[Prioritet]");
-        txtfPrioritet.setFocusable(false);
-        txtfPrioritet.setMaximumSize(new java.awt.Dimension(185, 30));
-        txtfPrioritet.setMinimumSize(new java.awt.Dimension(45, 30));
-        txtfPrioritet.setPreferredSize(new java.awt.Dimension(70, 30));
+        cbPrioritet.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Låg", "Medel", "Hög" }));
 
         javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
         jPanel14.setLayout(jPanel14Layout);
@@ -352,15 +342,15 @@ public class ProjektProjektchef extends javax.swing.JFrame {
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel14Layout.createSequentialGroup()
                 .addComponent(jLabel15)
-                .addGap(29, 29, 29)
-                .addComponent(txtfPrioritet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addComponent(cbPrioritet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel14Layout.setVerticalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(txtfPrioritet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(cbPrioritet, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pnlVanster.add(jPanel14);
@@ -649,7 +639,6 @@ public class ProjektProjektchef extends javax.swing.JFrame {
                         .addComponent(lblAvslutad)
                         .addGap(19, 19, 19))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlTopLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblStartar)
                         .addGap(20, 20, 20)))
                 .addGroup(pnlTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -739,8 +728,7 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         spnlDeltagare.setVisible(false);
         spnlPartners.setVisible(false);        
 
-        //----NYTT FÖR PROJEKTCHEF----------------------------------------
-        
+        //----NYTT FÖR PROJEKTCHEF----------------------------------------       
         //---Redigerings-läget---
         //...Datum rutor
         dateStartDatum.setVisible(false);
@@ -805,19 +793,26 @@ public class ProjektProjektchef extends javax.swing.JFrame {
             lblPid.setText("Projektid: " + pid);
             txtfProjektnamn.setText(projektinfoEnskilda.get("projektnamn"));
             txarBeskrivning.setText(projektinfoEnskilda.get("beskrivning"));
-            txtfStatus.setText(projektinfoEnskilda.get("status"));
-            txtfPrioritet.setText(projektinfoEnskilda.get("prioritet"));
             txtfKostnad.setText(projektinfoEnskilda.get("kostnad"));
             //-----NYTT FÖR PROJEKTCHEF-----
+           //...Datum
             String startdatum = projektinfoEnskilda.get("startdatum");
             String slutdatum = projektinfoEnskilda.get("slutdatum");
             txtfStartDatum.setText(startdatum);
             txtfSlutDatum.setText(slutdatum);
-
-            Date startdatumDate = java.sql.Date.valueOf(startdatum); //Upcasting
-            Date slutdatumDate =  java.sql.Date.valueOf(slutdatum);
+            java.util.Date startdatumDate = java.sql.Date.valueOf(startdatum); //Upcasting från java.sql.Date till java.util.Date 
+            java.util.Date slutdatumDate =  java.sql.Date.valueOf(slutdatum);
             dateStartDatum.setDate(startdatumDate);
             dateSlutDatum.setDate(slutdatumDate);
+            //...Drop-downs
+            String status = projektinfoEnskilda.get("status");
+            String prioritet = projektinfoEnskilda.get("prioritet");
+            if(arIComboBox(cbStatus, status)){//Exempel: Finns status "Planerat" som item i ComboBoxen cbStatus?
+                cbStatus.setSelectedItem(status); //Om statusen finns --> visa denna i vår ComboBox 
+            }
+            if(arIComboBox(cbPrioritet, prioritet)){
+                cbStatus.setSelectedItem(prioritet); 
+            } 
             //-------------------------------
             
             
@@ -846,21 +841,28 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         }
         catch(InfException e){
             System.out.println("Info kunde ej laddas. "+e.getMessage());
-        }
-        
+        }     
         pnlTop.revalidate();
     }
     
     private void sparaAndradInfo(){
-        //pid är projektid
-        //andradProjektinfo är en samling som sparar ändrad projektinfo. Nyckeln i 
-        //denna HashMap sparar attribut-identifierare på samma sätt som FetchRow() i InfDB
+        //Samlingen andradProjektinfos key är identifieraren på informationen vi sparar (som i InfDB's HashMaps)
         HashMap<String, String> andradProjektinfo = new HashMap<>();
+        //Sätter in all information från våra olika textrutor i andradProjektinfo
         andradProjektinfo.put("projektnamn", txtfProjektnamn.getText());
-        andradProjektinfo.put("startdatum", new java.sql.Date(dateStartDatum.getDate().getTime()).toString()); 
-                //projektnamn, startdatum, slutdatum, Projekt.beskrivning, "+
+        andradProjektinfo.put("startdatum", new java.sql.Date( dateStartDatum.getDate().getTime() ).toString()); //konverterar java.util.Date till String i format YYYY-MM-DD
+        andradProjektinfo.put("slutdatum", new java.sql.Date( dateSlutDatum.getDate().getTime() ).toString());     
+        andradProjektinfo.put("beskrivning", txarBeskrivning.getText());
+        andradProjektinfo.put("status", (String) cbStatus.getSelectedItem()); //Downcast pga att getSelectedItem är generisk --> kan vara vad som helst för subtyp, vi behöver bara specifiera den.
+        andradProjektinfo.put("prioritet", (String) cbPrioritet.getSelectedItem());
+        andradProjektinfo.put("kostnad", txtfKostnad.getText());
+        //...namn = landnamn (alias funka inte)
+        andradProjektinfo.put("namn", btnLand.getText()); //måste göra väljaruta för land och anstalld!
+//projektnamn, startdatum, slutdatum, Projekt.beskrivning, "+
                     //"status, Projekt.prioritet, kostnad, Land.namn as landnamn, "+
                     //"CONCAT(fornamn, ' ', efternamn) as chefnamn, projektchef
+                    
+                    //För instansknapparna behöver vi också spara ID på något snyggt sätt
     }
         
     private void vaxlaPopupSynlighet(JScrollPane popUpRuta)
@@ -930,8 +932,8 @@ public class ProjektProjektchef extends javax.swing.JFrame {
                     }
                     
                     //Lägger till metod vid knapp-tryck (genom klassen ActionListener)
-                    btnInstans.addActionListener(new ActionListener() { //implementerar abstrakt klass i ny anonymklass
-                        @Override //override av abstrkt metod
+                    btnInstans.addActionListener(new ActionListener() { //implementerar ActionListener interface i ny anonymklass
+                        @Override //override av abstrakt metod
                         public void actionPerformed(ActionEvent e) {
                             System.out.println("Öppnar HallbarhetsmålHandläggare");
                             //new Hallbarhetsmal(idb, aid, hid) som (idb, aid, id)
@@ -1002,6 +1004,40 @@ public class ProjektProjektchef extends javax.swing.JFrame {
                 //new Personalista(idb, aid)
             }        
         });
+    }
+    
+    private void instansieraLandListener(){
+        
+    }
+    
+    private void instansieraProjektchefListener(){
+        
+    }
+    
+    /**
+     * Kollar om en item finns i en JComboBox
+     * 
+     * @param <T> typen av elementen i JComboBoxen
+     * @param cb  JComboBoxen som håller 1-N items av typ T
+     * @param item item som vi kollar om finns i cb.
+     * @return true om item finns i denna cb, false om inte.
+     * 
+     * Kan exempelvis kontrollera en item av typ String.
+     */
+    private <T> boolean arIComboBox(JComboBox<T> cb, T item){ //generisk typ O ser till att båda parametrar har samma typ O
+        //Validerar argument
+        if(cb == null){
+            System.out.println("Argumentet för JComboBox<O> cb saknade referens - cb var null");
+            return false; 
+        }    
+        
+        for (int i = 0; i < cb.getItemCount(); i++) {
+            T cbItem = cb.getItemAt(i);
+            if (cbItem != null && cbItem.equals(item)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void btnDeltagareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeltagareActionPerformed
@@ -1108,6 +1144,8 @@ public class ProjektProjektchef extends javax.swing.JFrame {
     private javax.swing.JButton btnMal;
     private javax.swing.JButton btnPartners;
     private javax.swing.JButton btnSpara;
+    private javax.swing.JComboBox<String> cbPrioritet;
+    private javax.swing.JComboBox<String> cbStatus;
     private com.toedter.calendar.JDateChooser dateSlutDatum;
     private com.toedter.calendar.JDateChooser dateStartDatum;
     private javax.swing.JButton jButton8;
@@ -1155,10 +1193,8 @@ public class ProjektProjektchef extends javax.swing.JFrame {
     private javax.swing.JScrollPane spnlTop;
     private javax.swing.JTextArea txarBeskrivning;
     private javax.swing.JTextField txtfKostnad;
-    private javax.swing.JTextField txtfPrioritet;
     private javax.swing.JTextField txtfProjektnamn;
     private javax.swing.JTextField txtfSlutDatum;
     private javax.swing.JTextField txtfStartDatum;
-    private javax.swing.JTextField txtfStatus;
     // End of variables declaration//GEN-END:variables
 }
