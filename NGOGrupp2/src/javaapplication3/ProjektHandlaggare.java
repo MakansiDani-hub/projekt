@@ -636,7 +636,7 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
             //---Hämtar projektinfo---
             HashMap<String, String> projektinfoEnskilda = idb.fetchRow(
                     "SELECT projektnamn, startdatum, slutdatum, Projekt.beskrivning, "+
-                    "status, Projekt.prioritet, kostnad, Land.namn as landnamn, lid, "+
+                    "status, Projekt.prioritet, kostnad, Land.namn, lid, "+
                     "CONCAT(fornamn, ' ', efternamn) as chefnamn, projektchef "+
                     "FROM Projekt "+
                     "JOIN Land ON land = lid "+
@@ -750,7 +750,7 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
                     }
                     
                     //Lägger till action för knapp-tryck (genom klassen ActionListener)
-                    btnInstans.addActionListener(new ActionListener() { //implementerar abstrakt klass ActionListener i ny anonymklass                     
+                    btnInstans.addActionListener(new ActionListener() { //implementerar ActionListener interface i ny anonymklass                     
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             //Vid knapptryck skapas ett Hållbarhets-fönster som visar uppgifter om ett hållbarhetsmål.
