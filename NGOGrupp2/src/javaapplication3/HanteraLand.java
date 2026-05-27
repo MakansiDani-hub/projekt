@@ -194,6 +194,7 @@ import javax.swing.JOptionPane;
         JBtnLaggTillLand = new javax.swing.JButton();
         JBtnÄndraLand = new javax.swing.JButton();
         JBtnTaBortLand = new javax.swing.JButton();
+        JBtnTillbakaTillMeny = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -311,24 +312,30 @@ import javax.swing.JOptionPane;
                 .addContainerGap(9, Short.MAX_VALUE))
         );
 
+        JBtnTillbakaTillMeny.setText("Tillbaka till meny");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(314, 314, 314)
-                .addComponent(JLblRubrik)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(JBtnTillbakaTillMeny)
+                        .addGap(188, 188, 188)
+                        .addComponent(JLblRubrik)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(JLblRubrik)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(JLblRubrik)
+                    .addComponent(JBtnTillbakaTillMeny))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -369,6 +376,7 @@ public static void main(String args[]) {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton JBtnLaggTillLand;
     private javax.swing.JButton JBtnTaBortLand;
+    private javax.swing.JButton JBtnTillbakaTillMeny;
     private javax.swing.JButton JBtnÄndraLand;
     private javax.swing.JLabel JLblEkonomi;
     private javax.swing.JLabel JLblLID;

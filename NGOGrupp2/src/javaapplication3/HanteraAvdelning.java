@@ -180,10 +180,12 @@ public class HanteraAvdelning extends javax.swing.JFrame {
         JBtnTaBortAvdelning = new javax.swing.JButton();
         JLblChef = new javax.swing.JLabel();
         JTxtFieldChef = new javax.swing.JTextField();
+        JLblRubrik = new javax.swing.JLabel();
+        JBtnTillbakaTillMeny = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        JPanelAvdelningar.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Hantera avdelningar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Segoe UI", 1, 18))); // NOI18N
+        JPanelAvdelningar.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Segoe UI", 1, 18))); // NOI18N
 
         JTableAvdelningar.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -253,12 +255,12 @@ public class HanteraAvdelning extends javax.swing.JFrame {
                     .addComponent(JTxtFieldStad)
                     .addComponent(JbtnAndraAvdelning, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
                     .addComponent(JTxtFieldChef))
-                .addContainerGap(70, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         JPanelAvdelningarLayout.setVerticalGroup(
             JPanelAvdelningarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(JPanelAvdelningarLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(11, 11, 11)
                 .addGroup(JPanelAvdelningarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(JPanelAvdelningarLayout.createSequentialGroup()
                         .addGap(25, 25, 25)
@@ -300,18 +302,36 @@ public class HanteraAvdelning extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(JBtnTaBortAvdelning, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
+
+        JLblRubrik.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        JLblRubrik.setText("Hantera Avdelningar");
+
+        JBtnTillbakaTillMeny.setText("Tillbaka till meny");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(JPanelAvdelningar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(JBtnTillbakaTillMeny)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 127, Short.MAX_VALUE)
+                .addComponent(JLblRubrik)
+                .addGap(249, 249, 249))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(JPanelAvdelningar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(JLblRubrik)
+                    .addComponent(JBtnTillbakaTillMeny))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(JPanelAvdelningar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -349,12 +369,14 @@ public class HanteraAvdelning extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton JBtnLaggTillAvdelning;
     private javax.swing.JButton JBtnTaBortAvdelning;
+    private javax.swing.JButton JBtnTillbakaTillMeny;
     private javax.swing.JLabel JLblAdress;
     private javax.swing.JLabel JLblAvdID;
     private javax.swing.JLabel JLblBeskrivning;
     private javax.swing.JLabel JLblChef;
     private javax.swing.JLabel JLblEpost;
     private javax.swing.JLabel JLblNamn;
+    private javax.swing.JLabel JLblRubrik;
     private javax.swing.JLabel JLblStad;
     private javax.swing.JLabel JLblTelefon;
     private javax.swing.JPanel JPanelAvdelningar;
