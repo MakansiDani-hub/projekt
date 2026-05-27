@@ -273,25 +273,16 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="L&#xe4;gg till"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JBtnLaggTillPartnerActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="JBtn&#xc4;ndraPartner">
           <Properties>
             <Property name="text" type="java.lang.String" value="&#xc4;ndra"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JBtn&#xc4;ndraPartnerActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="JBtnTaBortPartner">
           <Properties>
             <Property name="text" type="java.lang.String" value="Ta Bort"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JBtnTaBortPartnerActionPerformed"/>
-          </Events>
         </Component>
       </SubComponents>
     </Container>

@@ -7,10 +7,6 @@ import java.util.HashMap;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JOptionPane;
 
-/**
- * Kostnadsstatistik för projekt.
- * @author Big Dick J
- */
 public class ProjectCost extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ProjectCost.class.getName());
@@ -18,26 +14,21 @@ public class ProjectCost extends javax.swing.JFrame {
     private InfDB idb;
     private int aid;
 
-    /**
-     * Konstruktor som tar emot databasanslutning och användar-ID.
-     */
     public ProjectCost(InfDB idb, int aid) {
         initComponents();
         this.idb = idb;
         this.aid = aid;
         
-        // Fyll tabellen med all data direkt när fönstret laddas
+        // Hämta all data när fönstret öppnas
         uppdateraStatistik("SELECT projektnamn, status, budget, kostnad FROM projekt");
     }
 
-    /**
-     * Hämtar data baserat på SQL-frågan, fyller tabellen och räknar ut statistik.
-     */
+    // Vår huvudmetod för att hämta data och uppdatera gränssnittet
     private void uppdateraStatistik(String sqlFraga) {
         try {
             ArrayList<HashMap<String, String>> projektLista = idb.fetchRows(sqlFraga);
             DefaultTableModel model = (DefaultTableModel) tblKostnadsStatistik.getModel();
-            model.setRowCount(0); // Tömmer gamla rader
+            model.setRowCount(0); // Töm tabellen
             
             double totalKostnad = 0;
             int antalProjekt = 0;
@@ -57,19 +48,18 @@ public class ProjectCost extends javax.swing.JFrame {
                     }
                 }
             }
-            
-            // Uppdatera textetiketterna med statistik
             lblTotalKostnad.setText(Math.round(totalKostnad) + " kr");
             if (antalProjekt > 0) {
                 lblGenomsnitt.setText(Math.round(totalKostnad / antalProjekt) + " kr");
             } else {
                 lblGenomsnitt.setText("0 kr");
             }
-            
         } catch (InfException e) {
             JOptionPane.showMessageDialog(null, "Databasfel: " + e.getMessage());
         }
     }
+
+    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -269,8 +259,8 @@ public class ProjectCost extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EntQueue.invokeLater(() -> new ProjectCost().setVisible(true));
-    }
+        java.awt.EventQueue.invokeLater(() -> new ProjectCost().setVisible(true));
+    }nä
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSökDatum;
