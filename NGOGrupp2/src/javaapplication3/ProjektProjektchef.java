@@ -35,8 +35,7 @@ public class ProjektProjektchef extends javax.swing.JFrame {
     private static final Color bakgrundsfarg = new Color(212, 217, 223);
 
     //Session
-    private InfDB idb; //databas
-    private int aid; //användarens id
+    private Anvandare anv; //användaren (Session)
     private int pid; //det valda projektet vars uppgifter visas  
 
     //Redigeringsläge
@@ -58,12 +57,11 @@ public class ProjektProjektchef extends javax.swing.JFrame {
     private Popup valjs;
     
 
-    public ProjektProjektchef(InfDB idb, int aid, int pid)
+    public ProjektProjektchef(Anvandare anv, int pid)
     {
         //Den som öppnat detta fönster är projektchef för det, vid nuläget innebär det att kontroll behöver
         
-        this.idb = idb;
-        this.aid = aid;
+        this.anv = anv;
         this.pid = pid;
         redigerar = false;
         valjs = Popup.INGEN;       
@@ -823,6 +821,8 @@ public class ProjektProjektchef extends javax.swing.JFrame {
     
   
     private void laddaInfo(){
+        //databas
+        InfDB idb = anv.getIdb();
         
         try{
             //---Hämtar projektinfo--- (Att ha datahämtning här är dålig cohesion och coupling. Förbättra vid refaktorisering, är låg-prio)
@@ -1281,7 +1281,7 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         
         try {
             InfDB idb = new InfDB("sdgsweden", "3306", "root", "masterkey");
-            new ProjektProjektchef(idb, 3, 2).setVisible(true);
+            new ProjektProjektchef(new Anvandare(idb, null, null, null, 3, null, null, null), 2).setVisible(true);
             System.out.println("Databaskoppling skapad");
         } catch (InfException e) {
             System.out.println(e.getMessage());
