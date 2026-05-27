@@ -4,6 +4,7 @@
  */
 package javaapplication3;
 
+//import projListener.LandListener;
 import oru.inf.InfDB;
 import oru.inf.InfException;
 import java.util.ArrayList;
@@ -15,9 +16,9 @@ import javax.swing.JOptionPane;
  *
  * @author Kristoffer Kolkowski
  */
-
-    public class HanteraLand extends javax.swing.JFrame {
     
+    public class HanteraLand extends javax.swing.JFrame {
+        //private LandListener landListener;
         private InfDB idb;
         private DefaultTableModel bordsModell;
         private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(HanteraLand.class.getName());
@@ -25,6 +26,12 @@ import javax.swing.JOptionPane;
     /**
      * Creates new form HanteraLand
      */
+        
+//    public HanteraLand(InfDB idb, LandListener landListener){
+//        this.landListener = landListener;
+//        HanteraLand(idb);
+//    }
+        
     public HanteraLand(InfDB idb) {
         this.idb = idb;// Sparar databasanslutningen
         initComponents();
@@ -49,6 +56,7 @@ import javax.swing.JOptionPane;
                 JTxtFieldTidZon.setText(bordsModell.getValueAt(rad, 4).toString());
                 JTxtFieldPolitiskStruktur.setText(bordsModell.getValueAt(rad, 5).toString());
                 JTxtFieldEkonomi.setText(bordsModell.getValueAt(rad, 6).toString());
+                //landListener.valLand(bordsModell.getValueAt(rad, 0),bordsModell.getValueAt(rad, 1));
             }
         }
     });

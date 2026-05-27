@@ -41,7 +41,7 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
                 // Ta reda på vilken rad användaren klickade på
                 int valdRad = JTableHallberhetsmal.getSelectedRow();
                 
-                // kollar om en rad är vald Om en rad faktiskt är valdr
+                // kollar om en rad är vald
                 if (valdRad >= 0) {
                     // Hämtar datan från kolumnerna på den valda raden
                     String id = bordsModell.getValueAt(valdRad, 0).toString();
