@@ -219,7 +219,7 @@
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="btnMal" min="-2" pref="137" max="-2" attributes="0"/>
+                              <Component id="btnMalDropdown" min="-2" pref="137" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="lblMalTips" min="-2" pref="114" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="31" max="32767" attributes="0"/>
@@ -228,7 +228,7 @@
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="btnMal" alignment="0" pref="35" max="32767" attributes="0"/>
+                          <Component id="btnMalDropdown" alignment="0" pref="35" max="32767" attributes="0"/>
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace max="32767" attributes="0"/>
                               <Component id="lblMalTips" min="-2" max="-2" attributes="0"/>
@@ -238,7 +238,7 @@
                     </DimensionLayout>
                   </Layout>
                   <SubComponents>
-                    <Component class="javax.swing.JButton" name="btnMal">
+                    <Component class="javax.swing.JButton" name="btnMalDropdown">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="&#x25b6; H&#xe5;llbarhetsm&#xe5;l"/>
                         <Property name="horizontalAlignment" type="int" value="2"/>
@@ -253,7 +253,7 @@
                         </Property>
                       </Properties>
                       <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMalActionPerformed"/>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMalDropdownActionPerformed"/>
                       </Events>
                     </Component>
                     <Component class="javax.swing.JLabel" name="lblMalTips">
@@ -270,7 +270,7 @@
                     </Component>
                   </SubComponents>
                 </Container>
-                <Container class="javax.swing.JScrollPane" name="spnlMal">
+                <Container class="javax.swing.JScrollPane" name="spnlMalDropdown">
                   <Properties>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
@@ -356,7 +356,7 @@
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="btnBeskrivning" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnBeskrivningDropdown" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="175" max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -365,14 +365,14 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
-                              <Component id="btnBeskrivning" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnBeskrivningDropdown" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
                   </Layout>
                   <SubComponents>
-                    <Component class="javax.swing.JButton" name="btnBeskrivning">
+                    <Component class="javax.swing.JButton" name="btnBeskrivningDropdown">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="&#x25b6; Beskrivning"/>
                         <Property name="horizontalAlignment" type="int" value="2"/>
@@ -391,12 +391,12 @@
                         <Property name="verifyInputWhenFocusTarget" type="boolean" value="false"/>
                       </Properties>
                       <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBeskrivningActionPerformed"/>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBeskrivningDropdownActionPerformed"/>
                       </Events>
                     </Component>
                   </SubComponents>
                 </Container>
-                <Container class="javax.swing.JScrollPane" name="spnlBeskrivning">
+                <Container class="javax.swing.JScrollPane" name="spnlBeskrivningDropdown">
                   <Properties>
                     <Property name="horizontalScrollBarPolicy" type="int" value="31"/>
                     <Property name="toolTipText" type="java.lang.String" value=""/>
@@ -432,7 +432,6 @@
                             <Property name="columns" type="int" value="5"/>
                             <Property name="lineWrap" type="boolean" value="true"/>
                             <Property name="rows" type="int" value="5"/>
-                            <Property name="text" type="java.lang.String" value="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"/>
                             <Property name="wrapStyleWord" type="boolean" value="true"/>
                             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                               <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
@@ -479,6 +478,8 @@
                               <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
                               <Component id="btnLand" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
+                              <Component id="btnBytLand" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace pref="135" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -489,6 +490,7 @@
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="btnLand" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel12" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnBytLand" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
@@ -527,6 +529,20 @@
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLandActionPerformed"/>
                       </Events>
                     </Component>
+                    <Component class="javax.swing.JButton" name="btnBytLand">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Byt"/>
+                        <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+                          <Insets value="[0, 10, 0, 10]"/>
+                        </Property>
+                        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                          <Dimension value="[40, 19]"/>
+                        </Property>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBytLandActionPerformed"/>
+                      </Events>
+                    </Component>
                   </SubComponents>
                 </Container>
                 <Container class="javax.swing.JPanel" name="jPanel12">
@@ -547,19 +563,24 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
-                              <Component id="cbStatus" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="cbStatus" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtfStatus" min="-2" max="-2" attributes="0"/>
+                              </Group>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="cbStatus" min="-2" pref="30" max="-2" attributes="0"/>
                           <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                              <Component id="txtfStatus" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel13" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
-                              <Component id="cbStatus" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -570,13 +591,33 @@
                         <Property name="text" type="java.lang.String" value="Status"/>
                       </Properties>
                     </Component>
+                    <Component class="javax.swing.JTextField" name="txtfStatus">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="false"/>
+                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="df" green="d9" red="d4" type="rgb"/>
+                        </Property>
+                        <Property name="text" type="java.lang.String" value="[Status]"/>
+                        <Property name="focusable" type="boolean" value="false"/>
+                        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                          <Dimension value="[160, 30]"/>
+                        </Property>
+                        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                          <Dimension value="[45, 30]"/>
+                        </Property>
+                        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                          <Dimension value="[60, 30]"/>
+                        </Property>
+                      </Properties>
+                    </Component>
                     <Component class="javax.swing.JComboBox" name="cbStatus">
                       <Properties>
                         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                          <StringArray count="3">
+                          <StringArray count="4">
                             <StringItem index="0" value="Planerat"/>
                             <StringItem index="1" value="P&#xe5;g&#xe5;ende"/>
                             <StringItem index="2" value="Avslutad"/>
+                            <StringItem index="3" value="Ingen"/>
                           </StringArray>
                         </Property>
                       </Properties>
@@ -604,19 +645,29 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
+                          <Group type="102" attributes="0">
                               <Component id="jLabel15" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
-                              <Component id="cbPrioritet" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="cbPrioritet" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="4" pref="4" max="-2" attributes="0"/>
+                                      <Component id="txtfPrioritet" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <EmptySpace pref="156" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                              <Component id="jLabel15" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="cbPrioritet" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="jLabel15" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
+                              <Component id="txtfPrioritet" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -627,13 +678,33 @@
                         <Property name="text" type="java.lang.String" value="Prioritet"/>
                       </Properties>
                     </Component>
+                    <Component class="javax.swing.JTextField" name="txtfPrioritet">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="false"/>
+                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="df" green="d9" red="d4" type="rgb"/>
+                        </Property>
+                        <Property name="text" type="java.lang.String" value="[Prioritet]"/>
+                        <Property name="focusable" type="boolean" value="false"/>
+                        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                          <Dimension value="[185, 30]"/>
+                        </Property>
+                        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                          <Dimension value="[45, 30]"/>
+                        </Property>
+                        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                          <Dimension value="[70, 30]"/>
+                        </Property>
+                      </Properties>
+                    </Component>
                     <Component class="javax.swing.JComboBox" name="cbPrioritet">
                       <Properties>
                         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                          <StringArray count="3">
+                          <StringArray count="4">
                             <StringItem index="0" value="L&#xe5;g"/>
                             <StringItem index="1" value="Medel"/>
                             <StringItem index="2" value="H&#xf6;g"/>
+                            <StringItem index="3" value="Ingen"/>
                           </StringArray>
                         </Property>
                       </Properties>
@@ -727,7 +798,7 @@
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="btnDeltagare" min="-2" pref="106" max="-2" attributes="0"/>
+                              <Component id="btnDeltagareDropdown" min="-2" pref="106" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
                               <Component id="lblDeltagareTips" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="132" max="32767" attributes="0"/>
@@ -739,7 +810,7 @@
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="btnDeltagare" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnDeltagareDropdown" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="lblDeltagareTips" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -747,10 +818,10 @@
                     </DimensionLayout>
                   </Layout>
                   <SubComponents>
-                    <Component class="javax.swing.JButton" name="btnDeltagare">
+                    <Component class="javax.swing.JButton" name="btnDeltagareDropdown">
                       <Properties>
+                        <Property name="text" type="java.lang.String" value="&#x25b6; Deltagare"/>
                         <Property name="horizontalAlignment" type="int" value="2"/>
-                        <Property name="label" type="java.lang.String" value="&#x25bc; Deltagare"/>
                         <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                           <Dimension value="[200, 160]"/>
                         </Property>
@@ -762,7 +833,7 @@
                         </Property>
                       </Properties>
                       <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDeltagareActionPerformed"/>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDeltagareDropdownActionPerformed"/>
                       </Events>
                     </Component>
                     <Component class="javax.swing.JLabel" name="lblDeltagareTips">
@@ -775,7 +846,7 @@
                     </Component>
                   </SubComponents>
                 </Container>
-                <Container class="javax.swing.JScrollPane" name="spnlDeltagare">
+                <Container class="javax.swing.JScrollPane" name="spnlDeltagareDropdown">
                   <Properties>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
@@ -939,24 +1010,18 @@
                             <Property name="verticalGap" type="int" value="0"/>
                           </Layout>
                           <SubComponents>
-                            <Component class="javax.swing.JButton" name="btnAddProjektchef">
+                            <Component class="javax.swing.JButton" name="btnBytProjektchef">
                               <Properties>
-                                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                                  <Font name="Segoe UI" size="8" style="1"/>
-                                </Property>
-                                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                                  <Image iconType="3" name="/Ikoner/plusikon.png"/>
-                                </Property>
-                                <Property name="iconTextGap" type="int" value="0"/>
+                                <Property name="text" type="java.lang.String" value="Byt"/>
                                 <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-                                  <Insets value="[2, 13, 3, 14]"/>
+                                  <Insets value="[0, 10, 0, 10]"/>
                                 </Property>
                                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                                  <Dimension value="[19, 19]"/>
+                                  <Dimension value="[40, 19]"/>
                                 </Property>
                               </Properties>
                               <Events>
-                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddProjektchefActionPerformed"/>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBytProjektchefActionPerformed"/>
                               </Events>
                             </Component>
                           </SubComponents>
@@ -979,7 +1044,7 @@
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="btnPartners" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnPartnersDropdown" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
                               <Component id="lblPartnersTips" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="130" max="32767" attributes="0"/>
@@ -991,7 +1056,7 @@
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace min="0" pref="11" max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="btnPartners" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
+                                  <Component id="btnPartnersDropdown" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
                                   <Component id="lblPartnersTips" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -999,17 +1064,17 @@
                     </DimensionLayout>
                   </Layout>
                   <SubComponents>
-                    <Component class="javax.swing.JButton" name="btnPartners">
+                    <Component class="javax.swing.JButton" name="btnPartnersDropdown">
                       <Properties>
+                        <Property name="text" type="java.lang.String" value="&#x25b6; Partners"/>
                         <Property name="horizontalAlignment" type="int" value="2"/>
-                        <Property name="label" type="java.lang.String" value="&#x25bc; Partners"/>
                         <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                           <Dimension value="[160, 160]"/>
                         </Property>
                         <Property name="verifyInputWhenFocusTarget" type="boolean" value="false"/>
                       </Properties>
                       <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPartnersActionPerformed"/>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPartnersDropdownActionPerformed"/>
                       </Events>
                     </Component>
                     <Component class="javax.swing.JLabel" name="lblPartnersTips">
@@ -1022,7 +1087,7 @@
                     </Component>
                   </SubComponents>
                 </Container>
-                <Container class="javax.swing.JScrollPane" name="spnlPartners">
+                <Container class="javax.swing.JScrollPane" name="spnlPartnersDropdown">
                   <Properties>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
@@ -1123,6 +1188,9 @@
                   </Constraints>
                 </Component>
                 <Component class="com.toedter.calendar.JDateChooser" name="dateStartDatum">
+                  <Properties>
+                    <Property name="dateFormatString" type="java.lang.String" value="y MMM d"/>
+                  </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                       <AbsoluteConstraints x="0" y="0" width="130" height="30"/>
@@ -1174,6 +1242,9 @@
                   </Constraints>
                 </Component>
                 <Component class="com.toedter.calendar.JDateChooser" name="dateSlutDatum">
+                  <Properties>
+                    <Property name="dateFormatString" type="java.lang.String" value="y MMM d"/>
+                  </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                       <AbsoluteConstraints x="0" y="0" width="130" height="30"/>

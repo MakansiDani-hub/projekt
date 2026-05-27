@@ -2,12 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
-package Listeners;
+package projListeners;
 
 /**
  *
  * @author alexander.willen
  */
-public interface ProjektchefListener {
-    void valProjektchef(); //Automatiskt public och abstrakt pga interface
+public interface PartnerListener {
+    void valPartner(String partnerId, String namn);
 }
