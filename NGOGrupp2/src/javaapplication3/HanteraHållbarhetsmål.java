@@ -37,6 +37,9 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
         this.anvandare = anvandare;
         this.idb = anvandare.getIdb();
         
+        JBtnAndraHallbarhetsmal.addActionListener(this::JBtnAndraHallbarhetsmalActionPerformed);
+        JBtnTaBortHallbarhetsmal.addActionListener(this::JBtnTaBortHallbarhetsmalActionPerformed);
+        
         // Kopplar JTable till en hanterbar modell och sätter kolumnnamn
         bordsModell = (DefaultTableModel) JTableHallbarhetsmal.getModel();
         bordsModell.setColumnIdentifiers(new Object[]{"hid", "Namn", "Målnummer", "Beskrivning", "Prioritet"});
@@ -153,6 +156,16 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
         JLblBeskrivning.setText("Beskrivning");
 
         JLblPrioritet.setText("Prioritet");
+
+        JTxtFieldHID.setText("[HID]");
+
+        JTxtFieldNamn.setText("[Namn]");
+
+        JTxtFieldMalNr.setText("[Malnummer]");
+
+        JTxtFieldBeskrivning.setText("[Beskrivning]");
+
+        JTxtFieldPrioritet.setText("[Prioritet]");
 
         JBtnLaggTillHallbarhetsmal.setText("Lägg till");
         JBtnLaggTillHallbarhetsmal.addActionListener(this::JBtnLaggTillHallbarhetsmalActionPerformed);
