@@ -49,13 +49,6 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
-          <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="347" max="-2" attributes="0"/>
-                  <Component id="lblTillbakaTillMeny" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="348" max="32767" attributes="0"/>
-              </Group>
-          </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -68,13 +61,6 @@
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="JPanelProjektMotMal" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
-          </Group>
-          <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="246" max="-2" attributes="0"/>
-                  <Component id="lblTillbakaTillMeny" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="246" max="32767" attributes="0"/>
-              </Group>
           </Group>
       </Group>
     </DimensionLayout>
@@ -194,7 +180,7 @@
         </Container>
         <Component class="javax.swing.JLabel" name="JLblLID">
           <Properties>
-            <Property name="text" type="java.lang.String" value="H&#xe5;llberhetsm&#xe5;lID"/>
+            <Property name="text" type="java.lang.String" value="H&#xe5;llbarhetsm&#xe5;lID"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="JLblNamn">
@@ -218,29 +204,14 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="JTxtFieldHID">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="[HID]"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="JTxtFieldNamn">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="[Namn]"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="JTxtFieldMalNr">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="[Malnummer]"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="JTxtFieldBeskrivning">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="[Berskrivning]"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="JTxtFieldPrioritet">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="[Prioritet]"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="JBtnAndraHallbarhetsmal">
           <Properties>
@@ -278,13 +249,5 @@
         </DimensionLayout>
       </Layout>
     </Container>
-    <Component class="javax.swing.JButton" name="lblTillbakaTillMeny">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Tillbaka till Meny"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="lblTillbakaTillMenyActionPerformed"/>
-      </Events>
-    </Component>
   </SubComponents>
 </Form>
