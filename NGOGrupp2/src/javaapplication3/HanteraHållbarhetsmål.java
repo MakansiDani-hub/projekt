@@ -3,12 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package javaapplication3;
-
 /**
  *
  * @author Kristoffer Kolkowski
  */
-//import projListener.MalListener;
+//import projListener.malListener;
 import oru.inf.InfDB;
 import oru.inf.InfException;
 import java.util.ArrayList;
