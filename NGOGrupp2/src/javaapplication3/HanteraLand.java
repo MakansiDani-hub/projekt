@@ -22,6 +22,7 @@ import javax.swing.JOptionPane;
         private InfDB idb;
         private DefaultTableModel bordsModell;
         private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(HanteraLand.class.getName());
+        private Anvandare anvandare;
 
     /**
      * Creates new form HanteraLand
@@ -32,10 +33,11 @@ import javax.swing.JOptionPane;
 //        HanteraLand(idb);
 //    }
         
-    public HanteraLand(InfDB idb) {
-        this.idb = idb;// Sparar databasanslutningen
-        initComponents();
+    public HanteraLand(Anvandare anvandare) {
         
+        initComponents();
+        this.idb = anvandare.getIdb();// Sparar databasanslutningen
+        this.anvandare = anvandare;
         //initierar tabellmodellen
         bordsModell = (DefaultTableModel) JTableListaLand.getModel();
         //sätter rubriker som matchar databasen
@@ -370,16 +372,16 @@ import javax.swing.JOptionPane;
 
 
 //tillfällig main metod för att testa fönstret.
-public static void main(String args[]) {
-    java.awt.EventQueue.invokeLater(() -> {
-        try {
-            InfDB db = new InfDB("sdgsweden", "3306", "root", "masterkey");
-            new HanteraLand(db).setVisible(true);
-        } catch (InfException ex) {
-            System.out.println("Kunde inte starta databasen: " + ex.getMessage());
-        }
-    });
-}
+//public static void main(String args[]) {
+//    java.awt.EventQueue.invokeLater(() -> {
+//        try {
+//            InfDB idb = new InfDB("sdgsweden", "3306", "root", "masterkey");
+//            new HanteraLand(anvandare).setVisible(true);
+//        } catch (InfException ex) {
+//            System.out.println("Kunde inte starta databasen: " + ex.getMessage());
+//        }
+//    });
+//}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton JBtnLaggTillLand;
