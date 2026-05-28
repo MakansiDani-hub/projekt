@@ -20,13 +20,17 @@ public class HanteraAvdelning extends javax.swing.JFrame {
     private InfDB idb;
     private DefaultTableModel bordsModell;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(HanteraAvdelning.class.getName());
+    private Anvandare anvandare;
 
     /**
      * Creates new form HanteraAvdelning
      */
-    public HanteraAvdelning(InfDB idb) {
-        this.idb = idb;
+    public HanteraAvdelning(Anvandare anvandare) {
         initComponents();
+        this.anvandare = anvandare;
+        this.idb = anvandare.getIdb();
+        
+       
 
         // Initierar tabellen
         bordsModell = (DefaultTableModel) JTableAvdelningar.getModel();
@@ -350,22 +354,22 @@ public class HanteraAvdelning extends javax.swing.JFrame {
     }//GEN-LAST:event_JBtnTaBortAvdelningActionPerformed
 
         // Tillfällig main metod för att kunna provköra klassen
-    public static void main(String args[]) {
-        try {
-            // Upprättar anslutning mot SQL-servern
-            InfDB testDb = new InfDB("sdgsweden", "3306", "root", "masterkey");
-
-            java.awt.EventQueue.invokeLater(new Runnable() {
-                public void run() {
-                    // Startar denna klass och skickar med databaskopplingen
-                    new HanteraAvdelning(testDb).setVisible(true);
-                }
-            });
-        } catch (InfException e) {
-            System.out.println("Kunde inte ansluta till MySQL-servern: " + e.getMessage());
-            JOptionPane.showMessageDialog(null, "Anslutningsfel: " + e.getMessage());
-        }
-    }
+//    public static void main(String args[]) {
+//        try {
+//            // Upprättar anslutning mot SQL-servern
+//            InfDB testDb = new InfDB("sdgsweden", "3306", "root", "masterkey");
+//
+//            java.awt.EventQueue.invokeLater(new Runnable() {
+//                public void run() {
+//                    // Startar denna klass och skickar med databaskopplingen
+//                    new HanteraAvdelning(testDb).setVisible(true);
+//                }
+//            });
+//        } catch (InfException e) {
+//            System.out.println("Kunde inte ansluta till MySQL-servern: " + e.getMessage());
+//            JOptionPane.showMessageDialog(null, "Anslutningsfel: " + e.getMessage());
+//        }
+//    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton JBtnLaggTillAvdelning;
     private javax.swing.JButton JBtnTaBortAvdelning;
