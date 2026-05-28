@@ -101,7 +101,6 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        JBtnLaggTillHallbarhetsmal = new javax.swing.JButton();
         JLblRubrik = new javax.swing.JLabel();
         JPanelHållbarhetsmål = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -116,11 +115,10 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
         JTxtFieldMalNr = new javax.swing.JTextField();
         JTxtFieldBeskrivning = new javax.swing.JTextField();
         JTxtFieldPrioritet = new javax.swing.JTextField();
+        JBtnLaggTillHallbarhetsmal = new javax.swing.JButton();
         JBtnAndraHallbarhetsmal = new javax.swing.JButton();
         JBtnTaBortHallbarhetsmal = new javax.swing.JButton();
         JPanelProjektMotMal = new javax.swing.JPanel();
-
-        JBtnLaggTillHallbarhetsmal.setText("Lägg till");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -152,6 +150,9 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
 
         JLblPrioritet.setText("Prioritet");
 
+        JBtnLaggTillHallbarhetsmal.setText("Lägg till");
+        JBtnLaggTillHallbarhetsmal.addActionListener(this::JBtnLaggTillHallbarhetsmalActionPerformed);
+
         JBtnAndraHallbarhetsmal.setText("Ändra");
 
         JBtnTaBortHallbarhetsmal.setText("Ta bort");
@@ -169,7 +170,8 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
                     .addComponent(JLblNamn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(JLblMalNr, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(JLblBeskrivning, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(JLblPrioritet, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(JLblPrioritet, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(JBtnLaggTillHallbarhetsmal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(JPanelHållbarhetsmålLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(JTxtFieldHID)
@@ -210,7 +212,9 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
                             .addComponent(JTxtFieldPrioritet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(JPanelHållbarhetsmålLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(JBtnAndraHallbarhetsmal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(JPanelHållbarhetsmålLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(JBtnAndraHallbarhetsmal)
+                                .addComponent(JBtnLaggTillHallbarhetsmal))
                             .addComponent(JBtnTaBortHallbarhetsmal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
         );
 
