@@ -17,6 +17,8 @@ public class MenyHandlaggareProjektchef extends javax.swing.JFrame {
     private Anvandare anvandare;
     private InfDB idb;
     private int aid;
+    private String namn;
+    private String efternamn;
 
     /**
      * Creates new form MenyHandlaggareProjektchef
@@ -26,6 +28,12 @@ public class MenyHandlaggareProjektchef extends javax.swing.JFrame {
         this.idb = anvandare.getIdb();
         this.aid = anvandare.getAid();
         this.anvandare = anvandare;
+        this.namn = anvandare.getDbNamn();
+        this.efternamn = anvandare.getDbEfternamn();
+        this.anvandare = anvandare;
+        
+        lblFörnamn.setText("namn: " + namn +" " + efternamn );
+        
        try{
         lblFörnamn.setText(idb.fetchSingle("SELECT fornamn FROM anstalld where aid = '"+ aid+"'"));
        }catch(InfException ex){
@@ -52,13 +60,12 @@ public class MenyHandlaggareProjektchef extends javax.swing.JFrame {
         btnSökPersonal = new javax.swing.JButton();
         btnSökProjekt = new javax.swing.JButton();
         lblFörnamn = new javax.swing.JLabel();
-        lblEfternamn = new javax.swing.JLabel();
         btnVisaProjektKostnader = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel1.setText("Projektchef & Handläggare");
+        jLabel1.setText("Projektchefs Meny");
 
         btnMinaUppgifter.setText("Mina uppgifter");
         btnMinaUppgifter.addActionListener(this::btnMinaUppgifterActionPerformed);
@@ -77,8 +84,6 @@ public class MenyHandlaggareProjektchef extends javax.swing.JFrame {
 
         lblFörnamn.setText("förnamn");
 
-        lblEfternamn.setText("efternamn");
-
         btnVisaProjektKostnader.setText("Visa Projekts Kostnader");
         btnVisaProjektKostnader.addActionListener(this::btnVisaProjektKostnaderActionPerformed);
 
@@ -96,9 +101,7 @@ public class MenyHandlaggareProjektchef extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(79, 79, 79)
                 .addComponent(lblFörnamn, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblEfternamn, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(btnVisaProjektKostnader, javax.swing.GroupLayout.DEFAULT_SIZE, 435, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
@@ -107,8 +110,7 @@ public class MenyHandlaggareProjektchef extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(lblFörnamn)
-                    .addComponent(lblEfternamn))
+                    .addComponent(lblFörnamn))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
                 .addComponent(btnMinaUppgifter)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -191,7 +193,6 @@ public class MenyHandlaggareProjektchef extends javax.swing.JFrame {
     private javax.swing.JButton btnSökProjekt;
     private javax.swing.JButton btnVisaProjektKostnader;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel lblEfternamn;
     private javax.swing.JLabel lblFörnamn;
     // End of variables declaration//GEN-END:variables
 }

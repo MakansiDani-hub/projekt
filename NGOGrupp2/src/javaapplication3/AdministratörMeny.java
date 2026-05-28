@@ -16,6 +16,8 @@ public class AdministratörMeny extends javax.swing.JFrame {
     private Anvandare anvandare;
     private InfDB idb;
     private int aid;
+    private String namn;
+    private String efternamn;
     /**
      * Creates new form Administratör
      */
@@ -24,6 +26,11 @@ public class AdministratörMeny extends javax.swing.JFrame {
         this.idb = anvandare.getIdb();
         this.aid = anvandare.getAid();
         this.anvandare = anvandare;
+        this.namn = anvandare.getDbNamn();
+        this.efternamn = anvandare.getDbEfternamn();
+        this.anvandare = anvandare;
+        
+        JLblEpost.setText("namn: " + namn +" " + efternamn );
     }
 
     /**
@@ -43,7 +50,6 @@ public class AdministratörMeny extends javax.swing.JFrame {
         BtnHanteraLand = new javax.swing.JButton();
         BtnHanteraHmål = new javax.swing.JButton();
         JLblEpost = new javax.swing.JLabel();
-        JLblinformationInloggad = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -68,9 +74,7 @@ public class AdministratörMeny extends javax.swing.JFrame {
         BtnHanteraHmål.setText("Hantera Hållbarhetsmål");
         BtnHanteraHmål.addActionListener(this::BtnHanteraHmålActionPerformed);
 
-        JLblEpost.setText("[Epost]");
-
-        JLblinformationInloggad.setText("Avdelning: [Namn + ID]");
+        JLblEpost.setText("för och efternamn");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -79,10 +83,8 @@ public class AdministratörMeny extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addComponent(RubrikAdmin)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 167, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(JLblEpost)
-                    .addComponent(JLblinformationInloggad))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 197, Short.MAX_VALUE)
+                .addComponent(JLblEpost)
                 .addGap(28, 28, 28))
             .addComponent(BtnHanteraAnst, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(BtnHanteraLand, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -98,9 +100,7 @@ public class AdministratörMeny extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(RubrikAdmin)
                     .addComponent(JLblEpost))
-                .addGap(6, 6, 6)
-                .addComponent(JLblinformationInloggad)
-                .addGap(18, 18, 18)
+                .addGap(40, 40, 40)
                 .addComponent(BtnHanteraAnst)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(BtnHanteraLand)
@@ -181,7 +181,6 @@ public class AdministratörMeny extends javax.swing.JFrame {
     private javax.swing.JButton BtnHanteraPartner;
     private javax.swing.JButton BtnHanteraProjekt;
     private javax.swing.JLabel JLblEpost;
-    private javax.swing.JLabel JLblinformationInloggad;
     private javax.swing.JLabel RubrikAdmin;
     // End of variables declaration//GEN-END:variables
 }

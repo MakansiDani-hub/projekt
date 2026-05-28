@@ -148,6 +148,7 @@ public class inloggningsfonster extends javax.swing.JFrame {
                 String anvandareslosenord = "SELECT losenord FROM anstalld where epost = '" + ePost+"'";
                 String dbAnvandareslosenord = idb.fetchSingle (anvandareslosenord);
                 
+                
 
                 
                 
@@ -174,6 +175,7 @@ public class inloggningsfonster extends javax.swing.JFrame {
                 
                 Anvandare anvandare = new Anvandare(
                 idb,
+                
                 dbNamn,
                 dbEfternamn,
                 dbAnstallningsdatum,

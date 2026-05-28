@@ -16,14 +16,23 @@ public class MenyHandlaggare extends javax.swing.JFrame {
     private Anvandare anvandare;
     private InfDB idb;
     private int aid;
+    private String namn;
+    private String efternamn;
+    private String epost;
     /**
      * Creates new form MenyHandlaggare
      */
     public MenyHandlaggare(Anvandare anvandare) {
+        initComponents();
         this.idb = anvandare.getIdb();
         this.aid = anvandare.getAid();
+        this.namn = anvandare.getDbNamn();
+        
+        this.efternamn = anvandare.getDbEfternamn();
         this.anvandare = anvandare;
-        initComponents();
+        
+        lblFullnamn.setText("namn: " + namn +" " + efternamn );
+        
     }
 
     /**
@@ -36,11 +45,10 @@ public class MenyHandlaggare extends javax.swing.JFrame {
     private void initComponents() {
 
         jButton1 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
+        lblFullnamn = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
 
@@ -49,20 +57,18 @@ public class MenyHandlaggare extends javax.swing.JFrame {
         jButton1.setText("Mina uppgifter");
         jButton1.addActionListener(this::jButton1ActionPerformed);
 
-        jLabel1.setText("Avdelning: [Namn + ID]");
-
-        jButton2.setText("Sök projekt  -> ProjektSok");
+        jButton2.setText("Sök projekt");
         jButton2.addActionListener(this::jButton2ActionPerformed);
 
-        jButton3.setText("Mina projekt (IN PROGRESS)");
+        jButton3.setText("Mina projekt ");
         jButton3.addActionListener(this::jButton3ActionPerformed);
 
-        jButton4.setText("Hållbarhetsmålen -> Hallbarhetsmal");
+        jButton4.setText("Hållbarhetsmålen");
         jButton4.addActionListener(this::jButton4ActionPerformed);
 
-        jLabel2.setText("[Epost]");
+        lblFullnamn.setText("för och efternamn");
 
-        jButton5.setText("Sök personal -> personal lisat");
+        jButton5.setText("Sök personal");
         jButton5.addActionListener(this::jButton5ActionPerformed);
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -75,10 +81,8 @@ public class MenyHandlaggare extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 105, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel1)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 135, Short.MAX_VALUE)
+                .addComponent(lblFullnamn))
             .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -90,11 +94,8 @@ public class MenyHandlaggare extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel1)))
-                .addGap(18, 18, 18)
+                    .addComponent(lblFullnamn))
+                .addGap(31, 31, 31)
                 .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton3)
@@ -111,19 +112,23 @@ public class MenyHandlaggare extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        new ProjektSok(anvandare).setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        new ProjektSok(anvandare).setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
+        new PersonalLista(anvandare).setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
+        new Hallbarhetsmal(anvandare).setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -162,8 +167,7 @@ public class MenyHandlaggare extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel lblFullnamn;
     // End of variables declaration//GEN-END:variables
 }

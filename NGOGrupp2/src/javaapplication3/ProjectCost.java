@@ -77,7 +77,7 @@ public class ProjectCost extends javax.swing.JFrame {
             }
 
         } catch (InfException e) {
-            JOptionPane.showMessageDialog(null, "Databasfel: " + e.getMessage());
+            //JOptionPane.showMessageDialog(null, "Databasfel: " + e.getMessage());
         }
     }
 
