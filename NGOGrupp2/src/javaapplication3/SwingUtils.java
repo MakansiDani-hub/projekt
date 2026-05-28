@@ -21,7 +21,7 @@ public final class SwingUtils {
      * Kan exempelvis kontrollera en item av typ String.
      * @author alexander.willen
      */
-    private <T> boolean arIComboBox(JComboBox<T> cb, T item) { //generisk typ T ser till att båda parametrar har samma typ T, tex String
+    public static <T> boolean arIComboBox(JComboBox<T> cb, T item) { //generisk typ T ser till att båda parametrar har samma typ T, tex String
         //Validerar argument
         if (cb == null) {
             System.out.println("Argumentet för JComboBox<O> cb saknade referens - cb var null");
