@@ -21,15 +21,15 @@ public final class SwingUtils {
      * Kan exempelvis kontrollera en item av typ String.
      * @author alexander.willen
      */
-    public static <T> boolean arIComboBox(JComboBox<T> cb, T item) { //generisk typ T ser till att båda parametrar har samma typ T, tex String
+    public static <T> boolean finnsIComboBox(JComboBox<T> comboBox, T itemAttProva) { //generisk typ T ser till att båda parametrar har samma typ T, tex String
         //Validerar argument
-        if (cb == null) {
+        if (comboBox == null) {
             System.out.println("Argumentet för JComboBox<O> cb saknade referens - cb var null");
             return false;
         }
-        for (int i = 0; i < cb.getItemCount(); i++) {
-            T cbItem = cb.getItemAt(i);
-            if (cbItem != null && cbItem.equals(item)) {
+        for (int i = 0; i < comboBox.getItemCount(); i++) {
+            T cbItem = comboBox.getItemAt(i);
+            if (cbItem != null && cbItem.equals(itemAttProva)) {
                 return true;
             }
         }

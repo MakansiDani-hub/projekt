@@ -21,6 +21,9 @@ public class ProjektSok extends javax.swing.JFrame {
     
     public ProjektSok(Anvandare anv) {
         this.anv = anv;
+        setStatus("Ingen");
+        setStartdatum(null);
+        setSlutdatum(null);
         
         initComponents();
     }
@@ -29,6 +32,7 @@ public class ProjektSok extends javax.swing.JFrame {
     private void setStatus(String status){
         valStatus = status;
         //uppdatera UI för vald-status
+        if(SwingUtils.finnsIComboBox(cbStatus, status))
         cbStatus.setSelectedItem(status);   
     }
     
@@ -36,7 +40,11 @@ public class ProjektSok extends javax.swing.JFrame {
         valStartdatum = datum;
         //uppdatera UI för vald-status
         dateStartdatum.setDate(datum);  
-        dateSlutdatum.setDate(datum);
+    }
+    private void setSlutdatum(Date datum){
+        valSlutdatum = datum;
+        //uppdatera UI för vald-status
+        dateSlutdatum.setDate(datum);  
     }
     
     private void genereraLista(Date startdatum, Date slutdatum, String status){
