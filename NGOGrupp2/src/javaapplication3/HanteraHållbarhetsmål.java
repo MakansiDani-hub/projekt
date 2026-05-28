@@ -20,6 +20,7 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
     private InfDB idb; 
     private DefaultTableModel bordsModell;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(HanteraHållbarhetsmål.class.getName());
+    private Anvandare anvandare;
 
     /**
      * Creates new form HanteraHållbarhetsmål
@@ -29,9 +30,12 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
 //        HanteraHållbarhetsmål(idb);
 //    }
     
-    public HanteraHållbarhetsmål(InfDB idb) {
-        this.idb = idb;
+    public HanteraHållbarhetsmål(Anvandare anvandare) {
+        
         initComponents();
+        this.idb = anvandare.getIdb();
+        this.anvandare = anvandare;
+        this.idb = anvandare.getIdb();
         
         // Kopplar JTable till en hanterbar modell och sätter kolumnnamn
         bordsModell = (DefaultTableModel) JTableHallbarhetsmal.getModel();
@@ -394,18 +398,18 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     //Tillfällig main metod för att kunna provköra klassen
-    public static void main(String args[]) {
-        try {
-            // upprättar anslutning mot mot sql-servern
-            InfDB testDb = new InfDB("sdgsweden", "3306", "root", "masterkey"); 
-            
-            java.awt.EventQueue.invokeLater(new Runnable() {
-                public void run() {
-                    new HanteraHållbarhetsmål(testDb).setVisible(true);
-                }
-            });
-        } catch (InfException e) {
-            System.out.println("Kunde inte ansluta till MySQL-servern: " + e.getMessage());
-        }
-    }
+//    public static void main(String args[]) {
+//        try {
+//            // upprättar anslutning mot mot sql-servern
+//            InfDB testDb = new InfDB("sdgsweden", "3306", "root", "masterkey"); 
+//            
+//            java.awt.EventQueue.invokeLater(new Runnable() {
+//                public void run() {
+//                    new HanteraHållbarhetsmål(testDb).setVisible(true);
+//                }
+//            });
+//        } catch (InfException e) {
+//            System.out.println("Kunde inte ansluta till MySQL-servern: " + e.getMessage());
+//        }
+//    }
 }

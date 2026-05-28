@@ -118,7 +118,7 @@ public class AdministratörMeny extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BtnHanteraHmålActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHanteraHmålActionPerformed
-        //new HanteraHållbarhetsmål(anvandare).setVisible(true);
+        new HanteraHållbarhetsmål(anvandare).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_BtnHanteraHmålActionPerformed
 
