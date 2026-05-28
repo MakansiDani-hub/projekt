@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
 public class ProjectCost extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ProjectCost.class.getName());
-
+    private Anvandare anvandare;
     private InfDB idb;
     private int aid;
 
@@ -267,7 +267,7 @@ public class ProjectCost extends javax.swing.JFrame {
 
     private void lblTillbakaTillMenyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblTillbakaTillMenyActionPerformed
         //new MenyHandlaggareProjektchef().setVisible(true);
-        new MenyHandlaggareProjektchef(idb, aid).setVisible(true);
+       // new MenyHandlaggareProjektchef(anvandare).setVisible(true);
         this.dispose();
         this.setVisible(false);
     }//GEN-LAST:event_lblTillbakaTillMenyActionPerformed

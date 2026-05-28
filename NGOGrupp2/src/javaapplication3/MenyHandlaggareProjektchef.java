@@ -208,7 +208,7 @@ public class MenyHandlaggareProjektchef extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMinaProjektActionPerformed
 
     private void btnHållbarhetsmålenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHållbarhetsmålenActionPerformed
-        new Hallbarhetsmal().setVisible(true);
+        //new Hallbarhetsmal().setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnHållbarhetsmålenActionPerformed
 
@@ -224,7 +224,7 @@ public class MenyHandlaggareProjektchef extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSökProjektActionPerformed
 
     private void btnÄndraProjektUppgifterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnÄndraProjektUppgifterActionPerformed
-        new HanteraProjekt(anvandare).setVisible(true);
+        //new HanteraProjekt(anvandare).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnÄndraProjektUppgifterActionPerformed
 
@@ -234,7 +234,7 @@ public class MenyHandlaggareProjektchef extends javax.swing.JFrame {
     }//GEN-LAST:event_btnHanterHandläggareActionPerformed
 
     private void btnVisaProjektKostnaderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVisaProjektKostnaderActionPerformed
-        new ProjectCost().setVisible(true);
+       // new ProjectCost().setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnVisaProjektKostnaderActionPerformed
 

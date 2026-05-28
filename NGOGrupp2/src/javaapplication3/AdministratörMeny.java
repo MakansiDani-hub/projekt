@@ -125,7 +125,7 @@ public class AdministratörMeny extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnHanteraAnstActionPerformed
 
     private void BtnHanteraProjektActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHanteraProjektActionPerformed
-        new HanteraProjekt(anvandare).setVisible(true);
+        //new HanteraProjekt(anvandare).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_BtnHanteraProjektActionPerformed
 

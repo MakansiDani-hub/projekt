@@ -849,31 +849,31 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
         //new LandHandlaggare(anv, lid)
     }//GEN-LAST:event_btnLandActionPerformed
 
-    public static void main(String args[]) { //TA BORT MAIN METODEN TILLSLUT. NI SKA ENDAST ANVÄNDA MAIN METODEN I Startklassen
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-        }
-        //</editor-fold>
-        
-        try {
-            InfDB idb = new InfDB("sdgsweden", "3306", "root", "masterkey");
-            new ProjektHandlaggare(new Anvandare(idb, null, null, null, 3, null, null, null), 2).setVisible(true);
-            System.out.println("Databaskoppling skapad");
-        } catch (InfException e) {
-            System.out.println(e.getMessage());
-        }
-    }
+//    public static void main(String args[]) { //TA BORT MAIN METODEN TILLSLUT. NI SKA ENDAST ANVÄNDA MAIN METODEN I Startklassen
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
+//        }
+//        //</editor-fold>
+//        
+//        try {
+//            InfDB idb = new InfDB("sdgsweden", "3306", "root", "masterkey");
+//            new ProjektHandlaggare(new Anvandare(idb, null, null, null, 3, null, null, null), 2).setVisible(true);
+//            System.out.println("Databaskoppling skapad");
+//        } catch (InfException e) {
+//            System.out.println(e.getMessage());
+//        }
+//    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
