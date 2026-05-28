@@ -11,12 +11,16 @@ package javaapplication3;
 public class HanteraProjekt extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(HanteraProjekt.class.getName());
+    
 
     /**
      * Creates new form HanteraProjekt
      */
     public HanteraProjekt() {
         initComponents();
+        
+        
+        
     }
 
     /**
@@ -65,6 +69,7 @@ public class HanteraProjekt extends javax.swing.JFrame {
         JBtnTaBortUppgifter = new javax.swing.JButton();
         JLblProjektansvarig = new javax.swing.JLabel();
         JTxtFieldProjektansvarig = new javax.swing.JTextField();
+        lblTillbakaTillMeny = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -306,27 +311,34 @@ public class HanteraProjekt extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        lblTillbakaTillMeny.setText("Tillbaka till Meny");
+        lblTillbakaTillMeny.addActionListener(this::lblTillbakaTillMenyActionPerformed);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(JPanelUppgifterValtProjekt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(JPanelProjekt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(286, 286, 286)
-                        .addComponent(JLblRubrik)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(JPanelUppgifterValtProjekt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(JPanelProjekt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblTillbakaTillMeny)
+                                .addGap(160, 160, 160)
+                                .addComponent(JLblRubrik)
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(JLblRubrik)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(JLblRubrik)
+                    .addComponent(lblTillbakaTillMeny))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(JPanelProjekt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -339,6 +351,11 @@ public class HanteraProjekt extends javax.swing.JFrame {
     private void JBtnLaggTillProjektActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnLaggTillProjektActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_JBtnLaggTillProjektActionPerformed
+
+    private void lblTillbakaTillMenyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblTillbakaTillMenyActionPerformed
+        //new MenyHandlaggareProjektchef().setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_lblTillbakaTillMenyActionPerformed
 
     /**
      * @param args the command line arguments
@@ -403,5 +420,6 @@ public class HanteraProjekt extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField jTextField2;
+    private javax.swing.JButton lblTillbakaTillMeny;
     // End of variables declaration//GEN-END:variables
 }
