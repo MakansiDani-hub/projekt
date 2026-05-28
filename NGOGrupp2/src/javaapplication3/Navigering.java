@@ -8,8 +8,10 @@ package javaapplication3;
  *
  * @author WDM
  */
-public class Navigering {
+public final class Navigering {
 
+    private Navigering(){}
+    
     public static void tillbakaTillMeny(Anvandare anvandare) {
 
         String roll = anvandare.getRoll();
