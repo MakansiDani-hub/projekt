@@ -88,7 +88,7 @@ public class HanteraAnstalld extends javax.swing.JFrame {
         btnSök = new javax.swing.JButton();
         btnGenereraLösenord = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         JLblRubrik.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         JLblRubrik.setText("Hantera Anställda");

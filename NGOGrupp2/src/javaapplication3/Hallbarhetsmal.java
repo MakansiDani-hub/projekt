@@ -78,31 +78,138 @@ public class Hallbarhetsmal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        JBtnTillbakaTillMeny = new javax.swing.JButton();
-        JScrollPaneHallbarhetsmal = new javax.swing.JScrollPane();
-        JTableVisaMal = new javax.swing.JTable();
-        JLblRubrik = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jPanel6 = new javax.swing.JPanel();
+        jPanel10 = new javax.swing.JPanel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jPanel11 = new javax.swing.JPanel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        jPanel12 = new javax.swing.JPanel();
+        jLabel20 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        jLabel23 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        lblTillbakaTillMeny = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        JBtnTillbakaTillMeny.setText("Tillbaka till Meny");
-        JBtnTillbakaTillMeny.addActionListener(this::JBtnTillbakaTillMenyActionPerformed);
+        jPanel6.setLayout(new javax.swing.BoxLayout(jPanel6, javax.swing.BoxLayout.Y_AXIS));
 
-        JTableVisaMal.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        JScrollPaneHallbarhetsmal.setViewportView(JTableVisaMal);
+        jPanel10.setBorder(javax.swing.BorderFactory.createEmptyBorder(4, 0, 4, 0));
+        jPanel10.setMaximumSize(new java.awt.Dimension(580, 32));
+        jPanel10.setPreferredSize(new java.awt.Dimension(600, 32));
+        jPanel10.setLayout(new javax.swing.BoxLayout(jPanel10, javax.swing.BoxLayout.X_AXIS));
 
-        JLblRubrik.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        JLblRubrik.setText("Hållbarhetsmål");
+        jLabel12.setText("Namn");
+        jLabel12.setMaximumSize(new java.awt.Dimension(150, 16));
+        jLabel12.setMinimumSize(new java.awt.Dimension(150, 16));
+        jLabel12.setPreferredSize(new java.awt.Dimension(150, 16));
+        jPanel10.add(jLabel12);
+
+        jLabel13.setText("målnummer");
+        jLabel13.setMaximumSize(new java.awt.Dimension(80, 16));
+        jLabel13.setMinimumSize(new java.awt.Dimension(80, 16));
+        jLabel13.setPreferredSize(new java.awt.Dimension(80, 16));
+        jPanel10.add(jLabel13);
+
+        jLabel14.setText("Beskrivning");
+        jLabel14.setMaximumSize(new java.awt.Dimension(270, 16));
+        jLabel14.setMinimumSize(new java.awt.Dimension(270, 16));
+        jLabel14.setPreferredSize(new java.awt.Dimension(270, 16));
+        jPanel10.add(jLabel14);
+
+        jLabel15.setText("Prioritet");
+        jLabel15.setMaximumSize(new java.awt.Dimension(180, 16));
+        jLabel15.setPreferredSize(new java.awt.Dimension(180, 16));
+        jPanel10.add(jLabel15);
+
+        jPanel6.add(jPanel10);
+        jPanel6.add(jSeparator1);
+
+        jPanel11.setBorder(javax.swing.BorderFactory.createEmptyBorder(4, 0, 4, 0));
+        jPanel11.setMaximumSize(new java.awt.Dimension(580, 32));
+        jPanel11.setPreferredSize(new java.awt.Dimension(600, 32));
+        jPanel11.setLayout(new javax.swing.BoxLayout(jPanel11, javax.swing.BoxLayout.X_AXIS));
+
+        jLabel16.setText("[namn]");
+        jLabel16.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 0, 1, 4));
+        jLabel16.setMaximumSize(new java.awt.Dimension(150, 16));
+        jLabel16.setMinimumSize(new java.awt.Dimension(150, 16));
+        jLabel16.setPreferredSize(new java.awt.Dimension(150, 16));
+        jPanel11.add(jLabel16);
+
+        jLabel17.setText("[målnummer]");
+        jLabel17.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 0, 1, 4));
+        jLabel17.setMaximumSize(new java.awt.Dimension(80, 16));
+        jLabel17.setMinimumSize(new java.awt.Dimension(80, 16));
+        jLabel17.setPreferredSize(new java.awt.Dimension(80, 16));
+        jPanel11.add(jLabel17);
+
+        jLabel18.setText("[beskrivning]");
+        jLabel18.setAlignmentX(0.5F);
+        jLabel18.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 0, 1, 4));
+        jLabel18.setMaximumSize(new java.awt.Dimension(270, 16));
+        jLabel18.setMinimumSize(new java.awt.Dimension(270, 16));
+        jLabel18.setPreferredSize(new java.awt.Dimension(270, 16));
+        jPanel11.add(jLabel18);
+
+        jLabel19.setText("[prioritet]");
+        jLabel19.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 0, 1, 4));
+        jLabel19.setMaximumSize(new java.awt.Dimension(180, 16));
+        jLabel19.setPreferredSize(new java.awt.Dimension(180, 16));
+        jPanel11.add(jLabel19);
+
+        jPanel6.add(jPanel11);
+
+        jPanel12.setBorder(javax.swing.BorderFactory.createEmptyBorder(4, 0, 4, 0));
+        jPanel12.setMaximumSize(new java.awt.Dimension(580, 32));
+        jPanel12.setPreferredSize(new java.awt.Dimension(600, 32));
+        jPanel12.setLayout(new javax.swing.BoxLayout(jPanel12, javax.swing.BoxLayout.X_AXIS));
+
+        jLabel20.setText("[namn]");
+        jLabel20.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 0, 1, 4));
+        jLabel20.setMaximumSize(new java.awt.Dimension(150, 16));
+        jLabel20.setMinimumSize(new java.awt.Dimension(150, 16));
+        jLabel20.setPreferredSize(new java.awt.Dimension(150, 16));
+        jPanel12.add(jLabel20);
+
+        jLabel21.setText("[målnummer]");
+        jLabel21.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 0, 1, 4));
+        jLabel21.setMaximumSize(new java.awt.Dimension(80, 16));
+        jLabel21.setMinimumSize(new java.awt.Dimension(80, 16));
+        jLabel21.setPreferredSize(new java.awt.Dimension(80, 16));
+        jPanel12.add(jLabel21);
+
+        jLabel22.setText("[beskrivning]");
+        jLabel22.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 0, 1, 4));
+        jLabel22.setMaximumSize(new java.awt.Dimension(270, 16));
+        jLabel22.setMinimumSize(new java.awt.Dimension(270, 16));
+        jLabel22.setPreferredSize(new java.awt.Dimension(270, 16));
+        jPanel12.add(jLabel22);
+
+        jLabel23.setText("[prioritet]");
+        jLabel23.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 0, 1, 4));
+        jLabel23.setMaximumSize(new java.awt.Dimension(180, 16));
+        jLabel23.setPreferredSize(new java.awt.Dimension(180, 16));
+        jPanel12.add(jLabel23);
+
+        jPanel6.add(jPanel12);
+
+        jScrollPane1.setViewportView(jPanel6);
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setText("Hållbarhetsmål");
+
+        lblTillbakaTillMeny.setText("Tillbaka till Meny");
+        lblTillbakaTillMeny.addActionListener(this::lblTillbakaTillMenyActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -111,12 +218,12 @@ public class Hallbarhetsmal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(JScrollPaneHallbarhetsmal)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(JBtnTillbakaTillMeny)
+                        .addComponent(lblTillbakaTillMeny)
                         .addGap(122, 122, 122)
-                        .addComponent(JLblRubrik)
-                        .addGap(0, 242, Short.MAX_VALUE)))
+                        .addComponent(jLabel1)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 615, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -124,10 +231,10 @@ public class Hallbarhetsmal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(JBtnTillbakaTillMeny)
-                    .addComponent(JLblRubrik))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(JScrollPaneHallbarhetsmal, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE)
+                    .addComponent(jLabel1)
+                    .addComponent(lblTillbakaTillMeny))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 357, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -165,9 +272,25 @@ public class Hallbarhetsmal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton JBtnTillbakaTillMeny;
-    private javax.swing.JLabel JLblRubrik;
-    private javax.swing.JScrollPane JScrollPaneHallbarhetsmal;
-    private javax.swing.JTable JTableVisaMal;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JButton lblTillbakaTillMeny;
     // End of variables declaration//GEN-END:variables
 }
