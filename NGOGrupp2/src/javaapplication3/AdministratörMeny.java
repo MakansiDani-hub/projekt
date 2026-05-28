@@ -57,6 +57,7 @@ public class AdministratörMeny extends javax.swing.JFrame {
         BtnHanteraProjekt.addActionListener(this::BtnHanteraProjektActionPerformed);
 
         BtnHanteraAvd.setText("Hantera avdelning");
+        BtnHanteraAvd.addActionListener(this::BtnHanteraAvdActionPerformed);
 
         BtnHanteraPartner.setText("Hantera Partner");
         BtnHanteraPartner.addActionListener(this::BtnHanteraPartnerActionPerformed);
@@ -118,7 +119,7 @@ public class AdministratörMeny extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BtnHanteraHmålActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHanteraHmålActionPerformed
-        //new HanteraHållbarhetsmål(anvandare).setVisible(true);
+        new HanteraHållbarhetsmål(anvandare).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_BtnHanteraHmålActionPerformed
 
@@ -141,6 +142,11 @@ public class AdministratörMeny extends javax.swing.JFrame {
         new HanteraPartner(anvandare).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_BtnHanteraPartnerActionPerformed
+
+    private void BtnHanteraAvdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHanteraAvdActionPerformed
+        new HanteraAvdelning(anvandare).setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_BtnHanteraAvdActionPerformed
 
     /**
      * @param args the command line arguments
