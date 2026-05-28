@@ -164,7 +164,7 @@ public class VisaPartnerProjektchef extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         JTableAktivaProjektMedPartner = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         JPanelPartners.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Partner", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
 

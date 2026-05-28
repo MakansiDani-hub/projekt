@@ -44,25 +44,25 @@ public class MenyHandlaggare extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jButton1.setText("Mina uppgifter");
         jButton1.addActionListener(this::jButton1ActionPerformed);
 
         jLabel1.setText("Avdelning: [Namn + ID]");
 
-        jButton2.setText("Sök projekt");
+        jButton2.setText("Sök projekt (IN PROGRESS) -> ProjektSok");
         jButton2.addActionListener(this::jButton2ActionPerformed);
 
-        jButton3.setText("Mina projekt");
+        jButton3.setText("Mina projekt (IN PROGRESS)");
         jButton3.addActionListener(this::jButton3ActionPerformed);
 
-        jButton4.setText("Hållbarhetsmålen");
+        jButton4.setText("Hållbarhetsmålen -> Hallbarhetsmal");
         jButton4.addActionListener(this::jButton4ActionPerformed);
 
         jLabel2.setText("[Epost]");
 
-        jButton5.setText("Sök personal");
+        jButton5.setText("Sök personal -> personal lisat");
         jButton5.addActionListener(this::jButton5ActionPerformed);
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
