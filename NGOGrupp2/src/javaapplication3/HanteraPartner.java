@@ -186,8 +186,6 @@ public class HanteraPartner extends javax.swing.JFrame {
 
         JTxtFieldAdress.addActionListener(this::JTxtFieldAdressActionPerformed);
 
-        JTxtStad.setText("Stad");
-
         JBtnLaggTillPartner.setText("Lägg till");
         JBtnLaggTillPartner.addActionListener(this::JBtnLaggTillPartnerActionPerformed);
 
