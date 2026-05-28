@@ -26,7 +26,7 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="135" max="32767" attributes="0"/>
+              <EmptySpace pref="127" max="32767" attributes="0"/>
               <Component id="lblFullnamn" min="-2" max="-2" attributes="0"/>
           </Group>
           <Component id="jButton1" alignment="0" max="32767" attributes="0"/>
@@ -109,7 +109,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Segoe UI" size="18" style="1"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Handl&#xe4;ggare Meny"/>
+        <Property name="text" type="java.lang.String" value="Handl&#xe4;ggares Meny"/>
       </Properties>
     </Component>
   </SubComponents>
