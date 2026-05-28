@@ -81,7 +81,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="jButton2">
       <Properties>
-        <Property name="text" type="java.lang.String" value="S&#xf6;k projekt"/>
+        <Property name="text" type="java.lang.String" value="S&#xf6;k projekt (IN PROGRESS) -&gt; ProjektSok"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
@@ -89,7 +89,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="jButton3">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Mina projekt"/>
+        <Property name="text" type="java.lang.String" value="Mina projekt (IN PROGRESS)"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
@@ -97,7 +97,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="jButton4">
       <Properties>
-        <Property name="text" type="java.lang.String" value="H&#xe5;llbarhetsm&#xe5;len"/>
+        <Property name="text" type="java.lang.String" value="H&#xe5;llbarhetsm&#xe5;len -&gt; Hallbarhetsmal"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton4ActionPerformed"/>
@@ -110,7 +110,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="jButton5">
       <Properties>
-        <Property name="text" type="java.lang.String" value="S&#xf6;k personal"/>
+        <Property name="text" type="java.lang.String" value="S&#xf6;k personal -&gt; personal lisat"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton5ActionPerformed"/>
