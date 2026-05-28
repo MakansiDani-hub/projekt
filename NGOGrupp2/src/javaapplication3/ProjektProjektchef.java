@@ -918,12 +918,12 @@ public class ProjektProjektchef extends javax.swing.JFrame {
             String prioritet = projektinfoEnskilda.get("prioritet");
             txtfStatus.setText(status);
             txtfPrioritet.setText(prioritet);
-            if (SwingUtils.arIComboBox(cbStatus, status)) {//Finns exempelvis statusen "planerat" som item i ComboBoxen cbStatus?
+            if (SwingUtils.finnsIComboBox(cbStatus, status)) {//Finns exempelvis statusen "planerat" som item i ComboBoxen cbStatus?
                 //Validering av input i databasen sker, därför kan denna kontroll ses som onödig, men 
                 //att göra det för output är ofta bra ändå ifall fel data råkat kommit i databasen av diverse anledning.
                 cbStatus.setSelectedItem(status); //Om statusen finns --> visa denna i vår ComboBox 
             }
-            if (SwingUtils.arIComboBox(cbPrioritet, prioritet)) {
+            if (SwingUtils.finnsIComboBox(cbPrioritet, prioritet)) {
                 cbStatus.setSelectedItem(prioritet);
             } else {
                 cbStatus.setSelectedItem("Ingen");
