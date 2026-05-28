@@ -21,7 +21,7 @@ public class ProjektSok extends javax.swing.JFrame {
     
     public ProjektSok(Anvandare anv) {
         this.anv = anv;
-        
+        setStatus("Ingen");
         initComponents();
     }
 
@@ -104,7 +104,7 @@ public class ProjektSok extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 

@@ -116,7 +116,7 @@ public class Partners extends javax.swing.JFrame {
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jButton1.setText("Tillbaka till ");
         jButton1.addActionListener(this::jButton1ActionPerformed);

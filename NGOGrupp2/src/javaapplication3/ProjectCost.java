@@ -124,7 +124,7 @@ public class ProjectCost extends javax.swing.JFrame {
 
         jLabel4.setText("Datum:");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Kostnadsstatistik");
