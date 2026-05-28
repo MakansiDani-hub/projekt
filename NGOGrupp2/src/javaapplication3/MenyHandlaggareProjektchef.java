@@ -128,28 +128,28 @@ public class MenyHandlaggareProjektchef extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnMinaProjektActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMinaProjektActionPerformed
-        //new ProjektHandlaggare().setVisible(true);
-        this.setVisible(false);
+        new ProjektSok(anvandare).setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnMinaProjektActionPerformed
 
     private void btnHållbarhetsmålenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHållbarhetsmålenActionPerformed
-        //new Hallbarhetsmal().setVisible(true);
-        this.setVisible(false);
+        new Hallbarhetsmal(anvandare).setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnHållbarhetsmålenActionPerformed
 
     private void btnSökPersonalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSökPersonalActionPerformed
         new PersonalLista(anvandare).setVisible(true);
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_btnSökPersonalActionPerformed
 
     private void btnSökProjektActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSökProjektActionPerformed
 
-        //new ProjektSokHandlaggareAdmin().setVisible(true);
-        this.setVisible(false);
+        new ProjektSok(anvandare).setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnSökProjektActionPerformed
 
     private void btnVisaProjektKostnaderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVisaProjektKostnaderActionPerformed
-       // new ProjectCost().setVisible(true);
+        new ProjectCost(anvandare).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnVisaProjektKostnaderActionPerformed
 

@@ -310,7 +310,8 @@ public class PersonalLista extends javax.swing.JFrame {
     }//GEN-LAST:event_SökningsFältActionPerformed
 
     private void btnTillbakaTillMenyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaTillMenyActionPerformed
-        // TODO add your handling code here:
+        Navigering.tillbakaTillMeny(anvandare);
+        this.dispose();
     }//GEN-LAST:event_btnTillbakaTillMenyActionPerformed
 
     /**

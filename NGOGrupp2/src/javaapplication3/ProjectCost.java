@@ -22,10 +22,11 @@ public class ProjectCost extends javax.swing.JFrame {
     /**
      * Konstruktor som tar emot databasanslutning och användar-ID.
      */
-    public ProjectCost(InfDB idb, int aid) {
+    public ProjectCost(Anvandare anvandare) {
         initComponents();
-        this.idb = idb;
-        this.aid = aid;
+        this.anvandare = anvandare;
+        this.idb = anvandare.getIdb();
+        this.aid = anvandare.getAid();
 
         // Fyll tabellen med all data direkt när fönstret laddas
         uppdateraStatistik("SELECT projektnamn, status, budget, kostnad FROM projekt");
@@ -266,10 +267,8 @@ public class ProjectCost extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void lblTillbakaTillMenyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblTillbakaTillMenyActionPerformed
-        //new MenyHandlaggareProjektchef().setVisible(true);
-       // new MenyHandlaggareProjektchef(anvandare).setVisible(true);
+        Navigering.tillbakaTillMeny(anvandare);
         this.dispose();
-        this.setVisible(false);
     }//GEN-LAST:event_lblTillbakaTillMenyActionPerformed
 
     private void txtStartDatumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtStartDatumActionPerformed
@@ -319,7 +318,7 @@ public class ProjectCost extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new ProjectCost(null, 1).setVisible(true));
+        //java.awt.EventQueue.invokeLater(() -> new ProjectCost(null, 1).setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
