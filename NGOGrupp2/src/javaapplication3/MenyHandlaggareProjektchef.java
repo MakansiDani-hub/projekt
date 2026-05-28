@@ -14,17 +14,18 @@ import oru.inf.InfDB;
 public class MenyHandlaggareProjektchef extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MenyHandlaggareProjektchef.class.getName());
-    
+    private Anvandare anvandare;
     private InfDB idb;
     private int aid;
 
     /**
      * Creates new form MenyHandlaggareProjektchef
      */
-    public MenyHandlaggareProjektchef(InfDB idb, int aid) {
+    public MenyHandlaggareProjektchef(Anvandare anvandare) {
         initComponents();
-        this.idb = idb;
-        this.aid = aid;
+        this.idb = anvandare.getIdb();
+        this.aid = anvandare.getAid();
+        this.anvandare = anvandare;
        try{
         lblFörnamn.setText(idb.fetchSingle("SELECT fornamn FROM anstalld where aid = '"+ aid+"'"));
        }catch(InfException ex){
@@ -50,15 +51,9 @@ public class MenyHandlaggareProjektchef extends javax.swing.JFrame {
         btnHållbarhetsmålen = new javax.swing.JButton();
         btnSökPersonal = new javax.swing.JButton();
         btnSökProjekt = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
-        btnÄndraProjektUppgifter = new javax.swing.JButton();
-        btnHanterHandläggare = new javax.swing.JButton();
-        btnManagePartners = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
-        btnVisaProjektKostnader = new javax.swing.JButton();
-        btnVisaProjektland = new javax.swing.JButton();
         lblFörnamn = new javax.swing.JLabel();
         lblEfternamn = new javax.swing.JLabel();
+        btnVisaProjektKostnader = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -80,72 +75,12 @@ public class MenyHandlaggareProjektchef extends javax.swing.JFrame {
         btnSökProjekt.setText("Sök projekt");
         btnSökProjekt.addActionListener(this::btnSökProjektActionPerformed);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Hantera och Uppdatera"));
-
-        btnÄndraProjektUppgifter.setText("Ändra projektuppgifter");
-        btnÄndraProjektUppgifter.addActionListener(this::btnÄndraProjektUppgifterActionPerformed);
-
-        btnHanterHandläggare.setText("Hanter handläggare");
-        btnHanterHandläggare.addActionListener(this::btnHanterHandläggareActionPerformed);
-
-        btnManagePartners.setText("Hantera partners");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnÄndraProjektUppgifter, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
-                    .addComponent(btnHanterHandläggare, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnManagePartners, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnÄndraProjektUppgifter)
-                .addGap(18, 18, 18)
-                .addComponent(btnHanterHandläggare)
-                .addGap(18, 18, 18)
-                .addComponent(btnManagePartners)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Visa information"));
-
-        btnVisaProjektKostnader.setText("Visa projektkostnader");
-        btnVisaProjektKostnader.addActionListener(this::btnVisaProjektKostnaderActionPerformed);
-
-        btnVisaProjektland.setText("Visa projektland");
-        btnVisaProjektland.addActionListener(this::btnVisaProjektlandActionPerformed);
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnVisaProjektKostnader, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
-                    .addComponent(btnVisaProjektland, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnVisaProjektKostnader)
-                .addGap(18, 18, 18)
-                .addComponent(btnVisaProjektland)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
         lblFörnamn.setText("förnamn");
 
         lblEfternamn.setText("efternamn");
+
+        btnVisaProjektKostnader.setText("Visa Projekts Kostnader");
+        btnVisaProjektKostnader.addActionListener(this::btnVisaProjektKostnaderActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -154,6 +89,8 @@ public class MenyHandlaggareProjektchef extends javax.swing.JFrame {
             .addComponent(btnMinaProjekt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnMinaUppgifter, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnHållbarhetsmålen, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnSökPersonal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnSökProjekt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
@@ -162,13 +99,7 @@ public class MenyHandlaggareProjektchef extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblEfternamn, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(27, Short.MAX_VALUE))
-            .addComponent(btnSökPersonal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnSökProjekt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23))
+            .addComponent(btnVisaProjektKostnader, javax.swing.GroupLayout.DEFAULT_SIZE, 435, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -178,7 +109,7 @@ public class MenyHandlaggareProjektchef extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addComponent(lblFörnamn)
                     .addComponent(lblEfternamn))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
                 .addComponent(btnMinaUppgifter)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnMinaProjekt)
@@ -188,14 +119,9 @@ public class MenyHandlaggareProjektchef extends javax.swing.JFrame {
                 .addComponent(btnSökPersonal)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnSökProjekt)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnVisaProjektKostnader)
+                .addGap(95, 95, 95))
         );
 
         pack();
@@ -207,12 +133,12 @@ public class MenyHandlaggareProjektchef extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMinaProjektActionPerformed
 
     private void btnHållbarhetsmålenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHållbarhetsmålenActionPerformed
-        new Hallbarhetsmal().setVisible(true);
+        //new Hallbarhetsmal().setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnHållbarhetsmålenActionPerformed
 
     private void btnSökPersonalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSökPersonalActionPerformed
-        new PersonalLista().setVisible(true);
+        new PersonalLista(anvandare).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnSökPersonalActionPerformed
 
@@ -222,30 +148,15 @@ public class MenyHandlaggareProjektchef extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_btnSökProjektActionPerformed
 
-    private void btnÄndraProjektUppgifterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnÄndraProjektUppgifterActionPerformed
-        new HanteraProjekt().setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_btnÄndraProjektUppgifterActionPerformed
-
-    private void btnHanterHandläggareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHanterHandläggareActionPerformed
-        new HanteraHandläggare().setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_btnHanterHandläggareActionPerformed
-
     private void btnVisaProjektKostnaderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVisaProjektKostnaderActionPerformed
-        new ProjectCost().setVisible(true);
+       // new ProjectCost().setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnVisaProjektKostnaderActionPerformed
 
     private void btnMinaUppgifterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMinaUppgifterActionPerformed
-        new UppgifterHandlaggare(idb, aid).setVisible(true);
+        new UppgifterHandlaggare(anvandare).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnMinaUppgifterActionPerformed
-
-    private void btnVisaProjektlandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVisaProjektlandActionPerformed
-        new ViewProjectCountry().setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_btnVisaProjektlandActionPerformed
 
     /**
      * @param args the command line arguments
@@ -273,19 +184,13 @@ public class MenyHandlaggareProjektchef extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnHanterHandläggare;
     private javax.swing.JButton btnHållbarhetsmålen;
-    private javax.swing.JButton btnManagePartners;
     private javax.swing.JButton btnMinaProjekt;
     private javax.swing.JButton btnMinaUppgifter;
     private javax.swing.JButton btnSökPersonal;
     private javax.swing.JButton btnSökProjekt;
     private javax.swing.JButton btnVisaProjektKostnader;
-    private javax.swing.JButton btnVisaProjektland;
-    private javax.swing.JButton btnÄndraProjektUppgifter;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lblEfternamn;
     private javax.swing.JLabel lblFörnamn;
     // End of variables declaration//GEN-END:variables

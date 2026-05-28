@@ -97,16 +97,25 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Hantera avdelning"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnHanteraAvdActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="BtnHanteraPartner">
       <Properties>
         <Property name="text" type="java.lang.String" value="Hantera Partner"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnHanteraPartnerActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="BtnHanteraLand">
       <Properties>
         <Property name="text" type="java.lang.String" value="Hantera Land"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnHanteraLandActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="BtnHanteraHm&#xe5;l">
       <Properties>

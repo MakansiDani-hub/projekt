@@ -247,9 +247,6 @@
         <Component class="javax.swing.JTextField" name="JTxtFieldBranch">
         </Component>
         <Component class="javax.swing.JTextField" name="JTxtStad">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Stad"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="JBtnLaggTillPartner">
           <Properties>

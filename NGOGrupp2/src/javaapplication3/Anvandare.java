@@ -27,7 +27,10 @@ public class Anvandare {
             int aid,
             String dbAnvandaresAdress,
             String dbAnvandaresTelefon,
-            String dbAnvandareslosenord) {
+            String dbAnvandareslosenord,
+            String roll
+    ) 
+    {
 
         this.idb = idb;
         this.dbNamn = dbNamn;
@@ -37,6 +40,7 @@ public class Anvandare {
         this.dbAnvandaresAdress = dbAnvandaresAdress;
         this.dbAnvandaresTelefon = dbAnvandaresTelefon;
         this.dbAnvandareslosenord = dbAnvandareslosenord;
+        this.roll = roll;
     }
 
     // Get metoder
@@ -72,6 +76,10 @@ public class Anvandare {
     public String getDbAnvandareslosenord() {
         return dbAnvandareslosenord;
     }
+    
+    public String getRoll() {
+    return roll;
+    }
 
     // SET METHODS
 
@@ -86,4 +94,20 @@ public class Anvandare {
     public void setDbAnvandareslosenord(String losenord) {
         this.dbAnvandareslosenord = losenord;
     }
+    public void setRoll(String roll) {
+    this.roll = roll;
+    }
+    
+    public void setDbNamn(String dbNamn){
+        this.dbNamn = dbNamn;
+    }
+    
+    public void setDbEfternamn(String dbEfternamn){
+        this.dbEfternamn = dbEfternamn;
+    }
+    
+    public void setDbAnstallningsdatum(String dbAnstallningsdatum){
+        this.dbAnstallningsdatum = dbAnstallningsdatum;
+    }
+    
 }

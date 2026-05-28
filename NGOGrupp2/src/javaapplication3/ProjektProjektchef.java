@@ -47,13 +47,13 @@ public class ProjektProjektchef extends javax.swing.JFrame {
     private boolean borttagningslagePartners;
     
     //behöver bara spara ID! Det är ju genom dessa vi för frågorna
-    private projektAndringar 
-    private projektMalNya
-    private projektMalBorttagen
-    private projektDeltagareNya
-    private projektDeltagareBorttagna
-    private projektPartnerNya
-    private projektPartnerBorttagna
+//    private projektAndringar 
+//    private projektMalNya
+//    private projektMalBorttagen
+//    private projektDeltagareNya
+//    private projektDeltagareBorttagna
+//    private projektPartnerNya
+//    private projektPartnerBorttagna
 
     public ProjektProjektchef(Anvandare anv, int pid) {
         //Den som öppnat detta fönster är projektchef för det, vid nuläget innebär det att kontroll behöver
@@ -66,8 +66,8 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         borttagningslageDeltagare = false;
         borttagningslagePartners = false;
 
-        anstalldListener = skapaAnstalldListener();
-        landListener = skapaLandListener();
+        //anstalldListener = skapaAnstalldListener();
+        //landListener = skapaLandListener();
 
         initComponents();
         laddaInfo();
@@ -1183,42 +1183,42 @@ public class ProjektProjektchef extends javax.swing.JFrame {
     }
 
 
-    private LandListener skapaLandListener() {
-        return new LandListener() {
-            @Override
-            public void valLand(String landId) {
-
-            }
-        };
-    }
-
-    private AnstalldListener skapaDeltagareListener() {
-        return new AnstalldListener() {
-            @Override
-            public void valDeltagare(String DeltagareId, String namn) {
-                //Denna metod körs då användaren valt en deltagare i ett pop-up fönster (se personallista klasserna)
-                //Körs endast om detta fönster är öppnat och inte disposed
-
-                //Gör projekt-fönstret redigerbart. 
-                dennaFrame.setEnabled(true);
-
-                switch (valjs) {
-                    //Utifrån det som väljs just nu körs olika kod, bestämt av "valjs" variabeln.
-                    case (Popup.PROJEKTCHEF): {
-
-                    }
-                    case (Popup.ADMIN):
-                    case (Popup.HANDLAGGARE):
-                    case (Popup.INGEN): {
-                        throw new IllegalStateException("Ingen instans var 'vald' i Projekt-fönstret, något blev fel");
-                    }
-                }
-                //Lägger till deltagaren som knapp
-                //skapaInstansknapp(new HashMap<String, String> deltagare, Instanstyp.);
-                //Stänger fönstret som denna metod kallas i
-            }
-        };
-    }
+//    private LandListener skapaLandListener() {
+//        return new LandListener() {
+//            @Override
+//            public void valLand(String landId) {
+//
+//            }
+//        };
+//    }
+//
+//    private AnstalldListener skapaDeltagareListener() {
+//        return new AnstalldListener() {
+//            @Override
+//            public void valDeltagare(String DeltagareId, String namn) {
+//                //Denna metod körs då användaren valt en deltagare i ett pop-up fönster (se personallista klasserna)
+//                //Körs endast om detta fönster är öppnat och inte disposed
+//
+//                //Gör projekt-fönstret redigerbart. 
+//                dennaFrame.setEnabled(true);
+//
+//                switch (valjs) {
+//                    //Utifrån det som väljs just nu körs olika kod, bestämt av "valjs" variabeln.
+//                    case (Popup.PROJEKTCHEF): {
+//
+//                    }
+//                    case (Popup.ADMIN):
+//                    case (Popup.HANDLAGGARE):
+//                    case (Popup.INGEN): {
+//                        throw new IllegalStateException("Ingen instans var 'vald' i Projekt-fönstret, något blev fel");
+//                    }
+//                }
+//                //Lägger till deltagaren som knapp
+//                //skapaInstansknapp(new HashMap<String, String> deltagare, Instanstyp.);
+//                //Stänger fönstret som denna metod kallas i
+//            }
+//        };
+//    }
 
     /**
      * Kollar om en item finns i en JComboBox
@@ -1260,9 +1260,9 @@ public class ProjektProjektchef extends javax.swing.JFrame {
                 //...aktivera vår ruta igen
                 dennaFrame.setEnabled(true);
                 //...lagra ändringen - eventuell tidigare ändring byts ut mot den nya pga hur put() fungerar.
-                andringar.put("Land", HashMap < > (Map.of( //Tabell
-                        landId, new HashMap<>(Map.of( //PK av entitet
-                                "namn", landNamn))));          //Attribut 
+                //andringar.put("Land", HashMap < > (Map.of( //Tabell
+                       // landId, new HashMap<>(Map.of( //PK av entitet
+                              //  "namn", landNamn))));          //Attribut 
             }
         };
         //behöver inte ens ha listener som fält?
@@ -1300,15 +1300,15 @@ public class ProjektProjektchef extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBeskrivningDropdownActionPerformed
 
     private void btnAddHandlaggareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddHandlaggareActionPerformed
-        oppnaValjPopup(Popup.HANDLAGGARE);
+       // oppnaValjPopup(Popup.HANDLAGGARE);
     }//GEN-LAST:event_btnAddHandlaggareActionPerformed
 
     private void btnAddAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddAdminActionPerformed
-        oppnaValjPopup(Popup.ADMIN);
+       // oppnaValjPopup(Popup.ADMIN);
     }//GEN-LAST:event_btnAddAdminActionPerformed
 
     private void btnAddMalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddMalActionPerformed
-        oppnaValjPopup(Popup.HALLBARHETSMAL);
+       // oppnaValjPopup(Popup.HALLBARHETSMAL);
     }//GEN-LAST:event_btnAddMalActionPerformed
 
     private void btnAndraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAndraActionPerformed
@@ -1337,12 +1337,12 @@ public class ProjektProjektchef extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLandActionPerformed
 
     private void btnBytLandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBytLandActionPerformed
-        oppnaValjPopup(Popup.LAND);
+       // oppnaValjPopup(Popup.LAND);
 
     }//GEN-LAST:event_btnBytLandActionPerformed
 
     private void btnBytProjektchefActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBytProjektchefActionPerformed
-        oppnaValjPopup(Popup.PROJEKTCHEF);
+       // oppnaValjPopup(Popup.PROJEKTCHEF);
     }//GEN-LAST:event_btnBytProjektchefActionPerformed
 
     private void btnTaBortPartnersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaBortPartnersActionPerformed
@@ -1371,32 +1371,32 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         //Overrida valProjektchef metoden så att den körs då en viss anställd väljs (+ kontroll för att se till att de är handläggare)
     }//GEN-LAST:event_btnProjektchefActionPerformed
 
-    public static void main(String args[]) { //TA BORT MAIN METODEN TILLSLUT. NI SKA ENDAST ANVÄNDA MAIN METODEN I Startklassen
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-
-        }
-        //</editor-fold>
-
-        try {
-            InfDB idb = new InfDB("sdgsweden", "3306", "root", "masterkey");
-            new ProjektProjektchef(new Anvandare(idb, null, null, null, 3, null, null, null), 2).setVisible(true);
-            System.out.println("Databaskoppling skapad");
-        } catch (InfException e) {
-            System.out.println(e.getMessage());
-        }
-    }
+//    public static void main(String args[]) { //TA BORT MAIN METODEN TILLSLUT. NI SKA ENDAST ANVÄNDA MAIN METODEN I Startklassen
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
+//
+//        }
+//        //</editor-fold>
+//
+//        try {
+//            InfDB idb = new InfDB("sdgsweden", "3306", "root", "masterkey");
+//            new ProjektProjektchef(new Anvandare(idb, null, null, null, 3, null, null, null), 2).setVisible(true);
+//            System.out.println("Databaskoppling skapad");
+//        } catch (InfException e) {
+//            System.out.println(e.getMessage());
+//        }
+//    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -13,16 +13,17 @@ import oru.inf.InfDB;
 public class AdministratörMeny extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AdministratörMeny.class.getName());
-
+    private Anvandare anvandare;
     private InfDB idb;
     private int aid;
     /**
      * Creates new form Administratör
      */
-    public AdministratörMeny(InfDB idb, int aid) {
+    public AdministratörMeny(Anvandare anvandare) {
         initComponents();
-        this.idb = idb;
-        this.aid = aid;
+        this.idb = anvandare.getIdb();
+        this.aid = anvandare.getAid();
+        this.anvandare = anvandare;
     }
 
     /**
@@ -56,10 +57,13 @@ public class AdministratörMeny extends javax.swing.JFrame {
         BtnHanteraProjekt.addActionListener(this::BtnHanteraProjektActionPerformed);
 
         BtnHanteraAvd.setText("Hantera avdelning");
+        BtnHanteraAvd.addActionListener(this::BtnHanteraAvdActionPerformed);
 
         BtnHanteraPartner.setText("Hantera Partner");
+        BtnHanteraPartner.addActionListener(this::BtnHanteraPartnerActionPerformed);
 
         BtnHanteraLand.setText("Hantera Land");
+        BtnHanteraLand.addActionListener(this::BtnHanteraLandActionPerformed);
 
         BtnHanteraHmål.setText("Hantera Hållbarhetsmål");
         BtnHanteraHmål.addActionListener(this::BtnHanteraHmålActionPerformed);
@@ -115,16 +119,34 @@ public class AdministratörMeny extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BtnHanteraHmålActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHanteraHmålActionPerformed
-        // TODO add your handling code here:
+        new HanteraHållbarhetsmål(anvandare).setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_BtnHanteraHmålActionPerformed
 
     private void BtnHanteraAnstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHanteraAnstActionPerformed
-        // Överlappande funktionalitet med både handläggare och projektchef
+        new HanteraAnstalld(anvandare).setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_BtnHanteraAnstActionPerformed
 
     private void BtnHanteraProjektActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHanteraProjektActionPerformed
-        // TODO add your handling code here:
+        //new HanteraProjekt(anvandare).setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_BtnHanteraProjektActionPerformed
+
+    private void BtnHanteraLandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHanteraLandActionPerformed
+        new HanteraLand(anvandare).setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_BtnHanteraLandActionPerformed
+
+    private void BtnHanteraPartnerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHanteraPartnerActionPerformed
+        new HanteraPartner(anvandare).setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_BtnHanteraPartnerActionPerformed
+
+    private void BtnHanteraAvdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHanteraAvdActionPerformed
+        new HanteraAvdelning(anvandare).setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_BtnHanteraAvdActionPerformed
 
     /**
      * @param args the command line arguments

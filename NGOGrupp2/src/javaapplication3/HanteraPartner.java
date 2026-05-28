@@ -14,24 +14,23 @@ import javax.swing.JOptionPane;
 public class HanteraPartner extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(HanteraPartner.class.getName());
-    
+    private Anvandare anvandare;
     private InfDB idb;
     private int aid;
 
     /**
      * Tom konstruktor.
      */
-    public HanteraPartner() {
-        initComponents();
-    }
+  
 
     /**
      * Riktig konstruktor som tar emot databasanslutning.
      */
-    public HanteraPartner(InfDB idb, int aid) {
+    public HanteraPartner(Anvandare anvandare) {
         initComponents();
-        this.idb = idb;
-        this.aid = aid;
+        this.anvandare = anvandare;
+        this.idb = anvandare.getIdb();
+        this.aid = anvandare.getAid();
         
         // Fyll tabellen med partners när fönstret öppnas
         laddaAllaPartners();
@@ -185,8 +184,6 @@ public class HanteraPartner extends javax.swing.JFrame {
         JLblStad.setText("Stad");
 
         JTxtFieldAdress.addActionListener(this::JTxtFieldAdressActionPerformed);
-
-        JTxtStad.setText("Stad");
 
         JBtnLaggTillPartner.setText("Lägg till");
         JBtnLaggTillPartner.addActionListener(this::JBtnLaggTillPartnerActionPerformed);
@@ -457,7 +454,7 @@ public class HanteraPartner extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new HanteraPartner().setVisible(true));
+        //java.awt.EventQueue.invokeLater(() -> new HanteraPartner().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

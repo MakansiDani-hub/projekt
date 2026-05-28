@@ -13,15 +13,16 @@ import oru.inf.InfDB;
 public class MenyHandlaggare extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MenyHandlaggare.class.getName());
-
+    private Anvandare anvandare;
     private InfDB idb;
     private int aid;
     /**
      * Creates new form MenyHandlaggare
      */
-    public MenyHandlaggare(InfDB idb, int aid) {
-        this.idb = idb;
-        this.aid = aid;
+    public MenyHandlaggare(Anvandare anvandare) {
+        this.idb = anvandare.getIdb();
+        this.aid = anvandare.getAid();
+        this.anvandare = anvandare;
         initComponents();
     }
 
