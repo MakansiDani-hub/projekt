@@ -7,7 +7,7 @@ package javaapplication3;
  *
  * @author Kristoffer Kolkowski
  */
-//import projListener.malListener;
+//import projListener.MalListener;
 import oru.inf.InfDB;
 import oru.inf.InfException;
 import java.util.ArrayList;
