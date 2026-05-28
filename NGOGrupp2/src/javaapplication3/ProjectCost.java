@@ -9,12 +9,13 @@ import javax.swing.JOptionPane;
 
 /**
  * Kostnadsstatistik för projekt.
+ *
  * @author Big Dick J
  */
 public class ProjectCost extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ProjectCost.class.getName());
-    
+
     private InfDB idb;
     private int aid;
 
@@ -25,20 +26,28 @@ public class ProjectCost extends javax.swing.JFrame {
         initComponents();
         this.idb = idb;
         this.aid = aid;
-        
+
         // Fyll tabellen med all data direkt när fönstret laddas
         uppdateraStatistik("SELECT projektnamn, status, budget, kostnad FROM projekt");
+
+        // Lägger till en lyssnare på ComboBoxen så tabellen uppdateras direkt när man byter status
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
     }
 
     /**
-     * Hämtar data baserat på SQL-frågan, fyller tabellen och räknar ut statistik.
+     * Hämtar data baserat på SQL-frågan, fyller tabellen och räknar ut
+     * statistik.
      */
     private void uppdateraStatistik(String sqlFraga) {
         try {
             ArrayList<HashMap<String, String>> projektLista = idb.fetchRows(sqlFraga);
             DefaultTableModel model = (DefaultTableModel) tblKostnadsStatistik.getModel();
             model.setRowCount(0); // Tömmer gamla rader
-            
+
             double totalKostnad = 0;
             int antalProjekt = 0;
 
@@ -48,16 +57,16 @@ public class ProjectCost extends javax.swing.JFrame {
                     String status = rad.get("status");
                     String budget = rad.get("budget");
                     String kostnad = rad.get("kostnad");
-                    
+
                     model.addRow(new Object[]{pNamn, status, budget, kostnad});
-                    
+
                     if (kostnad != null && !kostnad.isEmpty()) {
                         totalKostnad += Double.parseDouble(kostnad);
                         antalProjekt++;
                     }
                 }
             }
-            
+
             // Uppdatera textetiketterna med statistik
             lblTotalKostnad.setText(Math.round(totalKostnad) + " kr");
             if (antalProjekt > 0) {
@@ -65,10 +74,30 @@ public class ProjectCost extends javax.swing.JFrame {
             } else {
                 lblGenomsnitt.setText("0 kr");
             }
-            
+
         } catch (InfException e) {
             JOptionPane.showMessageDialog(null, "Databasfel: " + e.getMessage());
         }
+    }
+
+    /**
+     * Hanterar filtrering baserat på vald status i rullgardinsmenyn.
+     */
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {
+        String valtVal = jComboBox1.getSelectedItem().toString();
+        String fraga = "SELECT projektnamn, status, budget, kostnad FROM projekt";
+
+        if (valtVal.equals("Endast planerade projekt")) {
+            fraga += " WHERE status = 'Planerat'";
+        } else if (valtVal.equals("Endast pågående projekt")) {
+            fraga += " WHERE status = 'Pågående'";
+        } else if (valtVal.equals("Endast pausade projekt")) {
+            fraga += " WHERE status = 'Pausat'";
+        } else if (valtVal.equals("Endast avslutade projekt")) {
+            fraga += " WHERE status = 'Avslutat'";
+        }
+
+        uppdateraStatistik(fraga);
     }
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -91,6 +120,7 @@ public class ProjectCost extends javax.swing.JFrame {
         btnSökDatum = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         lblGenomsnitt = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
 
         jLabel4.setText("Datum:");
 
@@ -107,13 +137,13 @@ public class ProjectCost extends javax.swing.JFrame {
 
         tblKostnadsStatistik.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Projektnamn", "Status", "Budget", "Total Kostnad"
+                "Projektnamn", "Status", "Startdatum", "Slutdatum", "Kostnad"
             }
         ));
         jScrollPane1.setViewportView(tblKostnadsStatistik);
@@ -133,55 +163,22 @@ public class ProjectCost extends javax.swing.JFrame {
 
         txtSlutDatum.addActionListener(this::txtSlutDatumActionPerformed);
 
-        jLabel6.setText("Datum:");
+        jLabel6.setText("Startdatum:");
 
         btnSökDatum.setText("Sök");
+        btnSökDatum.addActionListener(this::btnSökDatumActionPerformed);
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel7.setText("Genomsnittlig kostnad:");
 
         lblGenomsnitt.setText("0 kr");
 
+        jLabel8.setText("Slutdatum:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jSeparator1)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblTillbakaTillMeny)
-                                .addGap(135, 135, 135)
-                                .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel1)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel2)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(38, 38, 38)
-                                .addComponent(jLabel5))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(txtStartDatum, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
-                                .addComponent(txtSlutDatum))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(20, 20, 20)
-                                .addComponent(btnSökDatum, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(26, 26, 26))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -192,6 +189,39 @@ public class ProjectCost extends javax.swing.JFrame {
                     .addComponent(lblTotalKostnad)
                     .addComponent(lblGenomsnitt))
                 .addGap(67, 67, 67))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(lblTillbakaTillMeny)
+                                .addGap(141, 141, 141)
+                                .addComponent(jLabel6))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel1)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel8)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(38, 38, 38)
+                                .addComponent(jLabel5))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(txtStartDatum, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                                .addComponent(txtSlutDatum))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(20, 20, 20)
+                                .addComponent(btnSökDatum, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 20, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -203,7 +233,8 @@ public class ProjectCost extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
-                            .addComponent(txtSlutDatum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtSlutDatum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
@@ -236,6 +267,8 @@ public class ProjectCost extends javax.swing.JFrame {
 
     private void lblTillbakaTillMenyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblTillbakaTillMenyActionPerformed
         //new MenyHandlaggareProjektchef().setVisible(true);
+        new MenyHandlaggareProjektchef(idb, aid).setVisible(true);
+        this.dispose();
         this.setVisible(false);
     }//GEN-LAST:event_lblTillbakaTillMenyActionPerformed
 
@@ -246,6 +279,23 @@ public class ProjectCost extends javax.swing.JFrame {
     private void txtSlutDatumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSlutDatumActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSlutDatumActionPerformed
+
+    private void btnSökDatumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSökDatumActionPerformed
+        // TODO add your handling code here:                                  
+        String start = txtStartDatum.getText().trim();
+        String slut = txtSlutDatum.getText().trim();
+
+        if (start.isEmpty() || slut.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Du måste fylla i både start- och slutdatum (ÅÅÅÅ-MM-DD)!");
+            return;
+        }
+
+        // Uppdaterad SQL-fråga som hämtar alla 5 värden för datumsintervallet
+        String fraga = "SELECT projektnamn, status, startdatum, slutdatum, kostnad FROM projekt "
+                + "WHERE startdatum >= '" + start + "' AND slutdatum <= '" + slut + "'";
+
+        uppdateraStatistik(fraga);
+    }//GEN-LAST:event_btnSökDatumActionPerformed
 
     /**
      * @param args the command line arguments
@@ -269,7 +319,7 @@ public class ProjectCost extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EntQueue.invokeLater(() -> new ProjectCost().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new ProjectCost(null, 1).setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -282,6 +332,7 @@ public class ProjectCost extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;

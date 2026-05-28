@@ -184,19 +184,7 @@ public class HanteraPartner extends javax.swing.JFrame {
 
         JLblStad.setText("Stad");
 
-        JTxtFieldPID.setText("[PID]");
-
-        JTxtFieldNamn.setText("[Namn]");
-
-        JTxtFieldKontaktPerson.setText("[Kontaktperson]");
-
-        JTxtFieldKontaktEpost.setText("[Kontaktepost]");
-
-        JTxtFieldTelefon.setText("[Telefon]");
-
-        JTxtFieldAdress.setText("[Adress]");
-
-        JTxtFieldBranch.setText("[Branch]");
+        JTxtFieldAdress.addActionListener(this::JTxtFieldAdressActionPerformed);
 
         JTxtStad.setText("Stad");
 
@@ -442,6 +430,10 @@ public class HanteraPartner extends javax.swing.JFrame {
     JOptionPane.showMessageDialog(null, "Kunde inte ta bort partner: " + e.getMessage());
 }
     }//GEN-LAST:event_JBtnTaBortPartnerActionPerformed
+
+    private void JTxtFieldAdressActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTxtFieldAdressActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JTxtFieldAdressActionPerformed
 
     /**
      * @param args the command line arguments

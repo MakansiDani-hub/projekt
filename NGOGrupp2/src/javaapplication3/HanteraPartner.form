@@ -230,39 +230,21 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="JTxtFieldPID">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="[PID]"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="JTxtFieldNamn">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="[Namn]"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="JTxtFieldKontaktPerson">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="[Kontaktperson]"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="JTxtFieldKontaktEpost">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="[Kontaktepost]"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="JTxtFieldTelefon">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="[Telefon]"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="JTxtFieldAdress">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="[Adress]"/>
-          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JTxtFieldAdressActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="JTxtFieldBranch">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="[Branch]"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="JTxtStad">
           <Properties>
