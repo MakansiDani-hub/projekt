@@ -3,11 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package javaapplication3;
-
 /**
  *
  * @author Kristoffer Kolkowski
  */
+//import projListener.MalListener;
 import oru.inf.InfDB;
 import oru.inf.InfException;
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.JOptionPane;
 
 public class HanteraHållbarhetsmål extends javax.swing.JFrame {
-    
+    //private MalListener malListener;
     private InfDB idb; 
     private DefaultTableModel bordsModell;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(HanteraHållbarhetsmål.class.getName());
@@ -24,24 +24,29 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
     /**
      * Creates new form HanteraHållbarhetsmål
      */
+//    public HanteraHållbarhetsmål(InfDB idb, MalListener malListener){
+//        this.malListener = malListener;
+//        HanteraHållbarhetsmål(idb);
+//    }
+    
     public HanteraHållbarhetsmål(InfDB idb) {
         this.idb = idb;
         initComponents();
         
         // Kopplar JTable till en hanterbar modell och sätter kolumnnamn
-        bordsModell = (DefaultTableModel) JTableHallberhetsmal.getModel();
+        bordsModell = (DefaultTableModel) JTableHallbarhetsmal.getModel();
         bordsModell.setColumnIdentifiers(new Object[]{"hid", "Namn", "Målnummer", "Beskrivning", "Prioritet"});
         
         // Hämtar data automatiskt vid uppstart
         laddaHållbarhetsmål();
         
-        JTableHallberhetsmal.addMouseListener(new java.awt.event.MouseAdapter() {
+        JTableHallbarhetsmal.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 // Ta reda på vilken rad användaren klickade på
-                int valdRad = JTableHallberhetsmal.getSelectedRow();
+                int valdRad = JTableHallbarhetsmal.getSelectedRow();
                 
-                // kollar om en rad är vald Om en rad faktiskt är vald
+                // kollar om en rad är vald
                 if (valdRad >= 0) {
                     // Hämtar datan från kolumnerna på den valda raden
                     String id = bordsModell.getValueAt(valdRad, 0).toString();
@@ -56,6 +61,8 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
                     JTxtFieldMalNr.setText(malnr);
                     JTxtFieldBeskrivning.setText(beskrivning);
                     JTxtFieldPrioritet.setText(prioritet);
+                    
+                    //malListener.valMal(id, namn, malnr);
                 }
             }
         });
@@ -97,7 +104,7 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
         JLblRubrik = new javax.swing.JLabel();
         JPanelHållbarhetsmål = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        JTableHallberhetsmal = new javax.swing.JTable();
+        JTableHallbarhetsmal = new javax.swing.JTable();
         JLblLID = new javax.swing.JLabel();
         JLblNamn = new javax.swing.JLabel();
         JLblMalNr = new javax.swing.JLabel();
@@ -121,7 +128,7 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
 
         JPanelHållbarhetsmål.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Hållbarhetsmål", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
 
-        JTableHallberhetsmal.setModel(new javax.swing.table.DefaultTableModel(
+        JTableHallbarhetsmal.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -132,7 +139,7 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(JTableHallberhetsmal);
+        jScrollPane1.setViewportView(JTableHallbarhetsmal);
 
         JLblLID.setText("HållberhetsmålID");
 
@@ -282,7 +289,7 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
         try {
             // Sqlfråga
             String sqlFråga = "INSERT INTO hallbarhetsmal (hid, namn, malnummer, beskrivning, prioritet) " +
-                  "VALUES ('" + id + "', '" + namn + "', '" + malnr + "', '" + beskrivning + "', '" + prioritet + "')";
+                  "VALUES (" + id + ", '" + namn + "', '" + malnr + "', '" + beskrivning + "', '" + prioritet + "')";
 
             //  Skickar frågan till databasen
             idb.insert(sqlFråga);
@@ -293,7 +300,7 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
             //  Uppdaterar tabellen på skärmen så att det nya målet syns
             laddaHållbarhetsmål();
 
-            // Tömmer rutorna efteråt
+            // 
             JTxtFieldHID.setText("");
             JTxtFieldNamn.setText("");
             JTxtFieldMalNr.setText("");
@@ -325,7 +332,7 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
                               "malnummer = '" + malnr + "', " +
                               "beskrivning = '" + beskrivning + "', " +
                               "prioritet = '" + prioritet + "' " +
-                              "WHERE hid = '" + id + "'";
+                              "WHERE hid = " + id +"";
 
             idb.update(sqlFråga);
             JOptionPane.showMessageDialog(this, "Hållbarhetsmålet har uppdateras!");
@@ -350,7 +357,7 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
         
         if (svar == JOptionPane.YES_OPTION) {
             try {
-                String sqlFråga = "DELETE FROM hallbarhetsmal WHERE hid = '" + id + "'";
+                String sqlFråga = "DELETE FROM hallbarhetsmal WHERE hid = " + id + "";
                 idb.delete(sqlFråga);
                 
                 JOptionPane.showMessageDialog(this, "Hållbarhetsmålet har tagits bort.");
@@ -384,7 +391,7 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
     private javax.swing.JLabel JLblRubrik;
     private javax.swing.JPanel JPanelHållbarhetsmål;
     private javax.swing.JPanel JPanelProjektMotMal;
-    private javax.swing.JTable JTableHallberhetsmal;
+    private javax.swing.JTable JTableHallbarhetsmal;
     private javax.swing.JTextField JTxtFieldBeskrivning;
     private javax.swing.JTextField JTxtFieldHID;
     private javax.swing.JTextField JTxtFieldMalNr;

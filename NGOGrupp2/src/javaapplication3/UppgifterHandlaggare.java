@@ -13,17 +13,18 @@ import oru.inf.InfDB;
 public class UppgifterHandlaggare extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(UppgifterHandlaggare.class.getName());
-    
+    private Anvandare anvandare;
     private InfDB idb;
     private int aid;
 
     /**
      * Creates new form Uppgifter_Handläggare
      */
-    public UppgifterHandlaggare(InfDB idb, int aid) {
+    public UppgifterHandlaggare(Anvandare anvandare) {
         initComponents();
-        this.idb = idb;
-        this.aid = aid;
+        this.idb = anvandare.getIdb();
+        this.aid = anvandare.getAid();
+        this.anvandare = anvandare;
         lblAid.setText("AnställningsID: " + aid);
         
     }

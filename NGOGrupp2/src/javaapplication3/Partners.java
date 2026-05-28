@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
 public class Partners extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Partners.class.getName());
-    
+    private Anvandare anvandare; 
     private InfDB idb;
     private int aid;
 
@@ -337,7 +337,7 @@ public class Partners extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        new MenyHandlaggareProjektchef(idb, aid).setVisible(true);
+       // new MenyHandlaggareProjektchef(idb, aid).setVisible(true);
 this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 

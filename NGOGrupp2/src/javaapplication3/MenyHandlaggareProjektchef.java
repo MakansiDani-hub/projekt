@@ -14,17 +14,18 @@ import oru.inf.InfDB;
 public class MenyHandlaggareProjektchef extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MenyHandlaggareProjektchef.class.getName());
-    
+    private Anvandare anvandare;
     private InfDB idb;
     private int aid;
 
     /**
      * Creates new form MenyHandlaggareProjektchef
      */
-    public MenyHandlaggareProjektchef(InfDB idb, int aid) {
+    public MenyHandlaggareProjektchef(Anvandare anvandare) {
         initComponents();
-        this.idb = idb;
-        this.aid = aid;
+        this.idb = anvandare.getIdb();
+        this.aid = anvandare.getAid();
+        this.anvandare = anvandare;
        try{
         lblFörnamn.setText(idb.fetchSingle("SELECT fornamn FROM anstalld where aid = '"+ aid+"'"));
        }catch(InfException ex){
@@ -207,12 +208,12 @@ public class MenyHandlaggareProjektchef extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMinaProjektActionPerformed
 
     private void btnHållbarhetsmålenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHållbarhetsmålenActionPerformed
-        new Hallbarhetsmal().setVisible(true);
+        //new Hallbarhetsmal().setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnHållbarhetsmålenActionPerformed
 
     private void btnSökPersonalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSökPersonalActionPerformed
-        new PersonalLista().setVisible(true);
+        new PersonalLista(anvandare).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnSökPersonalActionPerformed
 
@@ -223,7 +224,7 @@ public class MenyHandlaggareProjektchef extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSökProjektActionPerformed
 
     private void btnÄndraProjektUppgifterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnÄndraProjektUppgifterActionPerformed
-        new HanteraProjekt().setVisible(true);
+        //new HanteraProjekt(anvandare).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnÄndraProjektUppgifterActionPerformed
 
@@ -233,12 +234,12 @@ public class MenyHandlaggareProjektchef extends javax.swing.JFrame {
     }//GEN-LAST:event_btnHanterHandläggareActionPerformed
 
     private void btnVisaProjektKostnaderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVisaProjektKostnaderActionPerformed
-        new ProjectCost().setVisible(true);
+       // new ProjectCost().setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnVisaProjektKostnaderActionPerformed
 
     private void btnMinaUppgifterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMinaUppgifterActionPerformed
-        new UppgifterHandlaggare(idb, aid).setVisible(true);
+        new UppgifterHandlaggare(anvandare).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnMinaUppgifterActionPerformed
 
