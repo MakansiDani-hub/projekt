@@ -6,8 +6,8 @@
 .mtj.tmp/
 hs_err_pid*
 target/
-build/
 dist/
+build/
 
 # NetBeans
 NGOGrupp2/nbproject/private/
