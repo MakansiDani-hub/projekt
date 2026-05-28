@@ -148,28 +148,22 @@ public class Partners extends javax.swing.JFrame {
         jLabel9.setText("Stad");
 
         jTextField1.setEditable(false);
-        jTextField1.setText("[kontaktperson]");
 
         jTextField2.setEditable(false);
-        jTextField2.setText("[kontaktepost]");
 
         jTextField3.setEditable(false);
-        jTextField3.setText("[telefon]");
+        jTextField3.addActionListener(this::jTextField3ActionPerformed);
 
         jTextField4.setEditable(false);
-        jTextField4.setText("[branch]");
         jTextField4.addActionListener(this::jTextField4ActionPerformed);
 
         jTextField5.setEditable(false);
-        jTextField5.setText("[adress]");
         jTextField5.addActionListener(this::jTextField5ActionPerformed);
 
         jTextField6.setEditable(false);
-        jTextField6.setText("[land]");
         jTextField6.addActionListener(this::jTextField6ActionPerformed);
 
         jTextField7.setEditable(false);
-        jTextField7.setText("[stad]");
         jTextField7.addActionListener(this::jTextField7ActionPerformed);
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Välj partner" }));
@@ -346,6 +340,10 @@ public class Partners extends javax.swing.JFrame {
        // new MenyHandlaggareProjektchef(idb, aid).setVisible(true);
 this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField3ActionPerformed
 
     /**
      * @param args the command line arguments
