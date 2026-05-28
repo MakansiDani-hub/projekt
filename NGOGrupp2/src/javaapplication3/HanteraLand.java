@@ -323,6 +323,7 @@ import javax.swing.JOptionPane;
         );
 
         JBtnTillbakaTillMeny.setText("Tillbaka till meny");
+        JBtnTillbakaTillMeny.addActionListener(this::JBtnTillbakaTillMenyActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -369,6 +370,11 @@ import javax.swing.JOptionPane;
         // Kallar på TaBortLand Metoden
         taBortLand();
     }//GEN-LAST:event_JBtnTaBortLandActionPerformed
+
+    private void JBtnTillbakaTillMenyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnTillbakaTillMenyActionPerformed
+        Navigering.tillbakaTillMeny(anvandare);
+        this.dispose();
+    }//GEN-LAST:event_JBtnTillbakaTillMenyActionPerformed
 
 
 //tillfällig main metod för att testa fönstret.
