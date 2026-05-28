@@ -34,102 +34,83 @@
                       <Component id="JLblSokAnställd" min="-2" pref="80" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="JTxtFieldSökruta" min="-2" pref="154" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="btnSök" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="JScrollPaneListaAnställda" min="-2" pref="337" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Component id="JLblAnstalldUppgifter" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" attributes="0">
-                                      <Group type="103" groupAlignment="1" attributes="0">
-                                          <Component id="JLblAnstalldID" max="32767" attributes="0"/>
-                                          <Component id="JLblAvdelning" max="32767" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="JTxtFieldAnstalldID" max="32767" attributes="0"/>
-                                  <Component id="JTxtFieldAvdelning" alignment="0" max="32767" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Component id="JLblTeleNr" linkSize="1" min="-2" pref="119" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="JTxtFieldTeleNr" min="-2" pref="119" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" attributes="0">
-                                      <Component id="JLblPostAdress" linkSize="1" min="-2" pref="119" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="JTxtFieldPostadress" min="-2" pref="121" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" attributes="0">
-                                      <Component id="JLblEpost" linkSize="1" min="-2" pref="119" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="JTxtFieldEpost" min="-2" pref="121" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" attributes="0">
-                                      <Component id="JLblAnstDatum" linkSize="1" min="-2" pref="119" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="JTxtFieldAnstDatum" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" attributes="0">
-                                      <Component id="JLblLön" linkSize="1" min="-2" pref="119" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="JTxtFieldLön" min="-2" pref="121" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" attributes="0">
-                                      <Component id="JLblLösen" linkSize="1" min="-2" pref="119" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="jTextField5" min="-2" pref="121" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" attributes="0">
-                                      <Component id="JBtnLaggTillAnstalld" min="-2" pref="119" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="JBtnUppdateraAnstalld" min="-2" pref="119" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="JBtnTaBortAnstalld" min="-2" pref="119" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="JBtnRensaUppgifteranstalld" min="-2" pref="119" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                          <Component id="JLblRoll" max="32767" attributes="0"/>
-                                          <Component id="JLblENamn" linkSize="1" alignment="1" pref="100" max="32767" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace min="19" max="32767" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Component id="JLblFNamn" max="32767" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                                      <Component id="JTxtFieldENamn" min="-2" pref="118" max="-2" attributes="0"/>
-                                      <Component id="JTxtFieldFNamn" min="-2" pref="122" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Component id="JTxtFieldRoll" alignment="1" min="-2" pref="122" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                      </Group>
+                      <Component id="JScrollPaneListaAnställda" min="-2" pref="765" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="51" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="JBtnLaggTillAnstalld" min="-2" pref="119" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="JBtnUppdateraAnstalld" min="-2" pref="119" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="JBtnTaBortAnstalld" min="-2" pref="119" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="JBtnRensaUppgifteranstalld" min="-2" pref="119" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="JLblFNamn" max="32767" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="JTxtFieldFNamn" min="-2" pref="260" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="JLblAnstalldUppgifter" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                                  <Component id="JLblAnstalldID" min="-2" pref="104" max="-2" attributes="0"/>
+                                  <Component id="JLblAvdelning" min="-2" pref="104" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="JLblRoll" max="32767" attributes="0"/>
+                                  <Component id="JLblENamn" linkSize="1" alignment="1" pref="100" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="JTxtFieldAvdelning" alignment="1" max="32767" attributes="0"/>
+                              <Component id="JTxtFieldRoll" max="32767" attributes="0"/>
+                              <Component id="JTxtFieldAnstalldID" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="JLblTeleNr" linkSize="1" min="-2" pref="119" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="JTxtFieldENamn" max="32767" attributes="0"/>
+                              <Component id="JTxtFieldTeleNr" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="JLblPostAdress" linkSize="1" min="-2" pref="119" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="JTxtFieldPostadress" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="JLblEpost" linkSize="1" min="-2" pref="119" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="JTxtFieldEpost" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="JLblAnstDatum" linkSize="1" min="-2" pref="119" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="JTxtFieldAnstDatum" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="JLblLösen" linkSize="1" min="-2" pref="119" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="jTextField5" min="-2" pref="260" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <Component id="btnGenereraLösenord" alignment="1" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -137,14 +118,20 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <Component id="JLblRubrik" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="JTxtFieldSökruta" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="JLblSokAnställd" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="JTxtFieldSökruta" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="JLblSokAnställd" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnSök" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="JScrollPaneListaAnställda" pref="824" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                       <Component id="JLblAnstalldUppgifter" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -191,17 +178,14 @@
                           <Component id="JLblAnstDatum" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="JTxtFieldAnstDatum" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="JLblLön" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="JTxtFieldLön" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="JLblLösen" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jTextField5" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btnGenereraLösenord" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="JBtnLaggTillAnstalld" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
                           <Component id="JBtnUppdateraAnstalld" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
@@ -211,11 +195,9 @@
                           <Component id="JBtnTaBortAnstalld" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
                           <Component id="JBtnRensaUppgifteranstalld" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
-                  <Component id="JScrollPaneListaAnställda" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -251,9 +233,9 @@
       </SubComponents>
     </Container>
     <Component class="javax.swing.JTextField" name="JTxtFieldS&#xf6;kruta">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="[Anst&#xe4;lld Namn]"/>
-      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JTxtFieldS&#xf6;krutaActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="JLblSokAnst&#xe4;lld">
       <Properties>
@@ -264,21 +246,33 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Uppdatera"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JBtnUppdateraAnstalldActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="JBtnRensaUppgifteranstalld">
       <Properties>
         <Property name="text" type="java.lang.String" value="Rensa"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JBtnRensaUppgifteranstalldActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="JBtnTaBortAnstalld">
       <Properties>
         <Property name="text" type="java.lang.String" value="Ta bort"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JBtnTaBortAnstalldActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="JBtnLaggTillAnstalld">
       <Properties>
         <Property name="text" type="java.lang.String" value="L&#xe4;gg till"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JBtnLaggTillAnstalldActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="JLblAnstalldID">
       <Properties>
@@ -304,9 +298,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="JTxtFieldFNamn">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="[ForNamn]"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="JLblRoll">
       <Properties>
@@ -315,7 +306,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="JTxtFieldRoll">
       <Properties>
-        <Property name="text" type="java.lang.String" value="[Roll]"/>
+        <Property name="text" type="java.lang.String" value="admin/handlaggare_projektchef/handlaggare"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JTxtFieldRollActionPerformed"/>
@@ -327,9 +318,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="JTxtFieldENamn">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="[Efternamn]"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="JLblTeleNr">
       <Properties>
@@ -347,38 +335,19 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="JTxtFieldTeleNr">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="[TeleNr]"/>
-      </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JTxtFieldTeleNrActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="JTxtFieldPostadress">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="[Postadress]"/>
-      </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JTxtFieldPostadressActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="JTxtFieldEpost">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="[Epost]"/>
-      </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JTxtFieldEpostActionPerformed"/>
       </Events>
-    </Component>
-    <Component class="javax.swing.JLabel" name="JLblL&#xf6;n">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="L&#xf6;n"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="JTxtFieldL&#xf6;n">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="[L&#xf6;n]"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="JLblL&#xf6;sen">
       <Properties>
@@ -386,9 +355,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTextField5">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="[Slumpat l&#xf6;senord]"/>
-      </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField5ActionPerformed"/>
       </Events>
@@ -410,8 +376,24 @@
     </Component>
     <Component class="javax.swing.JTextField" name="JTxtFieldAnstDatum">
       <Properties>
-        <Property name="text" type="java.lang.String" value="[Anst&#xe4;llningsdatum]"/>
+        <Property name="text" type="java.lang.String" value="&#xc5;&#xc5;&#xc5;&#xc5;-MM-DD"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnS&#xf6;k">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="S&#xf6;k"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnS&#xf6;kActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnGenereraL&#xf6;senord">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Generera l&#xf6;senord"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGenereraL&#xf6;senordActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

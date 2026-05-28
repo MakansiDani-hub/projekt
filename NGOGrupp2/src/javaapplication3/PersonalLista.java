@@ -3,6 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package javaapplication3;
+import oru.inf.InfDB;
+import java.util.ArrayList;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import java.awt.BorderLayout;
 
 /**
  *
@@ -11,20 +16,76 @@ package javaapplication3;
 public class PersonalLista extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(PersonalLista.class.getName());
-<<<<<<< HEAD
     private Anvandare anvandare;
-=======
->>>>>>> c9ce765844caf8906405e9077fe776aa526b53ac
+    private InfDB idb;
+    private int aid;
 
     /**
      * Creates new form Personer
      */
     public PersonalLista(Anvandare anvandare) {
+        
         initComponents();
-<<<<<<< HEAD
         this.anvandare = anvandare;
-=======
->>>>>>> c9ce765844caf8906405e9077fe776aa526b53ac
+        this.idb = anvandare.getIdb();
+        this.aid = anvandare.getAid();
+        jLabel3.setVisible(false);
+
+        visaAllPersonalIAvdelning();
+    }
+      
+    private void visaAllPersonalIAvdelning() {
+        try {
+            jPanel6.removeAll();
+            jPanel6.add(jPanel10);
+
+            String sqlFraga =
+                    "SELECT CONCAT(fornamn, ' ', efternamn), epost, telefon " +
+                    "FROM anstalld " +
+                    "WHERE avdelning = (SELECT avdelning FROM anstalld WHERE aid = " + aid + ")";
+
+            ArrayList<java.util.HashMap<String, String>> personalLista = idb.fetchRows(sqlFraga);
+
+            if (personalLista == null || personalLista.isEmpty()) {
+                jLabel3.setText("Ingen personal hittades");
+                jLabel3.setVisible(true);
+                return;
+            }
+
+            for (java.util.HashMap<String, String> rad : personalLista) {
+
+                String namn = rad.get("CONCAT(fornamn, ' ', efternamn)");
+                String epost = rad.get("epost");
+                String telefon = rad.get("telefon");
+
+                JPanel radPanel = new JPanel();
+                radPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(4, 0, 4, 0));
+                radPanel.setMaximumSize(new java.awt.Dimension(570, 32));
+                radPanel.setPreferredSize(new java.awt.Dimension(570, 32));
+                radPanel.setLayout(new BorderLayout(10, 0));
+
+                JLabel lblNamn = new JLabel(namn);
+                lblNamn.setPreferredSize(new java.awt.Dimension(180, 16));
+
+                JLabel lblEpost = new JLabel(epost);
+
+                JLabel lblTelefon = new JLabel(telefon);
+                lblTelefon.setPreferredSize(new java.awt.Dimension(120, 16));
+
+                radPanel.add(lblNamn, BorderLayout.WEST);
+                radPanel.add(lblEpost, BorderLayout.CENTER);
+                radPanel.add(lblTelefon, BorderLayout.EAST);
+
+                jPanel6.add(radPanel);
+            }
+
+            jPanel6.revalidate();
+            jPanel6.repaint();
+
+        } catch (Exception ex) {
+            jLabel3.setText("Kunde inte hämta personal");
+            jLabel3.setVisible(true);
+        }
     }
 
     /**
@@ -36,7 +97,7 @@ public class PersonalLista extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
+        btnTillbakaTillMeny = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel6 = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
@@ -53,16 +114,15 @@ public class PersonalLista extends javax.swing.JFrame {
         jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        btnSök = new javax.swing.JButton();
+        SökningsFält = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("Tillbaka till Meny");
-        jButton1.addActionListener(this::jButton1ActionPerformed);
+        btnTillbakaTillMeny.setText("Tillbaka till Meny");
+        btnTillbakaTillMeny.addActionListener(this::btnTillbakaTillMenyActionPerformed);
 
         jPanel6.setLayout(new javax.swing.BoxLayout(jPanel6, javax.swing.BoxLayout.Y_AXIS));
 
@@ -135,17 +195,15 @@ public class PersonalLista extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Sök efter personal i din avdelning");
 
-        jButton2.setText("Sök 🔍");
-        jButton2.addActionListener(this::jButton2ActionPerformed);
+        btnSök.setText("Sök 🔍");
+        btnSök.addActionListener(this::btnSökActionPerformed);
 
-        jTextField1.setText("[sökningstecken]");
+        SökningsFält.addActionListener(this::SökningsFältActionPerformed);
 
         jLabel2.setText("Sök efter namn och epost");
 
         jLabel3.setForeground(new java.awt.Color(204, 0, 51));
         jLabel3.setText("[felmeddelande]");
-
-        jButton3.setText("Se all personal");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -156,38 +214,32 @@ public class PersonalLista extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 583, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(SökningsFält, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnSök, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
-                            .addComponent(jButton1)
+                            .addComponent(btnTillbakaTillMeny)
                             .addComponent(jLabel2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton3)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1)
+                .addComponent(btnTillbakaTillMeny)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(9, 9, 9)
-                        .addComponent(jButton3))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel2)))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2)
+                    .addComponent(SökningsFält, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSök)
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -197,22 +249,70 @@ public class PersonalLista extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btnSökActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSökActionPerformed
+        try {
+                String sokning = SökningsFält.getText();
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+                String sqlFraga =
+                        "SELECT CONCAT(fornamn, ' ', efternamn) AS namn, epost, telefon " +
+                        "FROM anstalld " +
+                        "WHERE avdelning = (SELECT avdelning FROM anstalld WHERE aid = " + aid + ") " +
+                        "AND (fornamn LIKE '%" + sokning + "%' " +
+                        "OR efternamn LIKE '%" + sokning + "%' " +
+                        "OR epost LIKE '%" + sokning + "%')";
 
-<<<<<<< HEAD
+                ArrayList<java.util.HashMap<String, String>> resultat = idb.fetchRows(sqlFraga);
+
+                if (resultat == null || resultat.isEmpty()) {
+                    javax.swing.JOptionPane.showMessageDialog(
+                            this,
+                            "Ingen anställd hittades i din avdelning.",
+                            "Sökresultat",
+                            javax.swing.JOptionPane.INFORMATION_MESSAGE
+                    );
+                    return;
+                }
+
+                StringBuilder meddelande = new StringBuilder();
+
+                for (java.util.HashMap<String, String> rad : resultat) {
+                    meddelande.append("Namn: ").append(rad.get("namn")).append("\n");
+                    meddelande.append("Epost: ").append(rad.get("epost")).append("\n");
+                    meddelande.append("Telefon: ").append(rad.get("telefon")).append("\n");
+                    meddelande.append("----------------------\n");
+                }
+
+                javax.swing.JOptionPane.showMessageDialog(
+                        this,
+                        meddelande.toString(),
+                        "Personal i din avdelning",
+                        javax.swing.JOptionPane.INFORMATION_MESSAGE
+                );
+
+            } catch (Exception ex) {
+                javax.swing.JOptionPane.showMessageDialog(
+                        this,
+                        "Fel vid sökning.",
+                        "Fel",
+                        javax.swing.JOptionPane.ERROR_MESSAGE
+                );
+            }
+    }//GEN-LAST:event_btnSökActionPerformed
+    
+
     private void lblTillbakaTillMenyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblTillbakaTillMenyActionPerformed
-        new MenyHandlaggareProjektchef(anvandare).setVisible(true);
-        this.setVisible(false);
+        //new MenyHandlaggareProjektchef().setVisible(true);
+       // this.setVisible(false);
     }//GEN-LAST:event_lblTillbakaTillMenyActionPerformed
 
-=======
->>>>>>> c9ce765844caf8906405e9077fe776aa526b53ac
+    private void SökningsFältActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SökningsFältActionPerformed
+        btnSökActionPerformed(evt);
+    }//GEN-LAST:event_SökningsFältActionPerformed
+
+    private void btnTillbakaTillMenyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaTillMenyActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnTillbakaTillMenyActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -235,13 +335,13 @@ public class PersonalLista extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new PersonalLista().setVisible(true));
+        //java.awt.EventQueue.invokeLater(() -> new PersonalLista().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JTextField SökningsFält;
+    private javax.swing.JButton btnSök;
+    private javax.swing.JButton btnTillbakaTillMeny;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
@@ -260,6 +360,5 @@ public class PersonalLista extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

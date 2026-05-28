@@ -4,6 +4,8 @@
  */
 package javaapplication3;
 
+import oru.inf.InfDB;
+
 /**
  *
  * @author Krist
@@ -11,24 +13,17 @@ package javaapplication3;
 public class AdministratörMeny extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AdministratörMeny.class.getName());
-<<<<<<< HEAD
     private Anvandare anvandare;
-    private InfDB idb;
+   // private InfDB idb;
     private int aid;
     /**
      * Creates new form Administratör
      */
     public AdministratörMeny(Anvandare anvandare) {
         initComponents();
+       // this.idb = idb;
+        this.aid = anvandare.getAid();
         this.anvandare = anvandare;
-=======
-
-    /**
-     * Creates new form Administratör
-     */
-    public AdministratörMeny() {
-        initComponents();
->>>>>>> c9ce765844caf8906405e9077fe776aa526b53ac
     }
 
     /**
@@ -53,7 +48,7 @@ public class AdministratörMeny extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         RubrikAdmin.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        RubrikAdmin.setText("Meny");
+        RubrikAdmin.setText("ADMIN Meny");
 
         BtnHanteraAnst.setText("Hantera anställd");
         BtnHanteraAnst.addActionListener(this::BtnHanteraAnstActionPerformed);
@@ -80,23 +75,18 @@ public class AdministratörMeny extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(17, 17, 17)
+                .addComponent(RubrikAdmin)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 167, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(BtnHanteraProjekt, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(RubrikAdmin, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(BtnHanteraAnst, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(BtnHanteraLand, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(BtnHanteraPartner, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(BtnHanteraAvd, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 167, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(JLblEpost)
-                            .addComponent(JLblinformationInloggad))
-                        .addGap(28, 28, 28))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(BtnHanteraHmål)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                    .addComponent(JLblEpost)
+                    .addComponent(JLblinformationInloggad))
+                .addGap(28, 28, 28))
+            .addComponent(BtnHanteraAnst, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(BtnHanteraLand, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(BtnHanteraPartner, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(BtnHanteraAvd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(BtnHanteraProjekt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(BtnHanteraHmål, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -105,24 +95,21 @@ public class AdministratörMeny extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(RubrikAdmin)
                     .addComponent(JLblEpost))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(BtnHanteraAnst)
-                        .addGap(18, 18, 18)
-                        .addComponent(BtnHanteraLand)
-                        .addGap(18, 18, 18)
-                        .addComponent(BtnHanteraPartner)
-                        .addGap(18, 18, 18)
-                        .addComponent(BtnHanteraAvd)
-                        .addGap(18, 18, 18)
-                        .addComponent(BtnHanteraProjekt))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(JLblinformationInloggad)))
+                .addGap(6, 6, 6)
+                .addComponent(JLblinformationInloggad)
                 .addGap(18, 18, 18)
+                .addComponent(BtnHanteraAnst)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(BtnHanteraLand)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(BtnHanteraPartner)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(BtnHanteraAvd)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(BtnHanteraProjekt)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(BtnHanteraHmål)
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(151, Short.MAX_VALUE))
         );
 
         pack();
@@ -133,11 +120,13 @@ public class AdministratörMeny extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnHanteraHmålActionPerformed
 
     private void BtnHanteraAnstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHanteraAnstActionPerformed
-        // Överlappande funktionalitet med både handläggare och projektchef
+        new HanteraAnstalld(anvandare).setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_BtnHanteraAnstActionPerformed
 
     private void BtnHanteraProjektActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHanteraProjektActionPerformed
-        // TODO add your handling code here:
+        new HanteraProjekt(anvandare).setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_BtnHanteraProjektActionPerformed
 
     /**
@@ -162,7 +151,7 @@ public class AdministratörMeny extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new AdministratörMeny().setVisible(true));
+        //java.awt.EventQueue.invokeLater(() -> new AdministratörMeny().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

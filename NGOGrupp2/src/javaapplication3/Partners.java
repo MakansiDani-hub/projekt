@@ -51,6 +51,7 @@ public class Partners extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jButton1.setText("Tillbaka till [där vi var innan]");
+        jButton1.addActionListener(this::jButton1ActionPerformed);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -79,34 +80,27 @@ public class Partners extends javax.swing.JFrame {
         jLabel9.setText("Stad");
 
         jTextField1.setEditable(false);
-        jTextField1.setBackground(new java.awt.Color(242, 242, 242));
         jTextField1.setText("[kontaktperson]");
 
         jTextField2.setEditable(false);
-        jTextField2.setBackground(new java.awt.Color(242, 242, 242));
         jTextField2.setText("[kontaktepost]");
 
         jTextField3.setEditable(false);
-        jTextField3.setBackground(new java.awt.Color(242, 242, 242));
         jTextField3.setText("[telefon]");
 
         jTextField4.setEditable(false);
-        jTextField4.setBackground(new java.awt.Color(242, 242, 242));
         jTextField4.setText("[branch]");
         jTextField4.addActionListener(this::jTextField4ActionPerformed);
 
         jTextField5.setEditable(false);
-        jTextField5.setBackground(new java.awt.Color(242, 242, 242));
         jTextField5.setText("[adress]");
         jTextField5.addActionListener(this::jTextField5ActionPerformed);
 
         jTextField6.setEditable(false);
-        jTextField6.setBackground(new java.awt.Color(242, 242, 242));
         jTextField6.setText("[land]");
         jTextField6.addActionListener(this::jTextField6ActionPerformed);
 
         jTextField7.setEditable(false);
-        jTextField7.setBackground(new java.awt.Color(242, 242, 242));
         jTextField7.setText("[stad]");
         jTextField7.addActionListener(this::jTextField7ActionPerformed);
 
@@ -225,6 +219,10 @@ public class Partners extends javax.swing.JFrame {
     private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField7ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

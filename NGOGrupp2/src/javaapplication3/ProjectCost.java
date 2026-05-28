@@ -11,13 +11,13 @@ package javaapplication3;
 public class ProjectCost extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ProjectCost.class.getName());
-    private Anvandare anvandare;
+    
     /**
      * Creates new form ProjectCost
      */
-    public ProjectCost(Anvandare anvandare) {
+    public ProjectCost() {
         initComponents();
-        this.anvandare = anvandare;
+        
     }
 
     /**
@@ -81,7 +81,7 @@ public class ProjectCost extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap(13, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jSeparator1)
@@ -111,7 +111,7 @@ public class ProjectCost extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblTillbakaTillMeny)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -132,9 +132,8 @@ public class ProjectCost extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void lblTillbakaTillMenyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblTillbakaTillMenyActionPerformed
-         MenyHandlaggareProjektchef meny = new MenyHandlaggareProjektchef(anvandare);
-        meny.setVisible(true);
-        this.dispose();
+        //new MenyHandlaggareProjektchef().setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_lblTillbakaTillMenyActionPerformed
 
     /**
@@ -159,7 +158,7 @@ public class ProjectCost extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        //java.awt.EventQueue.invokeLater(() -> new ProjectCost().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new ProjectCost().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

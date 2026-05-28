@@ -21,11 +21,9 @@ public class inloggningsfonster extends javax.swing.JFrame {
      */
     public inloggningsfonster(InfDB idb) {
         this.idb = idb;
-<<<<<<< HEAD
-        this.anvandare = anvandare;
+
         
-=======
->>>>>>> c9ce765844caf8906405e9077fe776aa526b53ac
+
         initComponents();
         lblFelmeddelande.setVisible(false);
     }
@@ -56,6 +54,7 @@ public class inloggningsfonster extends javax.swing.JFrame {
         lblLösenord.setText("Lösenord");
 
         tfEPost.setText("maria.g@example.com");
+        tfEPost.addActionListener(this::tfEPostActionPerformed);
 
         tfLösenord.setText("password123");
         tfLösenord.addActionListener(this::tfLösenordActionPerformed);
@@ -149,7 +148,30 @@ public class inloggningsfonster extends javax.swing.JFrame {
                 String anvandareslosenord = "SELECT losenord FROM anstalld where epost = '" + ePost+"'";
                 String dbAnvandareslosenord = idb.fetchSingle (anvandareslosenord);
                 
-<<<<<<< HEAD
+
+                
+                
+                //här kollar man om en sådan ID finns i en tabell 
+                String adminCheck = idb.fetchSingle("SELECT COUNT(*) FROM admin WHERE aid = " + dbAnvandaresID); //admin tabellen har inga upprepningar så en admin kan vara en gång(0-1)
+                String handlaggareCheck = idb.fetchSingle("SELECT COUNT(*) FROM handlaggare WHERE aid = " + dbAnvandaresID);// en handläggare kan vara en handläggare(0-1)
+                String projektchefCheck = idb.fetchSingle("SELECT COUNT(*) FROM projekt WHERE projektchef = " + dbAnvandaresID);//projektchef kan vara chef för flera projekt(0-INF)
+
+
+                boolean arAdmin = !adminCheck.equals("0");
+                boolean arHandlaggare = !handlaggareCheck.equals("0");
+                boolean arProjektchef = !projektchefCheck.equals("0");
+                
+                String roll = "";
+                if (arAdmin) {
+                    roll = "admin";
+                }
+                else if (arHandlaggare && arProjektchef) {
+                    roll = "handlaggare_projektchef";
+                }
+                else if (arHandlaggare) {
+                    roll = "handlaggare";
+                }
+                
                 Anvandare anvandare = new Anvandare(
                 idb,
                 dbNamn,
@@ -158,25 +180,12 @@ public class inloggningsfonster extends javax.swing.JFrame {
                 Integer.parseInt(dbAnvandaresID),
                 dbAnvandaresAdress,
                 dbAnvandaresTelefon,
-                dbAnvandareslosenord
+                dbAnvandareslosenord,
+                roll
                 );
                 
-                //här kollar man om en sådan ID finns i en tabell 
-                String adminCheck = idb.fetchSingle("SELECT COUNT(*) FROM admin WHERE aid = " + dbAnvandaresID); //admin tabellen har inga upprepningar så en admin kan vara en gång(0-1)
-                String handlaggareCheck = idb.fetchSingle("SELECT COUNT(*) FROM handlaggare WHERE aid = " + dbAnvandaresID);// en handläggare kan vara en handläggare(0-1)
-                String projektchefCheck = idb.fetchSingle("SELECT COUNT(*) FROM projekt WHERE projektchef = " + dbAnvandaresID);//projektchef kan vara chef för flera projekt(0-INF)
-=======
-                String adminCheck = idb.fetchSingle("SELECT aid FROM admin WHERE aid = " + dbAnvandaresID);
-                String handlaggareCheck = idb.fetchSingle("SELECT aid FROM handlaggare WHERE aid = " + dbAnvandaresID);
-                String projektchefCheck = idb.fetchSingle("SELECT aid FROM projektchef WHERE aid = " + dbAnvandaresID);
->>>>>>> c9ce765844caf8906405e9077fe776aa526b53ac
-
-                boolean arAdmin = adminCheck != null;
-                boolean arHandlaggare = handlaggareCheck != null;
-                boolean arProjektchef = projektchefCheck != null;
-                
                 if (arAdmin) {
-<<<<<<< HEAD
+
                     new AdministratörMeny(anvandare).setVisible(true);
                 }
                 else if (arHandlaggare && arProjektchef) {
@@ -186,28 +195,7 @@ public class inloggningsfonster extends javax.swing.JFrame {
                 else if (arHandlaggare) {
                     new MenyHandlaggare(anvandare).setVisible(true);
                 }
-=======
 
-                    String behorighetsniva = idb.fetchSingle("SELECT behorighetsniva FROM admin WHERE aid = " + dbAnvandaresID);
-
-                    if (behorighetsniva.equals("1")) {
-                        new AdministratörMeny().setVisible(true);
-                    } 
-                    else if (behorighetsniva.equals("2")) {
-                        new AdministratorMeny2().setVisible(true); // byt namn 
-                    }
-
-                } 
-                else if (arHandlaggare && arProjektchef) {
-                    new MenyHandlaggareProjektchef().setVisible(true); // GUI ej klart
-                } 
-                else if (arProjektchef) {
-                    new MenyProjektchef().setVisible(true); // GUI ej klart 
-                } 
-                else if (arHandlaggare) {
-                    new MenyHandlaggare().setVisible(true);
-                } 
->>>>>>> c9ce765844caf8906405e9077fe776aa526b53ac
                 else {
                     lblFelmeddelande.setVisible(true);
                 }               
@@ -222,6 +210,10 @@ public class inloggningsfonster extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnLoggainActionPerformed
 
+    
+    private void tfEPostActionPerformed(java.awt.event.ActionEvent evt) {                                        
+    // TODO add your handling code here:
+}
     private void tfLösenordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfLösenordActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tfLösenordActionPerformed
