@@ -154,6 +154,16 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
 
         JLblPrioritet.setText("Prioritet");
 
+        JTxtFieldHID.setText("[HID]");
+
+        JTxtFieldNamn.setText("[Namn]");
+
+        JTxtFieldMalNr.setText("[Malnummer]");
+
+        JTxtFieldBeskrivning.setText("[Beskrivning]");
+
+        JTxtFieldPrioritet.setText("[Prioritet]");
+
         JBtnLaggTillHallbarhetsmal.setText("Lägg till");
         JBtnLaggTillHallbarhetsmal.addActionListener(this::JBtnLaggTillHallbarhetsmalActionPerformed);
 
