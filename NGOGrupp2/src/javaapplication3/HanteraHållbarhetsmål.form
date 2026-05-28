@@ -49,13 +49,6 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
-          <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="347" max="-2" attributes="0"/>
-                  <Component id="lblTillbakaTillMeny" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="348" max="32767" attributes="0"/>
-              </Group>
-          </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -68,13 +61,6 @@
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="JPanelProjektMotMal" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
-          </Group>
-          <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="246" max="-2" attributes="0"/>
-                  <Component id="lblTillbakaTillMeny" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="246" max="32767" attributes="0"/>
-              </Group>
           </Group>
       </Group>
     </DimensionLayout>
@@ -278,13 +264,5 @@
         </DimensionLayout>
       </Layout>
     </Container>
-    <Component class="javax.swing.JButton" name="lblTillbakaTillMeny">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Tillbaka till Meny"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="lblTillbakaTillMenyActionPerformed"/>
-      </Events>
-    </Component>
   </SubComponents>
 </Form>
