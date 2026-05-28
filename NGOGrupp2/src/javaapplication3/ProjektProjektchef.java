@@ -156,7 +156,7 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         btnSpara = new javax.swing.JButton();
         lblFelmeddelandeUnder = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         spnlTop.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         spnlTop.setPreferredSize(new java.awt.Dimension(730, 577));
@@ -918,12 +918,12 @@ public class ProjektProjektchef extends javax.swing.JFrame {
             String prioritet = projektinfoEnskilda.get("prioritet");
             txtfStatus.setText(status);
             txtfPrioritet.setText(prioritet);
-            if (arIComboBox(cbStatus, status)) {//Finns exempelvis statusen "planerat" som item i ComboBoxen cbStatus?
+            if (SwingUtils.arIComboBox(cbStatus, status)) {//Finns exempelvis statusen "planerat" som item i ComboBoxen cbStatus?
                 //Validering av input i databasen sker, därför kan denna kontroll ses som onödig, men 
                 //att göra det för output är ofta bra ändå ifall fel data råkat kommit i databasen av diverse anledning.
                 cbStatus.setSelectedItem(status); //Om statusen finns --> visa denna i vår ComboBox 
             }
-            if (arIComboBox(cbPrioritet, prioritet)) {
+            if (SwingUtils.arIComboBox(cbPrioritet, prioritet)) {
                 cbStatus.setSelectedItem(prioritet);
             } else {
                 cbStatus.setSelectedItem("Ingen");
@@ -1220,31 +1220,7 @@ public class ProjektProjektchef extends javax.swing.JFrame {
 //        };
 //    }
 
-    /**
-     * Kollar om en item finns i en JComboBox
-     *
-     * @param <T> typen av elementen i JComboBoxen
-     * @param cb JComboBoxen som håller 1-N items av typ T
-     * @param item item som vi kollar om finns i cb.
-     * @return true om item finns i denna cb, false om inte. Om item är null
-     * returneras alltid false.
-     *
-     * Kan exempelvis kontrollera en item av typ String.
-     */
-    private <T> boolean arIComboBox(JComboBox<T> cb, T item) { //generisk typ T ser till att båda parametrar har samma typ T, tex String
-        //Validerar argument
-        if (cb == null) {
-            System.out.println("Argumentet för JComboBox<O> cb saknade referens - cb var null");
-            return false;
-        }
-        for (int i = 0; i < cb.getItemCount(); i++) {
-            T cbItem = cb.getItemAt(i);
-            if (cbItem != null && cbItem.equals(item)) {
-                return true;
-            }
-        }
-        return false;
-    }
+
 
     private void valjLandPopup() {
         //Öppna popup
