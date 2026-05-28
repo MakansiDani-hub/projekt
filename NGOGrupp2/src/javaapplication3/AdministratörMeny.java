@@ -61,6 +61,7 @@ public class AdministratörMeny extends javax.swing.JFrame {
         BtnHanteraPartner.setText("Hantera Partner");
 
         BtnHanteraLand.setText("Hantera Land");
+        BtnHanteraLand.addActionListener(this::BtnHanteraLandActionPerformed);
 
         BtnHanteraHmål.setText("Hantera Hållbarhetsmål");
         BtnHanteraHmål.addActionListener(this::BtnHanteraHmålActionPerformed);
@@ -128,6 +129,10 @@ public class AdministratörMeny extends javax.swing.JFrame {
         //new HanteraProjekt(anvandare).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_BtnHanteraProjektActionPerformed
+
+    private void BtnHanteraLandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHanteraLandActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BtnHanteraLandActionPerformed
 
     /**
      * @param args the command line arguments
