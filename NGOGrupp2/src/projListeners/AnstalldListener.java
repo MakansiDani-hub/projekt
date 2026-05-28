@@ -8,6 +8,6 @@ package projListeners;
  *
  * @author alexander.willen
  */
-public interface DeltagareListener {
-    void valDeltagare(String deltagareId, String namn); //Automatiskt public och abstrakt pga interface
+public interface AnstalldListener {
+    void valAnstalld(String anstalldId, String namn); //Automatiskt public och abstrakt pga interface
 }

@@ -29,14 +29,12 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
     }
 
     //---Session---
-    private InfDB idb; //databas
-    private int aid; //användarens id - ENS VIKTIGT ATT VETA?
+    private Anvandare anv; //databas + anvandare
     private int pid; //det valda projektet vars uppgifter visas
 
-    public ProjektHandlaggare(InfDB idb, int aid, int pid)
+    public ProjektHandlaggare(Anvandare anv, int pid)
     {
-        this.idb = idb;
-        this.aid = aid;
+        this.anv = anv;
         this.pid = pid;
 
         initComponents();
@@ -89,6 +87,7 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
         pnlHandlaggare = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         pnlProjektchef = new javax.swing.JPanel();
+        btnProjektchef = new javax.swing.JButton();
         jPanel11 = new javax.swing.JPanel();
         btnPartnersDropdown = new javax.swing.JButton();
         spnlPartnersDropdown = new javax.swing.JScrollPane();
@@ -235,6 +234,7 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
         btnLand.setMaximumSize(new java.awt.Dimension(180, 30));
         btnLand.setMinimumSize(new java.awt.Dimension(43, 30));
         btnLand.setPreferredSize(new java.awt.Dimension(50, 30));
+        btnLand.addActionListener(this::btnLandActionPerformed);
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
@@ -408,6 +408,15 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
 
         pnlProjektchef.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 5, 0));
 
+        btnProjektchef.setText("[Projektchef]");
+        btnProjektchef.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnProjektchef.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnProjektchef.setMaximumSize(new java.awt.Dimension(180, 30));
+        btnProjektchef.setMinimumSize(new java.awt.Dimension(43, 30));
+        btnProjektchef.setPreferredSize(new java.awt.Dimension(80, 30));
+        btnProjektchef.addActionListener(this::btnProjektchefActionPerformed);
+        pnlProjektchef.add(btnProjektchef);
+
         javax.swing.GroupLayout pnlDeltagareLayout = new javax.swing.GroupLayout(pnlDeltagare);
         pnlDeltagare.setLayout(pnlDeltagareLayout);
         pnlDeltagareLayout.setHorizontalGroup(
@@ -446,13 +455,13 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
+                .addComponent(pnlAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, 69, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlHandlaggare, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)
+                .addComponent(pnlHandlaggare, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
                 .addGap(26, 26, 26))
         );
 
@@ -632,6 +641,7 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
     }
     
     private void laddaInfo(){
+        InfDB idb = anv.getIdb();
         
         try{
             //---Hämtar projektinfo---
@@ -681,9 +691,9 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
             txtfStatus.setText(projektinfoEnskilda.get("status"));
             txtfPrioritet.setText(projektinfoEnskilda.get("prioritet"));
             txtfKostnad.setText(projektinfoEnskilda.get("kostnad"));
-            //...skapar knapp som visar projektchef (om projektet har en projektchef)
-            
-            
+            btnProjektchef.setText(projektinfoEnskilda.get("chefnamn"));
+            btnLand.setText(projektinfoEnskilda.get("namn"));
+                        
             //---Skapar "instansknappar"---
             //...Hållbarhetsmålen
             skapaInstansknappar(projektinfoMal, Instanstyp.HALLBARHETSMAL);
@@ -693,19 +703,6 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
             skapaInstansknappar(projektinfoHandlaggare, Instanstyp.HANDLAGGARE);
             //...Partners
             skapaInstansknappar(projektinfoPartners, Instanstyp.PARTNER);
-            //...Projektchef
-            if(projektinfoEnskilda.get("projektchef") != null){
-                JButton btnProjektchef = new JButton(projektinfoEnskilda.get("chefnamn"));
-                pnlProjektchef.add(btnProjektchef, 0);
-                btnProjektchef.setMinimumSize(new Dimension(70, 23));
-                btnProjektchef.setMaximumSize(new Dimension(200, 23));
-                skapaActionBtnProjektchef(btnProjektchef);
-            }
-            //...Land
-            if(projektinfoEnskilda.get("namn") != null){
-                 btnLand.setText(projektinfoEnskilda.get("namn"));
-                 skapaActionBtnLand();
-            }
             
             
         }
@@ -809,15 +806,7 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
         });
     }
     
-    private void skapaActionBtnProjektchef(JButton knapp){
-        knapp.addActionListener(new ActionListener(){
-            @Override 
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Öppnar projektchef");   
-                //new Personalista(idb, aid)
-            }        
-        });
-    }
+
 
     private void vaxlaDropdownLage(JScrollPane dropdownRuta, JButton dropdownKnapp)
     {
@@ -835,7 +824,7 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDeltagareDropdownActionPerformed
 
     private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
-        new ProjektSok(idb, aid).setVisible(true);
+        new ProjektSok(anv.getIdb(), anv.getAid()).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnTillbakaActionPerformed
 
@@ -850,6 +839,15 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
     private void btnBeskrivningDropdownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBeskrivningDropdownActionPerformed
         vaxlaDropdownLage(spnlBeskrivningDropdown, btnBeskrivningDropdown);
     }//GEN-LAST:event_btnBeskrivningDropdownActionPerformed
+
+    private void btnProjektchefActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProjektchefActionPerformed
+        //Öppna ett nytt fönsetr för att välja
+        //new Personalista(anv, aid)
+    }//GEN-LAST:event_btnProjektchefActionPerformed
+
+    private void btnLandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLandActionPerformed
+        //new LandHandlaggare(anv, lid)
+    }//GEN-LAST:event_btnLandActionPerformed
 
     public static void main(String args[]) { //TA BORT MAIN METODEN TILLSLUT. NI SKA ENDAST ANVÄNDA MAIN METODEN I Startklassen
         /* Set the Nimbus look and feel */
@@ -870,7 +868,7 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
         
         try {
             InfDB idb = new InfDB("sdgsweden", "3306", "root", "masterkey");
-            new ProjektHandlaggare(idb, 3, 1).setVisible(true);
+            new ProjektHandlaggare(new Anvandare(idb, null, null, null, 3, null, null, null), 2).setVisible(true);
             System.out.println("Databaskoppling skapad");
         } catch (InfException e) {
             System.out.println(e.getMessage());
@@ -884,6 +882,7 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
     private javax.swing.JButton btnLand;
     private javax.swing.JButton btnMalDropdown;
     private javax.swing.JButton btnPartnersDropdown;
+    private javax.swing.JButton btnProjektchef;
     private javax.swing.JButton btnTillbaka;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;

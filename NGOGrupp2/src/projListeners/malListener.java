@@ -8,6 +8,6 @@ package projListeners;
  *
  * @author alexander.willen
  */
-public interface malListener {
+public interface MalListener {
     void valMal(String malId, String malNamn, int malNummer);
 }
