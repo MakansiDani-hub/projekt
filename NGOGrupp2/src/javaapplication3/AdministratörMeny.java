@@ -45,7 +45,7 @@ public class AdministratörMeny extends javax.swing.JFrame {
         JLblEpost = new javax.swing.JLabel();
         JLblinformationInloggad = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         RubrikAdmin.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         RubrikAdmin.setText("ADMIN Meny");

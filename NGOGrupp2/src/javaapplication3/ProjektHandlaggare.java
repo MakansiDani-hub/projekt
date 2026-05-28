@@ -99,7 +99,7 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
         pnlProjektnamn = new javax.swing.JPanel();
         txtfProjektnamn = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         spnlTop.setBorder(null);
         spnlTop.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
