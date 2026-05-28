@@ -24,11 +24,27 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Component id="JPanelAvdelningar" alignment="0" max="32767" attributes="0"/>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="JBtnTillbakaTillMeny" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="127" max="32767" attributes="0"/>
+              <Component id="JLblRubrik" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="249" max="-2" attributes="0"/>
+          </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="JPanelAvdelningar" alignment="0" max="32767" attributes="0"/>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="JLblRubrik" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="JBtnTillbakaTillMeny" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="JPanelAvdelningar" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
+          </Group>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -37,7 +53,7 @@
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-            <TitledBorder position="2" title="Hantera avdelningar">
+            <TitledBorder position="2">
               <Font PropertyName="font" name="Segoe UI" size="18" style="1"/>
             </TitledBorder>
           </Border>
@@ -47,7 +63,7 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
+              <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jScrollPane1" min="-2" pref="370" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -72,17 +88,17 @@
                       <Component id="JTxtFieldEpost" alignment="0" max="32767" attributes="0"/>
                       <Component id="JTxtFieldTelefon" alignment="0" max="32767" attributes="0"/>
                       <Component id="JTxtFieldStad" alignment="0" max="32767" attributes="0"/>
-                      <Component id="JBtnUppdateraAvdelning" pref="100" max="32767" attributes="0"/>
+                      <Component id="JbtnAndraAvdelning" pref="100" max="32767" attributes="0"/>
                       <Component id="JTxtFieldChef" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="70" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Group type="102" attributes="0">
                           <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
@@ -128,14 +144,14 @@
                           <EmptySpace max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="JBtnLaggTillAvdelning" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
-                              <Component id="JBtnUppdateraAvdelning" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
+                              <Component id="JbtnAndraAvdelning" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="JBtnTaBortAvdelning" min="-2" pref="33" max="-2" attributes="0"/>
                       </Group>
                       <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="12" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -188,9 +204,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="JTxtFieldAvdID">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="[AvdID]"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="JLblTelefon">
           <Properties>
@@ -203,49 +216,40 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="JTxtFieldNamn">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="[Namn]"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="JTxtFieldBeskrivning">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="[Beskrivning]"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="JTxtFieldAdress">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="[Adress]"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="JTxtFieldEpost">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="[Epost]"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="JTxtFieldTelefon">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="[Telefon]"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="JTxtFieldStad">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="[Stad]"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="JBtnLaggTillAvdelning">
           <Properties>
             <Property name="text" type="java.lang.String" value="L&#xe4;gg till"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JBtnLaggTillAvdelningActionPerformed"/>
+          </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="JBtnUppdateraAvdelning">
+        <Component class="javax.swing.JButton" name="JbtnAndraAvdelning">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Uppdatera"/>
+            <Property name="text" type="java.lang.String" value="&#xc4;ndra"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JbtnAndraAvdelningActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="JBtnTaBortAvdelning">
           <Properties>
             <Property name="text" type="java.lang.String" value="Ta bort"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JBtnTaBortAvdelningActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="JLblChef">
           <Properties>
@@ -253,11 +257,21 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="JTxtFieldChef">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="[Chef]"/>
-          </Properties>
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JLabel" name="JLblRubrik">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Segoe UI" size="18" style="1"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Hantera Avdelningar"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="JBtnTillbakaTillMeny">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Tillbaka till meny"/>
+      </Properties>
+    </Component>
   </SubComponents>
 </Form>
