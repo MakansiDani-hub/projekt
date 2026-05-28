@@ -16,7 +16,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.JOptionPane;
 
 public class Hallbarhetsmal extends javax.swing.JFrame {
-
+    private Anvandare anvandare;
     private InfDB idb;
     private DefaultTableModel bordsModell;
 
@@ -25,8 +25,9 @@ public class Hallbarhetsmal extends javax.swing.JFrame {
     /**
      * Creates new form Hallbarhetsmal
      */
-    public Hallbarhetsmal(InfDB idb) {
-        this.idb = idb;
+    public Hallbarhetsmal(Anvandare anvandare) {
+        this.idb = anvandare.getIdb();
+        this.anvandare = anvandare;
         initComponents();
 
         // Kopplar JTable till modell och sätter samma rubriker som i admin-fönstret
@@ -78,15 +79,18 @@ public class Hallbarhetsmal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        JBtnTillbakaTillMeny = new javax.swing.JButton();
-        JScrollPaneHallbarhetsmal = new javax.swing.JScrollPane();
+        jLabel1 = new javax.swing.JLabel();
+        lblTillbakaTillMeny = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
         JTableVisaMal = new javax.swing.JTable();
-        JLblRubrik = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        JBtnTillbakaTillMeny.setText("Tillbaka till Meny");
-        JBtnTillbakaTillMeny.addActionListener(this::JBtnTillbakaTillMenyActionPerformed);
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setText("Hållbarhetsmål");
+
+        lblTillbakaTillMeny.setText("Tillbaka till Meny");
+        lblTillbakaTillMeny.addActionListener(this::lblTillbakaTillMenyActionPerformed);
 
         JTableVisaMal.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -99,10 +103,7 @@ public class Hallbarhetsmal extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        JScrollPaneHallbarhetsmal.setViewportView(JTableVisaMal);
-
-        JLblRubrik.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        JLblRubrik.setText("Hållbarhetsmål");
+        jScrollPane2.setViewportView(JTableVisaMal);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -111,12 +112,12 @@ public class Hallbarhetsmal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(JScrollPaneHallbarhetsmal)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 615, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(JBtnTillbakaTillMeny)
+                        .addComponent(lblTillbakaTillMeny)
                         .addGap(122, 122, 122)
-                        .addComponent(JLblRubrik)
-                        .addGap(0, 242, Short.MAX_VALUE)))
+                        .addComponent(jLabel1)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -124,10 +125,10 @@ public class Hallbarhetsmal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(JBtnTillbakaTillMeny)
-                    .addComponent(JLblRubrik))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(JScrollPaneHallbarhetsmal, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE)
+                    .addComponent(jLabel1)
+                    .addComponent(lblTillbakaTillMeny))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2)
                 .addContainerGap())
         );
 
@@ -135,39 +136,45 @@ public class Hallbarhetsmal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void JBtnTillbakaTillMenyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnTillbakaTillMenyActionPerformed
-        // TODO add your handling code here:
+        Navigering.tillbakaTillMeny(anvandare);
+        this.dispose();
     }//GEN-LAST:event_JBtnTillbakaTillMenyActionPerformed
+
+    private void lblTillbakaTillMenyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblTillbakaTillMenyActionPerformed
+        Navigering.tillbakaTillMeny(anvandare);
+        this.dispose();
+    }//GEN-LAST:event_lblTillbakaTillMenyActionPerformed
 
     /**
      * Tillfällig main metod för att provköra fönstret.
      */
-    public static void main(String args[]) {
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-
-        /* Skapar en testanslutning och visar fönstret */
-        java.awt.EventQueue.invokeLater(() -> {
-            try {
-                InfDB testDb = new InfDB("sdgsweden", "3306", "root", "masterkey");
-                new Hallbarhetsmal(testDb).setVisible(true);
-            } catch (InfException e) {
-                System.out.println("Kunde inte starta testdatabasen: " + e.getMessage());
-            }
-        });
-    }
+//    public static void main(String args[]) {
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
+//            logger.log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//
+//        /* Skapar en testanslutning och visar fönstret */
+//        java.awt.EventQueue.invokeLater(() -> {
+//            try {
+//                InfDB testDb = new InfDB("sdgsweden", "3306", "root", "masterkey");
+//                new Hallbarhetsmal(testDb).setVisible(true);
+//            } catch (InfException e) {
+//                System.out.println("Kunde inte starta testdatabasen: " + e.getMessage());
+//            }
+//        });
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton JBtnTillbakaTillMeny;
-    private javax.swing.JLabel JLblRubrik;
-    private javax.swing.JScrollPane JScrollPaneHallbarhetsmal;
     private javax.swing.JTable JTableVisaMal;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JButton lblTillbakaTillMeny;
     // End of variables declaration//GEN-END:variables
 }

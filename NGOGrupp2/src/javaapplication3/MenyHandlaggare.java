@@ -51,7 +51,7 @@ public class MenyHandlaggare extends javax.swing.JFrame {
 
         jLabel1.setText("Avdelning: [Namn + ID]");
 
-        jButton2.setText("Sök projekt (IN PROGRESS) -> ProjektSok");
+        jButton2.setText("Sök projekt  -> ProjektSok");
         jButton2.addActionListener(this::jButton2ActionPerformed);
 
         jButton3.setText("Mina projekt (IN PROGRESS)");

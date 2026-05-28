@@ -53,7 +53,7 @@ public class AdministratörMeny extends javax.swing.JFrame {
         BtnHanteraAnst.setText("Hantera anställd");
         BtnHanteraAnst.addActionListener(this::BtnHanteraAnstActionPerformed);
 
-        BtnHanteraProjekt.setText("Hantera Projekt");
+        BtnHanteraProjekt.setText("Projekt");
         BtnHanteraProjekt.addActionListener(this::BtnHanteraProjektActionPerformed);
 
         BtnHanteraAvd.setText("Hantera avdelning");
@@ -120,32 +120,32 @@ public class AdministratörMeny extends javax.swing.JFrame {
 
     private void BtnHanteraHmålActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHanteraHmålActionPerformed
         new HanteraHållbarhetsmål(anvandare).setVisible(true);
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_BtnHanteraHmålActionPerformed
 
     private void BtnHanteraAnstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHanteraAnstActionPerformed
         new HanteraAnstalld(anvandare).setVisible(true);
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_BtnHanteraAnstActionPerformed
 
     private void BtnHanteraProjektActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHanteraProjektActionPerformed
-        //new HanteraProjekt(anvandare).setVisible(true);
-        this.setVisible(false);
+        new ProjektSok(anvandare).setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_BtnHanteraProjektActionPerformed
 
     private void BtnHanteraLandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHanteraLandActionPerformed
         new HanteraLand(anvandare).setVisible(true);
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_BtnHanteraLandActionPerformed
 
     private void BtnHanteraPartnerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHanteraPartnerActionPerformed
         new HanteraPartner(anvandare).setVisible(true);
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_BtnHanteraPartnerActionPerformed
 
     private void BtnHanteraAvdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHanteraAvdActionPerformed
         new HanteraAvdelning(anvandare).setVisible(true);
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_BtnHanteraAvdActionPerformed
 
     /**

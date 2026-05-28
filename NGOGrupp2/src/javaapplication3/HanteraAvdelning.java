@@ -313,6 +313,7 @@ public class HanteraAvdelning extends javax.swing.JFrame {
         JLblRubrik.setText("Hantera Avdelningar");
 
         JBtnTillbakaTillMeny.setText("Tillbaka till meny");
+        JBtnTillbakaTillMeny.addActionListener(this::JBtnTillbakaTillMenyActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -352,6 +353,11 @@ public class HanteraAvdelning extends javax.swing.JFrame {
     private void JBtnTaBortAvdelningActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnTaBortAvdelningActionPerformed
         taBortAvdelning();
     }//GEN-LAST:event_JBtnTaBortAvdelningActionPerformed
+
+    private void JBtnTillbakaTillMenyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnTillbakaTillMenyActionPerformed
+        Navigering.tillbakaTillMeny(anvandare);
+        this.dispose();
+    }//GEN-LAST:event_JBtnTillbakaTillMenyActionPerformed
 
         // Tillfällig main metod för att kunna provköra klassen
 //    public static void main(String args[]) {

@@ -392,8 +392,8 @@ public class UppgifterHandlaggare extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSparaActionPerformed
 
     private void lblTillbakaTillMenyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblTillbakaTillMenyActionPerformed
-        //new MenyHandlaggareProjektchef().setVisible(true);
-        this.setVisible(false);
+        Navigering.tillbakaTillMeny(anvandare);
+        this.dispose();
     }//GEN-LAST:event_lblTillbakaTillMenyActionPerformed
 
     private void txtHandläggaresNamnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtHandläggaresNamnActionPerformed

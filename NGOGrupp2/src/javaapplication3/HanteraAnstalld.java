@@ -87,6 +87,7 @@ public class HanteraAnstalld extends javax.swing.JFrame {
         JTxtFieldAnstDatum = new javax.swing.JTextField();
         btnSök = new javax.swing.JButton();
         btnGenereraLösenord = new javax.swing.JButton();
+        btnTillbakatillmeny = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -168,25 +169,27 @@ public class HanteraAnstalld extends javax.swing.JFrame {
         btnGenereraLösenord.setText("Generera lösenord");
         btnGenereraLösenord.addActionListener(this::btnGenereraLösenordActionPerformed);
 
+        btnTillbakatillmeny.setText("Tillbaka till meny");
+        btnTillbakatillmeny.addActionListener(this::btnTillbakatillmenyActionPerformed);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(230, 230, 230)
+                        .addComponent(btnTillbakatillmeny)
+                        .addGap(149, 149, 149)
                         .addComponent(JLblRubrik))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(JLblSokAnställd, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(JTxtFieldSökruta, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnSök))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(JScrollPaneListaAnställda, javax.swing.GroupLayout.PREFERRED_SIZE, 765, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(JScrollPaneListaAnställda, javax.swing.GroupLayout.PREFERRED_SIZE, 765, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -247,7 +250,9 @@ public class HanteraAnstalld extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(JLblRubrik)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(JLblRubrik)
+                    .addComponent(btnTillbakatillmeny))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -695,6 +700,11 @@ private void sokAnstalld() {
         jTextField5.setText("password" + genereradLosenord);// alla lösenord som blir genererade börjar med password som i db
     }//GEN-LAST:event_btnGenereraLösenordActionPerformed
 
+    private void btnTillbakatillmenyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakatillmenyActionPerformed
+        Navigering.tillbakaTillMeny(anvandare);
+        this.dispose();
+    }//GEN-LAST:event_btnTillbakatillmenyActionPerformed
+
     
     
     
@@ -754,6 +764,7 @@ private void sokAnstalld() {
     private javax.swing.JTextField JTxtFieldTeleNr;
     private javax.swing.JButton btnGenereraLösenord;
     private javax.swing.JButton btnSök;
+    private javax.swing.JButton btnTillbakatillmeny;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField5;
     // End of variables declaration//GEN-END:variables
