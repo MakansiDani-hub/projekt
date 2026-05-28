@@ -156,7 +156,7 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         btnSpara = new javax.swing.JButton();
         lblFelmeddelandeUnder = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         spnlTop.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         spnlTop.setPreferredSize(new java.awt.Dimension(730, 577));

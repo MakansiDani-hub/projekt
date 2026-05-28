@@ -45,7 +45,7 @@ public class inloggningsfonster extends javax.swing.JFrame {
         lblFelmeddelande = new javax.swing.JLabel();
         btnLoggain = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         lblMain.setText("NGO grupp2");
 
@@ -53,10 +53,10 @@ public class inloggningsfonster extends javax.swing.JFrame {
 
         lblLösenord.setText("Lösenord");
 
-        tfEPost.setText("chen.wei@example.com");
+        tfEPost.setText("maria.g@example.com");
         tfEPost.addActionListener(this::tfEPostActionPerformed);
 
-        tfLösenord.setText("passwordabc");
+        tfLösenord.setText("password123");
         tfLösenord.addActionListener(this::tfLösenordActionPerformed);
 
         lblFelmeddelande.setForeground(new java.awt.Color(255, 0, 0));
