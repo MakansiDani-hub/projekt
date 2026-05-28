@@ -10,7 +10,7 @@ package javaapplication3;
  */
 public final class Navigering {
 
-    private Navigering();
+    private Navigering(){}
     
     public static void tillbakaTillMeny(Anvandare anvandare) {
 

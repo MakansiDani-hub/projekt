@@ -8,6 +8,6 @@ package javaapplication3;
  *
  * @author alexander.willen
  */
-public class SwingUtils {
-    
+public final class SwingUtils {
+    private SwingUtils(){}
 }
