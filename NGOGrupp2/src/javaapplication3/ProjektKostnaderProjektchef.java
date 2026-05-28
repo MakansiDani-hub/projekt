@@ -12,25 +12,22 @@ import javax.swing.JOptionPane;
  *
  * @author Big Dick J
  */
-public class ProjectCost extends javax.swing.JFrame {
+public class ProjektKostnaderProjektchef extends javax.swing.JFrame {
 
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ProjectCost.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ProjektKostnaderProjektchef.class.getName());
     private Anvandare anvandare;
-    private InfDB idb;
-    private int aid;
-
     /**
      * Konstruktor som tar emot databasanslutning och användar-ID.
      */
-    public ProjectCost(InfDB idb, int aid) {
+    public ProjektKostnaderProjektchef(Anvandare anv){
         initComponents();
         this.idb = idb;
         this.aid = aid;
 
         // Fyll tabellen med all data direkt när fönstret laddas
-        uppdateraStatistik("SELECT projektnamn, status, budget, kostnad FROM projekt");
+        uppdateraStatistik("SELECT projektnamn, status, startdatum, slutdatum, kostnad FROM projekt");
 
-        // Lägger till en lyssnare på ComboBoxen så tabellen uppdateras direkt när man byter status
+        // Lägger till en lyssnare på ComboBoxen
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
@@ -39,8 +36,7 @@ public class ProjectCost extends javax.swing.JFrame {
     }
 
     /**
-     * Hämtar data baserat på SQL-frågan, fyller tabellen och räknar ut
-     * statistik.
+     * Hämtar data baserat på SQL-frågan, fyller tabellen och räknar ut statistik.
      */
     private void uppdateraStatistik(String sqlFraga) {
         try {
@@ -55,10 +51,11 @@ public class ProjectCost extends javax.swing.JFrame {
                 for (HashMap<String, String> rad : projektLista) {
                     String pNamn = rad.get("projektnamn");
                     String status = rad.get("status");
-                    String budget = rad.get("budget");
+                    String startDatum = rad.get("startdatum");
+                    String slutDatum = rad.get("slutdatum");
                     String kostnad = rad.get("kostnad");
 
-                    model.addRow(new Object[]{pNamn, status, budget, kostnad});
+                    model.addRow(new Object[]{pNamn, status, startDatum, slutDatum, kostnad});
 
                     if (kostnad != null && !kostnad.isEmpty()) {
                         totalKostnad += Double.parseDouble(kostnad);
@@ -85,7 +82,7 @@ public class ProjectCost extends javax.swing.JFrame {
      */
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {
         String valtVal = jComboBox1.getSelectedItem().toString();
-        String fraga = "SELECT projektnamn, status, budget, kostnad FROM projekt";
+        String fraga = "SELECT projektnamn, status, startdatum, slutdatum, kostnad FROM projekt";
 
         if (valtVal.equals("Endast planerade projekt")) {
             fraga += " WHERE status = 'Planerat'";
@@ -117,7 +114,7 @@ public class ProjectCost extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         txtSlutDatum = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        btnSökDatum = new javax.swing.JButton();
+        btnSökDatumActionPerformed = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         lblGenomsnitt = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -165,8 +162,8 @@ public class ProjectCost extends javax.swing.JFrame {
 
         jLabel6.setText("Startdatum:");
 
-        btnSökDatum.setText("Sök");
-        btnSökDatum.addActionListener(this::btnSökDatumActionPerformed);
+        btnSökDatumActionPerformed.setText("Sök");
+        btnSökDatumActionPerformed.addActionListener(this::btnSökDatumActionPerformedActionPerformed);
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel7.setText("Genomsnittlig kostnad:");
@@ -218,7 +215,7 @@ public class ProjectCost extends javax.swing.JFrame {
                                 .addComponent(txtSlutDatum))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(20, 20, 20)
-                                .addComponent(btnSökDatum, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(btnSökDatumActionPerformed, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 20, Short.MAX_VALUE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
@@ -239,7 +236,7 @@ public class ProjectCost extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
                             .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnSökDatum)))
+                            .addComponent(btnSökDatumActionPerformed)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -280,8 +277,8 @@ public class ProjectCost extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSlutDatumActionPerformed
 
-    private void btnSökDatumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSökDatumActionPerformed
-        // TODO add your handling code here:                                  
+    private void btnSökDatumActionPerformedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSökDatumActionPerformedActionPerformed
+        // TODO add your handling code here:                                                 
         String start = txtStartDatum.getText().trim();
         String slut = txtSlutDatum.getText().trim();
 
@@ -290,22 +287,13 @@ public class ProjectCost extends javax.swing.JFrame {
             return;
         }
 
-        // Uppdaterad SQL-fråga som hämtar alla 5 värden för datumsintervallet
+        // Hämtar alla 5 värden för det valda datumsintervallet
         String fraga = "SELECT projektnamn, status, startdatum, slutdatum, kostnad FROM projekt "
                 + "WHERE startdatum >= '" + start + "' AND slutdatum <= '" + slut + "'";
-
         uppdateraStatistik(fraga);
-    }//GEN-LAST:event_btnSökDatumActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
+    }//GEN-LAST:event_btnSökDatumActionPerformedActionPerformed
+public static void main(String args[]) {
         /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -316,14 +304,22 @@ public class ProjectCost extends javax.swing.JFrame {
         } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
             logger.log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new ProjectCost(null, 1).setVisible(true));
-    }
-
+        /* Create and display the form */ 
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    oru.inf.InfDB testIdb = new oru.inf.InfDB("sdgsweden", "3306", "root", "password");
+                    new ProjektKostnaderProjektchef(testIdb, 1).setVisible(true);
+                } catch (Exception e) {
+                    new ProjektKostnaderProjektchef(null, 1).setVisible(true);
+                }
+            }
+        });
+    }    
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnSökDatum;
+    private javax.swing.JButton btnSökDatumActionPerformed;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

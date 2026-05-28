@@ -10,21 +10,21 @@ import javax.swing.JOptionPane;
  * Detaljvy för partners.
  * @author alexander.willen
  */
-public class Partners extends javax.swing.JFrame {
+public class PartnersHandlaggare extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Partners.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(PartnersHandlaggare.class.getName());
     private Anvandare anvandare; 
     private InfDB idb;
     private int aid;
 
-    public Partners() {
+    public PartnersHandlaggare() {
         initComponents();
     }
 
     /**
      * Riktig konstruktor som laddar databasen och rullgardinsmenyn.
      */
-    public Partners(InfDB idb, int aid) {
+    public PartnersHandlaggare(InfDB idb, int aid) {
         initComponents();
         this.idb = idb;
         this.aid = aid;
@@ -367,7 +367,7 @@ this.dispose();
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new Partners().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new PartnersHandlaggare().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
