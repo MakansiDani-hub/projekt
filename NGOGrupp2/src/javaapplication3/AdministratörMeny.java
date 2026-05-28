@@ -14,14 +14,14 @@ public class AdministratörMeny extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AdministratörMeny.class.getName());
     private Anvandare anvandare;
-   // private InfDB idb;
+    private InfDB idb;
     private int aid;
     /**
      * Creates new form Administratör
      */
     public AdministratörMeny(Anvandare anvandare) {
         initComponents();
-       // this.idb = idb;
+        this.idb = anvandare.getIdb();
         this.aid = anvandare.getAid();
         this.anvandare = anvandare;
     }
@@ -45,7 +45,7 @@ public class AdministratörMeny extends javax.swing.JFrame {
         JLblEpost = new javax.swing.JLabel();
         JLblinformationInloggad = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         RubrikAdmin.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         RubrikAdmin.setText("ADMIN Meny");
@@ -57,10 +57,13 @@ public class AdministratörMeny extends javax.swing.JFrame {
         BtnHanteraProjekt.addActionListener(this::BtnHanteraProjektActionPerformed);
 
         BtnHanteraAvd.setText("Hantera avdelning");
+        BtnHanteraAvd.addActionListener(this::BtnHanteraAvdActionPerformed);
 
         BtnHanteraPartner.setText("Hantera Partner");
+        BtnHanteraPartner.addActionListener(this::BtnHanteraPartnerActionPerformed);
 
         BtnHanteraLand.setText("Hantera Land");
+        BtnHanteraLand.addActionListener(this::BtnHanteraLandActionPerformed);
 
         BtnHanteraHmål.setText("Hantera Hållbarhetsmål");
         BtnHanteraHmål.addActionListener(this::BtnHanteraHmålActionPerformed);
@@ -116,7 +119,8 @@ public class AdministratörMeny extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BtnHanteraHmålActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHanteraHmålActionPerformed
-        // TODO add your handling code here:
+        new HanteraHållbarhetsmål(anvandare).setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_BtnHanteraHmålActionPerformed
 
     private void BtnHanteraAnstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHanteraAnstActionPerformed
@@ -128,6 +132,21 @@ public class AdministratörMeny extends javax.swing.JFrame {
         //new HanteraProjekt(anvandare).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_BtnHanteraProjektActionPerformed
+
+    private void BtnHanteraLandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHanteraLandActionPerformed
+        new HanteraLand(anvandare).setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_BtnHanteraLandActionPerformed
+
+    private void BtnHanteraPartnerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHanteraPartnerActionPerformed
+        new HanteraPartner(anvandare).setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_BtnHanteraPartnerActionPerformed
+
+    private void BtnHanteraAvdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHanteraAvdActionPerformed
+        new HanteraAvdelning(anvandare).setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_BtnHanteraAvdActionPerformed
 
     /**
      * @param args the command line arguments

@@ -99,7 +99,7 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
         pnlProjektnamn = new javax.swing.JPanel();
         txtfProjektnamn = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         spnlTop.setBorder(null);
         spnlTop.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -824,7 +824,7 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDeltagareDropdownActionPerformed
 
     private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
-        new ProjektSok(anv.getIdb(), anv.getAid()).setVisible(true);
+        new ProjektSok(anv).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnTillbakaActionPerformed
 
