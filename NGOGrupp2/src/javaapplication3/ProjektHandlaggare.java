@@ -824,7 +824,7 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDeltagareDropdownActionPerformed
 
     private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
-        new ProjektSok(anv.getIdb(), anv.getAid()).setVisible(true);
+        new ProjektSok(anv.getIdb(), anv).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnTillbakaActionPerformed
 
