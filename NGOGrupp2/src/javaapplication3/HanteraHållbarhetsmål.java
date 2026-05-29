@@ -54,23 +54,8 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
                 int valdRad = JTableHallbarhetsmal.getSelectedRow();
                 
                 // kollar om en rad är vald
-                if (valdRad >= 0) {
-                    // Hämtar datan från kolumnerna på den valda raden
-                    String id = bordsModell.getValueAt(valdRad, 0).toString();
-                    String namn = bordsModell.getValueAt(valdRad, 1).toString();
-                    String malnr = bordsModell.getValueAt(valdRad, 2).toString();
-                    String beskrivning = bordsModell.getValueAt(valdRad, 3).toString();
-                    String prioritet = bordsModell.getValueAt(valdRad, 4).toString();
-                    
-                    // Sätter in datan i JTextFields
-                    JTxtFieldHID.setText(id);
-                    JTxtFieldNamn.setText(namn);
-                    JTxtFieldMalNr.setText(malnr);
-                    JTxtFieldBeskrivning.setText(beskrivning);
-                    JTxtFieldPrioritet.setText(prioritet);
-                    
-                    //Kallar på mål-listenerns metod valLand så andra fönster kan registrera ett val vid behov
-                    malListener.valMal(id, namn, malnr);
+                if (valdRad >= 0) {             
+                    visaRadInfo(valdRad);
                 }
             }
         });
@@ -100,6 +85,48 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Kunde inte ladda data: " + e.getMessage());
         }
     }
+    
+    public void valjRad(String id){
+        if(id == null){
+            throw new NullPointerException("parameter id var null");
+        } 
+        for(int rad = 0; rad < JTableHallbarhetsmal.getRowCount(); rad++){
+            String radId = (String) JTableHallbarhetsmal.getValueAt(rad, 0); //kolumn 0 håller hid
+            if(id != null && id.equals(radId)){
+                //Sätter raden som selected
+                JTableHallbarhetsmal.setRowSelectionInterval(rad, rad); 
+                //Scrollar till där raden är
+                JTableHallbarhetsmal.scrollRectToVisible(JTableHallbarhetsmal.getCellRect(rad, 0, true));
+                //visar radens info
+                visaRadInfo(rad);
+                return;
+            }
+        }
+        //Då alla rader letats igenom utan att hitta matchande id
+        throw new IllegalStateException("Id för hållbarhetsmålet hittades inte i JTable-listan när det bör finnas");
+    }
+    
+    private void visaRadInfo(int valdRad){
+        // Hämtar datan från kolumnerna på den valda raden
+        String id = bordsModell.getValueAt(valdRad, 0).toString();
+        String namn = bordsModell.getValueAt(valdRad, 1).toString();
+        String malnr = bordsModell.getValueAt(valdRad, 2).toString();
+        String beskrivning = bordsModell.getValueAt(valdRad, 3).toString();
+        String prioritet = bordsModell.getValueAt(valdRad, 4).toString();
+
+        // Sätter in datan i JTextFields
+        JTxtFieldHID.setText(id);
+        JTxtFieldNamn.setText(namn);
+        JTxtFieldMalNr.setText(malnr);
+        JTxtFieldBeskrivning.setText(beskrivning);
+        JTxtFieldPrioritet.setText(prioritet);
+        
+        //Kallar på mål-listenerns metod valLand så andra fönster kan registrera ett val vid behov
+        if(malListener != null){
+            malListener.valMal(id, namn, malnr);
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

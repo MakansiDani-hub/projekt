@@ -60,10 +60,8 @@ public class ProjektProjektchef extends javax.swing.JFrame {
     private HashMap<String, String> projektinfoAndringar;  //Attributer. Identifierar + värde
     private HashSet<String> projektMalNya; //Nycklar
     private HashSet<String> projektMalBorttagna; //--::--
-    private HashSet<String> projektAdminsNya;
-    private HashSet<String> projektAdminsBorttagna;
-    private HashSet<String> projektHandlaggareNya;
-    private HashSet<String> projektHandlaggareBorttagna;
+    private HashSet<String> projektAdminsHandlaggareNya;
+    private HashSet<String> projektAdminsHandlaggareBorttagna;
     private HashSet<String> projektPartnersNya;
     private HashSet<String> projektPartnersBorttagna;
 
@@ -89,10 +87,8 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         projektinfoAndringar = new HashMap<>();
         projektMalNya = new HashSet<>();
         projektMalBorttagna = new HashSet<>();
-        projektAdminsNya = new HashSet<>();
-        projektAdminsBorttagna = new HashSet<>();
-        projektHandlaggareNya = new HashSet<>();
-        projektHandlaggareBorttagna = new HashSet<>();
+        projektAdminsHandlaggareNya = new HashSet<>();
+        projektAdminsHandlaggareBorttagna = new HashSet<>();
         projektPartnersNya = new HashSet<>();
         projektPartnersBorttagna = new HashSet<>();
 
@@ -1191,6 +1187,15 @@ public class ProjektProjektchef extends javax.swing.JFrame {
      * "5".
      */
     private void skapaInstansknapp(HashMap<String, String> instans, Instanstyp instanstyp) {
+        //Gör om nyckelidentifieraren i HashMappen till "id" eftersom alias ("as...") inte fungerade i SQL-frågan...
+        for(String key : instans.keySet()){
+            if(key.matches("^[aph]id$")){
+                String varde = instans.remove(key);
+                instans.put("id", varde);
+                break;
+            }
+        }
+        
         //---Endast dessa attributer sparas per instans---
         //...namm används som text på knappen
         String namn = instans.get("namn");
@@ -1212,37 +1217,48 @@ public class ProjektProjektchef extends javax.swing.JFrame {
                     @Override //override av abstrakt metod
                     public void actionPerformed(ActionEvent e) {
                         //Ett pop-up fönster öppnas, fönstret som visar en lista av Hållbarhetsmål.                        
-                        //new Hallbarhetsmal(idb, aid, hid) som (idb, aid, id)
+                        if (borttagningslageLand == true) {
+                            registreraBorttagningInstans(projektMalBorttagna, btnInstans, id);
+                        } else {//Om bortagningsläget ej är på:
+                            //Öppnar ett fönster som visar en lista på land med ett visst land i fokus
+                            HanteraHållbarhetsmål hallbarhetsmal = new HanteraHållbarhetsmål(anv);
+                            hallbarhetsmal.setVisible(true);
+                            hallbarhetsmal.valjRad(id);
+                        }
                     }
                 });
                 //Lägger knappen i början av panelen för mål
                 pnlMal.add(btnInstans, 0);
             }
-            case ADMIN -> {
+            case ADMIN, HANDLAGGARE -> {
                 btnInstans.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        //new PersonalListaAdmin(idb, this.aid, aid) som (idb, aid, id)                              
+                        if(borttagningslageDeltagare){
+                            registreraBorttagningInstans(projektAdminsHandlaggareBorttagna, btnInstans, id);
+                        }
+                        else{
+                            HanteraAnstalld anstalldFonster = new HanteraAnstalld(anv);
+                            anstalldFonster.setVisible(true);
+                            //IMPLEMENTERA valjRad() metoden i denna klass!
+                        }
                     }
                 });
-                pnlAdmin.add(btnInstans, 0);
-            }
-
-            case HANDLAGGARE -> {
-                btnInstans.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        //new PersonalListaAdmin(idb, this.aid, aid) som (idb, aid, id)                              
-                    }
-                });
-                pnlHandlaggare.add(btnInstans, 0);
+                if(instanstyp == instanstyp.ADMIN) pnlAdmin.add(btnInstans, 0);
+                if(instanstyp == instanstyp.HANDLAGGARE) pnlHandlaggare.add(btnInstans, 0);               
             }
             case PARTNER -> {
                 btnInstans.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        dennaFrame.setEnabled(false);
-                        //new PartnersHandlaggare(idb, aid, pid) (idb, aid, id)
+                        if(borttagningslagePartners){
+                            registreraBorttagningInstans(projektAdminsHandlaggareBorttagna, btnInstans, id);
+                        }
+                        else{
+                            HanteraPartner partnerFonster = new HanteraPartner(anv);
+                            partnerFonster.setVisible(true);
+                            //IMPLEMENTERA valjRad() I HanteraPartner FÖNSTRET
+                        }
                     }
                 });
                 pnlPartners.add(btnInstans, 0);
@@ -1300,10 +1316,8 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         projektinfoAndringar.clear();
         projektMalNya.clear();
         projektMalBorttagna.clear();
-        projektAdminsNya.clear();
-        projektAdminsBorttagna.clear();
-        projektHandlaggareNya.clear();
-        projektHandlaggareBorttagna.clear();
+        projektAdminsHandlaggareNya.clear();
+        projektAdminsHandlaggareBorttagna.clear();
         projektPartnersNya.clear();
         projektPartnersBorttagna.clear();
     }
@@ -1314,14 +1328,30 @@ public class ProjektProjektchef extends javax.swing.JFrame {
      * Skicka INTE in värder för själva nyckeln, tex id = 4.
      * den knapp som skickas in är knappen vars text som töms och färg
      * som görs röd för att indikera borttagning.
+     * 
+     * "Enstaka" i metodnamnet betyder att denna metod gäller för knappar som är enstaka, 
+     * eller fasta i fönstret. De tas ej bort eller läggs till.
      */
-    private void registreraBorttagning(String nyckelIdentifierare, JButton knapp){
+    private void registreraBorttagningEnstaka(String nyckelIdentifierare, JButton knapp){
         
         //Lägg till mapping för [nyckelIdentifierare] med värdet null. Detta indikerar bortagning av land i projektet.
         projektinfoAndringar.put(nyckelIdentifierare, null);
         knapp.setText("");
         knapp.setBackground(new Color(160, 50, 50));
     }
+    
+    /**
+     * Denna tar inte in en nyckelIdentifierare som registreraBorttagningEnstaka() gör.
+     * Den tar in en id-värde på en viss instans som ska tas bort från detta
+     * projekt. Typen av instansen kan tex vara ett hållbarhetsmål eller en partner.
+     * Denna id sparas för borttagning.
+     */
+    private void registreraBorttagningInstans(HashSet<String> borttagnaInstanser, JButton knapp, String id){
+        //spara id för instansen i fråga i en samling för eventuell borttagning
+        borttagnaInstanser.add(id);
+        //tar bort knappen i fråga från fönstret
+        remove(knapp);
+    }   
 
     private void valjLandPopup() {
         //Öppna popup
@@ -1350,9 +1380,6 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         //Eftresom vi overridar metoden för själva logiken av valet i pop-up fönstret
     }
 
-    private void oppnaVisaPopup() {
-        //overridear för att "tömma metoden" så logiken för vid ett val från en val-popup körs här.
-    }
 
     private void btnDeltagareDropdownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeltagareDropdownActionPerformed
         vaxlaDropdownLage(spnlDeltagareDropdown, btnDeltagareDropdown);
@@ -1409,13 +1436,14 @@ public class ProjektProjektchef extends javax.swing.JFrame {
     }//GEN-LAST:event_txtfProjektnamnActionPerformed
 
     private void btnLandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLandActionPerformed
-        if(borttagningslageLand == true){
-            registreraBorttagning("landId", btnLand);
+        if(borttagningslageLand){
+            registreraBorttagningEnstaka("landId", btnLand);
         }
         else{//Om bortagningsläget ej är på:
             //Öppnar ett fönster som visar en lista på land med ett visst land i fokus
-            System.out.println("Öppnar Land");
-            new HanteraLand(anv).setVisible(true);
+            JFrame landFonster = new HanteraLand(anv);
+            landFonster.setVisible(true);
+            //IMPLEMENTERA valjRow I HANTERALAND FÖNSTRET OCH KALLA HÄR
         }
     }//GEN-LAST:event_btnLandActionPerformed
 
@@ -1450,7 +1478,7 @@ public class ProjektProjektchef extends javax.swing.JFrame {
 
     private void btnProjektchefActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProjektchefActionPerformed
         //Öppna ett nytt fönsetr för att välja
-        //new Personalista(idb, aid)
+        
         //Overrida valProjektchef metoden så att den körs då en viss anställd väljs (+ kontroll för att se till att de är handläggare)
     }//GEN-LAST:event_btnProjektchefActionPerformed
 
@@ -1474,7 +1502,7 @@ public class ProjektProjektchef extends javax.swing.JFrame {
 
         try {
             InfDB idb = new InfDB("sdgsweden", "3306", "root", "masterkey");
-            new ProjektProjektchef(new Anvandare(idb, null, null, null, 3, null, null, null, null), 3).setVisible(true);
+            new ProjektProjektchef(new Anvandare(idb, null, null, null, 3, null, null, null, "admin"), 3).setVisible(true);
             System.out.println("Databaskoppling skapad");
         } catch (InfException e) {
             System.out.println(e.getMessage());
