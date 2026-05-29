@@ -13,9 +13,9 @@ public final class SwingUtils {
      * Kollar om en item finns i en JComboBox
      *
      * @param <T> typen av elementen i JComboBoxen
-     * @param cb JComboBoxen som håller 1-N items av typ T
-     * @param item item som vi kollar om finns i cb.
-     * @return true om item finns i denna cb, false om inte. Om item är null
+     * @param comboBox JComboBoxen som håller 1-N items av typ T
+     * @param itemAttProva item som vi kollar om finns i comboBox.
+     * @return true om item finns i denna comboBox, false om inte. Om item är null
      * returneras alltid false.
      *
      * Kan exempelvis kontrollera en item av typ String.

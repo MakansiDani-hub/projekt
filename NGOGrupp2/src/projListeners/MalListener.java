@@ -9,5 +9,5 @@ package projListeners;
  * @author alexander.willen
  */
 public interface MalListener {
-    void valMal(String malId, String malNamn, int malNummer);
+    void valMal(String malId, String malNamn, String malNummer);
 }
