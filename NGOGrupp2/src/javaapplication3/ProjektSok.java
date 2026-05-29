@@ -12,7 +12,7 @@ public class ProjektSok extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ProjektSok.class.getName());
 
-    private Anvandare anv;
+    private Anvandare anvandare;
     
     //Användarens söknings-inställningar
     private String valStatus;
@@ -20,7 +20,7 @@ public class ProjektSok extends javax.swing.JFrame {
     private Date valSlutdatum;
     
     public ProjektSok(Anvandare anv) {
-        this.anv = anv;
+        this.anvandare = anvandare;
         setStatus("Ingen");
         setStartdatum(null);
         setSlutdatum(null);
@@ -268,7 +268,7 @@ public class ProjektSok extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void lblTillbakaTillMenyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblTillbakaTillMenyActionPerformed
-        Navigering.tillbakaTillMeny(anv);
+        Navigering.tillbakaTillMeny(anvandare);
         this.dispose();
     }//GEN-LAST:event_lblTillbakaTillMenyActionPerformed
 
