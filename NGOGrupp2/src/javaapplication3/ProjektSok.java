@@ -39,19 +39,12 @@ public class ProjektSok extends javax.swing.JFrame {
     private void setStartdatum(Date datum){
         valStartdatum = datum;
         //uppdatera UI för vald-status
-        if(datum == null){
-            dateStartdatum.setDateFormatString("0000-00-00");
-            return;
-        }
+        System.out.println(dateStartdatum);
         dateStartdatum.setDate(datum);  
     }
     private void setSlutdatum(Date datum){
         valSlutdatum = datum;
         //uppdatera UI för vald-status
-        if(datum == null){
-            dateSlutdatum.setDateFormatString("0000-00-00");
-            return;
-        }
         dateSlutdatum.setDate(datum);  
     }
     

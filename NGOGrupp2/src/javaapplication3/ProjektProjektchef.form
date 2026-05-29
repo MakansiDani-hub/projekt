@@ -540,10 +540,13 @@
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Byt"/>
                         <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-                          <Insets value="[0, 10, 0, 10]"/>
+                          <Insets value="[0, 0, 0, 0]"/>
+                        </Property>
+                        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                          <Dimension value="[45, 22]"/>
                         </Property>
                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[40, 19]"/>
+                          <Dimension value="[45, 22]"/>
                         </Property>
                       </Properties>
                       <Events>
@@ -554,10 +557,16 @@
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Ta bort"/>
                         <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-                          <Insets value="[0, 10, 0, 10]"/>
+                          <Insets value="[0, 0, 0, 0]"/>
+                        </Property>
+                        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                          <Dimension value="[100, 22]"/>
+                        </Property>
+                        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                          <Dimension value="[45, 18]"/>
                         </Property>
                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[40, 19]"/>
+                          <Dimension value="[50, 22]"/>
                         </Property>
                       </Properties>
                       <Events>
@@ -637,7 +646,7 @@
                           <StringArray count="4">
                             <StringItem index="0" value="Planerat"/>
                             <StringItem index="1" value="P&#xe5;g&#xe5;ende"/>
-                            <StringItem index="2" value="Avslutad"/>
+                            <StringItem index="2" value="Avslutat"/>
                             <StringItem index="3" value="Ingen"/>
                           </StringArray>
                         </Property>
@@ -1030,7 +1039,6 @@
                           <SubComponents>
                             <Component class="javax.swing.JButton" name="btnProjektchef">
                               <Properties>
-                                <Property name="text" type="java.lang.String" value="[Projektchef]"/>
                                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                                   <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
                                     <EmptyBorder/>
@@ -1043,10 +1051,10 @@
                                   <Dimension value="[180, 30]"/>
                                 </Property>
                                 <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                                  <Dimension value="[43, 30]"/>
+                                  <Dimension value="[40, 30]"/>
                                 </Property>
                                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                                  <Dimension value="[80, 30]"/>
+                                  <Dimension value="[40, 30]"/>
                                 </Property>
                               </Properties>
                               <Events>
@@ -1057,10 +1065,13 @@
                               <Properties>
                                 <Property name="text" type="java.lang.String" value="Byt"/>
                                 <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-                                  <Insets value="[0, 10, 0, 10]"/>
+                                  <Insets value="[0, 0, 0, 0]"/>
+                                </Property>
+                                <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                                  <Dimension value="[45, 22]"/>
                                 </Property>
                                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                                  <Dimension value="[40, 19]"/>
+                                  <Dimension value="[45, 22]"/>
                                 </Property>
                               </Properties>
                               <Events>
