@@ -28,7 +28,7 @@ public class ProjektSok extends javax.swing.JFrame {
         initComponents();
     }
 
-
+    
     private void setStatus(String status){
         valStatus = status;
         //uppdatera UI för vald-status
@@ -48,8 +48,15 @@ public class ProjektSok extends javax.swing.JFrame {
         dateSlutdatum.setDate(datum);  
     }
     
-    private void genereraLista(Date startdatum, Date slutdatum, String status){
+    private void laddaLista(Date startdatum, Date slutdatum, String status, Boolean minaProjekt){
         
+    }
+    
+    private void laddaMinaProjekt(){
+        //Denna metod kan anropas i meny-fönstret:
+        //JFrame projektSok = new ProjektSok(anvandare);
+        //projektSok.laddaMinaProjekt();
+        //this.dispose();
     }
     
     @SuppressWarnings("unchecked")
