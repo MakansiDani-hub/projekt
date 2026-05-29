@@ -990,25 +990,25 @@ public class ProjektProjektchef extends javax.swing.JFrame {
 
     private void vaxlaBorttagningslageMal() {
         borttagningslageMal = !borttagningslageMal;
-        uppdateraTaBortKnapp(borttagningslageMal, btnTaBortMal);
+        uppdateraTaBortKnappUI(borttagningslageMal, btnTaBortMal);
     }
 
     private void vaxlaBorttagningslageLand() {
         borttagningslageLand = !borttagningslageLand;
-        uppdateraTaBortKnapp(borttagningslageLand, btnTaBortLand);
+        uppdateraTaBortKnappUI(borttagningslageLand, btnTaBortLand);
     }
 
     private void vaxlaBorttagningslageDeltagare() {
         borttagningslageDeltagare = !borttagningslageDeltagare;
-        uppdateraTaBortKnapp(borttagningslageDeltagare, btnTaBortDeltagare);
+        uppdateraTaBortKnappUI(borttagningslageDeltagare, btnTaBortDeltagare);
     }
 
     private void vaxlaBorttagningslagePartners() {
         borttagningslagePartners = !borttagningslagePartners;
-        uppdateraTaBortKnapp(borttagningslagePartners, btnTaBortPartners);
+        uppdateraTaBortKnappUI(borttagningslagePartners, btnTaBortPartners);
     }
 
-    private void uppdateraTaBortKnapp(Boolean bortagningslage, JButton taBortKnapp) {
+    private void uppdateraTaBortKnappUI(Boolean bortagningslage, JButton taBortKnapp) {
         //Sätter texten som antingen [ Avbryt borttagning ] eller [ Ta bort ]
         String knappText = bortagningslage ? "[ Avbryt borttagning ]" : "[ Ta bort ]";
         //Sätter färgen som antingen röd eller vit utifrån bortagningsläget
@@ -1296,7 +1296,32 @@ public class ProjektProjektchef extends javax.swing.JFrame {
 //        };
 //    }
 
-
+    private void tomAndringar(){
+        projektinfoAndringar.clear();
+        projektMalNya.clear();
+        projektMalBorttagna.clear();
+        projektAdminsNya.clear();
+        projektAdminsBorttagna.clear();
+        projektHandlaggareNya.clear();
+        projektHandlaggareBorttagna.clear();
+        projektPartnersNya.clear();
+        projektPartnersBorttagna.clear();
+    }
+    
+    /**
+     * Skicka in identifierare för vilken nyckel som ska registreras 
+     * som att den tas bort. Tex "landId".
+     * Skicka INTE in värder för själva nyckeln, tex id = 4.
+     * den knapp som skickas in är knappen vars text som töms och färg
+     * som görs röd för att indikera borttagning.
+     */
+    private void registreraBorttagning(String nyckelIdentifierare, JButton knapp){
+        
+        //Lägg till mapping för [nyckelIdentifierare] med värdet null. Detta indikerar bortagning av land i projektet.
+        projektinfoAndringar.put(nyckelIdentifierare, null);
+        knapp.setText("");
+        knapp.setBackground(new Color(160, 50, 50));
+    }
 
     private void valjLandPopup() {
         //Öppna popup
@@ -1331,7 +1356,6 @@ public class ProjektProjektchef extends javax.swing.JFrame {
 
     private void btnDeltagareDropdownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeltagareDropdownActionPerformed
         vaxlaDropdownLage(spnlDeltagareDropdown, btnDeltagareDropdown);
-
     }//GEN-LAST:event_btnDeltagareDropdownActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
@@ -1367,6 +1391,7 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         //---Om användaren trycker på samma knapp i redigeringsläget (ångra knappen)---
         if (vaxlaRedigeringslage() == false) {
             //laddar om infon, eventuella ändringar som gjordes i redigeringsläget försvinner
+            tomAndringar();
             laddaInfo();
         }
     }//GEN-LAST:event_btnAndraActionPerformed
@@ -1384,23 +1409,13 @@ public class ProjektProjektchef extends javax.swing.JFrame {
     }//GEN-LAST:event_txtfProjektnamnActionPerformed
 
     private void btnLandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLandActionPerformed
-
         if(borttagningslageLand == true){
-            //boolean landTasBort säger om användaren tar bort ett land nu eller ej
-            boolean landTasBort = projektinfoAndringar.containsKey("landId") && projektinfoAndringar.get("landId") == null;
-            //Då borttagningsläget är på:
-            if(!landTasBort){
-                //Lägg till mapping för nyckeln "landId" med värdet null. Detta indikerar bortagning av land i projektet.
-                //projektinfoAndringar.add("landId", null);  
-            }
-            else{
-                //Ta bort mapping för nyckeln "landId". Detta indikerar att användaren ångrar borttagningen
-                projektinfoAndringar.remove("landId");
-            }
+            registreraBorttagning("landId", btnLand);
         }
         else{//Om bortagningsläget ej är på:
-            //Öppnar ett fönster som visar en lista på namn
-            //new LandHandlaggare(idb, lid) 
+            //Öppnar ett fönster som visar en lista på land med ett visst land i fokus
+            System.out.println("Öppnar Land");
+            new HanteraLand(anv).setVisible(true);
         }
     }//GEN-LAST:event_btnLandActionPerformed
 
@@ -1415,22 +1430,22 @@ public class ProjektProjektchef extends javax.swing.JFrame {
 
     private void btnTaBortPartnersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaBortPartnersActionPerformed
         vaxlaBorttagningslagePartners(); //ändrar fältets tillstånd
-        uppdateraTaBortKnapp(borttagningslagePartners, btnTaBortPartners);//uppdaterar knappens visning utifrån nya tillståndet (detta är bra separering av ansvar)
+        uppdateraTaBortKnappUI(borttagningslagePartners, btnTaBortPartners);//uppdaterar knappens visning utifrån nya tillståndet (detta är bra separering av ansvar)
     }//GEN-LAST:event_btnTaBortPartnersActionPerformed
 
     private void btnTaBortDeltagareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaBortDeltagareActionPerformed
         vaxlaBorttagningslageDeltagare();
-        uppdateraTaBortKnapp(borttagningslageDeltagare, btnTaBortDeltagare);
+        uppdateraTaBortKnappUI(borttagningslageDeltagare, btnTaBortDeltagare);
     }//GEN-LAST:event_btnTaBortDeltagareActionPerformed
 
     private void btnTaBortMalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaBortMalActionPerformed
         vaxlaBorttagningslageMal();
-        uppdateraTaBortKnapp(borttagningslageMal, btnTaBortMal);
+        uppdateraTaBortKnappUI(borttagningslageMal, btnTaBortMal);
     }//GEN-LAST:event_btnTaBortMalActionPerformed
 
     private void btnTaBortLandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaBortLandActionPerformed
         vaxlaBorttagningslageLand();
-        uppdateraTaBortKnapp(borttagningslageLand, btnTaBortLand);
+        uppdateraTaBortKnappUI(borttagningslageLand, btnTaBortLand);
     }//GEN-LAST:event_btnTaBortLandActionPerformed
 
     private void btnProjektchefActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProjektchefActionPerformed

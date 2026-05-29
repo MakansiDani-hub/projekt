@@ -7,7 +7,7 @@ package javaapplication3;
  *
  * @author Kristoffer Kolkowski
  */
-//import projListener.MalListener;
+import projListeners.MalListener;
 import oru.inf.InfDB;
 import oru.inf.InfException;
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.JOptionPane;
 
 public class HanteraHållbarhetsmål extends javax.swing.JFrame {
-    //private MalListener malListener;
+    private MalListener malListener;
     private InfDB idb; 
     private DefaultTableModel bordsModell;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(HanteraHållbarhetsmål.class.getName());
@@ -25,10 +25,10 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
     /**
      * Creates new form HanteraHållbarhetsmål
      */
-//    public HanteraHållbarhetsmål(InfDB idb, MalListener malListener){
-//        this.malListener = malListener;
-//        HanteraHållbarhetsmål(idb);
-//    }
+    public HanteraHållbarhetsmål(Anvandare anvandare, MalListener malListener){
+        this.malListener = malListener;
+        this(anvandare);
+    }
     
     public HanteraHållbarhetsmål(Anvandare anvandare) {
         
@@ -69,7 +69,8 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
                     JTxtFieldBeskrivning.setText(beskrivning);
                     JTxtFieldPrioritet.setText(prioritet);
                     
-                    //malListener.valMal(id, namn, malnr);
+                    //Kallar på mål-listenerns metod valLand så andra fönster kan registrera ett val vid behov
+                    malListener.valMal(id, namn, malnr);
                 }
             }
         });
