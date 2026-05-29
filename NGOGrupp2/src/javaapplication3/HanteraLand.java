@@ -60,7 +60,9 @@ import javax.swing.JOptionPane;
                 JTxtFieldEkonomi.setText(bordsModell.getValueAt(rad, 6).toString());
                 //Kallar på land-listenerns metod valLand så andra fönster kan registrera ett val vid behov
                 //Skickar i denna metoden in id och namn
-                landListener.valLand(bordsModell.getValueAt(rad, 0).toString(),bordsModell.getValueAt(rad, 1).toString());
+                if(landListener != null){
+                    landListener.valLand(bordsModell.getValueAt(rad, 0).toString(),bordsModell.getValueAt(rad, 1).toString());                   
+                }
             }
         }
     });
