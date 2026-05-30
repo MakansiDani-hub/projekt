@@ -129,7 +129,7 @@ public class AdministratörMeny extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnHanteraAnstActionPerformed
 
     private void BtnHanteraProjektActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHanteraProjektActionPerformed
-        new ProjektSok(anvandare).setVisible(true);
+        new ProjektSokAdmin(anvandare).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_BtnHanteraProjektActionPerformed
 
