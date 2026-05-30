@@ -9,6 +9,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.HashMap;
 import java.util.HashSet;
 import javaapplication3.ProjektHandlaggare.Instanstyp;
@@ -46,16 +47,15 @@ public class ProjektProjektchef extends javax.swing.JFrame {
     private boolean borttagningslageLand;
     private boolean borttagningslageDeltagare;
     private boolean borttagningslagePartners;
-    
+
     //behöver bara spara ID! Det är ju genom dessa vi för SQL-uppdateringen/insert. Sen kallar vi bara ladda-info igen
-    
     //Nuvarande datan som visas i projektet
     private HashMap<String, String> projektinfoEnskilda; //Attributer. Identifierare + värde
     private HashSet<String> projektMal; //Nycklar
     private HashSet<String> projektAdmins; //--::--
     private HashSet<String> projektHandlaggare;
     private HashSet<String> projektPartners;
-    
+
     //Lagrade ändringar som ännu inte blivit sparade till databasen
     private HashMap<String, String> projektinfoAndringar;  //Attributer. Identifierar + värde
     private HashSet<String> projektMalNya; //Nycklar
@@ -75,14 +75,14 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         borttagningslageLand = false;
         borttagningslageDeltagare = false;
         borttagningslagePartners = false;
-        
+
         //Nuvarande data
         projektinfoEnskilda = new HashMap<>();
         projektMal = new HashSet<>();
         projektAdmins = new HashSet<>();
         projektHandlaggare = new HashSet<>();
         projektPartners = new HashSet<>();
-        
+
         //Lagrade ändringar
         projektinfoAndringar = new HashMap<>();
         projektMalNya = new HashSet<>();
@@ -94,7 +94,6 @@ public class ProjektProjektchef extends javax.swing.JFrame {
 
         //anstalldListener = skapaAnstalldListener();
         //landListener = skapaLandListener();
-
         initComponents();
         laddaInfo();
         startlageGUI();
@@ -894,7 +893,7 @@ public class ProjektProjektchef extends javax.swing.JFrame {
                     + "JOIN Land ON land = lid "
                     + "JOIN Anstalld ON projektchef = aid "
                     + "WHERE pid = " + pid);
-            
+
             ArrayList<HashMap<String, String>> projektinfoMal = idb.fetchRows(
                     "SELECT malnummer, namn, h.hid as id "
                     + "FROM Hallbarhetsmal h "
@@ -924,30 +923,29 @@ public class ProjektProjektchef extends javax.swing.JFrame {
             //-----NYTT FÖR PROJEKTCHEF-----
             String projektnamn = projektinfoEnskilda.get("projektnamn");
             String beskrivning = projektinfoEnskilda.get("beskrivning");
-            String kostnad = projektinfoEnskilda.get("kostnad");        
-            String chefnamn = projektinfoEnskilda.get("chefnamn");        
-            String landnamn = projektinfoEnskilda.get("namn");        
+            String kostnad = projektinfoEnskilda.get("kostnad");
+            String chefnamn = projektinfoEnskilda.get("chefnamn");
+            String landnamn = projektinfoEnskilda.get("namn");
             String startdatum = projektinfoEnskilda.get("startdatum");
             String slutdatum = projektinfoEnskilda.get("slutdatum");
             String status = projektinfoEnskilda.get("status");
             String prioritet = projektinfoEnskilda.get("prioritet");
-            
+
             //---Lagrar hämtad projektInfo i fält---
             this.projektinfoEnskilda.putAll(projektinfoEnskilda);
-            for(HashMap<String, String> mal : projektinfoMal){
+            for (HashMap<String, String> mal : projektinfoMal) {
                 this.projektMal.add(mal.get("id"));
             }
-            for(HashMap<String, String> admin : projektinfoAdmins){
+            for (HashMap<String, String> admin : projektinfoAdmins) {
                 this.projektAdmins.add(admin.get("id"));
             }
-            for(HashMap<String, String> handlaggare : projektinfoHandlaggare){
+            for (HashMap<String, String> handlaggare : projektinfoHandlaggare) {
                 this.projektHandlaggare.add(handlaggare.get("id"));
             }
-            for(HashMap<String, String> partner : projektinfoPartners){
+            for (HashMap<String, String> partner : projektinfoPartners) {
                 this.projektPartners.add(partner.get("id"));
             }
-            
-            
+
             //---Visar hämtad projektInfo---
             //...ändrar text
             lblPid.setText("Projektid: " + pid);
@@ -955,7 +953,7 @@ public class ProjektProjektchef extends javax.swing.JFrame {
             txarBeskrivning.setText(beskrivning);
             txtfKostnad.setText(kostnad);
             btnProjektchef.setText(chefnamn);
-            btnLand.setText(landnamn);      
+            btnLand.setText(landnamn);
             //...Datum
             uppdateraStartdatumUI(startdatum);
             uppdateraSlutdatumUI(slutdatum);
@@ -1004,11 +1002,23 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         uppdateraTaBortKnappUI(borttagningslagePartners, btnTaBortPartners);
     }
 
+    private void aterstallBorttagningslagen() {
+        borttagningslageMal = false;
+        borttagningslageLand = false;
+        borttagningslageDeltagare = false;
+        borttagningslagePartners = false;
+        uppdateraTaBortKnappUI(borttagningslageMal, btnTaBortMal);
+        uppdateraTaBortKnappUI(borttagningslageLand, btnTaBortLand);
+        uppdateraTaBortKnappUI(borttagningslageDeltagare, btnTaBortDeltagare);
+        uppdateraTaBortKnappUI(borttagningslagePartners, btnTaBortPartners);
+
+    }
+
     private void uppdateraTaBortKnappUI(Boolean bortagningslage, JButton taBortKnapp) {
         //Sätter texten som antingen [ Avbryt borttagning ] eller [ Ta bort ]
         String knappText = bortagningslage ? "[ Avbryt borttagning ]" : "[ Ta bort ]";
         //Sätter färgen som antingen röd eller vit utifrån bortagningsläget
-        Color knappFarg = bortagningslage ? new Color(160, 50, 50) : Color.WHITE;
+        Color knappFarg = bortagningslage ? new Color(160, 50, 50) : bakgrundsfarg;
         taBortKnapp.setText(knappText);
         taBortKnapp.setBackground(knappFarg);
 
@@ -1016,25 +1026,24 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         taBortKnapp.getParent().revalidate();
         pnlLand.getParent().repaint();
     }
-    
+
     /**
-     * Edit-UI refererar till UI som används för att ändra på en viss sak inom ett projekt.
-     * Exempelvis "byt"- och "ta-bort"-knapparna bredvid land.
+     * Edit-UI refererar till UI som används för att ändra på en viss sak inom
+     * ett projekt. Exempelvis "byt"- och "ta-bort"-knapparna bredvid land.
      */
     private void uppdateraEditUILand() {
         String landText = btnLand.getText();
-        if ("".equals(landText) || landText == null || "[ + ]".equals(landText)){
+        if ("".equals(landText) || landText == null || "[ + ]".equals(landText)) {
             //Växla mellan [ + ] och en tom ruta ifall det inte finns något land.
             //Om redigergingsläget är på --> visa "[ + ]"
             //Om redigergingsläget är av --> visa inget (null)
             String knappText = redigerar ? "[ + ]" : null;
             btnLand.setText(knappText);
-            
+
             //Edit-UI för land ska alltid vara gömd om det inte finns något land
             btnBytLand.setVisible(false);
             btnTaBortLand.setVisible(false);
-        }
-        else{
+        } else {
             //Växla bara knapparnas synlighet om det finns ett land
             //om redigeringsläget är på--> synligt
             //om redigergingsläget är av --> gömt
@@ -1042,21 +1051,19 @@ public class ProjektProjektchef extends javax.swing.JFrame {
             btnTaBortLand.setVisible(redigerar);
         }
     }
-    
+
     private void uppdateraEditUIProjektchef() {
         String projektchefText = btnProjektchef.getText();
-        if ("".equals(projektchefText) || projektchefText == null || "[ + ]".equals(projektchefText)){
+        if ("".equals(projektchefText) || projektchefText == null || "[ + ]".equals(projektchefText)) {
             String knappText = redigerar ? "[ + ]" : null;
             btnProjektchef.setText(knappText);
-            
             btnBytProjektchef.setVisible(false);
-        }
-        else{
+        } else {
             btnBytProjektchef.setVisible(redigerar);
         }
     }
-    
-    private void uppdateraStatusUI(String status){
+
+    private void uppdateraStatusUI(String status) {
         if (SwingUtils.finnsIComboBox(cbStatus, status)) {
             //Validering av input i databasen sker, därför kan denna kontroll ses som onödig, men 
             //att göra det för output är ofta bra ändå ifall fel data råkat kommit i databasen av diverse anledning.
@@ -1066,8 +1073,8 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         }
         txtfStatus.setText(status);
     }
-    
-    private void uppdateraPrioritetUI(String prioritet){
+
+    private void uppdateraPrioritetUI(String prioritet) {
         if (SwingUtils.finnsIComboBox(cbPrioritet, prioritet)) {
             cbPrioritet.setSelectedItem(prioritet);
         } else {
@@ -1075,18 +1082,19 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         }
         txtfPrioritet.setText(prioritet);
     }
-    
-    private void uppdateraStartdatumUI(String datum){
+
+    private void uppdateraStartdatumUI(String datum) {
         String startdatum = (datum == null) ? "DATUM TOMT" : datum;
         txtfStartDatum.setText(startdatum);
         java.util.Date startdatumDate = (datum == null) ? null : java.sql.Date.valueOf(datum); //Upcasting från java.sql.Date till java.util.Date;
-        dateStartDatum.setDate(startdatumDate);     
+        dateStartDatum.setDate(startdatumDate);
     }
-    private void uppdateraSlutdatumUI(String datum){
+
+    private void uppdateraSlutdatumUI(String datum) {
         String slutdatum = (datum == null) ? "DATUM TOMT" : datum;
         txtfSlutDatum.setText(slutdatum);
-        java.util.Date slutdatumDate = (datum == null) ? null : java.sql.Date.valueOf(datum); 
-        dateSlutDatum.setDate(slutdatumDate);  
+        java.util.Date slutdatumDate = (datum == null) ? null : java.sql.Date.valueOf(datum);
+        dateSlutDatum.setDate(slutdatumDate);
     }
 
     private void sparaAndringarTillDatabas() {
@@ -1112,7 +1120,7 @@ public class ProjektProjektchef extends javax.swing.JFrame {
 
     /**
      * @return returnerar det nya redigergingsläget
-    *
+     *
      */
     private void vaxlaDropdownLage(JScrollPane dropdownRuta, JButton dropdownKnapp) {
         Boolean rutaNySynlighet = !dropdownRuta.isVisible();
@@ -1130,11 +1138,13 @@ public class ProjektProjektchef extends javax.swing.JFrame {
 
         if (redigerar) {
             btnAndra.setText("Ångra");
-            txtfKostnad.setBackground(Color.WHITE);      
+            txtfKostnad.setBackground(Color.WHITE);
         } 
         else {
             btnAndra.setText("Ändra");
             txtfKostnad.setBackground(bakgrundsfarg);
+            aterstallBorttagningslagen();
+            tomAndringar();
 
             //LÅG-PRIO FUNKTIONALITETSUTÖKNING:
             //Fönster-pup-up som säger "Är du säker att du vill ångra och ej spara förändringar?" om förändringar skett.
@@ -1188,14 +1198,14 @@ public class ProjektProjektchef extends javax.swing.JFrame {
      */
     private void skapaInstansknapp(HashMap<String, String> instans, Instanstyp instanstyp) {
         //Gör om nyckelidentifieraren i HashMappen till "id" eftersom alias ("as...") inte fungerade i SQL-frågan...
-        for(String key : instans.keySet()){
-            if(key.matches("^[aph]id$")){
+        for (String key : instans.keySet()) {
+            if (key.matches("^[aph]id$")) {
                 String varde = instans.remove(key);
                 instans.put("id", varde);
                 break;
             }
         }
-        
+
         //---Endast dessa attributer sparas per instans---
         //...namm används som text på knappen
         String namn = instans.get("namn");
@@ -1234,27 +1244,29 @@ public class ProjektProjektchef extends javax.swing.JFrame {
                 btnInstans.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        if(borttagningslageDeltagare){
+                        if (borttagningslageDeltagare) {
                             registreraBorttagningInstans(projektAdminsHandlaggareBorttagna, btnInstans, id);
-                        }
-                        else{
+                        } else {
                             HanteraAnstalld anstalldFonster = new HanteraAnstalld(anv);
                             anstalldFonster.setVisible(true);
                             //IMPLEMENTERA valjRad() metoden i denna klass!
                         }
                     }
                 });
-                if(instanstyp == instanstyp.ADMIN) pnlAdmin.add(btnInstans, 0);
-                if(instanstyp == instanstyp.HANDLAGGARE) pnlHandlaggare.add(btnInstans, 0);               
+                if (instanstyp == instanstyp.ADMIN) {
+                    pnlAdmin.add(btnInstans, 0);
+                }
+                if (instanstyp == instanstyp.HANDLAGGARE) {
+                    pnlHandlaggare.add(btnInstans, 0);
+                }
             }
             case PARTNER -> {
                 btnInstans.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        if(borttagningslagePartners){
+                        if (borttagningslagePartners) {
                             registreraBorttagningInstans(projektAdminsHandlaggareBorttagna, btnInstans, id);
-                        }
-                        else{
+                        } else {
                             HanteraPartner partnerFonster = new HanteraPartner(anv);
                             partnerFonster.setVisible(true);
                             //IMPLEMENTERA valjRad() I HanteraPartner FÖNSTRET
@@ -1273,7 +1285,6 @@ public class ProjektProjektchef extends javax.swing.JFrame {
             skapaInstansknapp(instans, instanstyp);
         }
     }
-
 
 //    private LandListener skapaLandListener() {
 //        return new LandListener() {
@@ -1311,8 +1322,7 @@ public class ProjektProjektchef extends javax.swing.JFrame {
 //            }
 //        };
 //    }
-
-    private void tomAndringar(){
+    private void tomAndringar() {
         projektinfoAndringar.clear();
         projektMalNya.clear();
         projektMalBorttagna.clear();
@@ -1321,63 +1331,61 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         projektPartnersNya.clear();
         projektPartnersBorttagna.clear();
     }
-    
+
     /**
-     * Skicka in identifierare för vilken nyckel som ska registreras 
-     * som att den tas bort. Tex "landId".
-     * Skicka INTE in värder för själva nyckeln, tex id = 4.
-     * den knapp som skickas in är knappen vars text som töms och färg
-     * som görs röd för att indikera borttagning.
-     * 
-     * "Enstaka" i metodnamnet betyder att denna metod gäller för knappar som är enstaka, 
-     * eller fasta i fönstret. De tas ej bort eller läggs till.
+     * Skicka in identifierare för vilken nyckel som ska registreras som att den
+     * tas bort. Tex "landId". Skicka INTE in värder för själva nyckeln, tex id
+     * = 4. den knapp som skickas in är knappen vars text som töms och färg som
+     * görs röd för att indikera borttagning.
+     *
+     * "Enstaka" i metodnamnet betyder att denna metod gäller för knappar som är
+     * enstaka, eller fasta i fönstret. De tas ej bort eller läggs till.
      */
-    private void registreraBorttagningEnstaka(String nyckelIdentifierare, JButton knapp){
-        
+    private void registreraBorttagningEnstaka(String nyckelIdentifierare, JButton knapp) {
+
         //Lägg till mapping för [nyckelIdentifierare] med värdet null. Detta indikerar bortagning av land i projektet.
         projektinfoAndringar.put(nyckelIdentifierare, null);
         knapp.setText("");
-        knapp.setBackground(new Color(160, 50, 50));
     }
-    
+
     /**
-     * Denna tar inte in en nyckelIdentifierare som registreraBorttagningEnstaka() gör.
-     * Den tar in en id-värde på en viss instans som ska tas bort från detta
-     * projekt. Typen av instansen kan tex vara ett hållbarhetsmål eller en partner.
-     * Denna id sparas för borttagning.
+     * Denna tar inte in en nyckelIdentifierare som
+     * registreraBorttagningEnstaka() gör. Den tar in en id-värde på en viss
+     * instans som ska tas bort från detta projekt. Typen av instansen kan tex
+     * vara ett hållbarhetsmål eller en partner. Denna id sparas för
+     * borttagning.
      */
-    private void registreraBorttagningInstans(HashSet<String> borttagnaInstanser, JButton knapp, String id){
+    private void registreraBorttagningInstans(HashSet<String> borttagnaInstanser, JButton knapp, String id) {
         //spara id för instansen i fråga i en samling för eventuell borttagning
         borttagnaInstanser.add(id);
         //tar bort knappen i fråga från fönstret
         remove(knapp);
-    }   
+    }
 
-    private void valjLandPopup() {
-        //Öppna popup
-        //new LandHandlaggare(idb, anvandarId, landId, landListener);
-        //Detta fönstret görs non-interactable. Användaren kan
-        //endast interagera med det nya popup fönstret
-        this.setEnabled(false);
-
+    private void oppnaPopupValjLand() {
+        HanteraLand landFonster;
+        //Implementerar en metod till min landListener
         LandListener landListener = new LandListener() {
             @Override
             public void valLand(String landId, String landNamn) {
-                //Då ett val gjorts i en pop-up:
+                //Då ett val gjorts i en pop-up (metoden kallas i pop-up fönstret):
+                //...visa ändringen
+                btnLand.setText(landNamn);
+                //...lagra ändringen (men uppdaterar inte i databasen!)
+                projektinfoAndringar.put("landId", landId);
+                //...stänger pop-up fönstret
+                landFonster
                 //...aktivera vår ruta igen
                 dennaFrame.setEnabled(true);
-                //...lagra ändringen - eventuell tidigare ändring byts ut mot den nya pga hur put() fungerar.
-                //andringar.put("Land", HashMap < > (Map.of( //Tabell
-                       // landId, new HashMap<>(Map.of( //PK av entitet
-                              //  "namn", landNamn))));          //Attribut 
             }
         };
+        //Öppnar popup och skickar vidare min landListener med min implementerade metod
+        landFonster = new HanteraLand(anv, landListener);
+        landFonster.setVisible(true);
+        //Detta fönster görs non-interactable. Användaren
+        //kan endast interagera med det nya fönstret
+        this.setEnabled(false);
         //behöver inte ens ha listener som fält?
-        //ta bort valjs också?
-
-        //DU BEHÖVER BARA HA KOLL PÅ DELTAGARE, VÄLJS ETT LAND? BYT LAND.
-        //MEN DESSA FÖNSTER KAN OCKSÅ VARA ÖPPNA FÖR SOLELY VISNING. Använd if-sats då i pop-upen och ett extra fält: arPopup?
-        //Eftresom vi overridar metoden för själva logiken av valet i pop-up fönstret
     }
 
 
@@ -1403,15 +1411,15 @@ public class ProjektProjektchef extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBeskrivningDropdownActionPerformed
 
     private void btnAddHandlaggareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddHandlaggareActionPerformed
-       // oppnaValjPopup(Popup.HANDLAGGARE);
+        // oppnaValjPopup(Popup.HANDLAGGARE);
     }//GEN-LAST:event_btnAddHandlaggareActionPerformed
 
     private void btnAddAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddAdminActionPerformed
-       // oppnaValjPopup(Popup.ADMIN);
+        // oppnaValjPopup(Popup.ADMIN);
     }//GEN-LAST:event_btnAddAdminActionPerformed
 
     private void btnAddMalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddMalActionPerformed
-       // oppnaValjPopup(Popup.HALLBARHETSMAL);
+        // oppnaValjPopup(Popup.HALLBARHETSMAL);
     }//GEN-LAST:event_btnAddMalActionPerformed
 
     private void btnAndraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAndraActionPerformed
@@ -1436,10 +1444,17 @@ public class ProjektProjektchef extends javax.swing.JFrame {
     }//GEN-LAST:event_txtfProjektnamnActionPerformed
 
     private void btnLandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLandActionPerformed
-        if(borttagningslageLand){
-            registreraBorttagningEnstaka("landId", btnLand);
+        boolean saknasLand = projektinfoEnskilda.get("land") == null;
+        //True om nyckeln finns och värdet null finns mappad till det i samlingen som håller projektändringar, 
+        //false om ingen nyckel finns eller om ett NYTT värde finns:
+        boolean landBorttaget = projektinfoAndringar.containsKey("landId") && projektinfoAndringar.get("landId") == null; 
+        if(redigerar && (landBorttaget || saknasLand && !projektinfoAndringar.containsKey("landId"))){
+            oppnaPopupValjLand();
         }
-        else{//Om bortagningsläget ej är på:
+        else if (borttagningslageLand) {
+            registreraBorttagningEnstaka("landId", btnLand);
+            uppdateraEditUILand();
+        } else {//Om bortagningsläget ej är på:
             //Öppnar ett fönster som visar en lista på land med ett visst land i fokus
             JFrame landFonster = new HanteraLand(anv);
             landFonster.setVisible(true);
@@ -1448,12 +1463,12 @@ public class ProjektProjektchef extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLandActionPerformed
 
     private void btnBytLandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBytLandActionPerformed
-       // oppnaValjPopup(Popup.LAND);
+        // oppnaValjPopup(Popup.LAND);
 
     }//GEN-LAST:event_btnBytLandActionPerformed
 
     private void btnBytProjektchefActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBytProjektchefActionPerformed
-       // oppnaValjPopup(Popup.PROJEKTCHEF);
+        // oppnaValjPopup(Popup.PROJEKTCHEF);
     }//GEN-LAST:event_btnBytProjektchefActionPerformed
 
     private void btnTaBortPartnersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaBortPartnersActionPerformed
@@ -1478,7 +1493,7 @@ public class ProjektProjektchef extends javax.swing.JFrame {
 
     private void btnProjektchefActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProjektchefActionPerformed
         //Öppna ett nytt fönsetr för att välja
-        
+
         //Overrida valProjektchef metoden så att den körs då en viss anställd väljs (+ kontroll för att se till att de är handläggare)
     }//GEN-LAST:event_btnProjektchefActionPerformed
 
