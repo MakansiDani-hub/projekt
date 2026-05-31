@@ -143,73 +143,52 @@
               <Component id="jScrollPane2" min="-2" pref="572" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="lblPID" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblProjektsnamn" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblBeskrivning" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblStartdatum" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblStatus" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblPrioritet" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblProjektchef" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblLand" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblSlutdatum" alignment="1" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <EmptySpace max="32767" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                                              <Component id="jTextField10" min="-2" pref="260" max="-2" attributes="0"/>
-                                              <Component id="jTextField11" alignment="0" min="-2" pref="260" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Component id="jTextField9" alignment="1" min="-2" pref="260" max="-2" attributes="0"/>
-                                          <Component id="jTextField8" alignment="1" min="-2" pref="260" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                                  <Group type="102" attributes="0">
-                                      <EmptySpace min="34" pref="34" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" attributes="0">
-                                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                                  <Component id="jTextField2" alignment="0" pref="260" max="32767" attributes="0"/>
-                                                  <Component id="jTextField3" alignment="0" pref="260" max="32767" attributes="0"/>
-                                                  <Component id="jTextField4" alignment="0" pref="260" max="32767" attributes="0"/>
-                                                  <Component id="jTextField5" alignment="0" pref="260" max="32767" attributes="0"/>
-                                              </Group>
-                                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                          </Group>
-                                          <Component id="jTextField6" alignment="1" pref="260" max="32767" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                              </Group>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <Component id="lblKostnad" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
-                              <Component id="jTextField7" min="-2" pref="260" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="142" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="btnLäggTill" max="32767" attributes="0"/>
                           <Component id="btnTaBort" min="-2" pref="150" max="-2" attributes="0"/>
                       </Group>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jButton2" min="-2" pref="150" max="-2" attributes="0"/>
-                          </Group>
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                               <Component id="btnÄndra" min="-2" pref="150" max="-2" attributes="0"/>
                           </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="btnRensa" max="32767" attributes="0"/>
+                                  <Component id="jButton2" pref="150" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="lblKostnad" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblPID" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblProjektsnamn" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblBeskrivning" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblStartdatum" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblStatus" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblPrioritet" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblProjektchef" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblLand" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblSlutdatum" alignment="1" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="34" pref="34" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jTextField11" alignment="1" max="32767" attributes="0"/>
+                          <Component id="cbProjektPrioritet" alignment="1" max="32767" attributes="0"/>
+                          <Component id="jTextField10" max="32767" attributes="0"/>
+                          <Component id="cbProjektStatus" alignment="1" max="32767" attributes="0"/>
+                          <Component id="jTextField7" max="32767" attributes="0"/>
+                          <Component id="jTextField6" alignment="1" max="32767" attributes="0"/>
+                          <Component id="jTextField5" alignment="1" max="32767" attributes="0"/>
+                          <Component id="jTextField4" alignment="1" max="32767" attributes="0"/>
+                          <Component id="jTextField3" max="32767" attributes="0"/>
+                          <Component id="jTextField2" alignment="1" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
               </Group>
           </Group>
@@ -233,7 +212,7 @@
                       <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace pref="37" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="dateStartdatum" alignment="1" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel3" alignment="1" min="-2" max="-2" attributes="0"/>
@@ -248,8 +227,7 @@
                   </Group>
               </Group>
               <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="jScrollPane2" min="-2" pref="331" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblPID" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -283,12 +261,12 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblStatus" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jTextField8" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cbProjektStatus" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblPrioritet" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jTextField9" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cbProjektPrioritet" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -300,7 +278,7 @@
                           <Component id="lblLand" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jTextField11" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="29" pref="29" max="-2" attributes="0"/>
@@ -314,9 +292,11 @@
                               <Component id="btnÄndra" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="btnRensa" min="-2" max="-2" attributes="0"/>
                   </Group>
+                  <Component id="jScrollPane2" min="-2" pref="331" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -506,13 +486,40 @@
         <Property name="text" type="java.lang.String" value="Land"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTextField8">
-    </Component>
-    <Component class="javax.swing.JTextField" name="jTextField9">
-    </Component>
     <Component class="javax.swing.JTextField" name="jTextField10">
     </Component>
     <Component class="javax.swing.JTextField" name="jTextField11">
+    </Component>
+    <Component class="javax.swing.JComboBox" name="cbProjektStatus">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;(new String[] { &quot;Planerat&quot;, &quot;P&#xe5;g&#xe5;ende&quot;, &quot;Avslutat&quot;,&quot;Ingen&quot;})" type="code"/>
+        </Property>
+      </Properties>
+      <AccessibilityProperties>
+        <Property name="AccessibleContext.accessibleName" type="java.lang.String" value=""/>
+      </AccessibilityProperties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="cbProjektPrioritet">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;(new String[] { &quot;H&#xf6;g&quot;, &quot;Medel&quot;, &quot;L&#xe5;g&quot;,&quot;Ingen&quot;})" type="code"/>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnRensa">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Rensa"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRensaActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
