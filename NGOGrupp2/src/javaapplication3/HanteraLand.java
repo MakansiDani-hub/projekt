@@ -26,13 +26,7 @@ import javax.swing.JOptionPane;
 
     /**
      * Creates new form HanteraLand
-     */
-        
-    public HanteraLand(Anvandare anv, LandListener landListener){
-        this.landListener = landListener;
-        this(anv);
-    }
-        
+     */     
     public HanteraLand(Anvandare anvandare) {
         
         initComponents();
@@ -58,15 +52,22 @@ import javax.swing.JOptionPane;
                 JTxtFieldTidZon.setText(bordsModell.getValueAt(rad, 4).toString());
                 JTxtFieldPolitiskStruktur.setText(bordsModell.getValueAt(rad, 5).toString());
                 JTxtFieldEkonomi.setText(bordsModell.getValueAt(rad, 6).toString());
-                //Kallar på land-listenerns metod valLand så andra fönster kan registrera ett val vid behov
-                //Skickar i denna metoden in id och namn
+            
                 if(landListener != null){
+                    //Kallar på land-listenerns metod valLand så andra fönster kan registrera ett val vid behov
+                    //Skickar i denna metoden in id och namn för land
                     landListener.valLand(bordsModell.getValueAt(rad, 0).toString(),bordsModell.getValueAt(rad, 1).toString());                   
                 }
             }
         }
     });
     }
+    
+    //Initierar landListener
+    public void addLandListener(LandListener landListener){
+        this.landListener = landListener;
+    }
+    
     //metod för att ändra uppgifter om ett land
     private void andraLand(){
         
@@ -173,11 +174,10 @@ import javax.swing.JOptionPane;
             fyllTabell();// Uppdaterar listan
             JOptionPane.showMessageDialog(null, "Landet har lags till!");
             
-        } catch(InfException e) {
-            JOptionPane.showMessageDialog(null, "Kunde inte lägga till: " + e.getMessage());
+            } catch (InfException e) {
+                JOptionPane.showMessageDialog(null, "Kunde inte lägga till: " + e.getMessage());
+            }
         }
-}
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

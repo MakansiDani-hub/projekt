@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import projListeners.AnstalldListener;
 
 
 /**
@@ -18,33 +19,36 @@ public class HanteraAnstalld extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(HanteraAnstalld.class.getName());
     private Anvandare anvandare;
-    private InfDB idb;
+    private InfDB idb; 
+    private AnstalldListener anstalldListener;
     
- public HanteraAnstalld(Anvandare anvandare) {
-    initComponents();
+    public HanteraAnstalld(Anvandare anvandare) {
+        initComponents();
 
     this.anvandare = anvandare;
     this.idb = anvandare.getIdb();
 
-    if (!anvandare.getRoll().equals("admin")) {
-        JOptionPane.showMessageDialog(this, "Endast admin har tillgång till detta fönster.");
-        this.dispose();
-        return;
-    }
-
-    JTxtFieldAnstalldID.setEditable(false);
-    
-
-    hamtaAllaAnstallda();
-
-    jTable1.getSelectionModel().addListSelectionListener(new javax.swing.event.ListSelectionListener() {
-        public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-            if (!evt.getValueIsAdjusting()) {
-                fyllFaltFranMarkeradRad();
-            }
+        if (!anvandare.getRoll().equals("admin")) {
+            //Användaren är ej admin och ska ej få tillgång till knapparna ta bort, uppdatera, lägg till och rensa
+            JBtnLaggTillAnstalld.setVisible(false);
+            JBtnUppdateraAnstalld.setVisible(false);
+            JBtnTaBortAnstalld.setVisible(false);
+            JBtnRensaUppgifteranstalld.setVisible(false);
         }
-    });
-}
+
+        JTxtFieldAnstalldID.setEditable(false);
+
+        hamtaAllaAnstallda();
+
+        jTable1.getSelectionModel().addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                if (!evt.getValueIsAdjusting()) {
+                    int valdRad = jTable1.getSelectedRow();
+                    fyllFaltFranMarkeradRad(valdRad);
+                }
+            }
+        });
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -322,7 +326,9 @@ public class HanteraAnstalld extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
+    public void addAnstalldListener(AnstalldListener anstalldListener){
+        this.anstalldListener = anstalldListener;
+    }
     
     
     
@@ -375,13 +381,10 @@ private void hamtaAllaAnstallda() {
 
 
 
-private void fyllFaltFranMarkeradRad() {
-    int valdRad = jTable1.getSelectedRow();
-
+private void fyllFaltFranMarkeradRad(int valdRad) {
     if (valdRad == -1) {
         return;
     }
-
     JTxtFieldAnstalldID.setText(jTable1.getValueAt(valdRad, 0).toString());
     JTxtFieldFNamn.setText(jTable1.getValueAt(valdRad, 1).toString());
     JTxtFieldENamn.setText(jTable1.getValueAt(valdRad, 2).toString());
@@ -393,9 +396,33 @@ private void fyllFaltFranMarkeradRad() {
     jTextField5.setText(jTable1.getValueAt(valdRad, 8).toString());
 
     hamtaRollForAnstalld();
+    
+    if(anstalldListener != null){
+        String fulltNamn = jTable1.getValueAt(valdRad, 1) + " " + jTable1.getValueAt(valdRad, 2);
+        //Anropar valAnstalld på anstalldListener objektet och skickar in  id och namn då en rad valts
+        anstalldListener.valAnstalld(jTable1.getValueAt(valdRad, 0).toString(), fulltNamn);
+    }
 }
 
-
+public void valjRad(String id){
+        if(id == null){
+            throw new NullPointerException("parameter id var null");
+        } 
+        for(int rad = 0; rad < jTable1.getRowCount(); rad++){
+            String radId = (String) jTable1.getValueAt(rad, 0); //kolumn 0 håller hid
+            if(id != null && id.equals(radId)){
+                //Sätter raden som selected
+                jTable1.setRowSelectionInterval(rad, rad); 
+                //Scrollar till där raden är
+                jTable1.scrollRectToVisible(jTable1.getCellRect(rad, 0, true));
+                //visar radens info
+                fyllFaltFranMarkeradRad(rad);
+                return;
+            }
+        }
+        //Då alla rader letats igenom utan att hitta matchande id
+        throw new IllegalStateException("Id för anställd hittades inte i JTable-listan när det bör finnas");
+    }
 
 
 private void hamtaRollForAnstalld() {

@@ -25,11 +25,6 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
     /**
      * Creates new form HanteraHållbarhetsmål
      */
-    public HanteraHållbarhetsmål(Anvandare anvandare, MalListener malListener){
-        this.malListener = malListener;
-        this(anvandare);
-    }
-    
     public HanteraHållbarhetsmål(Anvandare anvandare) {
         
         initComponents();
@@ -61,6 +56,10 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
         });
     }
 
+    public void addMalListener(MalListener malListener){
+        this.malListener = malListener;
+    }
+    
     private void laddaHållbarhetsmål() {
         bordsModell.setRowCount(0); // Tömmer testrader
         
