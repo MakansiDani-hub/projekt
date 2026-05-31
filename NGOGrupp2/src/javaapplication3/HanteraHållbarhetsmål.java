@@ -95,6 +95,7 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
     public void valjRad(String malId)
     {
         int valdRad = SwingUtils.valjRadIJTableMedId(JTableHallbarhetsmal, malId, 0);
+        System.out.println("rad: "+valdRad);
         visaRadInfo(valdRad);
     }
     

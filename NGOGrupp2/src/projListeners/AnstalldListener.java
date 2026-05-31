@@ -9,5 +9,5 @@ package projListeners;
  * @author alexander.willen
  */
 public interface AnstalldListener {
-    void valAnstalld(String anstalldId, String fulltNamn); //Automatiskt public och abstrakt pga interface
+    void valAnstalld(String anstalldId, String fulltNamn, String roll); //Automatiskt public och abstrakt pga interface
 }

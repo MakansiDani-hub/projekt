@@ -26,7 +26,7 @@ public final class SwingUtils {
     public static <T> boolean finnsIComboBox(JComboBox<T> comboBox, T itemAttProva) { //generisk typ T ser till att båda parametrar har samma typ T, tex String
         //Validerar argument
         if (comboBox == null) {
-            System.out.println("Argumentet för JComboBox<O> cb saknade referens - cb var null");
+            System.out.println("Argumentet för JComboBox<T> cb saknade referens - cb var null");
             return false;
         }
         for (int i = 0; i < comboBox.getItemCount(); i++) {
