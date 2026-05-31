@@ -38,7 +38,7 @@ public class ProjektProjektchef extends javax.swing.JFrame {
 
     //Session
     private Anvandare anv; //användaren (Session)
-    private int pid; //det valda projektet vars uppgifter visas  
+    private int pid; //det valda projektet vars uppgifter visas
 
     //Redigeringsläge
     private boolean redigerar;
@@ -925,7 +925,7 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         spnlDeltagareDropdown.setVisible(false);
         spnlPartnersDropdown.setVisible(false);
 
-        //----NYTT FÖR PROJEKTCHEF------------------       
+        //----NYTT FÖR PROJEKTCHEF------------------
         //---Redigerings-läget---
         //...Datum rutor
         dateStartDatum.setVisible(false);
@@ -1062,7 +1062,7 @@ public class ProjektProjektchef extends javax.swing.JFrame {
     }
 
     private void vaxlaBorttagningslageMal() {
-        //Ändrar fältets tillstånd och uppdaterar knappens visning utifrån nya tillståndet 
+        //Ändrar fältets tillstånd och uppdaterar knappens visning utifrån nya tillståndet
         borttagningslageMal = !borttagningslageMal;
         uppdateraBorttagningslageUI(borttagningslageMal, btnTaBortMal);
     }
@@ -1157,9 +1157,9 @@ public class ProjektProjektchef extends javax.swing.JFrame {
 
     private void uppdateraStatusUI(String status) {
         if (SwingUtils.finnsIComboBox(cbStatus, status)) {
-            //Validering av input i databasen sker, därför kan denna kontroll ses som onödig, men 
+            //Validering av input i databasen sker, därför kan denna kontroll ses som onödig, men
             //att göra det för output är ofta bra ändå ifall fel data råkat kommit i databasen av diverse anledning.
-            cbStatus.setSelectedItem(status); //Om statusen finns --> visa denna i vår ComboBox 
+            cbStatus.setSelectedItem(status); //Om statusen finns --> visa denna i vår ComboBox
         } else {
             cbStatus.setSelectedItem("Ingen"); //Om statusen inte fanns (eller om item var null), visa "Ingen"
         }
@@ -1225,7 +1225,7 @@ public class ProjektProjektchef extends javax.swing.JFrame {
     }
 
     private boolean vaxlaRedigeringslage() {
-        //Växla mellan redigeringslägen 
+        //Växla mellan redigeringslägen
         redigerar = !redigerar;
 
         if (redigerar) {
@@ -1317,7 +1317,7 @@ public class ProjektProjektchef extends javax.swing.JFrame {
                 btnInstans.addActionListener(new ActionListener() { //<--implementerar ActionListener interface i ny instans av anonymklass
                     @Override //override av abstrakt metod
                     public void actionPerformed(ActionEvent e) {
-                        //Ett pop-up fönster öppnas, fönstret som visar en lista av Hållbarhetsmål.                        
+                        //Ett pop-up fönster öppnas, fönstret som visar en lista av Hållbarhetsmål.
                         if (borttagningslageMal == true) {
                             registreraBorttagningInstans(projektMalBorttagna, id, btnInstans);
                         } else {//Om bortagningsläget ej är på:
@@ -1702,7 +1702,7 @@ public class ProjektProjektchef extends javax.swing.JFrame {
 
     private void btnLandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLandActionPerformed
 
-        if (redigerar && arTom("lid")) {//Alias "as landId" fungerade inte, behöver använda lid 
+        if (redigerar && arTom("lid")) {//Alias "as landId" fungerade inte, behöver använda lid
             //Öppna popup för att välja ett fisst land om användaren redigerar och det ej visas något land
             System.out.println("Öppnar popup ruta för land att välja");
             oppnaPopupValjLand();
@@ -1753,7 +1753,7 @@ public class ProjektProjektchef extends javax.swing.JFrame {
             oppnaPopupValjProjektchef();
         } else if (borttagningslageDeltagare) {
             registreraBorttagningEnstaka("projektchef", btnProjektchef);
-            //Uppdaterar för att se till att EditUI göms och att knappen visar [ + ] 
+            //Uppdaterar för att se till att EditUI göms och att knappen visar [ + ]
             uppdateraEditUIProjektchef();
         } else {//Om bortagningsläget ej är på:
             //Öppnar ett fönster som visar en lista på anstallda med denna projektchef i fokus
@@ -1772,7 +1772,7 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {

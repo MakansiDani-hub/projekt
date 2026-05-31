@@ -65,10 +65,14 @@ public class ProjektSokAdmin extends javax.swing.JFrame {
 
     private void laddaAllaProjekt() {
         try {
-            String sql = "SELECT pid, projektnamn, beskrivning, startdatum, slutdatum, "
-                    + "kostnad, status, prioritet, projektchef, land "
-                    + "FROM projekt "
-                    + "ORDER BY pid";
+            String sql = "SELECT p.pid, p.projektnamn, p.beskrivning, p.startdatum, p.slutdatum, "
+                    + "p.kostnad, p.status, p.prioritet, "
+                    + "CONCAT(a.fornamn, ' ', a.efternamn) AS projektchef_namn, "
+                    + "l.namn AS land_namn "
+                    + "FROM projekt p "
+                    + "LEFT JOIN anstalld a ON p.projektchef = a.aid "
+                    + "LEFT JOIN land l ON p.land = l.lid "
+                    + "ORDER BY p.pid";
 
             ArrayList<HashMap<String, String>> projektLista = anvandare.getIdb().fetchRows(sql);
 
@@ -86,6 +90,7 @@ public class ProjektSokAdmin extends javax.swing.JFrame {
             model.addColumn("Land");
 
             for (HashMap<String, String> projekt : projektLista) {
+                //System.out.println(projekt);
                 model.addRow(new Object[]{
                     projekt.get("pid"),
                     projekt.get("projektnamn"),
@@ -95,12 +100,25 @@ public class ProjektSokAdmin extends javax.swing.JFrame {
                     projekt.get("kostnad"),
                     projekt.get("status"),
                     projekt.get("prioritet"),
-                    projekt.get("projektchef"),
-                    projekt.get("land")
+                    projekt.get("projektchef_namn"),
+                    projekt.get("namn")
                 });
             }
 
             tblProjektlista.setModel(model);
+
+            tblProjektlista.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+
+            tblProjektlista.getColumnModel().getColumn(0).setPreferredWidth(50);
+            tblProjektlista.getColumnModel().getColumn(1).setPreferredWidth(120);
+            tblProjektlista.getColumnModel().getColumn(2).setPreferredWidth(220);
+            tblProjektlista.getColumnModel().getColumn(3).setPreferredWidth(100);
+            tblProjektlista.getColumnModel().getColumn(4).setPreferredWidth(100);
+            tblProjektlista.getColumnModel().getColumn(5).setPreferredWidth(90);
+            tblProjektlista.getColumnModel().getColumn(6).setPreferredWidth(100);
+            tblProjektlista.getColumnModel().getColumn(7).setPreferredWidth(80);
+            tblProjektlista.getColumnModel().getColumn(8).setPreferredWidth(180);
+            tblProjektlista.getColumnModel().getColumn(9).setPreferredWidth(120);
 
         } catch (InfException ex) {
             JOptionPane.showMessageDialog(this, "Kunde inte ladda projektlistan: " + ex.getMessage());
@@ -120,8 +138,8 @@ public class ProjektSokAdmin extends javax.swing.JFrame {
         jTextField5.setText(tblProjektlista.getValueAt(rad, 3).toString()); // Startdatum
         jTextField6.setText(tblProjektlista.getValueAt(rad, 4).toString()); // Slutdatum
         jTextField7.setText(tblProjektlista.getValueAt(rad, 5).toString()); // Kostnad
-        jTextField8.setText(tblProjektlista.getValueAt(rad, 6).toString()); // Status
-        jTextField9.setText(tblProjektlista.getValueAt(rad, 7).toString()); // Prioritet
+        cbProjektStatus.setSelectedItem(tblProjektlista.getValueAt(rad, 6).toString()); // Status
+        cbProjektPrioritet.setSelectedItem(tblProjektlista.getValueAt(rad, 7).toString()); // Prioritet
         jTextField10.setText(tblProjektlista.getValueAt(rad, 8).toString()); // Projektchef
         jTextField11.setText(tblProjektlista.getValueAt(rad, 9).toString()); // Land
     }
@@ -134,8 +152,8 @@ public class ProjektSokAdmin extends javax.swing.JFrame {
         jTextField5.setEditable(false);
         jTextField6.setEditable(false);
         jTextField7.setEditable(false);
-        jTextField8.setEditable(false);
-        jTextField9.setEditable(false);
+        cbProjektStatus.setEnabled(false);
+        cbProjektPrioritet.setEnabled(false);
         jTextField10.setEditable(false);
         jTextField11.setEditable(false);
 
@@ -145,33 +163,33 @@ public class ProjektSokAdmin extends javax.swing.JFrame {
         jTextField5.setBackground(java.awt.Color.LIGHT_GRAY);
         jTextField6.setBackground(java.awt.Color.LIGHT_GRAY);
         jTextField7.setBackground(java.awt.Color.LIGHT_GRAY);
-        jTextField8.setBackground(java.awt.Color.LIGHT_GRAY);
-        jTextField9.setBackground(java.awt.Color.LIGHT_GRAY);
+        cbProjektStatus.setBackground(java.awt.Color.LIGHT_GRAY);
+        cbProjektPrioritet.setBackground(java.awt.Color.LIGHT_GRAY);
         jTextField10.setBackground(java.awt.Color.LIGHT_GRAY);
         jTextField11.setBackground(java.awt.Color.LIGHT_GRAY);
     }
 
     private void låsUppFält() {
 
-        jTextField2.setEditable(true);
+        //jTextField2.setEditable(true);
         jTextField3.setEditable(true);
         jTextField4.setEditable(true);
         jTextField5.setEditable(true);
         jTextField6.setEditable(true);
         jTextField7.setEditable(true);
-        jTextField8.setEditable(true);
-        jTextField9.setEditable(true);
+        cbProjektStatus.setEnabled(true);
+        cbProjektPrioritet.setEnabled(true);
         jTextField10.setEditable(true);
         jTextField11.setEditable(true);
 
-        jTextField2.setBackground(java.awt.Color.WHITE);
+        //jTextField2.setBackground(java.awt.Color.WHITE);
         jTextField3.setBackground(java.awt.Color.WHITE);
         jTextField4.setBackground(java.awt.Color.WHITE);
         jTextField5.setBackground(java.awt.Color.WHITE);
         jTextField6.setBackground(java.awt.Color.WHITE);
         jTextField7.setBackground(java.awt.Color.WHITE);
-        jTextField8.setBackground(java.awt.Color.WHITE);
-        jTextField9.setBackground(java.awt.Color.WHITE);
+        cbProjektStatus.setBackground(java.awt.Color.WHITE);
+        cbProjektPrioritet.setBackground(java.awt.Color.WHITE);
         jTextField10.setBackground(java.awt.Color.WHITE);
         jTextField11.setBackground(java.awt.Color.WHITE);
     }
@@ -234,12 +252,24 @@ public class ProjektSokAdmin extends javax.swing.JFrame {
             }
 
             tblProjektlista.setModel(model);
+            tblProjektlista.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+
+            tblProjektlista.getColumnModel().getColumn(0).setPreferredWidth(50);
+            tblProjektlista.getColumnModel().getColumn(1).setPreferredWidth(120);
+            tblProjektlista.getColumnModel().getColumn(2).setPreferredWidth(220);
+            tblProjektlista.getColumnModel().getColumn(3).setPreferredWidth(100);
+            tblProjektlista.getColumnModel().getColumn(4).setPreferredWidth(100);
+            tblProjektlista.getColumnModel().getColumn(5).setPreferredWidth(90);
+            tblProjektlista.getColumnModel().getColumn(6).setPreferredWidth(100);
+            tblProjektlista.getColumnModel().getColumn(7).setPreferredWidth(80);
+            tblProjektlista.getColumnModel().getColumn(8).setPreferredWidth(180);
+            tblProjektlista.getColumnModel().getColumn(9).setPreferredWidth(120);
 
         } catch (InfException ex) {
             JOptionPane.showMessageDialog(this, "Kunde inte filtrera projekt: " + ex.getMessage());
         }
     }
-    
+
     private void filtreraTabellPaStatus() {
         String valdStatus = cbStatus.getSelectedItem().toString();
 
@@ -253,6 +283,20 @@ public class ProjektSokAdmin extends javax.swing.JFrame {
         } else {
             sorter.setRowFilter(RowFilter.regexFilter("^" + valdStatus + "$", 6));
         }
+    }
+
+    private void rensaFalt() {
+        jTextField2.setText("");
+        jTextField3.setText("");
+        jTextField4.setText("");
+        jTextField5.setText("");
+        jTextField6.setText("");
+        jTextField7.setText("");
+        cbProjektStatus.setSelectedItem("Ingen");
+        cbProjektPrioritet.setSelectedItem("Ingen");
+        jTextField10.setText("");
+        jTextField11.setText("");
+
     }
 
     @SuppressWarnings("unchecked")
@@ -296,10 +340,11 @@ public class ProjektSokAdmin extends javax.swing.JFrame {
         lblPrioritet = new javax.swing.JLabel();
         lblProjektchef = new javax.swing.JLabel();
         lblLand = new javax.swing.JLabel();
-        jTextField8 = new javax.swing.JTextField();
-        jTextField9 = new javax.swing.JTextField();
         jTextField10 = new javax.swing.JTextField();
         jTextField11 = new javax.swing.JTextField();
+        cbProjektStatus = new javax.swing.JComboBox<>();
+        cbProjektPrioritet = new javax.swing.JComboBox<>();
+        btnRensa = new javax.swing.JButton();
 
         jDialog1.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         jDialog1.setTitle("Hitta personal");
@@ -400,6 +445,8 @@ public class ProjektSokAdmin extends javax.swing.JFrame {
 
         lblKostnad.setText("Kostnad");
 
+        jTextField2.addActionListener(this::jTextField2ActionPerformed);
+
         jTextField7.addActionListener(this::jTextField7ActionPerformed);
 
         jButton2.setText("Spara");
@@ -411,6 +458,13 @@ public class ProjektSokAdmin extends javax.swing.JFrame {
         lblProjektchef.setText("Projektchef");
 
         lblLand.setText("Land");
+
+        cbProjektStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Planerat", "Pågående", "Avslutat","Ingen"}));
+
+        cbProjektPrioritet.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hög", "Medel", "Låg","Ingen"}));
+
+        btnRensa.setText("Rensa");
+        btnRensa.addActionListener(this::btnRensaActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -443,59 +497,47 @@ public class ProjektSokAdmin extends javax.swing.JFrame {
                         .addComponent(jButton1)
                         .addGap(0, 0, Short.MAX_VALUE))))
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 572, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 587, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(lblPID)
-                                    .addComponent(lblProjektsnamn)
-                                    .addComponent(lblBeskrivning)
-                                    .addComponent(lblStartdatum)
-                                    .addComponent(lblStatus)
-                                    .addComponent(lblPrioritet)
-                                    .addComponent(lblProjektchef)
-                                    .addComponent(lblLand)
-                                    .addComponent(lblSlutdatum))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addComponent(jTextField9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jTextField8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(34, 34, 34)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                    .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
-                                                    .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
-                                                    .addComponent(jTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
-                                                    .addComponent(jTextField5, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE))
-                                                .addGap(0, 0, Short.MAX_VALUE))
-                                            .addComponent(jTextField6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblKostnad)
-                                .addGap(34, 34, 34)
-                                .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 182, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnLäggTill, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnTaBort, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnTaBort, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton2))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGap(6, 6, 6)
-                                .addComponent(btnÄndra)))
-                        .addContainerGap())))
+                                .addComponent(btnÄndra, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(btnRensa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblKostnad)
+                            .addComponent(lblPID)
+                            .addComponent(lblProjektsnamn)
+                            .addComponent(lblBeskrivning)
+                            .addComponent(lblStartdatum)
+                            .addComponent(lblStatus)
+                            .addComponent(lblPrioritet)
+                            .addComponent(lblProjektchef)
+                            .addComponent(lblLand)
+                            .addComponent(lblSlutdatum))
+                        .addGap(34, 34, 34)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextField11, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(cbProjektPrioritet, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jTextField10)
+                            .addComponent(cbProjektStatus, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jTextField7)
+                            .addComponent(jTextField6, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jTextField5, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jTextField4, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jTextField3)
+                            .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.TRAILING)))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -511,7 +553,7 @@ public class ProjektSokAdmin extends javax.swing.JFrame {
                             .addComponent(jLabel1))
                         .addGap(26, 26, 26)
                         .addComponent(jLabel5)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(dateStartdatum, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING))
@@ -523,8 +565,7 @@ public class ProjektSokAdmin extends javax.swing.JFrame {
                         .addComponent(jButton1)
                         .addComponent(cbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(7, 7, 7)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblPID)
@@ -552,11 +593,11 @@ public class ProjektSokAdmin extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblStatus)
-                            .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cbProjektStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblPrioritet)
-                            .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cbProjektPrioritet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblProjektchef)
@@ -565,7 +606,6 @@ public class ProjektSokAdmin extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblLand)
                             .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(29, 29, 29)
@@ -574,9 +614,18 @@ public class ProjektSokAdmin extends javax.swing.JFrame {
                                     .addComponent(jButton2)))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(btnLäggTill)
-                                .addComponent(btnÄndra)))))
-                .addContainerGap())
+                                .addComponent(btnÄndra)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnRensa))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        btnTaBort.getAccessibleContext().setAccessibleName("");
+        btnLäggTill.getAccessibleContext().setAccessibleName("");
+        btnÄndra.getAccessibleContext().setAccessibleName("");
+        jButton2.getAccessibleContext().setAccessibleName("");
+        cbProjektStatus.getAccessibleContext().setAccessibleName("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -606,6 +655,14 @@ public class ProjektSokAdmin extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField7ActionPerformed
 
+    private void btnRensaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRensaActionPerformed
+        rensaFalt();
+    }//GEN-LAST:event_btnRensaActionPerformed
+
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -631,8 +688,11 @@ public class ProjektSokAdmin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLäggTill;
+    private javax.swing.JButton btnRensa;
     private javax.swing.JButton btnTaBort;
     private javax.swing.JButton btnÄndra;
+    private javax.swing.JComboBox<String> cbProjektPrioritet;
+    private javax.swing.JComboBox<String> cbProjektStatus;
     private javax.swing.JComboBox<String> cbStatus;
     private com.toedter.calendar.JDateChooser dateSlutdatum;
     private com.toedter.calendar.JDateChooser dateStartdatum;
@@ -657,8 +717,6 @@ public class ProjektSokAdmin extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
     private javax.swing.JLabel lblBeskrivning;
     private javax.swing.JLabel lblKostnad;
     private javax.swing.JLabel lblLand;
