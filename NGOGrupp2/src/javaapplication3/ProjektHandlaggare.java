@@ -19,10 +19,11 @@ import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
  * @author alexander.willen
  */
 public class ProjektHandlaggare extends javax.swing.JFrame {
+
     private final JFrame dennaFrame = this;
-    
+
     //---Instanstyper som alternativ för skapandet av knappar---
-    public enum Instanstyp{
+    public enum Instanstyp {
         HALLBARHETSMAL,
         ADMIN,
         HANDLAGGARE,
@@ -33,8 +34,7 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
     private Anvandare anv; //databas + anvandare
     private int pid; //det valda projektet vars uppgifter visas
 
-    public ProjektHandlaggare(Anvandare anv, int pid)
-    {
+    public ProjektHandlaggare(Anvandare anv, int pid) {
         this.anv = anv;
         this.pid = pid;
 
@@ -231,7 +231,6 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
         btnLand.setMaximumSize(new java.awt.Dimension(180, 30));
         btnLand.setMinimumSize(new java.awt.Dimension(43, 30));
         btnLand.setPreferredSize(new java.awt.Dimension(50, 30));
-        btnLand.addActionListener(this::btnLandActionPerformed);
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
@@ -411,7 +410,6 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
         btnProjektchef.setMaximumSize(new java.awt.Dimension(180, 30));
         btnProjektchef.setMinimumSize(new java.awt.Dimension(43, 30));
         btnProjektchef.setPreferredSize(new java.awt.Dimension(80, 30));
-        btnProjektchef.addActionListener(this::btnProjektchefActionPerformed);
         pnlProjektchef.add(btnProjektchef);
 
         javax.swing.GroupLayout pnlDeltagareLayout = new javax.swing.GroupLayout(pnlDeltagare);
@@ -625,56 +623,55 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
-    private void startLageGUI(){
+
+    private void startLageGUI() {
         //Gömmer pop-up paneler
         spnlMalDropdown.setVisible(false);
         spnlBeskrivningDropdown.setVisible(false);
         spnlDeltagareDropdown.setVisible(false);
         spnlPartnersDropdown.setVisible(false);
     }
-    
-    private void laddaInfo(){
+
+    private void laddaInfo() {
         InfDB idb = anv.getIdb();
-        
-        try{
+
+        try {
             //---Hämtar projektinfo---
             HashMap<String, String> projektinfoEnskilda = idb.fetchRow(
-                    "SELECT projektnamn, startdatum, slutdatum, Projekt.beskrivning, "+
-                    "status, Projekt.prioritet, kostnad, Land.namn, lid, "+
-                    "CONCAT(fornamn, ' ', efternamn) as chefnamn, projektchef "+
-                    "FROM Projekt "+
-                    "JOIN Land ON land = lid "+
-                    "JOIN Anstalld ON projektchef = aid "+
-                    "WHERE pid = "+pid);
-            
+                    "SELECT projektnamn, startdatum, slutdatum, Projekt.beskrivning, "
+                    + "status, Projekt.prioritet, kostnad, Land.namn, lid, "
+                    + "CONCAT(fornamn, ' ', efternamn) as chefnamn, projektchef "
+                    + "FROM Projekt "
+                    + "JOIN Land ON land = lid "
+                    + "JOIN Anstalld ON projektchef = aid "
+                    + "WHERE pid = " + pid);
+
             ArrayList<HashMap<String, String>> projektinfoMal = idb.fetchRows(
-                    "SELECT malnummer, namn, h.hid as id "+
-                    "FROM Hallbarhetsmal h "+ 
-                    "JOIN Proj_Hallbarhet ph on h.hid = ph.hid "+
-                    "WHERE ph.pid = "+pid);
-            
+                    "SELECT malnummer, namn, h.hid as id "
+                    + "FROM Hallbarhetsmal h "
+                    + "JOIN Proj_Hallbarhet ph on h.hid = ph.hid "
+                    + "WHERE ph.pid = " + pid);
+
             ArrayList<HashMap<String, String>> projektinfoAdmin = idb.fetchRows(
-                    "SELECT CONCAT(fornamn, ' ', efternamn) as namn, a.aid as id "+
-                    "FROM Anstalld a "+ 
-                    "JOIN Admin ad on a.aid = ad.aid "+
-                    "JOIN Ans_Proj ap on a.aid = ap.aid "+
-                    "WHERE ap.pid = "+pid);
-            
+                    "SELECT CONCAT(fornamn, ' ', efternamn) as namn, a.aid as id "
+                    + "FROM Anstalld a "
+                    + "JOIN Admin ad on a.aid = ad.aid "
+                    + "JOIN Ans_Proj ap on a.aid = ap.aid "
+                    + "WHERE ap.pid = " + pid);
+
             ArrayList<HashMap<String, String>> projektinfoHandlaggare = idb.fetchRows(
-                    "SELECT CONCAT(fornamn, ' ', efternamn) as namn, a.aid as id "+
-                    "FROM Anstalld a "+ 
-                    "JOIN Handlaggare h on a.aid = h.aid "+
-                    "JOIN Ans_Proj ap on a.aid = ap.aid "+
-                    "WHERE ap.pid = "+pid);
-            
+                    "SELECT CONCAT(fornamn, ' ', efternamn) as namn, a.aid as id "
+                    + "FROM Anstalld a "
+                    + "JOIN Handlaggare h on a.aid = h.aid "
+                    + "JOIN Ans_Proj ap on a.aid = ap.aid "
+                    + "WHERE ap.pid = " + pid);
+
             ArrayList<HashMap<String, String>> projektinfoPartners = idb.fetchRows(
-                    "SELECT namn, p.pid as id "+
-                    "FROM Partner p "+ 
-                    "JOIN Projekt_Partner pp on p.pid = pp.partner_pid "+
-                    "WHERE pp.pid = "+pid);
-            
-            
+                    "SELECT namn, p.pid as id "
+                    + "FROM Partner p "
+                    + "JOIN Projekt_Partner pp on p.pid = pp.partner_pid "
+                    + "WHERE pp.pid = " + pid);
+
             //---Visar hämtad projektInfo---
             //...ändrar text
             lblPid.setText("Projektid: " + pid);
@@ -687,7 +684,7 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
             txtfKostnad.setText(projektinfoEnskilda.get("kostnad"));
             btnProjektchef.setText(projektinfoEnskilda.get("chefnamn"));
             btnLand.setText(projektinfoEnskilda.get("namn"));
-                        
+
             //---Skapar "instansknappar"---
             //...Hållbarhetsmålen
             skapaInstansknappar(projektinfoMal, Instanstyp.HALLBARHETSMAL);
@@ -697,33 +694,41 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
             skapaInstansknappar(projektinfoHandlaggare, Instanstyp.HANDLAGGARE);
             //...Partners
             skapaInstansknappar(projektinfoPartners, Instanstyp.PARTNER);
-            
+
             //Skapar actions för projektchef och land knapparna
             skapaActionBtnLand(projektinfoEnskilda.get("lid")); //skickar in land-id
             skapaActionBtnProjektchef(projektinfoEnskilda.get("projektchef")); //skickar in aid för projektchefen
-            
+
+        } catch (InfException e) {
+            System.out.println("Info kunde ej laddas. " + e.getMessage());
         }
-        catch(InfException e){
-            System.out.println("Info kunde ej laddas. "+e.getMessage());
-        }
-        
+
         pnlTop.revalidate();
     }
+
     /**
      * "Instansknappar" är knappar användaren trycker på för att ta sig vidare
      * till ett nytt fönster som visar information om saken knappen
-     * representerade. Knappar kan vara hållbarhetsmål, deltagare 
-     * och partners. 
-     * Denna metod skapar en viss typ av instansknapp, som definieras via parametern instanstyp. 
-     * En knapp är en "instans" av typ HashMap<String, String>. Genom argumentet för instans
-     * kommer information (namn, id) om instansen in. Alla instansers HashMap behöver 
-     * ha keys "id" och "namn" med mappade värden.
-     * Just hållbarhetsmål är ett specialfall. Om dess HashMap även innehåller key 
-     * "målnummer" så tas även detta med i knappens text.
-     * Vid tryckning av en knapp tas vi till information om dess instans i ett nytt fönster. 
-     * Tex i ett fönster om hållbarhetsmål med id "5".
+     * representerade. Knappar kan vara hållbarhetsmål, deltagare och partners.
+     * Denna metod skapar en viss typ av instansknapp, som definieras via
+     * parametern instanstyp. En knapp är en "instans" av typ
+     * HashMap<String, String>. Genom argumentet för instans kommer information
+     * (namn, id) om instansen in. Alla instansers HashMap behöver ha keys "id"
+     * och "namn" med mappade värden. Just hållbarhetsmål är ett specialfall. Om
+     * dess HashMap även innehåller key "målnummer" så tas även detta med i
+     * knappens text. Vid tryckning av en knapp tas vi till information om dess
+     * instans i ett nytt fönster. Tex i ett fönster om hållbarhetsmål med id
+     * "5".
      */
     private void skapaInstansknapp(HashMap<String, String> instans, Instanstyp instanstyp) {
+        //Gör om nyckelidentifieraren i HashMappen till "id" eftersom alias ("as...") inte fungerade i SQL-frågan...
+        for (String key : instans.keySet()) {
+            if (key.matches("^[aph]id$")) {
+                String varde = instans.remove(key);
+                instans.put("id", varde);
+                break;
+            }
+        }
         //---Endast dessa attributer sparas per instans---
         //...namm används som text på knappen
         String namn = instans.get("namn");
@@ -753,13 +758,13 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
                 btnInstans.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        oppnaPopupVisaAnstalldMedId(id);                       
+                        oppnaPopupVisaAnstalldMedId(id);
                     }
                 });
-                if(instanstyp == Instanstyp.ADMIN){
+                if (instanstyp == Instanstyp.ADMIN) {
                     pnlAdmin.add(btnInstans);
                 }
-                if(instanstyp == Instanstyp.HANDLAGGARE){
+                if (instanstyp == Instanstyp.HANDLAGGARE) {
                     pnlHandlaggare.add(btnInstans);
                 }
             }
@@ -784,60 +789,59 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
             skapaInstansknapp(instans, instanstyp);
         }
     }
-    
-    private void skapaActionBtnLand(String landId){
-        btnLand.addActionListener(new ActionListener(){
-            @Override 
+
+    private void skapaActionBtnLand(String landId) {
+        btnLand.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 oppnaPopupVisaLandMedId(landId);
-            }        
+            }
         });
     }
-    
-    private void skapaActionBtnProjektchef(String projektchefId){
-        btnProjektchef.addActionListener(new ActionListener(){
+
+    private void skapaActionBtnProjektchef(String projektchefId) {
+        btnProjektchef.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e){
+            public void actionPerformed(ActionEvent e) {
                 oppnaPopupVisaAnstalldMedId(projektchefId);
             }
         });
     }
-    
 
-
-    private void vaxlaDropdownLage(JScrollPane dropdownRuta, JButton dropdownKnapp)
-    {
+    private void vaxlaDropdownLage(JScrollPane dropdownRuta, JButton dropdownKnapp) {
         Boolean rutaNySynlighet = !dropdownRuta.isVisible();
-        
+
         String pil = rutaNySynlighet ? "▼" : "▶"; //Blir rutan synlig --> pil = ▼. Blir rutan osynlig --> pil = ▶
         dropdownKnapp.setText(pil + dropdownKnapp.getText().substring(1)); //sätter texten som pil + nuvarande texten minus pilen som redan fanns
         dropdownRuta.setVisible(rutaNySynlighet);
         //Uppdaterar layout
-        dropdownRuta.getParent().revalidate();                           
+        dropdownRuta.getParent().revalidate();
     }
-    
-    private void oppnaPopupVisaMalMedId(String id){
+
+    private void oppnaPopupVisaMalMedId(String id) {
+        //Öppnar ett fönster som visar en lista på mål med detta mål i fokus
         HanteraHållbarhetsmål malFonster = new HanteraHållbarhetsmål(anv);
         malFonster.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         malFonster.setVisible(true);
         malFonster.valjRad(id);
     }
-    
-    private void oppnaPopupVisaAnstalldMedId(String id){
+
+    private void oppnaPopupVisaAnstalldMedId(String id) {
+        //Öppnar ett fönster som visar en lista på anstallda med denna projektchef i fokus
         HanteraAnstalld anstalldFonster = new HanteraAnstalld(anv);
         anstalldFonster.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         anstalldFonster.setVisible(true);
-        //IMPLEMENTERA valjRad() metoden i denna klass! Skicka här in id
+        anstalldFonster.valjRad(id);
     }
-    
-    private void oppnaPopupVisaLandMedId(String id){
+
+    private void oppnaPopupVisaLandMedId(String id) {
         HanteraLand landFonster = new HanteraLand(anv);
         landFonster.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         landFonster.setVisible(true);
         landFonster.valjRad(id);
     }
-    
-    private void oppnaPopupVisaPartnerMedId(String id){
+
+    private void oppnaPopupVisaPartnerMedId(String id) {
         HanteraPartner partnerFonster = new HanteraPartner(anv);
         partnerFonster.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         partnerFonster.setVisible(true);
@@ -860,14 +864,6 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
         vaxlaDropdownLage(spnlBeskrivningDropdown, btnBeskrivningDropdown);
     }//GEN-LAST:event_btnBeskrivningDropdownActionPerformed
 
-    private void btnProjektchefActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProjektchefActionPerformed
-        
-    }//GEN-LAST:event_btnProjektchefActionPerformed
-
-    private void btnLandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLandActionPerformed
-
-    }//GEN-LAST:event_btnLandActionPerformed
-
     public static void main(String args[]) { //TA BORT MAIN METODEN TILLSLUT. NI SKA ENDAST ANVÄNDA MAIN METODEN I Startklassen
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -884,7 +880,7 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
         } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
         }
         //</editor-fold>
-        
+
         try {
             InfDB idb = new InfDB("sdgsweden", "3306", "root", "masterkey");
             new ProjektHandlaggare(new Anvandare(idb, null, null, null, 3, null, null, null, "handlaggare"), 3).setVisible(true);

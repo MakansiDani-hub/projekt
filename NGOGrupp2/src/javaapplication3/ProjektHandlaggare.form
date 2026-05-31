@@ -455,9 +455,6 @@
                           <Dimension value="[50, 30]"/>
                         </Property>
                       </Properties>
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLandActionPerformed"/>
-                      </Events>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -859,9 +856,6 @@
                                   <Dimension value="[80, 30]"/>
                                 </Property>
                               </Properties>
-                              <Events>
-                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnProjektchefActionPerformed"/>
-                              </Events>
                             </Component>
                           </SubComponents>
                         </Container>

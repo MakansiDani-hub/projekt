@@ -395,12 +395,12 @@ private void fyllFaltFranMarkeradRad(int valdRad) {
     JTxtFieldAvdelning.setText(jTable1.getValueAt(valdRad, 7).toString());
     jTextField5.setText(jTable1.getValueAt(valdRad, 8).toString());
 
-    hamtaRollForAnstalld();
+    String roll = visaRollForAnstalld();
     
     if(anstalldListener != null){
         String fulltNamn = jTable1.getValueAt(valdRad, 1) + " " + jTable1.getValueAt(valdRad, 2);
-        //Anropar valAnstalld på anstalldListener objektet och skickar in  id och namn då en rad valts
-        anstalldListener.valAnstalld(jTable1.getValueAt(valdRad, 0).toString(), fulltNamn);
+        //Anropar valAnstalld på anstalldListener objektet och skickar in  id, namn och roll då en rad valts
+        anstalldListener.valAnstalld(jTable1.getValueAt(valdRad, 0).toString(), fulltNamn, roll);
     }
 }
 
@@ -410,8 +410,8 @@ private void fyllFaltFranMarkeradRad(int valdRad) {
         fyllFaltFranMarkeradRad(valdRad);
     }
 
-
-private void hamtaRollForAnstalld() {
+//Returnerar rollen
+private String visaRollForAnstalld() {
     try {
         String aid = JTxtFieldAnstalldID.getText();
 
@@ -422,19 +422,20 @@ private void hamtaRollForAnstalld() {
         boolean arAdmin = !adminCheck.equals("0");
         boolean arHandlaggare = !handlaggareCheck.equals("0");
         boolean arProjektchef = !projektchefCheck.equals("0");
+        
+        String roll;
 
-        if (arAdmin) {
-            JTxtFieldRoll.setText("admin");
-        } else if (arHandlaggare && arProjektchef) {
-            JTxtFieldRoll.setText("handlaggare_projektchef");
-        } else if (arHandlaggare) {
-            JTxtFieldRoll.setText("handlaggare");
-        } else {
-            JTxtFieldRoll.setText("");
-        }
+        if(arAdmin) roll = "admin";
+        else if(arHandlaggare && arProjektchef) roll = "handlaggare_projektchef";
+        else if(arHandlaggare) roll = "handlaggare";
+        else roll = "";
 
+        JTxtFieldRoll.setText(roll);
+        return roll;
+        
     } catch (Exception ex) {
         JTxtFieldRoll.setText("");
+        return "";
     }
 }
 

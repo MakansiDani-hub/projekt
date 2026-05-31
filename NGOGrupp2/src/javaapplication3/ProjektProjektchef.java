@@ -9,8 +9,6 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
@@ -42,6 +40,9 @@ public class ProjektProjektchef extends javax.swing.JFrame {
 
     //Redigeringsläge
     private boolean redigerar;
+    
+    //Redigergingslägets UI (EJ IMPLEMENTERAD)
+    private ArrayList<JComponent> redigeringsUI;
 
     //Borttagningslägen
     private boolean borttagningslageMal;
@@ -189,6 +190,7 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         dateSlutDatum = new com.toedter.calendar.JDateChooser();
         pnlProjektnamn = new javax.swing.JPanel();
         txtfProjektnamn = new javax.swing.JTextField();
+        lblFelmeddelandeProjektnamn = new javax.swing.JLabel();
         btnAndra = new javax.swing.JButton();
         btnSpara = new javax.swing.JButton();
 
@@ -786,7 +788,6 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         txtfStartDatum.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 3, 0, 0));
         txtfStartDatum.setMargin(new java.awt.Insets(0, 0, 0, 0));
         txtfStartDatum.setPreferredSize(new java.awt.Dimension(86, 16));
-        txtfStartDatum.addActionListener(this::txtfStartDatumActionPerformed);
         pnlStartDatum.add(txtfStartDatum, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 30));
 
         dateStartDatum.setDateFormatString("y MMM d");
@@ -802,7 +803,6 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         txtfSlutDatum.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 3, 0, 0));
         txtfSlutDatum.setMargin(new java.awt.Insets(0, 0, 0, 0));
         txtfSlutDatum.setPreferredSize(new java.awt.Dimension(86, 16));
-        txtfSlutDatum.addActionListener(this::txtfSlutDatumActionPerformed);
         pnlSlutDatum.add(txtfSlutDatum, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 30));
 
         dateSlutDatum.setDateFormatString("y MMM d");
@@ -819,8 +819,11 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         txtfProjektnamn.setMinimumSize(new java.awt.Dimension(80, 25));
         txtfProjektnamn.setOpaque(true);
         txtfProjektnamn.setPreferredSize(new java.awt.Dimension(150, 25));
-        txtfProjektnamn.addActionListener(this::txtfProjektnamnActionPerformed);
         pnlProjektnamn.add(txtfProjektnamn);
+
+        lblFelmeddelandeProjektnamn.setForeground(new java.awt.Color(255, 51, 0));
+        lblFelmeddelandeProjektnamn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblFelmeddelandeProjektnamn.setText("[felmeddelande]");
 
         javax.swing.GroupLayout pnlTopLayout = new javax.swing.GroupLayout(pnlTop);
         pnlTop.setLayout(pnlTopLayout);
@@ -836,6 +839,8 @@ public class ProjektProjektchef extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(pnlTopLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(lblFelmeddelandeProjektnamn)
+                        .addGap(231, 231, 231)
                         .addComponent(lblPid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(52, 52, 52))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlTopLayout.createSequentialGroup()
@@ -860,8 +865,13 @@ public class ProjektProjektchef extends javax.swing.JFrame {
             pnlTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlTopLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblPid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlTopLayout.createSequentialGroup()
+                        .addComponent(lblPid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlTopLayout.createSequentialGroup()
+                        .addComponent(lblFelmeddelandeProjektnamn)
+                        .addGap(2, 2, 2)))
                 .addComponent(pnlProjektnamn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(pnlTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(pnlTopLayout.createSequentialGroup()
@@ -888,6 +898,7 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         btnAndra.addActionListener(this::btnAndraActionPerformed);
 
         btnSpara.setText("Spara");
+        btnSpara.addActionListener(this::btnSparaActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -936,12 +947,7 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         btnAddHandlaggare.setVisible(false);
         btnAddPartner.setVisible(false);
         //...Felmeddelande
-        lblFelmeddelandeMal.setVisible(false);
-        pnlFelmeddelandeKostnad.setVisible(false);
-        lblFelmeddelandeProjektchef.setVisible(false);
-        lblFelmeddelandeAdmin.setVisible(false);
-        lblFelmeddelandeHandlaggare.setVisible(false);
-        lblFelmeddelandePartners.setVisible(false);
+        gomFelmeddelanden();
         //...Comboboxes
         cbStatus.setVisible(false);
         cbPrioritet.setVisible(false);
@@ -994,7 +1000,7 @@ public class ProjektProjektchef extends javax.swing.JFrame {
                     + "JOIN Projekt_Partner pp on p.pid = pp.partner_pid "
                     + "WHERE pp.pid = " + pid);
 
-            //-----NYTT FÖR PROJEKTCHEF-----
+            //-----NYTT FÖR PROJEKTCHEF----- 
             String projektnamn = projektinfoEnskilda.get("projektnamn");
             String beskrivning = projektinfoEnskilda.get("beskrivning");
             String kostnad = projektinfoEnskilda.get("kostnad");
@@ -1008,16 +1014,16 @@ public class ProjektProjektchef extends javax.swing.JFrame {
             //---Lagrar hämtad projektInfo i fält---
             this.projektinfoEnskilda.putAll(projektinfoEnskilda);
             for (HashMap<String, String> mal : projektinfoMal) {
-                this.projektMal.add(mal.get("id"));
+                this.projektMal.add(mal.get("hid")); //Alias fungera inte igen i SQL-frågan
             }
             for (HashMap<String, String> admin : projektinfoAdmins) {
-                this.projektAdmins.add(admin.get("id"));
+                this.projektAdmins.add(admin.get("aid"));
             }
             for (HashMap<String, String> handlaggare : projektinfoHandlaggare) {
-                this.projektHandlaggare.add(handlaggare.get("id"));
+                this.projektHandlaggare.add(handlaggare.get("aid"));
             }
             for (HashMap<String, String> partner : projektinfoPartners) {
-                this.projektPartners.add(partner.get("id"));
+                this.projektPartners.add(partner.get("aid"));
             }
 
             //---Visar hämtad projektInfo---
@@ -1300,7 +1306,6 @@ public class ProjektProjektchef extends javax.swing.JFrame {
                 break;
             }
         }
-
         //---Endast dessa attributer sparas per instans---
         //...namm används som text på knappen
         String namn = instans.get("namn");
@@ -1326,10 +1331,7 @@ public class ProjektProjektchef extends javax.swing.JFrame {
                             registreraBorttagningInstans(projektMalBorttagna, id, btnInstans);
                         } else {//Om bortagningsläget ej är på:
                             //Öppnar ett fönster som visar en lista på land med ett visst land i fokus
-                            HanteraHållbarhetsmål hallbarhetsmal = new HanteraHållbarhetsmål(anv);
-                            hallbarhetsmal.setVisible(true);
-                            hallbarhetsmal.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-                            hallbarhetsmal.valjRad(id);
+                            oppnaPopupVisaMalMedId(id);
                         }
                     }
                 });
@@ -1343,10 +1345,7 @@ public class ProjektProjektchef extends javax.swing.JFrame {
                         if (borttagningslageDeltagare) {
                             registreraBorttagningInstans(projektAdminsBorttagna, id, btnInstans);
                         } else {
-                            HanteraAnstalld anstalldFonster = new HanteraAnstalld(anv);
-                            anstalldFonster.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-                            anstalldFonster.setVisible(true);
-                            //IMPLEMENTERA valjRad() metoden i denna klass!
+                            oppnaPopupVisaAnstalldMedId(id);
                         }
                     }
                 });
@@ -1361,10 +1360,7 @@ public class ProjektProjektchef extends javax.swing.JFrame {
                         if (borttagningslageDeltagare) {
                             registreraBorttagningInstans(projektAdminsBorttagna, id, btnInstans);
                         } else {
-                            HanteraAnstalld anstalldFonster = new HanteraAnstalld(anv);
-                            anstalldFonster.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-                            anstalldFonster.setVisible(true);
-                            //IMPLEMENTERA valjRad() metoden i denna klass!
+                            oppnaPopupVisaAnstalldMedId(id);
                         }
                     }
                 });
@@ -1377,10 +1373,7 @@ public class ProjektProjektchef extends javax.swing.JFrame {
                         if (borttagningslagePartners) {
                             registreraBorttagningInstans(projektPartnersBorttagna, id, btnInstans);
                         } else {
-                            HanteraPartner partnerFonster = new HanteraPartner(anv);
-                            partnerFonster.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-                            partnerFonster.setVisible(true);
-                            //IMPLEMENTERA valjRad() I HanteraPartner FÖNSTRET
+                            oppnaPopupVisaPartnerMedId(id);
                         }
                     }
                 });
@@ -1430,6 +1423,16 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         projektPartnersNya.clear();
         projektPartnersBorttagna.clear();
     }
+    
+    private void gomFelmeddelanden(){
+        lblFelmeddelandeProjektnamn.setVisible(false);
+        lblFelmeddelandeMal.setVisible(false);
+        pnlFelmeddelandeKostnad.setVisible(false);
+        lblFelmeddelandeProjektchef.setVisible(false);
+        lblFelmeddelandeAdmin.setVisible(false);
+        lblFelmeddelandeHandlaggare.setVisible(false);
+        lblFelmeddelandePartners.setVisible(false);
+    }
 
     /**
      * Skicka in identifierare för vilken nyckel som ska registreras som att den
@@ -1463,7 +1466,51 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         pnlTop.revalidate();
         pnlTop.repaint();
     }
-
+    
+    private boolean arTom(String id) {
+        //True om [det] för projektet saknas ([det] är tex land)
+        boolean saknas = projektinfoEnskilda.get(id) == null;
+        //True om en lagrad ändring finns
+        boolean andrat = projektinfoAndringar.containsKey(id);
+        //True om en lagrad ändring finns och lagrade ändringen är null.
+        boolean borttaget = andrat && projektinfoAndringar.get(id) == null;
+        //True om [det] som visas garanterat är tomt oavsett om användaren är i redigeringsläget eller ej
+        boolean arTom = (saknas && !andrat) || borttaget;
+        return arTom;
+    }
+    
+    //---------------------------POPUP METODER----------------------------------
+    
+     private void oppnaPopupVisaMalMedId(String id){
+       //Öppnar ett fönster som visar en lista på mål med detta mål i fokus
+        HanteraHållbarhetsmål malFonster = new HanteraHållbarhetsmål(anv);
+        malFonster.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        malFonster.setVisible(true);
+        malFonster.valjRad(id);
+    }
+    
+    private void oppnaPopupVisaAnstalldMedId(String id){
+        //Öppnar ett fönster som visar en lista på anstallda med denna projektchef i fokus
+        HanteraAnstalld anstalldFonster = new HanteraAnstalld(anv);
+        anstalldFonster.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        anstalldFonster.setVisible(true);
+        anstalldFonster.valjRad(id);
+    }
+    
+    private void oppnaPopupVisaLandMedId(String id){
+        HanteraLand landFonster = new HanteraLand(anv);
+        landFonster.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        landFonster.setVisible(true);
+        landFonster.valjRad(id);
+    }
+    
+    private void oppnaPopupVisaPartnerMedId(String id){
+        HanteraPartner partnerFonster = new HanteraPartner(anv);
+        partnerFonster.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        partnerFonster.setVisible(true);
+        //partnerFonster.valjRad(id); IMPLEMENTERA DENNA METOD
+    }
+    
     private void oppnaPopupValjMal() {
         //Isntansierar popup och skickar vidare min malListener
         HanteraHållbarhetsmål malFonster = new HanteraHållbarhetsmål(anv);
@@ -1472,18 +1519,29 @@ public class ProjektProjektchef extends javax.swing.JFrame {
             @Override
             public void valMal(String malId, String malNamn, String malnummer) {
                 //Då ett val gjorts i en pop-up (metoden kallas i pop-up fönstret):
-                //...lagra ändringen (men uppdaterar inte i databasen!)
-                projektMalNya.add(malId);
-                //...visa ändringen
-                skapaInstansknapp(
-                        Map.of(
-                                "id", malId,
-                                "namn", malNamn,
-                                "malnummer", malnummer
-                        ),
-                        Instanstyp.HALLBARHETSMAL);
+                //...göm felmeddelanden
+                gomFelmeddelanden();
+                if (projektMal.contains(malnummer)){
+                    //Om hållbarhetsmålet redan finns i projektet:
+                    lblFelmeddelandeMal.setText("Hållbarhetsmålet finns redan");
+                    lblFelmeddelandeMal.setVisible(true);
+                    pnlMal.revalidate();
+                    pnlMal.repaint();
+                }
+                else {
+                    //Om hållbarhetsmålet inte redan finns i projektet:
+                    //...lagra ändringen (men uppdaterar inte i databasen!)
+                    projektMalNya.add(malId);
+                    //...visa ändringen
+                    skapaInstansknapp(
+                            Map.of(
+                                    "id", malId,
+                                    "namn", malNamn,
+                                    "malnummer", malnummer
+                            ),
+                            Instanstyp.HALLBARHETSMAL);
+                }
                 //...stänger pop-up fönstret
-                malFonster.dispose();
                 //...aktivera vår originalruta igen
                 dennaFrame.setEnabled(true);
                 dennaFrame.toFront();
@@ -1509,6 +1567,8 @@ public class ProjektProjektchef extends javax.swing.JFrame {
             @Override
             public void valLand(String landId, String landNamn) {
                 //Då ett val gjorts i en pop-up (metoden kallas i pop-up fönstret):
+                //...göm felmeddelanden
+                gomFelmeddelanden();
                 //...lagra ändringen (men uppdaterar inte i databasen!)
                 projektinfoAndringar.put("lid", landId); //"lid" är land-id
                 //...visa ändringen
@@ -1540,12 +1600,22 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         anstalldFonster.addAnstalldListener(new AnstalldListener() {
             //Implementerar en metod till min landListener som jag skickar in i anstalldFonster med addAnstalldListener()
             @Override
-            public void valAnstalld(String projektchefId, String fulltNamn) {
+            public void valAnstalld(String projektchefId, String fulltNamn, String roll) {
                 //Då ett val gjorts i en pop-up (metoden kallas i pop-up fönstret):
-                //...lagra ändringen (men uppdaterar inte i databasen!)
-                projektinfoAndringar.put("projektchef", projektchefId); //projektchef är aid för projektchef
-                //...visa ändringen
-                btnProjektchef.setText(fulltNamn);
+                //...göm felmeddelanden
+                gomFelmeddelanden();
+                if(!ValideringInput.arHandlaggare(roll)){
+                    //Om användaren valde en anställd som ej är handläggare:
+                    lblFelmeddelandeProjektchef.setText("Endast handläggare kan vara projektchefer");
+                    lblFelmeddelandeProjektchef.setVisible(true);
+                }
+                else{
+                    //Om användaren valde en anställd som är handläggare:
+                    //...lagra ändringen (men uppdaterar inte i databasen!)
+                    projektinfoAndringar.put("projektchef", projektchefId); //projektchef är aid för projektchef
+                    //...visa ändringen
+                    btnProjektchef.setText(fulltNamn);
+                }
                 //...stänger pop-up fönstret
                 anstalldFonster.dispose();
                 //...aktivera vår originalruta igen
@@ -1573,17 +1643,29 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         anstalldFonster.addAnstalldListener(new AnstalldListener() {
             //Implementerar en metod till min anstalldListener som jag skickar in i anstalldFonster med metoden addAnstalldListener
             @Override
-            public void valAnstalld(String adminId, String fulltNamn) {
+            public void valAnstalld(String adminId, String fulltNamn, String roll) {
                 //Då ett val gjorts i en pop-up (metoden kallas i pop-up fönstret):
-                //...lagra ändringen (men uppdaterar inte i databasen!)
-                projektAdminsNya.add(adminId);
-                //...visa ändringen
-                skapaInstansknapp(
-                        Map.of(
-                                "id", adminId,
-                                "namn", fulltNamn
-                        ),
-                        Instanstyp.ADMIN);
+                //...göm felmeddelanden
+                gomFelmeddelanden();
+                if (projektAdmins.contains(adminId)){
+                    //Om administratören redan finns i projektet:
+                    lblFelmeddelandeAdmin.setText("Administratören finns redan");
+                    lblFelmeddelandeAdmin.setVisible(true);
+                    pnlMal.revalidate();
+                    pnlMal.repaint();
+                }
+                else {
+                    //Om administratören inte redan finns i projektet:
+                    //...lagra ändringen (men uppdaterar inte i databasen!)
+                    projektAdminsNya.add(adminId);
+                    //...visa ändringen
+                    skapaInstansknapp(
+                            Map.of(
+                                    "id", adminId,
+                                    "namn", fulltNamn
+                            ),
+                            Instanstyp.ADMIN);
+                }
                 //...stänger pop-up fönstret
                 anstalldFonster.dispose();
                 //...aktivera vår originalruta igen
@@ -1609,7 +1691,8 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         anstalldFonster.addAnstalldListener(new AnstalldListener() {
             //Implementerar en metod till min anstalldListener som jag skickar in i anstalldFonster med metoden addAnstalldListener
             @Override
-            public void valAnstalld(String handlaggareId, String fulltNamn) {
+            public void valAnstalld(String handlaggareId, String fulltNamn, String roll) {
+                System.out.println("roll: "+roll);
                 //Då ett val gjorts i en pop-up (metoden kallas i pop-up fönstret):
                 //...lagra ändringen (men uppdaterar inte i databasen!)
                 projektAdminsNya.add(handlaggareId);
@@ -1644,18 +1727,6 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         //Använd HanteraPartner, kollla rollen i början
     }
 
-    private boolean arTom(String id) {
-        //True om [det] för projektet saknas ([det] är tex land)
-        boolean saknas = projektinfoEnskilda.get(id) == null;
-        //True om en lagrad ändring finns
-        boolean andrat = projektinfoAndringar.containsKey(id);
-        //True om en lagrad ändring finns och lagrade ändringen är null.
-        boolean borttaget = andrat && projektinfoAndringar.get(id) == null;
-        //True om [det] som visas garanterat är tomt oavsett om användaren är i redigeringsläget eller ej
-        boolean arTom = (saknas && !andrat) || borttaget;
-        return arTom;
-    }
-
     private void btnDeltagareDropdownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeltagareDropdownActionPerformed
         vaxlaDropdownLage(spnlDeltagareDropdown, btnDeltagareDropdown);
     }//GEN-LAST:event_btnDeltagareDropdownActionPerformed
@@ -1666,7 +1737,6 @@ public class ProjektProjektchef extends javax.swing.JFrame {
 
     private void btnPartnersDropdownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPartnersDropdownActionPerformed
         vaxlaDropdownLage(spnlPartnersDropdown, btnPartnersDropdown);
-
     }//GEN-LAST:event_btnPartnersDropdownActionPerformed
 
     private void btnBeskrivningDropdownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBeskrivningDropdownActionPerformed
@@ -1686,41 +1756,24 @@ public class ProjektProjektchef extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddMalActionPerformed
 
     private void btnAndraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAndraActionPerformed
-        //---Om användaren trycker på samma knapp i redigeringsläget (ångra knappen)---
-        if (vaxlaRedigeringslage() == false) {
+        if (vaxlaRedigeringslage() == false) { //vaxlaRedigeringslage returnerar det nya redigeringsläget
+             //---Om användaren trycker på ångra knappen---
             //laddar om infon, eventuella ändringar som gjordes i redigeringsläget försvinner
             tomAndringar();
             laddaInfo();
         }
+        gomFelmeddelanden();
     }//GEN-LAST:event_btnAndraActionPerformed
 
-    private void txtfStartDatumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtfStartDatumActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtfStartDatumActionPerformed
-
-    private void txtfSlutDatumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtfSlutDatumActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtfSlutDatumActionPerformed
-
-    private void txtfProjektnamnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtfProjektnamnActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtfProjektnamnActionPerformed
-
     private void btnLandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLandActionPerformed
-
         if (redigerar && arTom("lid")) {//Alias "as landId" fungerade inte, behöver använda lid
-            //Öppna popup för att välja ett fisst land om användaren redigerar och det ej visas något land
-            System.out.println("Öppnar popup ruta för land att välja");
+            //Öppna popup för att välja ett visst land om användaren redigerar och det ej visas något land
             oppnaPopupValjLand();
         } else if (borttagningslageLand) {
             registreraBorttagningEnstaka("lid", btnLand);
             uppdateraEditUILand();
         } else {//Om bortagningsläget ej är på:
-            //Öppnar ett fönster som visar en lista på land med ett visst land i fokus
-            HanteraLand landFonster = new HanteraLand(anv);
-            landFonster.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-            landFonster.setVisible(true);
-            //IMPLEMENTERA valjRow I HANTERALAND FÖNSTRET OCH KALLA HÄR
+            oppnaPopupVisaLandMedId(projektinfoEnskilda.get("lid"));
         }
     }//GEN-LAST:event_btnLandActionPerformed
 
@@ -1762,17 +1815,18 @@ public class ProjektProjektchef extends javax.swing.JFrame {
             //Uppdaterar för att se till att EditUI göms och att knappen visar [ + ]
             uppdateraEditUIProjektchef();
         } else {//Om bortagningsläget ej är på:
-            //Öppnar ett fönster som visar en lista på anstallda med denna projektchef i fokus
-            HanteraAnstalld anstalldFonster = new HanteraAnstalld(anv);
-            anstalldFonster.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-            anstalldFonster.setVisible(true);
-            //IMPLEMENTERA valjRow I HANTERALAND FÖNSTRET OCH KALLA HÄR
+            oppnaPopupVisaAnstalldMedId(projektinfoEnskilda.get("projektchef"));//skickar in projektchefens id som argument
         }
     }//GEN-LAST:event_btnProjektchefActionPerformed
 
     private void btnAddPartnerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddPartnerActionPerformed
         oppnaPopupValjPartner();
     }//GEN-LAST:event_btnAddPartnerActionPerformed
+
+    private void btnSparaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSparaActionPerformed
+        
+        gomFelmeddelanden();
+    }//GEN-LAST:event_btnSparaActionPerformed
 
     public static void main(String args[]) { //TA BORT MAIN METODEN TILLSLUT. NI SKA ENDAST ANVÄNDA MAIN METODEN I Startklassen
         /* Set the Nimbus look and feel */
@@ -1849,6 +1903,7 @@ public class ProjektProjektchef extends javax.swing.JFrame {
     private javax.swing.JLabel lblFelmeddelandeMal;
     private javax.swing.JLabel lblFelmeddelandePartners;
     private javax.swing.JLabel lblFelmeddelandeProjektchef;
+    private javax.swing.JLabel lblFelmeddelandeProjektnamn;
     private javax.swing.JLabel lblPid;
     private javax.swing.JLabel lblStartar;
     private javax.swing.JPanel pnlAdmin;
