@@ -1374,9 +1374,9 @@ public class ProjektProjektchef extends javax.swing.JFrame {
                 //...lagra ändringen (men uppdaterar inte i databasen!)
                 projektinfoAndringar.put("landId", landId);
                 //...stänger pop-up fönstret
-                landFonster
+                //landFonster
                 //...aktivera vår ruta igen
-                dennaFrame.setEnabled(true);
+               // dennaFrame.setEnabled(true);
             }
         };
         //Öppnar popup och skickar vidare min landListener med min implementerade metod
