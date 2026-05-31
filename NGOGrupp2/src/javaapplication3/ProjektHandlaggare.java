@@ -51,7 +51,6 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
         lblPid = new javax.swing.JLabel();
         lblStartar = new javax.swing.JLabel();
         lblAvslutad = new javax.swing.JLabel();
-        btnTillbaka = new javax.swing.JButton();
         pnlVanster = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         btnMalDropdown = new javax.swing.JButton();
@@ -113,9 +112,6 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
         lblStartar.setText("Startad");
 
         lblAvslutad.setText("Avslutad");
-
-        btnTillbaka.setText("Tillbaka till Projekt");
-        btnTillbaka.addActionListener(this::btnTillbakaActionPerformed);
 
         pnlVanster.setMaximumSize(new java.awt.Dimension(385, 30000));
         pnlVanster.setMinimumSize(new java.awt.Dimension(200, 260));
@@ -560,8 +556,7 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
                         .addComponent(pnlHoger, javax.swing.GroupLayout.PREFERRED_SIZE, 376, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(pnlTopLayout.createSequentialGroup()
-                        .addComponent(btnTillbaka)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(lblPid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(52, 52, 52))
             .addGroup(pnlTopLayout.createSequentialGroup()
@@ -588,10 +583,8 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
             pnlTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlTopLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnTillbaka)
-                    .addComponent(lblPid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(11, 11, 11)
+                .addComponent(lblPid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15)
                 .addComponent(pnlProjektnamn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(pnlTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlTopLayout.createSequentialGroup()
@@ -823,11 +816,6 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
         vaxlaDropdownLage(spnlDeltagareDropdown, btnDeltagareDropdown);
     }//GEN-LAST:event_btnDeltagareDropdownActionPerformed
 
-    private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
-        new ProjektSokAdmin(anv).setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnTillbakaActionPerformed
-
     private void btnMalDropdownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMalDropdownActionPerformed
         vaxlaDropdownLage(spnlMalDropdown, btnMalDropdown);
     }//GEN-LAST:event_btnMalDropdownActionPerformed
@@ -883,7 +871,6 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
     private javax.swing.JButton btnMalDropdown;
     private javax.swing.JButton btnPartnersDropdown;
     private javax.swing.JButton btnProjektchef;
-    private javax.swing.JButton btnTillbaka;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel15;
