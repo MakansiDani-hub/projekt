@@ -5,8 +5,10 @@
 package javaapplication3;
 
 import javax.swing.JComboBox;
+import javax.swing.JTable;
 
 public final class SwingUtils {
+    //Gör SwingUtils ej-instansierbar
     private SwingUtils(){}
     
     /**
@@ -34,5 +36,28 @@ public final class SwingUtils {
             }
         }
         return false;
+    }
+    
+    /**
+     * Gör en rad selected i en JTable med en viss id i en angiven kolumn.
+     * Returnerar raden som valdes utifrån given id.
+     */
+    public static int valjRadIJTableMedId(JTable lista, String id, int idKolumn) {
+
+        if (id == null) {
+            throw new NullPointerException("parameter id var null");
+        }
+        for (int rad = 0; rad < lista.getRowCount(); rad++) {
+            String radId = (String) lista.getValueAt(rad, idKolumn);
+            if (id.equals(radId)) {
+                //Sätter raden som selected
+                lista.setRowSelectionInterval(rad, rad);
+                //Scrollar till där raden är
+                lista.scrollRectToVisible(lista.getCellRect(rad, 0, true));
+                return rad;
+            }
+        }
+        //Då alla rader letats igenom utan att hitta matchande id
+        throw new IllegalStateException("Id för rad hittades inte i JTable-listan när det bör finnas");
     }
 }

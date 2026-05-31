@@ -1229,10 +1229,14 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         redigerar = !redigerar;
 
         if (redigerar) {
-            btnAndra.setText("Ångra");
+            btnAndra.setText("[ Ångra ]");
+            btnAndra.setBackground(new Color(219, 136, 42)); //orange
+            btnSpara.setBackground(new Color(0, 255, 0)); //grön            
             txtfKostnad.setBackground(Color.WHITE);
         } else {
             btnAndra.setText("Ändra");
+            btnAndra.setBackground(bakgrundsfarg);
+            btnSpara.setBackground(bakgrundsfarg);
             txtfKostnad.setBackground(bakgrundsfarg);
             aterstallBorttagningslagen();
             tomAndringar();
@@ -1394,13 +1398,15 @@ public class ProjektProjektchef extends javax.swing.JFrame {
     }
 
     private void taBortInstansknapparI(JPanel pnl) {
-        int startAntal = pnl.getComponentCount();
-        for (int i = 0; i < startAntal; i++) {
+        for (int i = pnl.getComponentCount()-1; i >= 0; i--) { //loopar baklänges, ändrar värden så det reflekterar faktiska komponent-index i containern
             Component c = pnl.getComponent(i);
             if (c instanceof JButton knapp) {
-                if (knapp.getName() != null && !knapp.getName().startsWith("btnAdd")) {
+                String knappNamn = knapp.getName();
+                System.out.println("ProjektProjektchef: TaBortInstansknapparI(JPanel pnl): namnet av knappen: " + knappNamn);
+                if (knappNamn == null || !knappNamn.startsWith("btnAdd")) {
                     //tar bara bort om knappens namn inte börjar med btnAdd
-                    pnl.remove(knapp);
+                    pnl.remove(knapp); //pga baklänges loop ändras inte ordningen om i containern och borttagnings sker som det ska
+                    System.out.println("    --> Den togs bort.");
                 }
             }
         }

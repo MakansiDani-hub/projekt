@@ -96,17 +96,19 @@
                       <Component id="JBtnLaggTillHallbarhetsmal" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="JTxtFieldHID" alignment="0" max="32767" attributes="0"/>
-                      <Component id="JTxtFieldNamn" alignment="0" max="32767" attributes="0"/>
-                      <Component id="JTxtFieldMalNr" alignment="0" pref="100" max="32767" attributes="0"/>
-                      <Component id="JTxtFieldBeskrivning" alignment="0" max="32767" attributes="0"/>
-                      <Component id="JTxtFieldPrioritet" alignment="0" max="32767" attributes="0"/>
-                      <Component id="JBtnAndraHallbarhetsmal" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="JTxtFieldHID" alignment="0" min="-2" pref="170" max="-2" attributes="0"/>
+                      <Component id="JTxtFieldNamn" alignment="0" min="-2" pref="170" max="-2" attributes="0"/>
+                      <Component id="JTxtFieldMalNr" alignment="0" min="-2" pref="170" max="-2" attributes="0"/>
+                      <Component id="JTxtFieldBeskrivning" alignment="0" min="-2" pref="170" max="-2" attributes="0"/>
+                      <Component id="JTxtFieldPrioritet" alignment="0" min="-2" pref="170" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="JBtnAndraHallbarhetsmal" min="-2" pref="93" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="JBtnTaBortHallbarhetsmal" min="-2" pref="100" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="JBtnTaBortHallbarhetsmal" min="-2" pref="100" max="-2" attributes="0"/>
-                  <EmptySpace pref="79" max="32767" attributes="0"/>
+                  <EmptySpace pref="186" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -142,12 +144,10 @@
                               <Component id="JTxtFieldPrioritet" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="JBtnAndraHallbarhetsmal" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="JBtnLaggTillHallbarhetsmal" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Component id="JBtnTaBortHallbarhetsmal" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="JBtnAndraHallbarhetsmal" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="JBtnLaggTillHallbarhetsmal" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="JBtnTaBortHallbarhetsmal" alignment="3" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>

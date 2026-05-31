@@ -45,22 +45,17 @@ import javax.swing.JOptionPane;
         public void mouseClicked(java.awt.event.MouseEvent evt) {
             int rad = JTableListaLand.getSelectedRow();
             if (rad >= 0) {
-                JTxtLID.setText(bordsModell.getValueAt(rad, 0).toString());
-                JTxtFieldNamn.setText(bordsModell.getValueAt(rad, 1).toString());
-                JTxtFieldSprak.setText(bordsModell.getValueAt(rad, 2).toString());
-                JTxtFieldValuta.setText(bordsModell.getValueAt(rad, 3).toString());
-                JTxtFieldTidZon.setText(bordsModell.getValueAt(rad, 4).toString());
-                JTxtFieldPolitiskStruktur.setText(bordsModell.getValueAt(rad, 5).toString());
-                JTxtFieldEkonomi.setText(bordsModell.getValueAt(rad, 6).toString());
-            
-                if(landListener != null){
-                    //Kallar på land-listenerns metod valLand så andra fönster kan registrera ett val vid behov
-                    //Skickar i denna metoden in id och namn för land
-                    landListener.valLand(bordsModell.getValueAt(rad, 0).toString(),bordsModell.getValueAt(rad, 1).toString());                   
-                }
+                visaRadInfo(rad);
             }
         }
     });
+        
+        if (!anvandare.getRoll().equals("admin")) {
+            //Användaren är ej admin och ska ej få tillgång till knapparna lägg till, ändra och ta bort
+            JBtnLaggTillLand.setVisible(false);
+            JBtnÄndraLand.setVisible(false);
+            JBtnTaBortLand.setVisible(false);
+        }
     }
     
     //Initierar landListener
@@ -178,6 +173,32 @@ import javax.swing.JOptionPane;
                 JOptionPane.showMessageDialog(null, "Kunde inte lägga till: " + e.getMessage());
             }
         }
+    
+    private void visaRadInfo(int rad){
+        JTxtLID.setText(bordsModell.getValueAt(rad, 0).toString());
+        JTxtFieldNamn.setText(bordsModell.getValueAt(rad, 1).toString());
+        JTxtFieldSprak.setText(bordsModell.getValueAt(rad, 2).toString());
+        JTxtFieldValuta.setText(bordsModell.getValueAt(rad, 3).toString());
+        JTxtFieldTidZon.setText(bordsModell.getValueAt(rad, 4).toString());
+        JTxtFieldPolitiskStruktur.setText(bordsModell.getValueAt(rad, 5).toString());
+        JTxtFieldEkonomi.setText(bordsModell.getValueAt(rad, 6).toString());
+
+        if (landListener != null) {
+            //Kallar på land-listenerns metod valLand så andra fönster kan registrera ett val vid behov
+            //Skickar i denna metoden in id och namn för land
+            landListener.valLand(bordsModell.getValueAt(rad, 0).toString(), bordsModell.getValueAt(rad, 1).toString());
+        }
+    }
+    
+    /**
+     * Denna metod kan anropas av andra klasser för att se till att ett visst land (rad),
+     * med ett visst landId, är valt så information om det landet visas. 
+     */
+    public void valjRad(String landId)
+    {
+        int valdRad = SwingUtils.valjRadIJTableMedId(JTableListaLand, landId, 0);
+        visaRadInfo(valdRad);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -216,6 +237,7 @@ import javax.swing.JOptionPane;
         JLblRubrik.setText("Hantera Land");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Länder", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        jPanel1.setMinimumSize(new java.awt.Dimension(751, 0));
 
         JTableListaLand.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -271,18 +293,19 @@ import javax.swing.JOptionPane;
                     .addComponent(JLblEkonomi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(JBtnLaggTillLand, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(JTxtLID)
-                    .addComponent(JTxtFieldNamn)
-                    .addComponent(JTxtFieldSprak)
-                    .addComponent(JTxtFieldValuta)
-                    .addComponent(JTxtFieldTidZon)
-                    .addComponent(JTxtFieldPolitiskStruktur, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
-                    .addComponent(JTxtFieldEkonomi)
-                    .addComponent(JBtnÄndraLand, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addComponent(JBtnTaBortLand, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(JTxtLID, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JTxtFieldNamn, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JTxtFieldSprak, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JTxtFieldValuta, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JTxtFieldTidZon, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JTxtFieldPolitiskStruktur, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JTxtFieldEkonomi, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(JBtnÄndraLand, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(JBtnTaBortLand, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(10, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -320,8 +343,8 @@ import javax.swing.JOptionPane;
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(JBtnLaggTillLand, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
-                            .addComponent(JBtnÄndraLand, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(JBtnTaBortLand, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(JBtnTaBortLand, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(JBtnÄndraLand, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(9, Short.MAX_VALUE))
         );
@@ -341,7 +364,7 @@ import javax.swing.JOptionPane;
                         .addGap(188, 188, 188)
                         .addComponent(JLblRubrik)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -359,26 +382,26 @@ import javax.swing.JOptionPane;
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void JBtnTillbakaTillMenyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnTillbakaTillMenyActionPerformed
+        Navigering.tillbakaTillMeny(anvandare);
+        this.dispose();
+    }//GEN-LAST:event_JBtnTillbakaTillMenyActionPerformed
+
     private void JBtnLaggTillLandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnLaggTillLandActionPerformed
         //Kallar på LaggTillLand metoden
         LaggTillLand();
-        
-    }//GEN-LAST:event_JBtnLaggTillLandActionPerformed
 
-    private void JBtnÄndraLandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnÄndraLandActionPerformed
-        // Kallar på andraLand metoden
-        andraLand();
-    }//GEN-LAST:event_JBtnÄndraLandActionPerformed
+    }//GEN-LAST:event_JBtnLaggTillLandActionPerformed
 
     private void JBtnTaBortLandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnTaBortLandActionPerformed
         // Kallar på TaBortLand Metoden
         taBortLand();
     }//GEN-LAST:event_JBtnTaBortLandActionPerformed
 
-    private void JBtnTillbakaTillMenyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnTillbakaTillMenyActionPerformed
-        Navigering.tillbakaTillMeny(anvandare);
-        this.dispose();
-    }//GEN-LAST:event_JBtnTillbakaTillMenyActionPerformed
+    private void JBtnÄndraLandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnÄndraLandActionPerformed
+        // Kallar på andraLand metoden
+        andraLand();
+    }//GEN-LAST:event_JBtnÄndraLandActionPerformed
 
 
 //tillfällig main metod för att testa fönstret.
