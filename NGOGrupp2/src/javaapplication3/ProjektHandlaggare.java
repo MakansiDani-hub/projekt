@@ -12,6 +12,7 @@ import oru.inf.InfDB;
 import oru.inf.InfException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 
 /**
  *
@@ -697,6 +698,9 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
             //...Partners
             skapaInstansknappar(projektinfoPartners, Instanstyp.PARTNER);
             
+            //Skapar actions för projektchef och land knapparna
+            skapaActionBtnLand(projektinfoEnskilda.get("lid")); //skickar in land-id
+            skapaActionBtnProjektchef(projektinfoEnskilda.get("projektchef")); //skickar in aid för projektchefen
             
         }
         catch(InfException e){
@@ -740,43 +744,35 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
                 btnInstans.addActionListener(new ActionListener() { //<--implementerar ActionListener interface i ny instans av anonymklass
                     @Override //override av abstrakt metod
                     public void actionPerformed(ActionEvent e) {
-                        dennaFrame.setEnabled(false);
-                        //new Hallbarhetsmal(idb, aid, hid) som (idb, aid, id)
-                        //behöver inte skicka med användarens roll eftersom vi vet att vi är ett handläggar-fönster
+                        oppnaPopupVisaMalMedId(id);
                     }
                 });
-                pnlMal.add(btnInstans, 0); //lägger knappen i början av panelen för mål
+                pnlMal.add(btnInstans); //lägger knappen sist i panelen
             }
-            case ADMIN -> {
+            case ADMIN, HANDLAGGARE -> {
                 btnInstans.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        dennaFrame.setEnabled(false);
-                        //new PersonalListaAdmin(idb, this.aid, aid) som (idb, aid, id)                              
+                        oppnaPopupVisaAnstalldMedId(id);                       
                     }
                 });
-                pnlAdmin.add(btnInstans, 0);
-            }
-
-            case HANDLAGGARE -> {
-                btnInstans.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        dennaFrame.setEnabled(false);
-                        //new PersonalListaAdmin(idb, this.aid, aid) som (idb, aid, id)                              
-                    }
-                });
-                pnlHandlaggare.add(btnInstans, 0);
+                if(instanstyp == Instanstyp.ADMIN){
+                    pnlAdmin.add(btnInstans);
+                }
+                if(instanstyp == Instanstyp.HANDLAGGARE){
+                    pnlHandlaggare.add(btnInstans);
+                }
             }
             case PARTNER -> {
                 btnInstans.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        dennaFrame.setEnabled(false);
-                        //new PartnersHandlaggare(idb, aid, pid) (idb, aid, id)
+                        HanteraPartner partnerFonster = new HanteraPartner(anv);
+                        partnerFonster.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+                        partnerFonster.setVisible(true);
                     }
                 });
-                pnlPartners.add(btnInstans, 0);
+                pnlPartners.add(btnInstans);
             }
             default ->
                 throw new IllegalStateException();
@@ -789,13 +785,21 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
         }
     }
     
-    private void skapaActionBtnLand(){
+    private void skapaActionBtnLand(String landId){
         btnLand.addActionListener(new ActionListener(){
-            @Override    //BEHÖVER DENNA METOD VARA PUBLIC? VARFÖR?
+            @Override 
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Öppnar land");   
-                //new LandHandlaggare(idb, lid)
+                oppnaPopupVisaLandMedId(landId);
             }        
+        });
+    }
+    
+    private void skapaActionBtnProjektchef(String projektchefId){
+        btnProjektchef.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                oppnaPopupVisaAnstalldMedId(projektchefId);
+            }
         });
     }
     
@@ -810,6 +814,34 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
         dropdownRuta.setVisible(rutaNySynlighet);
         //Uppdaterar layout
         dropdownRuta.getParent().revalidate();                           
+    }
+    
+    private void oppnaPopupVisaMalMedId(String id){
+        HanteraHållbarhetsmål malFonster = new HanteraHållbarhetsmål(anv);
+        malFonster.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        malFonster.setVisible(true);
+        malFonster.valjRad(id);
+    }
+    
+    private void oppnaPopupVisaAnstalldMedId(String id){
+        HanteraAnstalld anstalldFonster = new HanteraAnstalld(anv);
+        anstalldFonster.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        anstalldFonster.setVisible(true);
+        //IMPLEMENTERA valjRad() metoden i denna klass! Skicka här in id
+    }
+    
+    private void oppnaPopupVisaLandMedId(String id){
+        HanteraLand landFonster = new HanteraLand(anv);
+        landFonster.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        landFonster.setVisible(true);
+        landFonster.valjRad(id);
+    }
+    
+    private void oppnaPopupVisaPartnerMedId(String id){
+        HanteraPartner partnerFonster = new HanteraPartner(anv);
+        partnerFonster.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        partnerFonster.setVisible(true);
+        //partnerFonster.valjRad(id); IMPLEMENTERA DENNA METOD
     }
 
     private void btnDeltagareDropdownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeltagareDropdownActionPerformed
@@ -829,12 +861,11 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBeskrivningDropdownActionPerformed
 
     private void btnProjektchefActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProjektchefActionPerformed
-        //Öppna ett nytt fönsetr för att välja
-        //new Personalista(anv, aid)
+        
     }//GEN-LAST:event_btnProjektchefActionPerformed
 
     private void btnLandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLandActionPerformed
-        //new LandHandlaggare(anv, lid)
+
     }//GEN-LAST:event_btnLandActionPerformed
 
     public static void main(String args[]) { //TA BORT MAIN METODEN TILLSLUT. NI SKA ENDAST ANVÄNDA MAIN METODEN I Startklassen
@@ -856,7 +887,7 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
         
         try {
             InfDB idb = new InfDB("sdgsweden", "3306", "root", "masterkey");
-            new ProjektHandlaggare(new Anvandare(idb, null, null, null, 3, null, null, null, "handlaggare"), 2).setVisible(true);
+            new ProjektHandlaggare(new Anvandare(idb, null, null, null, 3, null, null, null, "handlaggare"), 3).setVisible(true);
             System.out.println("Databaskoppling skapad");
         } catch (InfException e) {
             System.out.println(e.getMessage());

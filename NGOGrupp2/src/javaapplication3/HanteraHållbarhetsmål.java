@@ -54,6 +54,13 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
                 }
             }
         });
+        
+        if (!anvandare.getRoll().equals("admin")) {
+            //Användaren är ej admin och ska ej få tillgång till knapparna lägg till, ändra och ta bort
+            JBtnLaggTillHallbarhetsmal.setVisible(false);
+            JBtnAndraHallbarhetsmal.setVisible(false);
+            JBtnTaBortHallbarhetsmal.setVisible(false);
+        }
     }
 
     public void addMalListener(MalListener malListener){
@@ -85,24 +92,10 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
         }
     }
     
-    public void valjRad(String id){
-        if(id == null){
-            throw new NullPointerException("parameter id var null");
-        } 
-        for(int rad = 0; rad < JTableHallbarhetsmal.getRowCount(); rad++){
-            String radId = (String) JTableHallbarhetsmal.getValueAt(rad, 0); //kolumn 0 håller hid
-            if(id != null && id.equals(radId)){
-                //Sätter raden som selected
-                JTableHallbarhetsmal.setRowSelectionInterval(rad, rad); 
-                //Scrollar till där raden är
-                JTableHallbarhetsmal.scrollRectToVisible(JTableHallbarhetsmal.getCellRect(rad, 0, true));
-                //visar radens info
-                visaRadInfo(rad);
-                return;
-            }
-        }
-        //Då alla rader letats igenom utan att hitta matchande id
-        throw new IllegalStateException("Id för hållbarhetsmålet hittades inte i JTable-listan när det bör finnas");
+    public void valjRad(String malId)
+    {
+        int valdRad = SwingUtils.valjRadIJTableMedId(JTableHallbarhetsmal, malId, 0);
+        visaRadInfo(valdRad);
     }
     
     private void visaRadInfo(int valdRad){
@@ -218,16 +211,17 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
                     .addComponent(JLblPrioritet, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(JBtnLaggTillHallbarhetsmal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addGroup(JPanelHållbarhetsmålLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(JTxtFieldHID)
-                    .addComponent(JTxtFieldNamn)
-                    .addComponent(JTxtFieldMalNr, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-                    .addComponent(JTxtFieldBeskrivning)
-                    .addComponent(JTxtFieldPrioritet)
-                    .addComponent(JBtnAndraHallbarhetsmal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addComponent(JBtnTaBortHallbarhetsmal, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(79, Short.MAX_VALUE))
+                .addGroup(JPanelHållbarhetsmålLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(JTxtFieldHID, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JTxtFieldNamn, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JTxtFieldMalNr, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JTxtFieldBeskrivning, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JTxtFieldPrioritet, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(JPanelHållbarhetsmålLayout.createSequentialGroup()
+                        .addComponent(JBtnAndraHallbarhetsmal, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(JBtnTaBortHallbarhetsmal, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(186, Short.MAX_VALUE))
         );
         JPanelHållbarhetsmålLayout.setVerticalGroup(
             JPanelHållbarhetsmålLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -256,10 +250,9 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
                             .addComponent(JLblPrioritet)
                             .addComponent(JTxtFieldPrioritet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(JPanelHållbarhetsmålLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(JPanelHållbarhetsmålLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(JBtnAndraHallbarhetsmal)
-                                .addComponent(JBtnLaggTillHallbarhetsmal))
+                        .addGroup(JPanelHållbarhetsmålLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(JBtnAndraHallbarhetsmal)
+                            .addComponent(JBtnLaggTillHallbarhetsmal)
                             .addComponent(JBtnTaBortHallbarhetsmal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
         );
 

@@ -32,7 +32,7 @@
                       <Component id="JLblRubrik" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
-                  <Component id="jPanel1" max="32767" attributes="0"/>
+                  <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -71,6 +71,9 @@
             </TitledBorder>
           </Border>
         </Property>
+        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[751, 0]"/>
+        </Property>
       </Properties>
 
       <Layout>
@@ -91,19 +94,21 @@
                       <Component id="JBtnLaggTillLand" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="JTxtLID" max="32767" attributes="0"/>
-                      <Component id="JTxtFieldNamn" max="32767" attributes="0"/>
-                      <Component id="JTxtFieldSprak" alignment="0" max="32767" attributes="0"/>
-                      <Component id="JTxtFieldValuta" alignment="0" max="32767" attributes="0"/>
-                      <Component id="JTxtFieldTidZon" alignment="0" max="32767" attributes="0"/>
-                      <Component id="JTxtFieldPolitiskStruktur" alignment="0" pref="0" max="32767" attributes="0"/>
-                      <Component id="JTxtFieldEkonomi" alignment="0" max="32767" attributes="0"/>
-                      <Component id="JBtnÄndraLand" pref="100" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="JTxtLID" min="-2" pref="150" max="-2" attributes="0"/>
+                      <Component id="JTxtFieldNamn" min="-2" pref="150" max="-2" attributes="0"/>
+                      <Component id="JTxtFieldSprak" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
+                      <Component id="JTxtFieldValuta" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
+                      <Component id="JTxtFieldTidZon" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
+                      <Component id="JTxtFieldPolitiskStruktur" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
+                      <Component id="JTxtFieldEkonomi" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="JBtnÄndraLand" min="-2" pref="96" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="JBtnTaBortLand" min="-2" pref="100" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="JBtnTaBortLand" min="-2" pref="100" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="10" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -150,8 +155,8 @@
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="JBtnLaggTillLand" pref="33" max="32767" attributes="0"/>
-                              <Component id="JBtnÄndraLand" max="32767" attributes="0"/>
-                              <Component id="JBtnTaBortLand" max="32767" attributes="0"/>
+                              <Component id="JBtnTaBortLand" alignment="0" max="32767" attributes="0"/>
+                              <Component id="JBtnÄndraLand" alignment="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <Component id="jScrollPane1" alignment="0" min="-2" pref="330" max="-2" attributes="0"/>

@@ -404,24 +404,10 @@ private void fyllFaltFranMarkeradRad(int valdRad) {
     }
 }
 
-public void valjRad(String id){
-        if(id == null){
-            throw new NullPointerException("parameter id var null");
-        } 
-        for(int rad = 0; rad < jTable1.getRowCount(); rad++){
-            String radId = (String) jTable1.getValueAt(rad, 0); //kolumn 0 håller hid
-            if(id != null && id.equals(radId)){
-                //Sätter raden som selected
-                jTable1.setRowSelectionInterval(rad, rad); 
-                //Scrollar till där raden är
-                jTable1.scrollRectToVisible(jTable1.getCellRect(rad, 0, true));
-                //visar radens info
-                fyllFaltFranMarkeradRad(rad);
-                return;
-            }
-        }
-        //Då alla rader letats igenom utan att hitta matchande id
-        throw new IllegalStateException("Id för anställd hittades inte i JTable-listan när det bör finnas");
+    public void valjRad(String anstalldId)
+    {
+        int valdRad = SwingUtils.valjRadIJTableMedId(jTable1, anstalldId, 0);
+        fyllFaltFranMarkeradRad(valdRad);
     }
 
 
