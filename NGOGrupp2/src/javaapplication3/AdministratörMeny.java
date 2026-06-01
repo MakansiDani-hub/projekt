@@ -50,6 +50,7 @@ public class AdministratörMeny extends javax.swing.JFrame {
         BtnHanteraLand = new javax.swing.JButton();
         BtnHanteraHmål = new javax.swing.JButton();
         JLblEpost = new javax.swing.JLabel();
+        btnHanteraAvdelning = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -76,6 +77,9 @@ public class AdministratörMeny extends javax.swing.JFrame {
 
         JLblEpost.setText("för och efternamn");
 
+        btnHanteraAvdelning.setText("Hantera Avdelning");
+        btnHanteraAvdelning.addActionListener(this::btnHanteraAvdelningActionPerformed);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -91,6 +95,7 @@ public class AdministratörMeny extends javax.swing.JFrame {
             .addComponent(BtnHanteraPartner, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(BtnHanteraAvd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(BtnHanteraProjekt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnHanteraAvdelning, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(BtnHanteraHmål, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
@@ -111,8 +116,10 @@ public class AdministratörMeny extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(BtnHanteraProjekt)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnHanteraAvdelning)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(BtnHanteraHmål)
-                .addContainerGap(151, Short.MAX_VALUE))
+                .addContainerGap(122, Short.MAX_VALUE))
         );
 
         pack();
@@ -148,6 +155,11 @@ public class AdministratörMeny extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_BtnHanteraAvdActionPerformed
 
+    private void btnHanteraAvdelningActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHanteraAvdelningActionPerformed
+        new HanteraAvdelning(anvandare).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnHanteraAvdelningActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -182,5 +194,6 @@ public class AdministratörMeny extends javax.swing.JFrame {
     private javax.swing.JButton BtnHanteraProjekt;
     private javax.swing.JLabel JLblEpost;
     private javax.swing.JLabel RubrikAdmin;
+    private javax.swing.JButton btnHanteraAvdelning;
     // End of variables declaration//GEN-END:variables
 }
