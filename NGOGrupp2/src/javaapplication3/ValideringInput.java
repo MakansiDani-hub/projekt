@@ -24,7 +24,7 @@ public final class ValideringInput {
     /**
      * Kontrollerar om rollen är admin eller ej.
      * Implementera gärna denna metod där egen check
-     * för roll.equals"admin" gjorts.
+     * för roll.equals "admin" gjorts.
      */
     public static boolean arAdmin(String roll){
         return "admin".equals(roll);
