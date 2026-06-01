@@ -1665,7 +1665,7 @@ public class ProjektProjektchef extends javax.swing.JFrame {
                                     "namn", fulltNamn
                             ),
                             Instanstyp.ADMIN);
-                }
+                }//KONTROLLERA OCKSÅ SÅ ATT VI INTE LÄGGER TILL DELTAGAREN SOM REDAN ÄR PROJEKTCHEF, säg "anställd är redan projektchef"
                 //...stänger pop-up fönstret
                 anstalldFonster.dispose();
                 //...aktivera vår originalruta igen
