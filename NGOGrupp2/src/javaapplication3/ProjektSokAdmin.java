@@ -47,7 +47,7 @@ public class ProjektSokAdmin extends javax.swing.JFrame {
 
     private void setStatus(String status) {
         valStatus = status;
-        //uppdatera UI för vald-status
+        //uppdatera GUI för vald-status
         if (SwingUtils.finnsIComboBox(cbStatus, status)) {
             cbStatus.setSelectedItem(status);
         }
@@ -55,14 +55,14 @@ public class ProjektSokAdmin extends javax.swing.JFrame {
 
     private void setStartdatum(Date datum) {
         valStartdatum = datum;
-        //uppdatera UI för vald-status
+        //uppdatera GUI för vald-datum
         System.out.println(dateStartdatum);
         dateStartdatum.setDate(datum);
     }
 
     private void setSlutdatum(Date datum) {
         valSlutdatum = datum;
-        //uppdatera UI för vald-status
+        //uppdatera UI för vald-datum
         dateSlutdatum.setDate(datum);
     }
 
@@ -299,7 +299,7 @@ public class ProjektSokAdmin extends javax.swing.JFrame {
 
         tblProjektlista.setRowSorter(sorter);
 
-        if (valdStatus.equals("Ingen")) {
+        if (valdStatus.equals("Alla")) {
             sorter.setRowFilter(null);
         } else {
             sorter.setRowFilter(RowFilter.regexFilter("^" + valdStatus + "$", 6));
@@ -599,7 +599,7 @@ public class ProjektSokAdmin extends javax.swing.JFrame {
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        cbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Planerat", "Pågående", "Avslutat", "Ingen" }));
+        cbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Alla", "Pågående", "Avslutat", "Planerat" }));
         cbStatus.addActionListener(this::cbStatusActionPerformed);
 
         jLabel3.setText("Startdatum");
@@ -815,7 +815,6 @@ public class ProjektSokAdmin extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblLand)
                             .addComponent(cbLand, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(29, 29, 29)
