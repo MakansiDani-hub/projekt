@@ -1891,7 +1891,7 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         if (id == null) {
             return;
         }
-        HanteraPartner partnerFonster = new HanteraPartner(anv);
+        PartnerAdmin partnerFonster = new PartnerAdmin(anv);
         partnerFonster.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         partnerFonster.setVisible(true);
         //partnerFonster.valjRad(id); IMPLEMENTERA DENNA METOD
@@ -2088,7 +2088,7 @@ public class ProjektProjektchef extends javax.swing.JFrame {
 
     private void oppnaPopupValjPartner() {
         //Isntansierar popup och skickar vidare min PartnerListener
-        HanteraPartner partnerFonster = new HanteraPartner(anv);
+        PartnerAdmin partnerFonster = new PartnerAdmin(anv);
 //        partnerFonster.addPartnerListener(new PartnerListener() { 
 //            @Override
 //            public void valPartner(String partnerId, String partnerNamn) {

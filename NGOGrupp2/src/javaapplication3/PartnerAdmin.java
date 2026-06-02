@@ -12,23 +12,23 @@ import javax.swing.JOptionPane;
  *
  * @author Krist
  */
-public class VisaPartnerAdmin extends javax.swing.JFrame {
+public class PartnerAdmin extends javax.swing.JFrame {
 
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VisaPartnerAdmin.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(PartnerAdmin.class.getName());
 
     private Anvandare anvandare;
 
     /**
      * Tom konstruktor.
      */
-    public VisaPartnerAdmin() {
+    public PartnerAdmin() {
         initComponents();
     }
 
     /**
      * Riktig konstruktor som tar emot ett Anvandare-objekt.
      */
-    public VisaPartnerAdmin(Anvandare anvandare) {
+    public PartnerAdmin(Anvandare anvandare) {
         initComponents();
         this.anvandare = anvandare;
 
@@ -510,12 +510,12 @@ public class VisaPartnerAdmin extends javax.swing.JFrame {
                     // Försöker starta med en riktig test-anslutning
                     oru.inf.InfDB testIdb = new oru.inf.InfDB("sdgsweden", "3306", "root", "masterkey");
                     Anvandare testAnv = new Anvandare(testIdb, "Test", "Testsson", "2026-01-01", 1, "Gata 1", "123", "pw", "Projektchef");
-                    new VisaPartnerAdmin(testAnv).setVisible(true);
+                    new PartnerAdmin(testAnv).setVisible(true);
                 } catch (Exception e) {
                     // FIX: Om databasen inte är igång skapar vi ändå en tom fejk-användare 
                     // så att fönstret öppnas tomt istället för att krascha med röd text!
                     Anvandare fejkAnv = new Anvandare(null, "", "", "", 0, "", "", "", "");
-                    new VisaPartnerAdmin(fejkAnv).setVisible(true);
+                    new PartnerAdmin(fejkAnv).setVisible(true);
                 }
             }
         });

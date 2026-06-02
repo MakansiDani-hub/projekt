@@ -772,7 +772,7 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
                 btnInstans.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        HanteraPartner partnerFonster = new HanteraPartner(anv);
+                        PartnerAdmin partnerFonster = new PartnerAdmin(anv);
                         partnerFonster.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
                         partnerFonster.setVisible(true);
                     }
@@ -842,7 +842,7 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
     }
 
     private void oppnaPopupVisaPartnerMedId(String id) {
-        HanteraPartner partnerFonster = new HanteraPartner(anv);
+        PartnerAdmin partnerFonster = new PartnerAdmin(anv);
         partnerFonster.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         partnerFonster.setVisible(true);
         //partnerFonster.valjRad(id); IMPLEMENTERA DENNA METOD

@@ -146,7 +146,7 @@ public class AdministratörMeny extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnHanteraLandActionPerformed
 
     private void BtnHanteraPartnerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHanteraPartnerActionPerformed
-        new HanteraPartner(anvandare).setVisible(true);
+        new PartnerAdmin(anvandare).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_BtnHanteraPartnerActionPerformed
 

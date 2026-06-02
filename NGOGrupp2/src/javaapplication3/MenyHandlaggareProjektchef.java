@@ -143,7 +143,7 @@ public class MenyHandlaggareProjektchef extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSökProjektActionPerformed
 
     private void btnVisaProjektKostnaderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVisaProjektKostnaderActionPerformed
-        new ProjectCost(anvandare).setVisible(true);
+        new ProjektKostnaderProjektchef(anvandare).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnVisaProjektKostnaderActionPerformed
 
