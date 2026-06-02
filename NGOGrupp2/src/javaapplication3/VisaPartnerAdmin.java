@@ -12,24 +12,23 @@ import javax.swing.JOptionPane;
  *
  * @author Krist
  */
-public class VisaPartnerProjektchef extends javax.swing.JFrame {
+public class VisaPartnerAdmin extends javax.swing.JFrame {
 
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VisaPartnerProjektchef.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VisaPartnerAdmin.class.getName());
 
-    // Vi sparar enbart ditt Anvandare-objekt i klassen
     private Anvandare anvandare;
 
     /**
      * Tom konstruktor.
      */
-    public VisaPartnerProjektchef() {
+    public VisaPartnerAdmin() {
         initComponents();
     }
 
     /**
      * Riktig konstruktor som tar emot ett Anvandare-objekt.
      */
-    public VisaPartnerProjektchef(Anvandare anvandare) {
+    public VisaPartnerAdmin(Anvandare anvandare) {
         initComponents();
         this.anvandare = anvandare;
 
@@ -50,9 +49,18 @@ public class VisaPartnerProjektchef extends javax.swing.JFrame {
      */
     private void laddaAllaPartners() {
         try {
+            // SÄKERHETSSPÄRR 1: Kolla så att hela användarobjektet inte är tomt
+            if (anvandare == null) {
+                return;
+            }
 
-            // Vi skapar en kort lokal variabel för just denna metod!
             InfDB idb = anvandare.getIdb();
+
+            // SÄKERHETSSPÄRR 2: Om databasen saknas (t.ex. vid fristående Run File),
+            // avbryter metoden här innan den hinner krascha
+            if (idb == null) {
+                return;
+            }
 
             String fraga = "SELECT pid, namn, kontaktperson, kontaktepost, telefon, adress, branch, stad FROM partner";
             ArrayList<HashMap<String, String>> rader = idb.fetchRows(fraga);
@@ -357,8 +365,12 @@ public class VisaPartnerProjektchef extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void JBtnLaggTillPartnerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnLaggTillPartnerActionPerformed
-        // TODO add your handling code here:
+        // TODO add your handling code here                                                 
         try {
+            if (anvandare == null) return;
+            InfDB idb = anvandare.getIdb();
+            if (idb == null) return;
+
             String pid = JTxtFieldPID.getText().trim();
             String namn = JTxtFieldNamn.getText().trim();
             String kontakt = JTxtFieldKontaktPerson.getText().trim();
@@ -367,15 +379,15 @@ public class VisaPartnerProjektchef extends javax.swing.JFrame {
             String adress = JTxtFieldAdress.getText().trim();
             String branch = JTxtFieldBranch.getText().trim();
             String stad = JTxtStad.getText().trim();
-
-            if (pid.isEmpty() || pid.equals("[PID]") || namn.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "PID och Namn måste fyllas i!");
+            
+            if(pid.isEmpty() || namn.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "PartnerID och Namn måste fyllas i!");
                 return;
             }
-
-            String fraga = "INSERT INTO partner (pid, namn, kontaktperson, kontaktepost, telefon, adress, branch, stad) "
-                    + "VALUES (" + pid + ", '" + namn + "', '" + kontakt + "', '" + epost + "', '" + tel + "', '" + adress + "', '" + branch + "', " + stad + ")";
-
+            
+            String fraga = "INSERT INTO partner (pid, namn, kontaktperson, kontaktepost, telephone, adress, branch, stad) " +
+                           "VALUES (" + pid + ", '" + namn + "', '" + kontakt + "', '" + epost + "', '" + tel + "', '" + adress + "', '" + branch + "', '" + stad + "')";
+            
             idb.insert(fraga);
             JOptionPane.showMessageDialog(null, "Partner tillagd!");
             laddaAllaPartners();
@@ -386,7 +398,11 @@ public class VisaPartnerProjektchef extends javax.swing.JFrame {
 
     private void JBtnÄndraPartnerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnÄndraPartnerActionPerformed
         // TODO add your handling code here:
-        try {
+      try {
+            if (anvandare == null) return;
+            InfDB idb = anvandare.getIdb();
+            if (idb == null) return;
+
             String pid = JTxtFieldPID.getText().trim();
             String namn = JTxtFieldNamn.getText().trim();
             String kontakt = JTxtFieldKontaktPerson.getText().trim();
@@ -395,16 +411,16 @@ public class VisaPartnerProjektchef extends javax.swing.JFrame {
             String adress = JTxtFieldAdress.getText().trim();
             String branch = JTxtFieldBranch.getText().trim();
             String stad = JTxtStad.getText().trim();
-
-            if (pid.isEmpty() || pid.equals("[PID]")) {
+            
+            if(pid.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Välj en partner i listan först!");
                 return;
             }
-
-            String fraga = "UPDATE partner SET namn='" + namn + "', kontaktperson='" + kontakt
-                    + "', kontaktepost='" + epost + "', telefon='" + tel + "', adress='" + adress
-                    + "', branch='" + branch + "', stad=" + stad + " WHERE pid=" + pid;
-
+            
+            String fraga = "UPDATE partner SET namn='" + namn + "', kontaktperson='" + kontakt + 
+                           "', kontaktepost='" + epost + "', telephone='" + tel + "', adress='" + adress + 
+                           "', branch='" + branch + "', stad='" + stad + "' WHERE pid=" + pid;
+            
             idb.update(fraga);
             JOptionPane.showMessageDialog(null, "Partner uppdaterad!");
             laddaAllaPartners();
@@ -416,24 +432,24 @@ public class VisaPartnerProjektchef extends javax.swing.JFrame {
     private void JBtnTaBortPartnerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnTaBortPartnerActionPerformed
         // TODO add your handling code here:
         try {
+            if (anvandare == null) return;
+            InfDB idb = anvandare.getIdb();
+            if (idb == null) return;
+
             String pid = JTxtFieldPID.getText().trim();
-            if (pid.isEmpty() || pid.equals("[PID]")) {
+            if(pid.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Välj en partner i listan först!");
                 return;
             }
-
-            // Säkerhetsfråga innan radering
+            
             int svar = JOptionPane.showConfirmDialog(null, "Är du säker på att du vill ta bort denna partner?", "Varning", JOptionPane.YES_NO_OPTION);
-            if (svar == JOptionPane.YES_OPTION) {
-                // Ta först bort kopplingar i projekt_partner för att undvika databaskrockar
+            if(svar == JOptionPane.YES_OPTION) {
                 idb.delete("DELETE FROM projekt_partner WHERE partner_pid = " + pid);
-                // Ta sedan bort själva partnern
                 idb.delete("DELETE FROM partner WHERE pid = " + pid);
-
+                
                 JOptionPane.showMessageDialog(null, "Partnern har tagits bort!");
                 laddaAllaPartners();
-
-                // Töm undre tabellen
+                
                 DefaultTableModel model = (DefaultTableModel) JTableAktivaProjektMedPartner.getModel();
                 model.setRowCount(0);
             }
@@ -466,11 +482,35 @@ public class VisaPartnerProjektchef extends javax.swing.JFrame {
             logger.log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        try {
+           for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
+            logger.log(java.util.logging.Level.SEVERE, null, ex);
+        }
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new VisaPartnerProjektchef().setVisible(true));
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    // Försöker starta med en riktig test-anslutning
+                    oru.inf.InfDB testIdb = new oru.inf.InfDB("sdgsweden", "3306", "root", "masterkey");
+                    Anvandare testAnv = new Anvandare(testIdb, "Test", "Testsson", "2026-01-01", 1, "Gata 1", "123", "pw", "Projektchef");
+                    new VisaPartnerAdmin(testAnv).setVisible(true);
+                } catch (Exception e) {
+                    // FIX: Om databasen inte är igång skapar vi ändå en tom fejk-användare 
+                    // så att fönstret öppnas tomt istället för att krascha med röd text!
+                    Anvandare fejkAnv = new Anvandare(null, "", "", "", 0, "", "", "", "");
+                    new VisaPartnerAdmin(fejkAnv).setVisible(true);
+                }
+            }
+        });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton JBtnLaggTillPartner;
     private javax.swing.JButton JBtnTaBortPartner;

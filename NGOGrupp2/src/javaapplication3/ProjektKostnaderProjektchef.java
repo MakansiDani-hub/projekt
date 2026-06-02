@@ -15,14 +15,15 @@ import javax.swing.JOptionPane;
 public class ProjektKostnaderProjektchef extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ProjektKostnaderProjektchef.class.getName());
+    
     private Anvandare anvandare;
+
     /**
-     * Konstruktor som tar emot databasanslutning och användar-ID.
+     * Konstruktor som tar emot ett Anvandare-objekt.
      */
-    public ProjektKostnaderProjektchef(Anvandare anv){
+    public ProjektKostnaderProjektchef(Anvandare anvandare) {
         initComponents();
-        this.idb = idb;
-        this.aid = aid;
+        this.anvandare = anvandare;
 
         // Fyll tabellen med all data direkt när fönstret laddas
         uppdateraStatistik("SELECT projektnamn, status, startdatum, slutdatum, kostnad FROM projekt");
@@ -40,6 +41,19 @@ public class ProjektKostnaderProjektchef extends javax.swing.JFrame {
      */
     private void uppdateraStatistik(String sqlFraga) {
         try {
+            // SÄKERHETSSPÄRR 1: Kolla så att hela användarobjektet finns
+            if (anvandare == null) {
+                return;
+            }
+            
+            // Genväg till databasen via ditt objekt
+            InfDB idb = anvandare.getIdb();
+            
+            // SÄKERHETSSPÄRR 2: Avbryt tyst om databasen saknas vid en fristående testkörning
+            if (idb == null) {
+                return;
+            }
+            
             ArrayList<HashMap<String, String>> projektLista = idb.fetchRows(sqlFraga);
             DefaultTableModel model = (DefaultTableModel) tblKostnadsStatistik.getModel();
             model.setRowCount(0); // Tömmer gamla rader
@@ -265,8 +279,8 @@ public class ProjektKostnaderProjektchef extends javax.swing.JFrame {
     private void lblTillbakaTillMenyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblTillbakaTillMenyActionPerformed
         //new MenyHandlaggareProjektchef().setVisible(true);
        // new MenyHandlaggareProjektchef(anvandare).setVisible(true);
+       new MenyHandlaggareProjektchef(anvandare).setVisible(true);
         this.dispose();
-        this.setVisible(false);
     }//GEN-LAST:event_lblTillbakaTillMenyActionPerformed
 
     private void txtStartDatumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtStartDatumActionPerformed
@@ -292,7 +306,7 @@ public class ProjektKostnaderProjektchef extends javax.swing.JFrame {
                 + "WHERE startdatum >= '" + start + "' AND slutdatum <= '" + slut + "'";
         uppdateraStatistik(fraga);
     }//GEN-LAST:event_btnSökDatumActionPerformedActionPerformed
-public static void main(String args[]) {
+    public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -311,13 +325,16 @@ public static void main(String args[]) {
             public void run() {
                 try {
                     oru.inf.InfDB testIdb = new oru.inf.InfDB("sdgsweden", "3306", "root", "password");
-                    new ProjektKostnaderProjektchef(testIdb, 1).setVisible(true);
+                    Anvandare testAnv = new Anvandare(testIdb, "Test", "Testsson", "2026-01-01", 1, "Gata 1", "123", "pw", "Projektchef");
+                    new ProjektKostnaderProjektchef(testAnv).setVisible(true);
                 } catch (Exception e) {
-                    new ProjektKostnaderProjektchef(null, 1).setVisible(true);
+                    // Om databasen inte hittas vid fristående testkörning, startar vi ändå en tom fejk-användare
+                    Anvandare fejkAnv = new Anvandare(null, "", "", "", 0, "", "", "", "");
+                    new ProjektKostnaderProjektchef(fejkAnv).setVisible(true);
                 }
             }
         });
-    }    
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSökDatumActionPerformed;
     private javax.swing.JComboBox<String> jComboBox1;
