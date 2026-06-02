@@ -34,14 +34,6 @@ public class MenyHandlaggareProjektchef extends javax.swing.JFrame {
         
         lblFörnamn.setText("namn: " + namn +" " + efternamn );
         
-       try{
-        lblFörnamn.setText(idb.fetchSingle("SELECT fornamn FROM anstalld where aid = '"+ aid+"'"));
-       }catch(InfException ex){
-           
-       }
-        
-        
-       
     }
 
     /**
@@ -146,7 +138,7 @@ public class MenyHandlaggareProjektchef extends javax.swing.JFrame {
 
     private void btnSökProjektActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSökProjektActionPerformed
 
-        new ProjektSokAdmin(anvandare).setVisible(true);
+        new ProjrktSokProjektchef(anvandare).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnSökProjektActionPerformed
 
