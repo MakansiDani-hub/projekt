@@ -76,80 +76,107 @@ public class HanteraAvdelning extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Fel vid hämtning: " + e.getMessage());
         }
     }
+    
+    private void rensaFalt() {
+        //metod för att rensa fälten
+        JTxtFieldAvdID.setText("");
+        JTxtFieldNamn.setText("");
+        JTxtFieldBeskrivning.setText("");
+        JTxtFieldAdress.setText("");
+        JTxtFieldEpost.setText("");
+        JTxtFieldTelefon.setText("");
+        JTxtFieldStad.setText("");
+        JTxtFieldChef.setText("");
+    }
 
     private void laggTillAvdelning() {
+        //Validering via ValideringInput istället för här i fönstret
+        if (!ValideringInput.harVarde(JTxtFieldAvdID, "AvdelningID") ||
+            !ValideringInput.harVarde(JTxtFieldNamn, "Namn") ||
+            !ValideringInput.harVarde(JTxtFieldStad, "Stad") ||
+            !ValideringInput.harVarde(JTxtFieldChef, "Chef")) {
+            return;
+        }
+        //kollar så TxtFieldsen som kräver Integers är heltal
+        if (!ValideringInput.arHeltal(JTxtFieldAvdID, "AvdelningID") ||
+            !ValideringInput.arHeltal(JTxtFieldStad, "Stad-ID") ||
+            !ValideringInput.arHeltal(JTxtFieldChef, "Chef-ID")) {
+            return;
+        }
+        
         try {
+            // Hämtar text från TxtFields
             String id = JTxtFieldAvdID.getText();
-            String namn = JTxtFieldNamn.getText();
-            String besk = JTxtFieldBeskrivning.getText();
-            String adress = JTxtFieldAdress.getText();
-            String epost = JTxtFieldEpost.getText();
-            String tel = JTxtFieldTelefon.getText();
+            String namn = JTxtFieldNamn.getText().replace("'", "''");
+            String besk = JTxtFieldBeskrivning.getText().replace("'", "''");
+            String adress = JTxtFieldAdress.getText().replace("'", "''");
+            String epost = JTxtFieldEpost.getText().replace("'", "''");
+            String tel = JTxtFieldTelefon.getText().replace("'", "''");
             String stad = JTxtFieldStad.getText();
             String chef = JTxtFieldChef.getText();
 
-            if (id.isEmpty() || namn.isEmpty() || stad.isEmpty() || chef.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "ID, Namn, Stad och Chef måste fyllas i!");
-                return;
-            }
-
-            String fraga = "INSERT INTO avdelning VALUES (" + id + ", '" + namn + "', '" + besk + "', '"
-                    + adress + "', '" + epost + "', '" + tel + "'," + stad + "," + chef + ")";
+            String fraga = "INSERT INTO avdelning (avdid, namn, beskrivning, adress, epost, telefon, stad, chef) "
+                         + "VALUES (" + id + ", '" + namn + "', '" + besk + "', '"
+                         + adress + "', '" + epost + "', '" + tel + "', " + stad + ", " + chef + ")";
 
             idb.insert(fraga);
             fyllTabell();
+            rensaFalt();
+            //meddelande ifall man lyckades lägga till avdelning
             JOptionPane.showMessageDialog(this, "Avdelning tillagd!");
         } catch (InfException e) {
-            JOptionPane.showMessageDialog(this, "Kunde inte lägga till avdelning!: " + e.getMessage());
+            //Meddelande ifall det inte gick
+            JOptionPane.showMessageDialog(this, "Kunde inte lägga till: " + e.getMessage());
         }
+        
     }
 
     private void andraAvdelning() {
-        try {
-            String id = JTxtFieldAvdID.getText();
-            //kontroll så användaren har valt en avdelning att ändra
-            if (id.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Välj en avdelning i tabellen att ändra!");
-                return;
-            }
+        String id = JTxtFieldAvdID.getText();
+        //validering via Valideringinput att txtfield avdid är ifyllt
+        if (!ValideringInput.harVarde(JTxtFieldAvdID, "AvdelningID")) return;
 
-            // SQL för att uppdatera baserat på avdid
-            String fraga = "UPDATE avdelning SET namn='" + JTxtFieldNamn.getText()
-                    + "', beskrivning='" + JTxtFieldBeskrivning.getText()
-                    + "', adress='" + JTxtFieldAdress.getText()
-                    + "', epost='" + JTxtFieldEpost.getText()
-                    + "', telefon='" + JTxtFieldTelefon.getText() + "'"
+        try {
+            // SQLsats för att skicka in den nya datan i databasen
+            String fraga = "UPDATE avdelning SET namn='" + JTxtFieldNamn.getText().replace("'", "''")
+                    + "', beskrivning='" + JTxtFieldBeskrivning.getText().replace("'", "''")
+                    + "', adress='" + JTxtFieldAdress.getText().replace("'", "''")
+                    + "', epost='" + JTxtFieldEpost.getText().replace("'", "''")
+                    + "', telefon='" + JTxtFieldTelefon.getText().replace("'", "''") + "'"
                     + ", stad=" + JTxtFieldStad.getText()
                     + ", chef=" + JTxtFieldChef.getText()
                     + " WHERE avdid=" + id;
 
             idb.update(fraga);
             fyllTabell();
-            JOptionPane.showMessageDialog(this, "Ändringarna har sparats!");
+            //Meddealande ifall det lyckats
+            JOptionPane.showMessageDialog(this, "Ändringarna sparade!");
         } catch (InfException e) {
+            //meddelande ifall det inte lyckats
             JOptionPane.showMessageDialog(this, "Kunde inte ändra: " + e.getMessage());
         }
     }
 
     private void taBortAvdelning() {
-        try {
-            String id = JTxtFieldAvdID.getText();
-            //kontroll för att användaren har valt en avdelning att ta bort.
-            if (id.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Välj en avdelning att ta bort!");
-                return;
-            }
-
-            //Extra säkerhet så man inte råkar ta bort en avdelning av misstag.
-            int svar = JOptionPane.showConfirmDialog(this, "Vill du verkligen ta bort avdelning " + id + "?", "Bekräfta", JOptionPane.YES_NO_OPTION);
-            if (svar == JOptionPane.YES_OPTION) {
+        String id = JTxtFieldAvdID.getText();
+        //validering via Valideringinput att txtfield avdid är ifyllt
+        if (!ValideringInput.harVarde(JTxtFieldAvdID, "AvdelningID")) return;
+        
+        //extra kontroll så användare tar bort rätt avdelning
+        int svar = JOptionPane.showConfirmDialog(this, "Vill du verkligen ta bort avdelning " + id + "?", "Bekräfta", JOptionPane.YES_NO_OPTION);
+        if (svar == JOptionPane.YES_OPTION) {
+            try {
+                //SQLsats för att ta bort datan från databasen
                 String fraga = "DELETE FROM avdelning WHERE avdid=" + id;
                 idb.delete(fraga);
                 fyllTabell();
-                JOptionPane.showMessageDialog(this, "Avdelningen borttagen!");
+                rensaFalt();
+                //meddelande ifall det lyckats
+                JOptionPane.showMessageDialog(this, "Borttagen!");
+            } catch (InfException e) {
+                //meddelande ifall det inte lyckats
+                JOptionPane.showMessageDialog(this, "Kunde inte ta bort (kolla om den används i andra tabeller): " + e.getMessage());
             }
-        } catch (InfException e) {
-            JOptionPane.showMessageDialog(this, "Kunde inte ta bort: " + e.getMessage());
         }
     }
 
