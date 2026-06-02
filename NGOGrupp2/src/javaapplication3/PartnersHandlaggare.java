@@ -7,36 +7,29 @@ import java.util.HashMap;
 import javax.swing.JOptionPane;
 
 /**
- * Detaljvy för partners.
+ * Detaljvy för partners - Handläggarversion.
  * @author alexander.willen
  */
-public class Partners extends javax.swing.JFrame {
+public class PartnersHandlaggare extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Partners.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(PartnersHandlaggare.class.getName());
+    
+    // Vi sparar enbart ditt Anvandare-objekt i klassen nu!
     private Anvandare anvandare; 
-    private InfDB idb;
-    private int aid;
 
-    public Partners() {
+    public PartnersHandlaggare() {
         initComponents();
     }
 
     /**
-     * Riktig konstruktor som laddar databasen och rullgardinsmenyn.
+     * Riktig konstruktor som tar emot ett Anvandare-objekt.
      */
-    public Partners(InfDB idb, int aid) {
+    public PartnersHandlaggare(Anvandare anvandare) {
         initComponents();
-        this.idb = idb;
-        this.aid = aid;
-        fyllPartnerComboBox();
+        this.anvandare = anvandare;
         
-        // Lägg till en lyssnare på rullgardinsmenyn så att den reagerar när man väljer en partner
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
-            }
-        });
+        // Fyll rullgardinsmenyn med partners direkt när fönstret laddas
+        fyllPartnerComboBox();
     }
     
     /**
@@ -44,6 +37,15 @@ public class Partners extends javax.swing.JFrame {
      */
     private void fyllPartnerComboBox() {
         try {
+            // SÄKERHETSSPÄRR 1: Kolla så att hela användarobjektet finns
+            if (anvandare == null) return;
+            
+            // Kort lokal variabel för just denna metod!
+            InfDB idb = anvandare.getIdb();
+            
+            // SÄKERHETSSPÄRR 2: Avbryt tyst om databasen saknas vid fristående testkörning
+            if (idb == null) return;
+            
             String fraga = "SELECT namn FROM partner";
             ArrayList<String> partners = idb.fetchColumn(fraga);
             
@@ -54,40 +56,6 @@ public class Partners extends javax.swing.JFrame {
             }
         } catch (InfException e) {
             JOptionPane.showMessageDialog(null, "Fel vid laddning av partners: " + e.getMessage());
-        }
-    }
-
-    /**
-     * Körs när användaren väljer en partner i listan.
-     */
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {
-        String valtNamn = (String) jComboBox1.getSelectedItem();
-        if (valtNamn != null && !valtNamn.equals("Välj partner")) {
-            try {
-                String fraga = "SELECT pid, kontaktperson, kontaktepost, telefon, adress, branch, stad FROM partner WHERE namn = '" + valtNamn + "'";
-                HashMap<String, String> partnerData = idb.fetchRow(fraga);
-                
-                if (partnerData != null) {
-                    jLabel1.setText(valtNamn);
-                    jLabel2.setText("partnerID: " + partnerData.get("pid"));
-                    jTextField1.setText(partnerData.get("kontaktperson"));
-                    jTextField2.setText(partnerData.get("kontaktepost"));
-                    jTextField3.setText(partnerData.get("telefon"));
-                    jTextField5.setText(partnerData.get("adress"));
-                    jTextField4.setText(partnerData.get("branch"));
-                    jTextField7.setText(partnerData.get("stad"));
-                    
-                    // Hämtar land baserat på staden (eftersom land ligger i stad-tabellen i databasen)
-                    String stadId = partnerData.get("stad");
-                    if (stadId != null) {
-                        String landsFraga = "SELECT land.namn FROM land JOIN stad ON land.lid = stad.land WHERE stad.sid = " + stadId;
-                        String landNamn = idb.fetchSingle(landsFraga);
-                        jTextField6.setText(landNamn != null ? landNamn : "Okänt");
-                    }
-                }
-            } catch (InfException e) {
-                JOptionPane.showMessageDialog(null, "Fel vid hämtning av partnerdata: " + e.getMessage());
-            }
         }
     }
     @SuppressWarnings("unchecked")
@@ -167,6 +135,7 @@ public class Partners extends javax.swing.JFrame {
         jTextField7.addActionListener(this::jTextField7ActionPerformed);
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Välj partner" }));
+        jComboBox1.addActionListener(this::jComboBox1ActionPerformed);
 
         jLabel10.setText("Sök partner:");
 
@@ -272,51 +241,60 @@ public class Partners extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         try {
-    String pidText = jLabel2.getText().replace("partnerID: ", "").trim();
-    if (pidText.equals("[pid]") || pidText.isEmpty()) {
-        JOptionPane.showMessageDialog(null, "Välj en partner i listan först!");
-        return;
-    }
-    
-    String fraga = "SELECT projekt.projektnamn FROM projekt " +
-                   "JOIN projekt_partner ON projekt.pid = projekt_partner.pid " +
-                   "WHERE projekt_partner.partner_pid = " + pidText;
-    
-    ArrayList<String> projekt = idb.fetchColumn(fraga);
-    if (projekt != null && !projekt.isEmpty()) {
-        String resultat = "Partnern deltar i följande projekt:\n" + String.join("\n", projekt);
-        JOptionPane.showMessageDialog(null, resultat);
-    } else {
-        JOptionPane.showMessageDialog(null, "Denna partner deltar inte i några projekt.");
-    }
-} catch (InfException e) {
-    JOptionPane.showMessageDialog(null, "Fel vid hämtning av projekt: " + e.getMessage());
-}
+            if (anvandare == null) return;
+            InfDB idb = anvandare.getIdb();
+            if (idb == null) return;
+
+            String pidText = jLabel2.getText().replace("partnerID: ", "").trim();
+            if (pidText.equals("[pid]") || pidText.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Välj en partner i listan först!");
+                return;
+            }
+            
+            String fraga = "SELECT projekt.projektnamn FROM projekt " +
+                           "JOIN projekt_partner ON projekt.pid = projekt_partner.pid " +
+                           "WHERE projekt_partner.partner_pid = " + pidText;
+            
+            ArrayList<String> projekt = idb.fetchColumn(fraga);
+            if (projekt != null && !projekt.isEmpty()) {
+                String resultat = "Partnern deltar i följande projekt:\n" + String.join("\n", projekt);
+                JOptionPane.showMessageDialog(null, resultat);
+            } else {
+                JOptionPane.showMessageDialog(null, "Denna partner deltar inte i några projekt.");
+            }
+        } catch (InfException e) {
+            JOptionPane.showMessageDialog(null, "Fel vid hämtning av projekt: " + e.getMessage());
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         try {
-    String pidText = jLabel2.getText().replace("partnerID: ", "").trim();
-    if (pidText.equals("[pid]") || pidText.isEmpty()) {
-        JOptionPane.showMessageDialog(null, "Välj en partner i listan först!");
-        return;
-    }
-    
-    String fraga = "SELECT projekt.projektnamn FROM projekt " +
-                   "JOIN projekt_partner ON projekt.pid = projekt_partner.pid " +
-                   "WHERE projekt_partner.partner_pid = " + pidText + " AND projekt.projektchef = " + aid;
-    
-    ArrayList<String> projekt = idb.fetchColumn(fraga);
-    if (projekt != null && !projekt.isEmpty()) {
-        String resultat = "Partnern deltar i dina projekt:\n" + String.join("\n", projekt);
-        JOptionPane.showMessageDialog(null, resultat);
-    } else {
-        JOptionPane.showMessageDialog(null, "Denna partner deltar inte i några av dina projekt.");
-    }
-} catch (InfException e) {
-    JOptionPane.showMessageDialog(null, "Fel vid hämtning av dina projekt: " + e.getMessage());
-}
+            if (anvandare == null) return;
+            InfDB idb = anvandare.getIdb();
+            if (idb == null) return;
+            int aid = anvandare.getAid(); 
+
+            String pidText = jLabel2.getText().replace("partnerID: ", "").trim();
+            if (pidText.equals("[pid]") || pidText.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Välj en partner i listan först!");
+                return;
+            }
+            
+            String fraga = "SELECT projekt.projektnamn FROM projekt " +
+                           "JOIN projekt_partner ON projekt.pid = projekt_partner.pid " +
+                           "WHERE projekt_partner.partner_pid = " + pidText + " AND projekt.projektchef = " + aid;
+            
+            ArrayList<String> projekt = idb.fetchColumn(fraga);
+            if (projekt != null && !projekt.isEmpty()) {
+                String resultat = "Partnern deltar i dina projekt:\n" + String.join("\n", projekt);
+                JOptionPane.showMessageDialog(null, resultat);
+            } else {
+                JOptionPane.showMessageDialog(null, "Denna partner deltar inte i några av dina projekt.");
+            }
+        } catch (InfException e) {
+            JOptionPane.showMessageDialog(null, "Fel vid hämtning av dina projekt: " + e.getMessage());
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
@@ -337,24 +315,54 @@ public class Partners extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-       // new MenyHandlaggareProjektchef(idb, aid).setVisible(true);
-this.dispose();
+       // Öppnar menynigen och skickar med användaren automatiskt
+       new MenyHandlaggareProjektchef(anvandare).setVisible(true);
+       this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField3ActionPerformed
 
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+        String valtNamn = (String) jComboBox1.getSelectedItem();
+        if (valtNamn != null && !valtNamn.equals("Välj partner") && anvandare != null) {
+            try {
+                InfDB idb = anvandare.getIdb();
+                if (idb == null) return;
+                
+                String fraga = "SELECT pid, kontaktperson, kontaktepost, telephone, adress, branch, stad FROM partner WHERE namn = '" + valtNamn + "'";
+                HashMap<String, String> partnerData = idb.fetchRow(fraga);
+                
+                if (partnerData != null) {
+                    jLabel1.setText(valtNamn);
+                    jLabel2.setText("partnerID: " + partnerData.get("pid"));
+                    jTextField1.setText(partnerData.get("kontaktperson"));
+                    jTextField2.setText(partnerData.get("kontaktepost"));
+                    jTextField3.setText(partnerData.get("telephone")); 
+                    jTextField5.setText(partnerData.get("adress"));
+                    jTextField4.setText(partnerData.get("branch"));
+                    jTextField7.setText(partnerData.get("stad"));
+                    
+                    String stadId = partnerData.get("stad");
+                    if (stadId != null) {
+                        String landsFraga = "SELECT land.namn FROM land JOIN stad ON land.lid = stad.land WHERE stad.sid = " + stadId;
+                        String landNamn = idb.fetchSingle(landsFraga);
+                        jTextField6.setText(landNamn != null ? landNamn : "Okänt");
+                    }
+                }
+            } catch (InfException e) {
+                JOptionPane.showMessageDialog(null, "Fel vid hämtning av partnerdata: " + e.getMessage());
+            }
+        }
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
+            try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
@@ -364,12 +372,18 @@ this.dispose();
         } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
             logger.log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new Partners().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> {
+            try {
+                oru.inf.InfDB testIdb = new oru.inf.InfDB("sdgsweden", "3306", "root", "masterkey");
+                Anvandare testAnv = new Anvandare(testIdb, "Test", "Testsson", "2026-01-01", 1, "Gata 1", "123", "masterkey", "Handläggare");
+                new PartnersHandlaggare(testAnv).setVisible(true);
+            } catch (Exception e) {
+                Anvandare fejkAnv = new Anvandare(null, "", "", "", 0, "", "", "", "");
+                new PartnersHandlaggare(fejkAnv).setVisible(true);
+            }
+        });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
