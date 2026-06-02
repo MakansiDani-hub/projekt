@@ -9,32 +9,32 @@ import javax.swing.JOptionPane;
 
 /**
  * Hantering av partners (Lägga till, ändra, ta bort).
+ *
  * @author Krist
  */
-public class HanteraPartner extends javax.swing.JFrame {
-    
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(HanteraPartner.class.getName());
+public class VisaPartnerAdmin extends javax.swing.JFrame {
+
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VisaPartnerAdmin.class.getName());
+
     private Anvandare anvandare;
-    private InfDB idb;
-    private int aid;
 
     /**
      * Tom konstruktor.
      */
-  
+    public VisaPartnerAdmin() {
+        initComponents();
+    }
 
     /**
-     * Riktig konstruktor som tar emot databasanslutning.
+     * Riktig konstruktor som tar emot ett Anvandare-objekt.
      */
-    public HanteraPartner(Anvandare anvandare) {
+    public VisaPartnerAdmin(Anvandare anvandare) {
         initComponents();
         this.anvandare = anvandare;
-        this.idb = anvandare.getIdb();
-        this.aid = anvandare.getAid();
-        
+
         // Fyll tabellen med partners när fönstret öppnas
         laddaAllaPartners();
-        
+
         // Gör så att textfälten fylls i automatiskt när man klickar på en rad i översta tabellen
         JTablePartners.getSelectionModel().addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting() && JTablePartners.getSelectedRow() != -1) {
@@ -49,18 +49,31 @@ public class HanteraPartner extends javax.swing.JFrame {
      */
     private void laddaAllaPartners() {
         try {
+            // SÄKERHETSSPÄRR 1: Kolla så att hela användarobjektet inte är tomt
+            if (anvandare == null) {
+                return;
+            }
+
+            InfDB idb = anvandare.getIdb();
+
+            // SÄKERHETSSPÄRR 2: Om databasen saknas (t.ex. vid fristående Run File),
+            // avbryter metoden här innan den hinner krascha
+            if (idb == null) {
+                return;
+            }
+
             String fraga = "SELECT pid, namn, kontaktperson, kontaktepost, telefon, adress, branch, stad FROM partner";
             ArrayList<HashMap<String, String>> rader = idb.fetchRows(fraga);
-            
+
             DefaultTableModel model = new DefaultTableModel(
-                new String[]{"PID", "Namn", "Kontaktperson", "E-post", "Telefon", "Adress", "Bransch", "Stad"}, 0
+                    new String[]{"PID", "Namn", "Kontaktperson", "E-post", "Telefon", "Adress", "Bransch", "Stad"}, 0
             );
-            
+
             if (rader != null) {
                 for (HashMap<String, String> rad : rader) {
                     model.addRow(new Object[]{
-                        rad.get("pid"), rad.get("namn"), rad.get("kontaktperson"), 
-                        rad.get("kontaktepost"), rad.get("telefon"), rad.get("adress"), 
+                        rad.get("pid"), rad.get("namn"), rad.get("kontaktperson"),
+                        rad.get("kontaktepost"), rad.get("telefon"), rad.get("adress"),
                         rad.get("branch"), rad.get("stad")
                     });
                 }
@@ -89,23 +102,30 @@ public class HanteraPartner extends javax.swing.JFrame {
     }
 
     /**
-     * Fyller den undre tabellen med projekt som den valda partnern är kopplad till.
+     * Fyller den undre tabellen med projekt som den valda partnern är kopplad
+     * till.
      */
     private void laddaProjektForValdPartner() {
         int valdRad = JTablePartners.getSelectedRow();
         if (valdRad != -1) {
+            // Lokal genväg till databasen här med!
+            InfDB idb = anvandare.getIdb();
+            if (idb == null) {
+                return;
+            }
+
             String pid = JTablePartners.getValueAt(valdRad, 0).toString();
             try {
-                String fraga = "SELECT projekt.pid, projekt.projektnamn, projekt.status FROM projekt " +
-                               "JOIN projekt_partner ON projekt.pid = projekt_partner.pid " +
-                               "WHERE projekt_partner.partner_pid = " + pid;
-                
+                String fraga = "SELECT projekt.pid, projekt.projektnamn, projekt.status FROM projekt "
+                        + "JOIN projekt_partner ON projekt.pid = projekt_partner.pid "
+                        + "WHERE projekt_partner.partner_pid = " + pid;
+
                 ArrayList<HashMap<String, String>> projektRader = idb.fetchRows(fraga);
-                
+
                 DefaultTableModel model = new DefaultTableModel(
-                    new String[]{"Projekt-ID", "Projektnamn", "Status"}, 0
+                        new String[]{"Projekt-ID", "Projektnamn", "Status"}, 0
                 );
-                
+
                 if (projektRader != null) {
                     for (HashMap<String, String> rad : projektRader) {
                         model.addRow(new Object[]{
@@ -117,8 +137,10 @@ public class HanteraPartner extends javax.swing.JFrame {
             } catch (InfException e) {
                 JOptionPane.showMessageDialog(null, "Fel vid hämtning av projekt: " + e.getMessage());
             }
+        } else {
         }
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -347,89 +369,97 @@ public class HanteraPartner extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void JBtnLaggTillPartnerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnLaggTillPartnerActionPerformed
-        // TODO add your handling code here:
+        // TODO add your handling code here                                                 
         try {
-    String pid = JTxtFieldPID.getText().trim();
-    String namn = JTxtFieldNamn.getText().trim();
-    String kontakt = JTxtFieldKontaktPerson.getText().trim();
-    String epost = JTxtFieldKontaktEpost.getText().trim();
-    String tel = JTxtFieldTelefon.getText().trim();
-    String adress = JTxtFieldAdress.getText().trim();
-    String branch = JTxtFieldBranch.getText().trim();
-    String stad = JTxtStad.getText().trim();
-    
-    if(pid.isEmpty() || pid.equals("[PID]") || namn.isEmpty()) {
-        JOptionPane.showMessageDialog(null, "PID och Namn måste fyllas i!");
-        return;
-    }
-    
-    String fraga = "INSERT INTO partner (pid, namn, kontaktperson, kontaktepost, telefon, adress, branch, stad) " +
-                   "VALUES (" + pid + ", '" + namn + "', '" + kontakt + "', '" + epost + "', '" + tel + "', '" + adress + "', '" + branch + "', " + stad + ")";
-    
-    idb.insert(fraga);
-    JOptionPane.showMessageDialog(null, "Partner tillagd!");
-    laddaAllaPartners();
-} catch (InfException e) {
-    JOptionPane.showMessageDialog(null, "Kunde inte lägga till: " + e.getMessage());
-}
+            if (anvandare == null) return;
+            InfDB idb = anvandare.getIdb();
+            if (idb == null) return;
+
+            String pid = JTxtFieldPID.getText().trim();
+            String namn = JTxtFieldNamn.getText().trim();
+            String kontakt = JTxtFieldKontaktPerson.getText().trim();
+            String epost = JTxtFieldKontaktEpost.getText().trim();
+            String tel = JTxtFieldTelefon.getText().trim();
+            String adress = JTxtFieldAdress.getText().trim();
+            String branch = JTxtFieldBranch.getText().trim();
+            String stad = JTxtStad.getText().trim();
+            
+            if(pid.isEmpty() || namn.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "PartnerID och Namn måste fyllas i!");
+                return;
+            }
+            
+            String fraga = "INSERT INTO partner (pid, namn, kontaktperson, kontaktepost, telephone, adress, branch, stad) " +
+                           "VALUES (" + pid + ", '" + namn + "', '" + kontakt + "', '" + epost + "', '" + tel + "', '" + adress + "', '" + branch + "', '" + stad + "')";
+            
+            idb.insert(fraga);
+            JOptionPane.showMessageDialog(null, "Partner tillagd!");
+            laddaAllaPartners();
+        } catch (InfException e) {
+            JOptionPane.showMessageDialog(null, "Kunde inte lägga till: " + e.getMessage());
+        }
     }//GEN-LAST:event_JBtnLaggTillPartnerActionPerformed
 
     private void JBtnÄndraPartnerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnÄndraPartnerActionPerformed
         // TODO add your handling code here:
-        try {
-    String pid = JTxtFieldPID.getText().trim();
-    String namn = JTxtFieldNamn.getText().trim();
-    String kontakt = JTxtFieldKontaktPerson.getText().trim();
-    String epost = JTxtFieldKontaktEpost.getText().trim();
-    String tel = JTxtFieldTelefon.getText().trim();
-    String adress = JTxtFieldAdress.getText().trim();
-    String branch = JTxtFieldBranch.getText().trim();
-    String stad = JTxtStad.getText().trim();
-    
-    if(pid.isEmpty() || pid.equals("[PID]")) {
-        JOptionPane.showMessageDialog(null, "Välj en partner i listan först!");
-        return;
-    }
-    
-    String fraga = "UPDATE partner SET namn='" + namn + "', kontaktperson='" + kontakt + 
-                   "', kontaktepost='" + epost + "', telefon='" + tel + "', adress='" + adress + 
-                   "', branch='" + branch + "', stad=" + stad + " WHERE pid=" + pid;
-    
-    idb.update(fraga);
-    JOptionPane.showMessageDialog(null, "Partner uppdaterad!");
-    laddaAllaPartners();
-} catch (InfException e) {
-    JOptionPane.showMessageDialog(null, "Kunde inte ändra: " + e.getMessage());
-}
+      try {
+            if (anvandare == null) return;
+            InfDB idb = anvandare.getIdb();
+            if (idb == null) return;
+
+            String pid = JTxtFieldPID.getText().trim();
+            String namn = JTxtFieldNamn.getText().trim();
+            String kontakt = JTxtFieldKontaktPerson.getText().trim();
+            String epost = JTxtFieldKontaktEpost.getText().trim();
+            String tel = JTxtFieldTelefon.getText().trim();
+            String adress = JTxtFieldAdress.getText().trim();
+            String branch = JTxtFieldBranch.getText().trim();
+            String stad = JTxtStad.getText().trim();
+            
+            if(pid.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Välj en partner i listan först!");
+                return;
+            }
+            
+            String fraga = "UPDATE partner SET namn='" + namn + "', kontaktperson='" + kontakt + 
+                           "', kontaktepost='" + epost + "', telephone='" + tel + "', adress='" + adress + 
+                           "', branch='" + branch + "', stad='" + stad + "' WHERE pid=" + pid;
+            
+            idb.update(fraga);
+            JOptionPane.showMessageDialog(null, "Partner uppdaterad!");
+            laddaAllaPartners();
+        } catch (InfException e) {
+            JOptionPane.showMessageDialog(null, "Kunde inte ändra: " + e.getMessage());
+        }
     }//GEN-LAST:event_JBtnÄndraPartnerActionPerformed
 
     private void JBtnTaBortPartnerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnTaBortPartnerActionPerformed
         // TODO add your handling code here:
         try {
-    String pid = JTxtFieldPID.getText().trim();
-    if(pid.isEmpty() || pid.equals("[PID]")) {
-        JOptionPane.showMessageDialog(null, "Välj en partner i listan först!");
-        return;
-    }
-    
-    // Säkerhetsfråga innan radering
-    int svar = JOptionPane.showConfirmDialog(null, "Är du säker på att du vill ta bort denna partner?", "Varning", JOptionPane.YES_NO_OPTION);
-    if(svar == JOptionPane.YES_OPTION) {
-        // Ta först bort kopplingar i projekt_partner för att undvika databaskrockar
-        idb.delete("DELETE FROM projekt_partner WHERE partner_pid = " + pid);
-        // Ta sedan bort själva partnern
-        idb.delete("DELETE FROM partner WHERE pid = " + pid);
-        
-        JOptionPane.showMessageDialog(null, "Partnern har tagits bort!");
-        laddaAllaPartners();
-        
-        // Töm undre tabellen
-        DefaultTableModel model = (DefaultTableModel) JTableAktivaProjektMedPartner.getModel();
-        model.setRowCount(0);
-    }
-} catch (InfException e) {
-    JOptionPane.showMessageDialog(null, "Kunde inte ta bort partner: " + e.getMessage());
-}
+            if (anvandare == null) return;
+            InfDB idb = anvandare.getIdb();
+            if (idb == null) return;
+
+            String pid = JTxtFieldPID.getText().trim();
+            if(pid.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Välj en partner i listan först!");
+                return;
+            }
+            
+            int svar = JOptionPane.showConfirmDialog(null, "Är du säker på att du vill ta bort denna partner?", "Varning", JOptionPane.YES_NO_OPTION);
+            if(svar == JOptionPane.YES_OPTION) {
+                idb.delete("DELETE FROM projekt_partner WHERE partner_pid = " + pid);
+                idb.delete("DELETE FROM partner WHERE pid = " + pid);
+                
+                JOptionPane.showMessageDialog(null, "Partnern har tagits bort!");
+                laddaAllaPartners();
+                
+                DefaultTableModel model = (DefaultTableModel) JTableAktivaProjektMedPartner.getModel();
+                model.setRowCount(0);
+            }
+        } catch (InfException e) {
+            JOptionPane.showMessageDialog(null, "Kunde inte ta bort partner: " + e.getMessage());
+        }
     }//GEN-LAST:event_JBtnTaBortPartnerActionPerformed
 
     private void JTxtFieldAdressActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTxtFieldAdressActionPerformed
@@ -461,11 +491,35 @@ public class HanteraPartner extends javax.swing.JFrame {
             logger.log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        try {
+           for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
+            logger.log(java.util.logging.Level.SEVERE, null, ex);
+        }
 
         /* Create and display the form */
-        //java.awt.EventQueue.invokeLater(() -> new HanteraPartner().setVisible(true));
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    // Försöker starta med en riktig test-anslutning
+                    oru.inf.InfDB testIdb = new oru.inf.InfDB("sdgsweden", "3306", "root", "masterkey");
+                    Anvandare testAnv = new Anvandare(testIdb, "Test", "Testsson", "2026-01-01", 1, "Gata 1", "123", "pw", "Projektchef");
+                    new VisaPartnerAdmin(testAnv).setVisible(true);
+                } catch (Exception e) {
+                    // FIX: Om databasen inte är igång skapar vi ändå en tom fejk-användare 
+                    // så att fönstret öppnas tomt istället för att krascha med röd text!
+                    Anvandare fejkAnv = new Anvandare(null, "", "", "", 0, "", "", "", "");
+                    new VisaPartnerAdmin(fejkAnv).setVisible(true);
+                }
+            }
+        });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton JBtnLaggTillPartner;
     private javax.swing.JButton JBtnTaBortPartner;
