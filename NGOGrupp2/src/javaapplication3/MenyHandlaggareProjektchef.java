@@ -138,7 +138,7 @@ public class MenyHandlaggareProjektchef extends javax.swing.JFrame {
 
     private void btnSökProjektActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSökProjektActionPerformed
 
-        new ProjrktSokProjektchef(anvandare).setVisible(true);
+        new ProjektSokHandlaggare(anvandare).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnSökProjektActionPerformed
 

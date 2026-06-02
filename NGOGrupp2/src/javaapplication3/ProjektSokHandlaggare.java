@@ -21,9 +21,8 @@ public class ProjektSokHandlaggare extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ProjektSokHandlaggare.class.getName());
     private Anvandare anvandare;
     private String valStatus;
-    private Date valStartdatum;
-    private Date valSlutdatum;
     private String namn;
+    private String roll;
 
     /**
      * Creates new form ProjektSokHandlaggare
@@ -32,41 +31,99 @@ public class ProjektSokHandlaggare extends javax.swing.JFrame {
         initComponents();
         this.anvandare = anvandare;
         this.namn = anvandare.getDbNamn();
-        laddaAllaProjektPåAvdelningen();
+        this.roll = anvandare.getRoll();
+        if ("handlaggare_projektchef".equals(roll)) {
+            laddaAllaProjektPaAvdelningenForProjektchef();
+        } else {
+            laddaAllaProjektPaAvdelningenForHandlaggare();
+        }
 
         lblAnvändaresNamn.setText(namn);
     }
 
-    private void setStartdatum(Date datum) {
-        valStartdatum = datum;
-        //uppdatera GUI för vald-datum
-        System.out.println(dateStartdatum);
-        dateStartdatum.setDate(datum);
-    }
-
-    private void setSlutdatum(Date datum) {
-        valSlutdatum = datum;
-        //uppdatera UI för vald-datum
-        dateSlutdatum.setDate(datum);
-    }
-
-    private void laddaAllaProjektPåAvdelningen() {
+    private void laddaAllaProjektPaAvdelningenForHandlaggare() {
         try {
-            String sqlfraga = "SELECT p.pid, p.projektnamn, p.beskrivning, p.startdatum, p.slutdatum, "
-                    + "p.kostnad, p.status, p.prioritet, "
-                    + "(SELECT CONCAT(a.fornamn, ' ', a.efternamn) "
-                    + "FROM anstalld a WHERE a.aid = p.projektchef) AS projektchef_namn, "
-                    + "(SELECT l.namn FROM land l WHERE l.lid = p.land) AS land_namn "
+            String sqlfraga
+                    = "SELECT DISTINCT p.pid, p.projektnamn, p.beskrivning, "
+                    + "p.startdatum, p.slutdatum, p.kostnad, p.status, p.prioritet, "
+                    + "CONCAT(pc.fornamn, ' ', pc.efternamn) AS projektchef_namn, "
+                    + "l.namn AS land_namn "
                     + "FROM projekt p "
+                    + "JOIN ans_proj ap ON p.pid = ap.pid "
+                    + "JOIN anstalld a ON ap.aid = a.aid "
+                    + "LEFT JOIN anstalld pc ON p.projektchef = pc.aid "
+                    + "LEFT JOIN land l ON p.land = l.lid "
                     + "WHERE p.status = 'Pågående' "
-                    + "AND p.pid IN ( "
-                    + "SELECT ap.pid FROM ans_proj ap "
-                    + "WHERE ap.aid IN ( "
-                    + "SELECT a.aid FROM anstalld a "
-                    + "WHERE a.avdelning = ( "
-                    + "SELECT avdelning FROM anstalld "
-                    + "WHERE aid = " + anvandare.getAid()
-                    + "))) "
+                    + "AND a.avdelning = (SELECT avdelning FROM anstalld WHERE aid = "
+                    + anvandare.getAid() + ") "
+                    + "ORDER BY p.pid";
+
+            ArrayList<HashMap<String, String>> projektLista = anvandare.getIdb().fetchRows(sqlfraga);
+
+            DefaultTableModel model = new DefaultTableModel();
+
+            model.addColumn("PID");
+            model.addColumn("Projektnamn");
+            model.addColumn("Beskrivning");
+            model.addColumn("Startdatum");
+            model.addColumn("Slutdatum");
+            model.addColumn("Kostnad");
+            model.addColumn("Status");
+            model.addColumn("Prioritet");
+            model.addColumn("Projektchef");
+            model.addColumn("Land");
+
+            for (HashMap<String, String> projekt : projektLista) {
+                //System.out.println(projekt);
+                model.addRow(new Object[]{
+                    projekt.get("pid"),
+                    projekt.get("projektnamn"),
+                    projekt.get("beskrivning"),
+                    projekt.get("startdatum"),
+                    projekt.get("slutdatum"),
+                    projekt.get("kostnad"),
+                    projekt.get("status"),
+                    projekt.get("prioritet"),
+                    projekt.get("projektchef_namn"),
+                    projekt.get("land_namn")
+                });
+            }
+
+            tblProjektlista.setModel(model);
+
+            tblProjektlista.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+
+            tblProjektlista.getColumnModel().getColumn(0).setPreferredWidth(50);
+            tblProjektlista.getColumnModel().getColumn(1).setPreferredWidth(120);
+            tblProjektlista.getColumnModel().getColumn(2).setPreferredWidth(220);
+            tblProjektlista.getColumnModel().getColumn(3).setPreferredWidth(100);
+            tblProjektlista.getColumnModel().getColumn(4).setPreferredWidth(100);
+            tblProjektlista.getColumnModel().getColumn(5).setPreferredWidth(90);
+            tblProjektlista.getColumnModel().getColumn(6).setPreferredWidth(100);
+            tblProjektlista.getColumnModel().getColumn(7).setPreferredWidth(80);
+            tblProjektlista.getColumnModel().getColumn(8).setPreferredWidth(180);
+            tblProjektlista.getColumnModel().getColumn(9).setPreferredWidth(120);
+
+        } catch (InfException ex) {
+            JOptionPane.showMessageDialog(this, "Kunde inte ladda projektlistan: " + ex.getMessage());
+        }
+    }
+
+    private void laddaAllaProjektPaAvdelningenForProjektchef() {
+        try {
+            String sqlfraga
+                    = "SELECT DISTINCT p.pid, p.projektnamn, p.beskrivning, "
+                    + "p.startdatum, p.slutdatum, p.kostnad, p.status, p.prioritet, "
+                    + "CONCAT(pc.fornamn, ' ', pc.efternamn) AS projektchef_namn, "
+                    + "l.namn AS land_namn "
+                    + "FROM projekt p "
+                    + "JOIN ans_proj ap ON p.pid = ap.pid "
+                    + "JOIN anstalld a ON ap.aid = a.aid "
+                    + "LEFT JOIN anstalld pc ON p.projektchef = pc.aid "
+                    + "LEFT JOIN land l ON p.land = l.lid "
+                    + "WHERE p.status = 'Pågående' "
+                    + "AND a.avdelning = (SELECT avdelning FROM anstalld WHERE aid = "
+                    + anvandare.getAid() + ") "
                     + "ORDER BY p.pid";
 
             ArrayList<HashMap<String, String>> projektLista = anvandare.getIdb().fetchRows(sqlfraga);
@@ -208,7 +265,6 @@ public class ProjektSokHandlaggare extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         lblTillbakaTillMeny = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         ScrollPane = new javax.swing.JScrollPane();
         tblProjektlista = new javax.swing.JTable();
@@ -225,8 +281,6 @@ public class ProjektSokHandlaggare extends javax.swing.JFrame {
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel5.setText("Sök efter projekt");
-
-        jLabel1.setText("HandLäggare");
 
         jButton1.setText("Sök 🔍");
         jButton1.addActionListener(this::jButton1ActionPerformed);
@@ -252,11 +306,7 @@ public class ProjektSokHandlaggare extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lblTillbakaTillMeny)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel1))
+                    .addComponent(ScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -274,9 +324,10 @@ public class ProjektSokHandlaggare extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jButton1)))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(ScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblTillbakaTillMeny)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lblAnvändaresNamn)))
                 .addContainerGap())
         );
@@ -286,10 +337,8 @@ public class ProjektSokHandlaggare extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTillbakaTillMeny)
-                    .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblAnvändaresNamn)
-                .addGap(11, 11, 11)
+                    .addComponent(lblAnvändaresNamn))
+                .addGap(33, 33, 33)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -348,7 +397,6 @@ public class ProjektSokHandlaggare extends javax.swing.JFrame {
     private com.toedter.calendar.JDateChooser dateSlutdatum;
     private com.toedter.calendar.JDateChooser dateStartdatum;
     private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
