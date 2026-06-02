@@ -1040,7 +1040,7 @@
                                       <Component id="lblFelmeddelandeAdmin" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="pnlAdmin" pref="98" max="32767" attributes="0"/>
+                                  <Component id="pnlAdmin" pref="97" max="32767" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jSeparator2" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
@@ -1049,7 +1049,7 @@
                                       <Component id="lblFelmeddelandeHandlaggare" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="pnlHandlaggare" pref="42" max="32767" attributes="0"/>
+                                  <Component id="pnlHandlaggare" pref="43" max="32767" attributes="0"/>
                                   <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -1153,7 +1153,10 @@
                                   <Dimension value="[180, 23]"/>
                                 </Property>
                                 <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                                  <Dimension value="[40, 23]"/>
+                                  <Dimension value="[60, 23]"/>
+                                </Property>
+                                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                                  <Dimension value="null"/>
                                 </Property>
                               </Properties>
                               <Events>

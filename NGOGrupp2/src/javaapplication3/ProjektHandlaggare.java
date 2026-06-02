@@ -642,8 +642,8 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
                     + "status, Projekt.prioritet, kostnad, Land.namn, lid, "
                     + "CONCAT(fornamn, ' ', efternamn) as chefnamn, projektchef "
                     + "FROM Projekt "
-                    + "JOIN Land ON land = lid "
-                    + "JOIN Anstalld ON projektchef = aid "
+                    + "LEFT JOIN Land ON land = lid "
+                    + "LEFT JOIN Anstalld ON projektchef = aid "
                     + "WHERE pid = " + pid);
 
             ArrayList<HashMap<String, String>> projektinfoMal = idb.fetchRows(

@@ -15,6 +15,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import javaapplication3.ProjektHandlaggare.Instanstyp;
 import static javaapplication3.ProjektHandlaggare.Instanstyp.*;
+import javaapplication3.ValideringInput.ArGiltigKostnad;
+import javaapplication3.ValideringInput.ArGiltigProjektnamn;
 import javax.swing.*;
 import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 import oru.inf.InfDB;
@@ -22,6 +24,7 @@ import oru.inf.InfException;
 import projListeners.LandListener;
 import projListeners.AnstalldListener;
 import projListeners.MalListener;
+import projListeners.PartnerListener;
 
 /**
  *
@@ -36,11 +39,12 @@ public class ProjektProjektchef extends javax.swing.JFrame {
 
     //Session
     private Anvandare anv; //användaren (Session)
+    private InfDB idb;
     private int pid; //det valda projektet vars uppgifter visas
 
     //Redigeringsläge
     private boolean redigerar;
-    
+
     //Redigergingslägets UI (EJ IMPLEMENTERAD)
     private ArrayList<JComponent> redigeringsUI;
 
@@ -69,10 +73,17 @@ public class ProjektProjektchef extends javax.swing.JFrame {
     private HashSet<String> projektPartnersNya;
     private HashSet<String> projektPartnersBorttagna;
 
+    enum DBInstanstyp {
+        HALLBARHETSMAL,
+        ANSTALLD,
+        PARTNER
+    }
+
     public ProjektProjektchef(Anvandare anv, int pid) {
         //Den som öppnat detta fönster är projektchef för det, vid nuläget innebär det att kontroll behöver
 
         this.anv = anv;
+        idb = anv.getIdb();
         this.pid = pid;
         redigerar = false;
         borttagningslageMal = false;
@@ -612,7 +623,8 @@ public class ProjektProjektchef extends javax.swing.JFrame {
 
         btnProjektchef.setBorder(javax.swing.BorderFactory.createEmptyBorder(6, 16, 6, 16));
         btnProjektchef.setMaximumSize(new java.awt.Dimension(180, 23));
-        btnProjektchef.setMinimumSize(new java.awt.Dimension(40, 23));
+        btnProjektchef.setMinimumSize(new java.awt.Dimension(60, 23));
+        btnProjektchef.setPreferredSize(null);
         btnProjektchef.addActionListener(this::btnProjektchefActionPerformed);
         pnlProjektchef.add(btnProjektchef);
 
@@ -686,7 +698,7 @@ public class ProjektProjektchef extends javax.swing.JFrame {
                     .addComponent(jLabel8)
                     .addComponent(lblFelmeddelandeAdmin))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE)
+                .addComponent(pnlAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -694,7 +706,7 @@ public class ProjektProjektchef extends javax.swing.JFrame {
                     .addComponent(jLabel9)
                     .addComponent(lblFelmeddelandeHandlaggare))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlHandlaggare, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+                .addComponent(pnlHandlaggare, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
                 .addGap(26, 26, 26))
         );
 
@@ -964,17 +976,15 @@ public class ProjektProjektchef extends javax.swing.JFrame {
 
     private void laddaInfo() {
         //databas
-        InfDB idb = anv.getIdb();
-
         try {
             //---Hämtar projektinfo--- (Att ha datahämtning här är dålig cohesion och coupling. Förbättra vid refaktorisering, är låg-prio)
-            HashMap<String, String> projektinfoEnskilda = idb.fetchRow(
+            HashMap<String, String> hamtadProjektinfoEnskilda = idb.fetchRow(
                     "SELECT projektnamn, startdatum, slutdatum, Projekt.beskrivning, "
                     + "status, prioritet, kostnad, Land.namn as landnamn, lid as landId, "
                     + "CONCAT(fornamn, ' ', efternamn) as chefnamn, projektchef as projektchefId "
                     + "FROM Projekt "
-                    + "JOIN Land ON land = lid "
-                    + "JOIN Anstalld ON projektchef = aid "
+                    + "LEFT JOIN Land ON land = lid " //LEFT JOIN, inte INNER JOIN, så projektet inte försvinner bara för att land = lid inte matchar
+                    + "LEFT JOIN Anstalld ON projektchef = aid "
                     + "WHERE pid = " + pid);
 
             ArrayList<HashMap<String, String>> projektinfoMal = idb.fetchRows(
@@ -1004,18 +1014,18 @@ public class ProjektProjektchef extends javax.swing.JFrame {
                     + "WHERE pp.pid = " + pid);
 
             //-----NYTT FÖR PROJEKTCHEF----- 
-            String projektnamn = projektinfoEnskilda.get("projektnamn");
-            String beskrivning = projektinfoEnskilda.get("beskrivning");
-            String kostnad = projektinfoEnskilda.get("kostnad");
-            String chefnamn = projektinfoEnskilda.get("chefnamn");
-            String landnamn = projektinfoEnskilda.get("namn"); //alias (as landnamn) fungerade ej
-            String startdatum = projektinfoEnskilda.get("startdatum");
-            String slutdatum = projektinfoEnskilda.get("slutdatum");
-            String status = projektinfoEnskilda.get("status");
-            String prioritet = projektinfoEnskilda.get("prioritet");
+            String projektnamn = hamtadProjektinfoEnskilda.get("projektnamn");
+            String beskrivning = hamtadProjektinfoEnskilda.get("beskrivning");
+            String kostnad = hamtadProjektinfoEnskilda.get("kostnad");
+            String chefnamn = hamtadProjektinfoEnskilda.get("chefnamn");
+            String landnamn = hamtadProjektinfoEnskilda.get("namn"); //alias (as landnamn) fungerade ej
+            String startdatum = hamtadProjektinfoEnskilda.get("startdatum");
+            String slutdatum = hamtadProjektinfoEnskilda.get("slutdatum");
+            String status = hamtadProjektinfoEnskilda.get("status");
+            String prioritet = hamtadProjektinfoEnskilda.get("prioritet");
 
             //---Lagrar hämtad projektInfo i fält---
-            this.projektinfoEnskilda.putAll(projektinfoEnskilda);
+            this.projektinfoEnskilda.putAll(hamtadProjektinfoEnskilda);
             for (HashMap<String, String> mal : projektinfoMal) {
                 this.projektMal.add(mal.get("hid")); //Alias fungera inte igen i SQL-frågan
             }
@@ -1198,25 +1208,263 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         dateSlutDatum.setDate(slutdatumDate);
     }
 
-    private void sparaAndringarTillDatabas() {
-        //Hashmappen andradProjektinfos key är identifieraren på informationen vi sparar (som i InfDB's HashMaps)
-        HashMap<String, String> andradProjektinfo = new HashMap<>();
-        //Sätter in all information från våra olika textrutor i andradProjektinfo
-        andradProjektinfo.put("projektnamn", txtfProjektnamn.getText());
-        andradProjektinfo.put("startdatum", new java.sql.Date(dateStartDatum.getDate().getTime()).toString()); //konverterar java.util.Date till String i format YYYY-MM-DD
-        andradProjektinfo.put("slutdatum", new java.sql.Date(dateSlutDatum.getDate().getTime()).toString());
-        andradProjektinfo.put("beskrivning", txarBeskrivning.getText());
-        andradProjektinfo.put("status", (String) cbStatus.getSelectedItem()); //Downcast pga att getSelectedItem är generisk --> kan vara vad som helst för subtyp, vi behöver bara specifiera den.
-        andradProjektinfo.put("prioritet", (String) cbPrioritet.getSelectedItem());
-        andradProjektinfo.put("kostnad", txtfKostnad.getText());
-        //...namn = landnamn (alias funka inte)
-        andradProjektinfo.put("namn", btnLand.getText()); //måste göra väljaruta för land och anstalld!
-        //projektnamn, startdatum, slutdatum, Projekt.beskrivning, "+
-        //"status, Projekt.prioritet, kostnad, Land.namn as landnamn, "+
-        //"CONCAT(fornamn, ' ', efternamn) as chefnamn, projektchef
+    /**
+     * Returnerar true om kostnaden var giltig Returnerar false om den inte var
+     * giltig
+     */
+    private boolean kontrolleraKostnad(String kostnad) {
+        ArGiltigKostnad giltighet = ValideringInput.valideraKostnad(kostnad);
+        String felmeddelande = "";
+        switch (giltighet) {
+            case JA -> {
+                return true;
+            }
+            case HAR_OGILTIGA_TECKEN -> {
+                felmeddelande = "Ta bort ogiltiga tecken, tex bokstäver";
+            }
+            case DECIMAL_UTAN_SIFFROR_INNAN -> {
+                felmeddelande = "Decimal saknar siffror innan";
+            }
+            case DECIMAL_UTAN_SIFFROR_EFTER -> {
+                felmeddelande = "Onödig decimal: saknas siffror efter";
+            }
+            case FOR_LANG_DECIMAL -> {
+                felmeddelande = "Endast 2 siffror tillåts efter decimal";
+            }
+            case FOR_LANG_INTEGER -> {
+                felmeddelande = "För stort tal: över 12 siffror innan decimal";
+            }
+            case NEJ -> {
+                felmeddelande = "Ogiltig kostnad";
+            }
+        }
+        //Felmeddelande
+        pnlFelmeddelandeKostnad.setVisible(true);
+        lblFelmeddelandeKostnad.setText(felmeddelande);
+        pnlVanster.revalidate();
+        pnlVanster.repaint();
+        return false;
+    }
 
+    /**
+     * Returnerar true om projektnamnet var giltigt Returnerar false om det inte
+     * var giltigt
+     */
+    private boolean kontrolleraProjektnamn(String projektnamn) {
+        ArGiltigProjektnamn giltighet = ValideringInput.valideraProjektnamn(projektnamn);
+        String felmeddelande = "";
+        switch (giltighet) {
+            case JA -> {
+                return true;
+            }
+            case FOR_LANG -> {
+                felmeddelande = "Projektnamn för stort: över 100 tecken";
+            }
+            case OGILTIGT_TECKEN -> {
+                felmeddelande = "Ogiltigt tecken i projektnamnet";
+            }
+            case NEJ -> {
+                felmeddelande = "Ogiltigt projektnamn";
+            }
+        }
+        //Felmeddelande
+        lblFelmeddelandeProjektnamn.setVisible(true);
+        lblFelmeddelandeKostnad.setText(felmeddelande);
+        pnlTop.revalidate();
+        pnlTop.repaint();
+        return false;
+    }
+
+    private void runUpdateSats(HashMap<String, String> projektinfoAndrat) {
+        try {
+            String updateSats = "UPDATE Projekt "
+                    + "SET projektnamn = '" + projektinfoAndrat.get("projektnamn") + "', "
+                    + "startdatum = '" + projektinfoAndrat.get("startdatum") + "', "
+                    + "slutdatum = '" + projektinfoAndrat.get("slutdatum") + "', "
+                    + "beskrivning = '" + projektinfoAndrat.get("beskrivning") + "', "
+                    + "status = '" + projektinfoAndrat.get("status") + "', "
+                    + "prioritet = '" + projektinfoAndrat.get("prioritet") + "', "
+                    + "kostnad = " + projektinfoAndrat.get("kostnad") + ", "
+                    + "land = " + projektinfoAndrat.get("land") + ", "
+                    + "projektchef = " + projektinfoAndrat.get("projektchef") + " "
+                    + "WHERE pid = " + pid;
+            //Kör UPDATE-satsen
+            idb.update(updateSats);
+        } catch (InfException e) {
+            System.out.println("Updatesats: " + e.getMessage());
+        }
+    }
+    
+    /**
+     * Skicka tex in hid, aid eller partner-id som nycklar. Ange typen av
+     * instanser du ska ta bort: HALLBARHETSMAL, ANSTALLD eller PARTNER.
+     */
+    private void runDeleteSats(DBInstanstyp instanstyp, HashSet<String> nycklar) {
+        try {
+            String tabell;
+            String nyckelidentifierare;
+            switch (instanstyp) {
+                case HALLBARHETSMAL -> {
+                    tabell = "proj_hallbarhet";
+                    nyckelidentifierare = "hid";
+                }
+                case ANSTALLD -> {
+                    tabell = "ans_proj";
+                    nyckelidentifierare = "aid";
+                }
+                case PARTNER -> {
+                    tabell = "projekt_partner";
+                    nyckelidentifierare = "partner_pid";
+                }
+                default ->
+                    throw new IllegalStateException("Ogiltigt val av instanstyp");
+            }
+
+            if (!nycklar.isEmpty()) {
+                //Om registrerade borttagningar finns:
+                StringBuilder deletesats = new StringBuilder();
+                deletesats.append("DELETE FROM ")
+                        .append(tabell)
+                        .append(" WHERE (pid,")
+                        .append(nyckelidentifierare)
+                        .append(") IN(");
+                boolean forstaIteration = true;
+                for (String nycklel : nycklar) {
+                    //Lägger till varje nyckel som ska tas bort i vår DELETE-statement          
+                    if (!forstaIteration) {
+                        deletesats.append(", ");
+                    }
+                    deletesats.append("(")
+                            .append(pid)
+                            .append(",")
+                            .append(nycklel)
+                            .append(")");
+                    forstaIteration = false;
+                }
+                deletesats.append(")");
+                //Kör DELETE-satsen
+                idb.delete(deletesats.toString());
+            }
+        } catch (InfException e) {
+            System.out.println("Deletesats: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Skicka tex in hid, aid eller partner-id som nycklar. Ange typen av
+     * instanser du ska lägga till: HALLBARHETSMAL, ANSTALLD eller PARTNER.
+     */
+    private void runInsertSats(DBInstanstyp instanstyp, HashSet<String> nycklar) {
+        try {
+
+            String tabell;
+            String nyckelidentifierare;
+            switch (instanstyp) {
+                case HALLBARHETSMAL -> {
+                    tabell = "proj_hallbarhet";
+                    nyckelidentifierare = "hid";
+                }
+                case ANSTALLD -> {
+                    tabell = "ans_proj";
+                    nyckelidentifierare = "aid";
+                }
+                case PARTNER -> {
+                    tabell = "projekt_partner";
+                    nyckelidentifierare = "partner_pid";
+                }
+                default ->
+                    throw new IllegalStateException("Ogiltigt val av instanstyp");
+            }
+
+            if (!nycklar.isEmpty()) {
+                //Om registrerade tillägg finns:
+                StringBuilder insertsats = new StringBuilder();
+                insertsats.append("INSERT INTO ")
+                        .append(tabell)
+                        .append("(pid, ")
+                        .append(nyckelidentifierare)
+                        .append(")")
+                        .append("values");
+
+                boolean forstaIteration = true;
+                for (String nycklel : nycklar) {
+                    //Lägger till varje nyckel som ska tas bort i vår INSERT-statement          
+                    if (!forstaIteration) {
+                        insertsats.append(", ");
+                    }
+                    insertsats.append("(")
+                            .append(pid)
+                            .append(",")
+                            .append(nycklel)
+                            .append(")");
+                    forstaIteration = false;
+                }
+                //Kör INSERT-satsen:
+                idb.insert(insertsats.toString());
+            }
+        } catch(InfException e){
+            System.out.println("Insertsats: "+e.getMessage());
+        }
+    }
+
+    private void sparaAndringarTillDatabas() {
+        //Validerar input för kostnad och projektnamn
+        String kostnadInput = txtfKostnad.getText();
+        String projektnamnInput = txtfProjektnamn.getText();
+
+        boolean valideringLyckades = kontrolleraKostnad(kostnadInput) || kontrolleraProjektnamn(projektnamnInput);
+        if (!valideringLyckades) {
+            //Om något misslyckades i valideringen:
+            //Return, avbryt sparningen
+            System.out.println("Sparning misslyckad!");
+            return;
+        }
+
+        //Om giltig kostnad och projektnamn (eftersom return inte gjordes!):
+        String kostnadNormaliserad = ValideringInput.normaliseraKostnad(kostnadInput);
+        String projektnamnNormaliserad = ValideringInput.normaliseraKostnad(kostnadInput);
+
+        String startdatum = null;
+        String slutdatum = null;
+        if (dateStartDatum.getDate() != null) {
+            //Om valt startdatum inte är null, annars fortsätter startdatum vara null
+            startdatum = new java.sql.Date(dateStartDatum.getDate().getTime()).toString(); //konverterar java.util.Date till String i format YYYY-MM-DD
+        }
+        if (dateSlutDatum.getDate() != null) {
+            slutdatum = new java.sql.Date(dateSlutDatum.getDate().getTime()).toString();
+        }
+
+        //Sätter in all information från våra olika textrutor i andradProjektinfo
+        projektinfoAndringar.put("projektnamn", txtfProjektnamn.getText());
+        projektinfoAndringar.put("startdatum", startdatum);
+        projektinfoAndringar.put("slutdatum", slutdatum);
+        projektinfoAndringar.put("beskrivning", txarBeskrivning.getText());
+        projektinfoAndringar.put("status", (String) cbStatus.getSelectedItem()); //Downcast pga att getSelectedItem är generisk --> kan vara vad som helst för subtyp, vi behöver bara specifiera den.
+        projektinfoAndringar.put("prioritet", (String) cbPrioritet.getSelectedItem());
+        projektinfoAndringar.put("kostnad", txtfKostnad.getText());
+
+        //---------------------ÄNDRAR I DATABASEN------------------------
+        //----Uppdaterar befintliga projektuppgifter----
+        runUpdateSats(projektinfoAndringar);
+
+        //----Tar bort kopplingar till målen, administratörer, handläggare och partners som var valda för borttagning----
+        //...Tar bort mål
+        runDeleteSats(DBInstanstyp.HALLBARHETSMAL, projektMalBorttagna);
+
+        //...Tar bort anställda
+        HashSet<String> allaBorttagnaAnstallda = new HashSet<>();
+        allaBorttagnaAnstallda.addAll(projektAdminsBorttagna);
+        allaBorttagnaAnstallda.addAll(projektHandlaggareBorttagna);
+        runDeleteSats(DBInstanstyp.ANSTALLD, allaBorttagnaAnstallda);
+
+        //...Tar bort partners
+        runDeleteSats(DBInstanstyp.PARTNER, projektPartnersBorttagna);
+
+        //----Lägger till mål, administratörer, handläggare och partners som var valda för att bli tillagda----
+        
         //För instansknapparna behöver vi också spara ID på något snyggt sätt
         //Spara "Ingen" i comboboxes som null
+        stangAvRedigeringslage();
     }
 
     /**
@@ -1233,6 +1481,12 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         dropdownRuta.getParent().revalidate();
     }
 
+    private void stangAvRedigeringslage() {
+        if (redigerar) {
+            vaxlaRedigeringslage();
+        }
+    }
+
     private boolean vaxlaRedigeringslage() {
         //Växla mellan redigeringslägen
         redigerar = !redigerar;
@@ -1242,11 +1496,13 @@ public class ProjektProjektchef extends javax.swing.JFrame {
             btnAndra.setBackground(new Color(219, 136, 42)); //orange
             btnSpara.setBackground(new Color(0, 255, 0)); //grön            
             txtfKostnad.setBackground(Color.WHITE);
+            txtfProjektnamn.setBackground(Color.WHITE);
         } else {
             btnAndra.setText("Ändra");
             btnAndra.setBackground(bakgrundsfarg);
             btnSpara.setBackground(bakgrundsfarg);
             txtfKostnad.setBackground(bakgrundsfarg);
+            txtfProjektnamn.setBackground(bakgrundsfarg);
             aterstallBorttagningslagen();
             tomAndringar();
 
@@ -1277,6 +1533,9 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         //...Ta-Bort knappar
         //---Andra växlande värden---
         txtfKostnad.setEditable(redigerar);
+        txtfKostnad.setFocusable(redigerar);
+        txtfProjektnamn.setEditable(redigerar);
+        txtfProjektnamn.setFocusable(redigerar);
 
         //Uppdatera layout
         pnlTop.revalidate();
@@ -1287,7 +1546,7 @@ public class ProjektProjektchef extends javax.swing.JFrame {
     }
 
     private void taBortInstansknapparI(JPanel pnl) {
-        for (int i = pnl.getComponentCount()-1; i >= 0; i--) { //loopar baklänges, ändrar värden så det reflekterar faktiska komponent-index i containern
+        for (int i = pnl.getComponentCount() - 1; i >= 0; i--) { //loopar baklänges, ändrar värden så det reflekterar faktiska komponent-index i containern
             Component c = pnl.getComponent(i);
             if (c instanceof JButton knapp) {
                 String knappNamn = knapp.getName();
@@ -1319,8 +1578,8 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         projektPartnersNya.clear();
         projektPartnersBorttagna.clear();
     }
-    
-    private void gomFelmeddelanden(){
+
+    private void gomFelmeddelanden() {
         lblFelmeddelandeProjektnamn.setVisible(false);
         lblFelmeddelandeMal.setVisible(false);
         pnlFelmeddelandeKostnad.setVisible(false);
@@ -1344,7 +1603,7 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         projektinfoAndringar.put(nyckelIdentifierare, null);
         knappAttTomma.setText("");
     }
-    
+
     /**
      * "Instansknappar" är knappar användaren trycker på för att ta sig vidare
      * till ett nytt fönster som visar information om saken knappen
@@ -1360,6 +1619,14 @@ public class ProjektProjektchef extends javax.swing.JFrame {
      * "5".
      */
     private void skapaInstansknappUI(Map<String, String> instans, Instanstyp instanstyp) {
+        //Gör om nyckelidentifieraren i HashMappen till "id" eftersom alias ("as...") inte fungerade i SQL-frågan...
+        for (String key : instans.keySet()) {
+            if (key.matches("^[aph]id$")) {
+                String varde = instans.remove(key);
+                instans.put("id", varde);
+                break;
+            }
+        }
         //---Endast dessa attributer sparas per instans---
         //...namm används som text på knappen
         String namn = instans.get("namn");
@@ -1373,7 +1640,7 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         switch (instanstyp) {
             case HALLBARHETSMAL -> {
                 //Lägger till malnummer i knappens text om det finns
-                if (instans.containsKey("malnummer")) {
+                if (instans.get("malnummer") != null) {
                     btnInstans.setText(btnInstans.getText() + " [" + instans.get("malnummer") + "]");
                 }
                 //Lägger till metod vid knapp-tryck (genom klassen ActionListener)
@@ -1459,71 +1726,16 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         pnlTop.revalidate();
         pnlTop.repaint();
     }
-    
+
     /**
-     * parametern "instans" håller en instans av antingen ett hållbarhetsmål,
-     * admin, handläggare eller partner. 
-     * En instans är av typ HashMap<String, String>, den bör hålla minst id och
-     * namn. Samma struktur med identifierare + värde gäller här som för InfDB
-     * metoderna.
-     * Denna metod skapar också "instansknapparna" så användaren kan se tillägget.
-     * Genom argumentet för instans kommer information
-     * (namn, id) om instansen in. Alla instansers HashMap behöver ha keys "id"
-     * och "namn" med mappade värden. Just hållbarhetsmål är ett specialfall, där
-     * kan vi även skicka in "målnummer" för att sparas och visas. Vi kan tex lägga
-     * till ett hållbarhetsmål med id 5, namn "mål ett" och målnummer 3.
+     * Returnerar true om målet redan visas (tillägg gjordes ej) returnerar
+     * false om målet inte redan visades (tillägget lyckades)
      */
-    private void registreraTillaggInstans(HashMap<String, String> instans, Instanstyp instanstyp){
-        //Gör om nyckelidentifieraren i HashMappen till "id" eftersom alias ("as...") inte fungerade i SQL-frågan...
-        for (String key : instans.keySet()) {
-            if (key.matches("^[aph]id$")) {
-                String varde = instans.remove(key);
-                instans.put("id", varde);
-                break;
-            }
-        }
-        //---Endast dessa attributer sparas per instans---
-        //...namm används som text på knappen
-        String namn = instans.get("namn");
-        //...id skickas vidare vid knapptryckning till nya fönstret
-        String id = instans.get("id");
-        //...malnummer, om det finns
-        String malnummer = instans.get("malnummer");
-        
-        HashSet<String> projektNycklar;
-        HashSet<String> projektNyaNycklar;
-        HashSet<String> projektBorttagnaNycklar;
-        
-        switch(instanstyp){
-            case HALLBARHETSMAL -> {
-                projektNycklar = projektMal;
-                projektNyaNycklar = projektMalNya;
-                projektBorttagnaNycklar = projektMalBorttagna;
-            }
-            case ADMIN -> {
-                projektNycklar = projektAdmins;
-                projektNyaNycklar = projektAdminsNya;
-                projektBorttagnaNycklar = projektAdminsBorttagna;
-            }
-            case HANDLAGGARE -> {
-                projektNycklar = projektHandlaggare;
-                projektNyaNycklar = projektHandlaggareNya;
-                projektBorttagnaNycklar = projektHandlaggareBorttagna;
-            }
-            case PARTNER -> {
-                projektNycklar = projektPartners;
-                projektNyaNycklar = projektPartnersNya;
-                projektBorttagnaNycklar = projektPartnersBorttagna;
-            }
-        
-        boolean finnsIProjekt = projektNycklar.contains(id) || projektNyaNycklar.contains(id);
+    private boolean forsokRegistreraTillaggMal(String id, String namn, String malnummer) {
+        boolean finnsIProjekt = projektMal.contains(id) || projektMalNya.contains(id);
         boolean arBorttagen = projektMalBorttagna.contains(id);
-        if (finnsIProjekt || !arBorttagen) {
-            //Om hållbarhetsmålet redan finns i projektet, originellt eller tillagt eller det inte registrerats för att tas bort:
-            lblFelmeddelandeMal.setText("Hållbarhetsmålet finns redan");
-            lblFelmeddelandeMal.setVisible(true);
-        } 
-        else{
+        boolean malVisasRedan = finnsIProjekt && !arBorttagen;
+        if (!malVisasRedan) {
             //...visa ändringen
             skapaInstansknappUI(
                     Map.of(
@@ -1541,8 +1753,95 @@ public class ProjektProjektchef extends javax.swing.JFrame {
                 projektMalNya.add(id);
             }
         }
+        return malVisasRedan;
     }
-    
+
+    /**
+     * Returnerar true om administratören redan visas (--> tillägg gjordes ej)
+     * returnerar false om administratören inte redan visades (--> tillägget
+     * lyckades)
+     */
+    private boolean forsokRegistreraTillaggAdmin(String id, String namn) {
+        boolean finnsIProjekt = projektAdmins.contains(id) || projektAdminsNya.contains(id);
+        boolean arBorttagen = projektAdminsBorttagna.contains(id);
+        boolean adminVisasRedan = finnsIProjekt && !arBorttagen;
+        if (!adminVisasRedan) {
+            //...visa ändringen
+            skapaInstansknappUI(
+                    Map.of(
+                            "id", id,
+                            "namn", namn
+                    ),
+                    Instanstyp.ADMIN);
+            //...lagrar ändringen (men uppdaterar inte i databasen!):
+            if (arBorttagen) {
+                //Tar bort själva borttagningen om en sådan fanns:
+                projektAdminsBorttagna.remove(id);
+            } else {
+                //Lägger till en ny admin i projektet endast om det inte var registrerat som borttaget
+                projektAdminsNya.add(id);
+            }
+        }
+        return adminVisasRedan;
+    }
+
+    /**
+     * Returnerar true om handläggaren redan visas (--> tillägg gjordes ej)
+     * returnerar false om handläggaren inte redan visades (--> tillägget
+     * lyckades)
+     */
+    private boolean forsokRegistreraTillaggHandlaggare(String id, String namn) {
+        boolean finnsIProjekt = projektHandlaggare.contains(id) || projektHandlaggareNya.contains(id);
+        boolean arBorttagen = projektHandlaggareBorttagna.contains(id);
+        boolean handlaggareVisasRedan = finnsIProjekt && !arBorttagen;
+        if (!handlaggareVisasRedan) {
+            //...visa ändringen
+            skapaInstansknappUI(
+                    Map.of(
+                            "id", id,
+                            "namn", namn
+                    ),
+                    Instanstyp.HANDLAGGARE);
+            //...lagrar ändringen (men uppdaterar inte i databasen!):
+            if (arBorttagen) {
+                //Tar bort själva borttagningen om en sådan fanns:
+                projektHandlaggareBorttagna.remove(id);
+            } else {
+                //Lägger till en ny handläggare i projektet endast om det inte var registrerat som borttaget
+                projektHandlaggareNya.add(id);
+            }
+        }
+        return handlaggareVisasRedan;
+    }
+
+    /**
+     * Returnerar true om Partnern redan visas (--> tillägg gjordes ej)
+     * returnerar false om Partnern inte redan visades (--> tillägget lyckades)
+     */
+    private boolean forsokRegistreraTillaggPartner(String id, String namn) {
+        boolean finnsIProjekt = projektPartners.contains(id) || projektPartnersNya.contains(id);
+        boolean arBorttagen = projektPartnersBorttagna.contains(id);
+        boolean partnerVisasRedan = finnsIProjekt && !arBorttagen;
+        if (!partnerVisasRedan) {
+            //...visa ändringen
+            skapaInstansknappUI(
+                    Map.of(
+                            "id", id,
+                            "namn", namn
+                    ),
+                    Instanstyp.PARTNER);
+            //...lagrar ändringen (men uppdaterar inte i databasen!):
+            if (arBorttagen) {
+                //Tar bort själva borttagningen om en sådan fanns:
+                projektPartnersBorttagna.remove(id);
+            } else {
+                //Lägger till en ny handläggare i projektet endast om det inte var registrerat som borttaget
+                projektPartnersNya.add(id);
+            }
+        }
+        return partnerVisasRedan;
+    }
+
     private boolean arTom(String id) {
         //True om [det] för projektet saknas ([det] är tex land)
         boolean saknas = projektinfoEnskilda.get(id) == null;
@@ -1554,39 +1853,50 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         boolean arTom = (saknas && !andrat) || borttaget;
         return arTom;
     }
-    
+
     //---------------------------POPUP METODER----------------------------------
-    
-     private void oppnaPopupVisaMalMedId(String id){
-       //Öppnar ett fönster som visar en lista på mål med detta mål i fokus
+    private void oppnaPopupVisaMalMedId(String id) {
+        //Öppnar ett fönster som visar en lista på mål med detta mål i fokus
+        if (id == null) {
+            return;
+        }
         HanteraHållbarhetsmål malFonster = new HanteraHållbarhetsmål(anv);
         malFonster.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         malFonster.setVisible(true);
         malFonster.valjRad(id);
     }
-    
-    private void oppnaPopupVisaAnstalldMedId(String id){
+
+    private void oppnaPopupVisaAnstalldMedId(String id) {
+        if (id == null) {
+            return;
+        }
         //Öppnar ett fönster som visar en lista på anstallda med denna projektchef i fokus
         HanteraAnstalld anstalldFonster = new HanteraAnstalld(anv);
         anstalldFonster.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         anstalldFonster.setVisible(true);
         anstalldFonster.valjRad(id);
     }
-    
-    private void oppnaPopupVisaLandMedId(String id){
+
+    private void oppnaPopupVisaLandMedId(String id) {
+        if (id == null) {
+            return;
+        }
         HanteraLand landFonster = new HanteraLand(anv);
         landFonster.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         landFonster.setVisible(true);
         landFonster.valjRad(id);
     }
-    
-    private void oppnaPopupVisaPartnerMedId(String id){
+
+    private void oppnaPopupVisaPartnerMedId(String id) {
+        if (id == null) {
+            return;
+        }
         HanteraPartner partnerFonster = new HanteraPartner(anv);
         partnerFonster.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         partnerFonster.setVisible(true);
         //partnerFonster.valjRad(id); IMPLEMENTERA DENNA METOD
     }
-    
+
     private void oppnaPopupValjMal() {
         //Isntansierar popup och skickar vidare min malListener
         HanteraHållbarhetsmål malFonster = new HanteraHållbarhetsmål(anv);
@@ -1597,25 +1907,19 @@ public class ProjektProjektchef extends javax.swing.JFrame {
                 //Då ett val gjorts i en pop-up (metoden kallas i pop-up fönstret):
                 //...göm felmeddelanden
                 gomFelmeddelanden();
-                boolean finnsIProjekt = projektMal.contains(malnummer) || projektMalNya.contains(malnummer);
-                boolean arBorttagen = projektMalBorttagna.contains(malnummer);
-                if (finnsIProjekt && !arBorttagen){
-                    //Om hållbarhetsmålet redan finns i projektet, originellt eller tillagt och det inte registrerats för att tas bort:
+                if (forsokRegistreraTillaggMal(malId, malNamn, malnummer)) {
+                    //Om hållbarhetsmålet redan visades
                     lblFelmeddelandeMal.setText("Hållbarhetsmålet finns redan");
                     lblFelmeddelandeMal.setVisible(true);
-                    
-                }
-                else {
-                    //Om hållbarhetsmålet inte redan finns i projektet eller varit borttagen:
-                    registreraTillaggMal();
                 }
                 //...stänger pop-up fönstret
+                malFonster.dispose();
                 //...aktivera vår originalruta igen
                 dennaFrame.setEnabled(true);
                 dennaFrame.toFront();
                 //växlar av alla borttagningslägen
                 aterstallBorttagningslagen();
-                
+
                 pnlMal.revalidate();
                 pnlMal.repaint();
             }
@@ -1638,12 +1942,16 @@ public class ProjektProjektchef extends javax.swing.JFrame {
             @Override
             public void valLand(String landId, String landNamn) {
                 //Då ett val gjorts i en pop-up (metoden kallas i pop-up fönstret):
+                if (landId == null) {
+                    throw new IllegalStateException("Oväntat: Valt land hade null landId");
+                }
                 //...göm felmeddelanden
                 gomFelmeddelanden();
                 //...lagra ändringen (men uppdaterar inte i databasen!)
                 projektinfoAndringar.put("lid", landId); //"lid" är land-id
                 //...visa ändringen
                 btnLand.setText(landNamn);
+
                 //...stänger pop-up fönstret
                 landFonster.dispose();
                 //...aktivera vår originalruta igen
@@ -1673,25 +1981,26 @@ public class ProjektProjektchef extends javax.swing.JFrame {
             @Override
             public void valAnstalld(String projektchefId, String fulltNamn, String roll) {
                 //Då ett val gjorts i en pop-up (metoden kallas i pop-up fönstret):
+                if (projektchefId == null) {
+                    throw new IllegalStateException("Oväntat: Vald projektchef hade null aid");
+                }
                 //...göm felmeddelanden
                 gomFelmeddelanden();
-                if(!ValideringInput.arHandlaggare(roll)){
+                if (!ValideringInput.arHandlaggare(roll)) {
                     //Om användaren valde en anställd som ej är handläggare:
                     lblFelmeddelandeProjektchef.setText("Endast handläggare kan vara projektchefer");
                     lblFelmeddelandeProjektchef.setVisible(true);
-                }
-                else{
+                } else {
                     //Om användaren valde en anställd som är handläggare:
                     //...lagra ändringen (men uppdaterar inte i databasen!)
                     projektinfoAndringar.put("projektchef", projektchefId); //projektchef är aid för projektchef
                     //...visa ändringen
                     btnProjektchef.setText(fulltNamn);
-                    if(projektHandlaggare.contains(projektchefId) || projektHandlaggareNya.contains(projektchefId)){
-                        //Om den nya projektchefen redan finns i projektet, originellt eller tillagt:
+                    if (projektHandlaggare.contains(projektchefId) || projektHandlaggareNya.contains(projektchefId)) {
+                        //Om den nya projektchefen redan finns SOM HANDLÄGGARE i projektet, originellt eller tillagt:
                         //ATT IMPLEMENTERA: Ta bort instansknappen som redan fanns för handläggaren och ta bort från projektHandlaggare och projektHandlaggareNya
-                    }
-                    else if(projektAdmins.contains(projektchefId)){
-                        throw new IllegalStateException("den anställdes id hittades både som admin och handläggare, något blev fel.");        
+                    } else if (projektAdmins.contains(projektchefId)) {
+                        throw new IllegalStateException("den anställdes id hittades både som admin och handläggare, något blev fel.");
                     }
                 }
                 //...stänger pop-up fönstret
@@ -1713,6 +2022,9 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         this.setEnabled(false);
         //Visar pop-up fönstret
         anstalldFonster.setVisible(true);
+
+        pnlHoger.revalidate();
+        pnlHoger.repaint();
     }
 
     private void oppnaPopupValjDeltagare() {
@@ -1723,55 +2035,33 @@ public class ProjektProjektchef extends javax.swing.JFrame {
             @Override
             public void valAnstalld(String anstalldId, String fulltNamn, String roll) {
                 //Då ett val gjorts i en pop-up (metoden kallas i pop-up fönstret):
-                if(anstalldId == null) throw new IllegalStateException("anstalld som valdes saknade id, id var null");
-                
-                gomFelmeddelanden();  
-                
-                boolean finnsIProjekt = projektHandlaggare.contains(anstalldId) || projektAdmins.contains(anstalldId);
+                if (anstalldId == null) {
+                    throw new IllegalStateException("anstalld som valdes saknade id, id var null");
+                }
+
+                gomFelmeddelanden();
+
                 boolean arProjektchef = anstalldId.equals(projektinfoEnskilda.get("projektchef"));
                 if (ValideringInput.arHandlaggare(roll)) {
                     //Om den valda anställda är handläggare:
-                    //Kontrollera först så handläggaren inte redan finns eller är projektchef:
-                    if (finnsIProjekt) {
-                        lblFelmeddelandeHandlaggare.setText("Handläggare finns redan i projektet");
+                    if (arProjektchef) {
+                        //Om handläggaren redan är projektchef i projektet
+                        lblFelmeddelandeHandlaggare.setText("Handläggaren är redan projektchef i projektet");
                         lblFelmeddelandeHandlaggare.setVisible(true);
-                    } else if (arProjektchef) {
-                        lblFelmeddelandeHandlaggare.setText("Handläggare är redan projektchef i projektet");
+                    } else if (forsokRegistreraTillaggHandlaggare(anstalldId, fulltNamn)) {
+                        //Om handläggaren redan visas i projektet
+                        lblFelmeddelandeHandlaggare.setText("Handläggaren finns redan i projektet");
+                        lblFelmeddelandeHandlaggare.setVisible(true);
                     }
-                    else{
-                        //...lagra ändringen (men uppdaterar inte i databasen!)
-                        projektHandlaggareNya.add(anstalldId);
-                        //...visa ändringen
-                        skapaInstansknappUI(
-                                Map.of(
-                                        "id", anstalldId,
-                                        "namn", fulltNamn
-                                ),
-                                Instanstyp.HANDLAGGARE);
-                    }
-                }
-                else if (ValideringInput.arAdmin(roll)){
+                } else if (ValideringInput.arAdmin(roll)) {
                     //Om den valda anställda är admin:
-                    //Kontrollera först så administratören inte redan finns
-                    if (finnsIProjekt) {
-                        lblFelmeddelandeAdmin.setText("Admin finns redan i projektet");
+                    if (arProjektchef) {
+                        throw new IllegalStateException("Admin med id " + anstalldId + " var registrerad som projektchef när endast handläggare kan vara det");
+                    } else if (forsokRegistreraTillaggAdmin(anstalldId, fulltNamn)) {
+                        lblFelmeddelandeAdmin.setText("Administratör finns redan i projektet");
                         lblFelmeddelandeAdmin.setVisible(true);
-                    } else if (arProjektchef) {
-                        throw new IllegalStateException("Admin med id " + anstalldId + " var registrerad som projektchef");
                     }
-                    else{
-                        //...lagra ändringen (men uppdaterar inte i databasen!)
-                        projektAdminsNya.add(anstalldId);
-                        //...visa ändringen
-                        skapaInstansknappUI(
-                                Map.of(
-                                        "id", anstalldId,
-                                        "namn", fulltNamn
-                                ),
-                                Instanstyp.ADMIN);
-                    }
-                }
-                else{
+                } else {
                     throw new IllegalStateException("Okänd roll valdes av användaren");
                 }
                 //...stänger pop-up fönstret
@@ -1781,7 +2071,7 @@ public class ProjektProjektchef extends javax.swing.JFrame {
                 dennaFrame.toFront();
                 //Växlar av alla borttagningslägen
                 aterstallBorttagningslagen();
-                
+
                 pnlHoger.revalidate();
                 pnlHoger.repaint();
             }
@@ -1797,8 +2087,42 @@ public class ProjektProjektchef extends javax.swing.JFrame {
     }
 
     private void oppnaPopupValjPartner() {
-        //Gör som metoderna ovan
-        //Använd HanteraPartner, kollla rollen i början
+        //Isntansierar popup och skickar vidare min PartnerListener
+        HanteraPartner partnerFonster = new HanteraPartner(anv);
+//        partnerFonster.addPartnerListener(new PartnerListener() { 
+//            @Override
+//            public void valPartner(String partnerId, String partnerNamn) {
+//                //Då ett val gjorts i en pop-up (metoden kallas i pop-up fönstret):
+//                //...göm felmeddelanden
+//                gomFelmeddelanden();
+//                if (forsokRegistreraTillaggPartner(partnerId, partnerNamn)){
+//                    //Om partnern redan visades
+//                    lblFelmeddelandePartners.setText("Partner finns redan");
+//                    lblFelmeddelandePartners.setVisible(true);
+//                }
+//                //...stänger pop-up fönstret
+//                partnerFonster.dispose();
+//                //...aktivera vår originalruta igen
+//                dennaFrame.setEnabled(true);
+//                dennaFrame.toFront();
+//                //växlar av alla borttagningslägen
+//                aterstallBorttagningslagen();
+//                
+//                pnlPartners.revalidate();
+//                pnlPartners.repaint();
+//            }
+//        });
+        //Gör att om partnerfönstret stängs ned så tas det bort, men andra fönster finns kvar,
+        //vilket passar bra till funktionen av ett popup-fönster.
+        partnerFonster.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        //Detta fönster görs non-interactable. Användaren
+        //kan endast interagera med det nya fönstret
+        this.setEnabled(false);
+        //Visar pop-up fönstret
+        partnerFonster.setVisible(true);
+
+        pnlHoger.revalidate();
+        pnlHoger.repaint();
     }
 
     private void btnDeltagareDropdownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeltagareDropdownActionPerformed
@@ -1831,7 +2155,7 @@ public class ProjektProjektchef extends javax.swing.JFrame {
 
     private void btnAndraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAndraActionPerformed
         if (vaxlaRedigeringslage() == false) { //vaxlaRedigeringslage returnerar det nya redigeringsläget
-             //---Om användaren trycker på ångra knappen---
+            //---Om användaren trycker på ångra knappen---
             //laddar om infon, eventuella ändringar som gjordes i redigeringsläget försvinner
             tomAndringar();
             laddaInfo();
@@ -1898,8 +2222,10 @@ public class ProjektProjektchef extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddPartnerActionPerformed
 
     private void btnSparaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSparaActionPerformed
-        
-        gomFelmeddelanden();
+        if (redigerar) {
+            sparaAndringarTillDatabas();
+            gomFelmeddelanden();
+        }
     }//GEN-LAST:event_btnSparaActionPerformed
 
     public static void main(String args[]) { //TA BORT MAIN METODEN TILLSLUT. NI SKA ENDAST ANVÄNDA MAIN METODEN I Startklassen
