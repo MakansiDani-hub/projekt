@@ -72,14 +72,14 @@ public class HanteraAnstalld extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Kunde inte ladda länder.");
         }
     }
-    
-    private void fyllRollComboBox() {
-    cbRoll.removeAllItems();
 
-    cbRoll.addItem("admin");
-    cbRoll.addItem("handlaggare");
-    cbRoll.addItem("handlaggare_projektchef");
-}
+    private void fyllRollComboBox() {
+        cbRoll.removeAllItems();
+
+        cbRoll.addItem("admin");
+        cbRoll.addItem("handlaggare");
+        cbRoll.addItem("handlaggare_projektchef");
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -117,12 +117,12 @@ public class HanteraAnstalld extends javax.swing.JFrame {
         jTextField5 = new javax.swing.JTextField();
         JLblAvdelning = new javax.swing.JLabel();
         JLblAnstDatum = new javax.swing.JLabel();
-        JTxtFieldAnstDatum = new javax.swing.JTextField();
         btnSök = new javax.swing.JButton();
         btnGenereraLösenord = new javax.swing.JButton();
         btnTillbakatillmeny = new javax.swing.JButton();
         cbAvdelning = new javax.swing.JComboBox<>();
         cbRoll = new javax.swing.JComboBox<>();
+        dAnställningsDatum = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -191,8 +191,6 @@ public class HanteraAnstalld extends javax.swing.JFrame {
 
         JLblAnstDatum.setText("Anställningsdatum");
 
-        JTxtFieldAnstDatum.setText("ÅÅÅÅ-MM-DD");
-
         btnSök.setText("Sök");
         btnSök.addActionListener(this::btnSökActionPerformed);
 
@@ -238,7 +236,8 @@ public class HanteraAnstalld extends javax.swing.JFrame {
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(JLblAnstDatum, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(18, 18, 18)
-                            .addComponent(JTxtFieldAnstDatum))
+                            .addComponent(dAnställningsDatum, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(0, 0, Short.MAX_VALUE))
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(JLblLösen, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(18, 18, 18)
@@ -340,24 +339,25 @@ public class HanteraAnstalld extends javax.swing.JFrame {
                             .addComponent(JLblEpost)
                             .addComponent(JTxtFieldEpost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(JLblAnstDatum)
-                            .addComponent(JTxtFieldAnstDatum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(JLblLösen)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnGenereraLösenord)
-                        .addGap(20, 20, 20)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(JBtnUppdateraAnstalld, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(JLblAnstDatum)
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(JBtnTaBortAnstalld, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(JBtnRensaUppgifteranstalld, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(JBtnLaggTillAnstalld, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(JLblLösen)
+                                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnGenereraLösenord)
+                                .addGap(20, 20, 20)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(JBtnUppdateraAnstalld, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(JBtnTaBortAnstalld, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(JBtnRensaUppgifteranstalld, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(JBtnLaggTillAnstalld, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(dAnställningsDatum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
@@ -420,7 +420,12 @@ public class HanteraAnstalld extends javax.swing.JFrame {
         JTxtFieldTeleNr.setText(jTable1.getValueAt(valdRad, 3).toString());
         JTxtFieldPostadress.setText(jTable1.getValueAt(valdRad, 4).toString());
         JTxtFieldEpost.setText(jTable1.getValueAt(valdRad, 5).toString());
-        JTxtFieldAnstDatum.setText(jTable1.getValueAt(valdRad, 6).toString());
+        try {
+            java.util.Date datum = new java.text.SimpleDateFormat("yyyy-MM-dd").parse(jTable1.getValueAt(valdRad, 6).toString());
+            dAnställningsDatum.setDate(datum);
+        } catch (Exception e) {
+            dAnställningsDatum.setDate(null);
+        }
         String avdelningsId = jTable1.getValueAt(valdRad, 7).toString();
 
         for (int i = 0; i < cbAvdelning.getItemCount(); i++) {
@@ -490,8 +495,8 @@ public class HanteraAnstalld extends javax.swing.JFrame {
         JTxtFieldTeleNr.setText("");
         JTxtFieldPostadress.setText("");
         JTxtFieldEpost.setText("");
-        JTxtFieldAnstDatum.setText("");
-        cbAvdelning.setSelectedItem("");
+        dAnställningsDatum.setDate(null);
+        cbAvdelning.setSelectedIndex(-1);
         cbRoll.setSelectedIndex(-1);
         jTextField5.setText("");
     }
@@ -584,7 +589,7 @@ public class HanteraAnstalld extends javax.swing.JFrame {
             String telefon = JTxtFieldTeleNr.getText();
             String adress = JTxtFieldPostadress.getText();
             String epost = JTxtFieldEpost.getText();
-            String anstallningsdatum = JTxtFieldAnstDatum.getText();
+            String anstallningsdatum = new java.text.SimpleDateFormat("yyyy-MM-dd").format(dAnställningsDatum.getDate());
             String losenord = jTextField5.getText();
 
             String sqlAnstalld
@@ -632,7 +637,7 @@ public class HanteraAnstalld extends javax.swing.JFrame {
             String telefon = JTxtFieldTeleNr.getText();
             String adress = JTxtFieldPostadress.getText();
             String epost = JTxtFieldEpost.getText();
-            String anstallningsdatum = JTxtFieldAnstDatum.getText();
+            String anstallningsdatum = new java.text.SimpleDateFormat("yyyy-MM-dd").format(dAnställningsDatum.getDate());
             String losenord = jTextField5.getText();
 
             if (aid.isEmpty()) {
@@ -799,7 +804,6 @@ public class HanteraAnstalld extends javax.swing.JFrame {
     private javax.swing.JLabel JLblSokAnställd;
     private javax.swing.JLabel JLblTeleNr;
     private javax.swing.JScrollPane JScrollPaneListaAnställda;
-    private javax.swing.JTextField JTxtFieldAnstDatum;
     private javax.swing.JTextField JTxtFieldAnstalldID;
     private javax.swing.JTextField JTxtFieldENamn;
     private javax.swing.JTextField JTxtFieldEpost;
@@ -812,6 +816,7 @@ public class HanteraAnstalld extends javax.swing.JFrame {
     private javax.swing.JButton btnTillbakatillmeny;
     private javax.swing.JComboBox<String> cbAvdelning;
     private javax.swing.JComboBox<String> cbRoll;
+    private com.toedter.calendar.JDateChooser dAnställningsDatum;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField5;
     // End of variables declaration//GEN-END:variables

@@ -56,7 +56,8 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="JLblAnstDatum" linkSize="1" min="-2" pref="119" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="JTxtFieldAnstDatum" max="32767" attributes="0"/>
+                          <Component id="dAnställningsDatum" min="-2" pref="250" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="JLblLösen" linkSize="1" min="-2" pref="119" max="-2" attributes="0"/>
@@ -188,28 +189,30 @@
                           <Component id="JTxtFieldEpost" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="JLblAnstDatum" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="JTxtFieldAnstDatum" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="JLblLösen" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jTextField5" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="btnGenereraLösenord" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <Component id="JBtnUppdateraAnstalld" min="-2" pref="45" max="-2" attributes="0"/>
+                              <Component id="JLblAnstDatum" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="JBtnTaBortAnstalld" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
-                                  <Component id="JBtnRensaUppgifteranstalld" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
+                                  <Component id="JLblLösen" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jTextField5" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="btnGenereraLösenord" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Component id="JBtnUppdateraAnstalld" min="-2" pref="45" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="3" attributes="0">
+                                          <Component id="JBtnTaBortAnstalld" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
+                                          <Component id="JBtnRensaUppgifteranstalld" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <Component id="JBtnLaggTillAnstalld" min="-2" pref="45" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <Component id="JBtnLaggTillAnstalld" min="-2" pref="45" max="-2" attributes="0"/>
+                          <Component id="dAnställningsDatum" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
@@ -377,11 +380,6 @@
         <Property name="text" type="java.lang.String" value="Anst&#xe4;llningsdatum"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="JTxtFieldAnstDatum">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="&#xc5;&#xc5;&#xc5;&#xc5;-MM-DD"/>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JButton" name="btnS&#xf6;k">
       <Properties>
         <Property name="text" type="java.lang.String" value="S&#xf6;k"/>
@@ -435,6 +433,8 @@
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
+    </Component>
+    <Component class="com.toedter.calendar.JDateChooser" name="dAnst&#xe4;llningsDatum">
     </Component>
   </SubComponents>
 </Form>
