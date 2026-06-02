@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package javaapplication3;
+
 /**
  *
  * @author Kristoffer Kolkowski
@@ -16,9 +17,11 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.JOptionPane;
 
 public class HanteraHållbarhetsmål extends javax.swing.JFrame {
+
     private MalListener malListener;
-    private InfDB idb; 
-    private DefaultTableModel bordsModell;
+    private InfDB idb;
+    private DefaultTableModel bordsModell; //Modell för Hållbarhetsmållistan
+    private DefaultTableModel projektBordsModell; // Modell för projektlistan
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(HanteraHållbarhetsmål.class.getName());
     private Anvandare anvandare;
 
@@ -26,35 +29,38 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
      * Creates new form HanteraHållbarhetsmål
      */
     public HanteraHållbarhetsmål(Anvandare anvandare) {
-        
+
         initComponents();
         this.idb = anvandare.getIdb();
         this.anvandare = anvandare;
-        this.idb = anvandare.getIdb();
-        
+
         JBtnAndraHallbarhetsmal.addActionListener(this::JBtnAndraHallbarhetsmalActionPerformed);
         JBtnTaBortHallbarhetsmal.addActionListener(this::JBtnTaBortHallbarhetsmalActionPerformed);
-        
+
         // Kopplar JTable till en hanterbar modell och sätter kolumnnamn
         bordsModell = (DefaultTableModel) JTableHallbarhetsmal.getModel();
         bordsModell.setColumnIdentifiers(new Object[]{"hid", "Namn", "Målnummer", "Beskrivning", "Prioritet"});
-        
+
+        // Initiera projekttabellen (Projekt kopplade till mål)
+        projektBordsModell = (DefaultTableModel) JTableProjekt.getModel();
+        projektBordsModell.setColumnIdentifiers(new Object[]{"Kopplade Projekt"});
+
         // Hämtar data automatiskt vid uppstart
         laddaHållbarhetsmål();
-        
+
         JTableHallbarhetsmal.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 // Ta reda på vilken rad användaren klickade på
                 int valdRad = JTableHallbarhetsmal.getSelectedRow();
-                
+
                 // kollar om en rad är vald
-                if (valdRad >= 0) {             
+                if (valdRad >= 0) {
                     visaRadInfo(valdRad);
                 }
             }
         });
-        
+
         if (!anvandare.getRoll().equals("admin")) {
             //Användaren är ej admin och ska ej få tillgång till knapparna lägg till, ändra och ta bort
             JBtnLaggTillHallbarhetsmal.setVisible(false);
@@ -63,19 +69,19 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
         }
     }
 
-    public void addMalListener(MalListener malListener){
+    public void addMalListener(MalListener malListener) {
         this.malListener = malListener;
     }
-    
+
     private void laddaHållbarhetsmål() {
         bordsModell.setRowCount(0); // Tömmer testrader
-        
+
         // sqlfråga
         String fråga = "SELECT hid, namn, malnummer, beskrivning, prioritet FROM hallbarhetsmal";
-        
+
         try {
             ArrayList<HashMap<String, String>> rader = idb.fetchRows(fråga);
-            
+
             if (rader != null) {
                 for (HashMap<String, String> rad : rader) {
                     bordsModell.addRow(new Object[]{
@@ -91,15 +97,34 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Kunde inte ladda data: " + e.getMessage());
         }
     }
-    
-    public void valjRad(String malId)
-    {
+
+    //Hämtar projekt från databasen som är kopplade till det valda målet från kopplingstabellen(proj_Hallbarhet)
+    private void laddaProjektForMal(String hid) {
+        projektBordsModell.setRowCount(0);
+        try {
+            // SQLfråga för att hämta datan från tabellen
+            String sql = "SELECT p.projektnamn FROM projekt p "
+                    + "JOIN proj_hallbarhet ph ON p.pid = ph.pid "
+                    + "WHERE ph.hid = " + hid;
+
+            ArrayList<HashMap<String, String>> rader = idb.fetchRows(sql);
+            if (rader != null) {
+                for (HashMap<String, String> rad : rader) {
+                    projektBordsModell.addRow(new Object[]{rad.get("projektnamn")});
+                }
+            }
+        } catch (InfException e) {
+            System.out.println("Kunde inte hämta projekt: " + e.getMessage());
+        }
+    }
+
+    public void valjRad(String malId) {
         int valdRad = SwingUtils.valjRadIJTableMedId(JTableHallbarhetsmal, malId, 0);
-        System.out.println("rad: "+valdRad);
+        System.out.println("rad: " + valdRad);
         visaRadInfo(valdRad);
     }
-    
-    private void visaRadInfo(int valdRad){
+
+    private void visaRadInfo(int valdRad) {
         // Hämtar datan från kolumnerna på den valda raden
         String id = bordsModell.getValueAt(valdRad, 0).toString();
         String namn = bordsModell.getValueAt(valdRad, 1).toString();
@@ -113,13 +138,118 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
         JTxtFieldMalNr.setText(malnr);
         JTxtFieldBeskrivning.setText(beskrivning);
         JTxtFieldPrioritet.setText(prioritet);
-        
+
+        // Låser ID-rutan så man inte ändrar den av misstag och rör till det i databasen.
+        JTxtFieldHID.setEditable(false);
+
+        //anropar projektlistan
+        laddaProjektForMal(id);
+
         //Kallar på mål-listenerns metod valLand så andra fönster kan registrera ett val vid behov
-        if(malListener != null){
+        if (malListener != null) {
             malListener.valMal(id, namn, malnr);
         }
     }
-    
+
+    private void rensaFalt() {
+        JTxtFieldHID.setText("");
+        JTxtFieldNamn.setText("");
+        JTxtFieldMalNr.setText("");
+        JTxtFieldBeskrivning.setText("");
+        JTxtFieldPrioritet.setText("");
+        JTxtFieldHID.setEditable(true); // Låser upp HID för att kunna skriva in ett nytt
+    }
+
+    private void laggTillMal() {
+        //Validering via ValideringInput istället för i detta fönster
+        //Kollar så det finns ett hid och malNr och att detta är ett heltal
+        //Kollar även att det finns ett namn
+        if (ValideringInput.harVarde(JTxtFieldHID, "HID")
+                && ValideringInput.arHeltal(JTxtFieldHID, "HID")
+                && ValideringInput.harVarde(JTxtFieldNamn, "Namn")
+                && ValideringInput.arHeltal(JTxtFieldMalNr, "Målnummer")) {
+
+            try {
+                //Hämtar datan ur TxtFieldsen och sätter den i variabler
+                String id = JTxtFieldHID.getText().trim();
+                String namn = JTxtFieldNamn.getText().trim().replace("'", "''");
+                String malnr = JTxtFieldMalNr.getText().trim();
+                String besk = JTxtFieldBeskrivning.getText().trim().replace("'", "''");
+                String prio = JTxtFieldPrioritet.getText().trim().replace("'", "''");
+
+                //För in datan i databasen
+                String sql = "INSERT INTO hallbarhetsmal VALUES (" + id + ", '" + namn + "', " + malnr + ", '" + besk + "', '" + prio + "')";
+                idb.insert(sql);
+
+                laddaHållbarhetsmål();
+                rensaFalt();//rensar TxtFieldsen så man kan jobba vidare med andra mål
+                //meddelande ifall det fungerat
+                JOptionPane.showMessageDialog(this, "Målet har lagts till!");
+            } catch (InfException e) {
+                //meddelande ifall det inte fungerat
+                JOptionPane.showMessageDialog(this, "Kunde inte spara: " + e.getMessage());
+            }
+        }
+    }
+
+    private void andraMal() {
+        // Kontrollerar att ett mål är valt genom att se om HID-rutan har ett värde
+        if (JTxtFieldHID.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Välj ett mål i tabellen först.");
+            return;
+        }
+        //Validering via ValideringInput istället för i detta fönster
+        //Kontrollerar att det finns ett namn och att målnummer är ett heltal
+        if (ValideringInput.harVarde(JTxtFieldNamn, "Namn")
+                && ValideringInput.arHeltal(JTxtFieldMalNr, "Målnummer")) {
+
+            try {
+                //Hämtar datan ur TxtFieldsen och sätter den i variabler
+                String id = JTxtFieldHID.getText();
+                String namn = JTxtFieldNamn.getText().trim().replace("'", "''");
+                String malnr = JTxtFieldMalNr.getText().trim();
+                String besk = JTxtFieldBeskrivning.getText().trim().replace("'", "''");
+                String prio = JTxtFieldPrioritet.getText().trim().replace("'", "''");
+
+                //uppdaterar datan i databasen med SQLsats
+                String sql = "UPDATE hallbarhetsmal SET namn='" + namn + "', malnummer=" + malnr
+                        + ", beskrivning='" + besk + "', prioritet='" + prio + "' WHERE hid=" + id;
+
+                idb.update(sql);
+                laddaHållbarhetsmål();
+                //meddelande ifall det fungerat
+                JOptionPane.showMessageDialog(this, "Ändringar sparade!");
+            } catch (InfException e) {
+                //meddelande ifall det inte fungerat
+                JOptionPane.showMessageDialog(this, "Fel vid uppdatering: " + e.getMessage());
+            }
+        }
+    }
+
+    private void taBortMal() {
+        //Kollar att HID har ett värde och är ett heltal
+        if (ValideringInput.harVarde(JTxtFieldHID, "HID") && ValideringInput.arHeltal(JTxtFieldHID, "HID")) {
+
+            String id = JTxtFieldHID.getText().trim();
+
+            //Extra kontroll så användare inte tar bort ett mål av misstag
+            int svar = JOptionPane.showConfirmDialog(this, "Vill du verkligen ta bort mål " + id + "?", "Bekräfta", JOptionPane.YES_NO_OPTION);
+
+            if (svar == JOptionPane.YES_OPTION) {
+                try {
+                    idb.delete("DELETE FROM hallbarhetsmal WHERE hid=" + id);
+                    laddaHållbarhetsmål();
+                    rensaFalt(); //Rensar rutorna så användare kan jobba vidare med andra mål
+                    //meddelande ifall det har tagits bort
+                    JOptionPane.showMessageDialog(this, "Målet har raderats.");
+                } catch (InfException e) {
+                    //meddelande ifall det inte har tagits bort
+                    JOptionPane.showMessageDialog(this, "Kunde inte ta bort: " + e.getMessage());
+                }
+            }
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -147,6 +277,8 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
         JBtnAndraHallbarhetsmal = new javax.swing.JButton();
         JBtnTaBortHallbarhetsmal = new javax.swing.JButton();
         JPanelProjektMotMal = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        JTableProjekt = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -259,15 +391,31 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
 
         JPanelProjektMotMal.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Projekt kopplade till valt hållbarhetsmål", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
 
+        JTableProjekt.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(JTableProjekt);
+
         javax.swing.GroupLayout JPanelProjektMotMalLayout = new javax.swing.GroupLayout(JPanelProjektMotMal);
         JPanelProjektMotMal.setLayout(JPanelProjektMotMalLayout);
         JPanelProjektMotMalLayout.setHorizontalGroup(
             JPanelProjektMotMalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(JPanelProjektMotMalLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2)
+                .addContainerGap())
         );
         JPanelProjektMotMalLayout.setVerticalGroup(
             JPanelProjektMotMalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 193, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
         );
 
         jButton1.setText("Tillbaka till meny");
@@ -309,117 +457,25 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void JBtnLaggTillHallbarhetsmalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnLaggTillHallbarhetsmalActionPerformed
-
-    //  Hämtar texten som användaren skrivit in i textfälten
-        String id = JTxtFieldHID.getText().trim();
-        String namn = JTxtFieldNamn.getText().trim();
-        String malnr = JTxtFieldMalNr.getText().trim();
-        String beskrivning = JTxtFieldBeskrivning.getText().trim();
-        String prioritet = JTxtFieldPrioritet.getText().trim();
-
-        //  Validering, Kontrollerar att användaren inte har glömt att fylla i något fält
-        if (id.isEmpty() || namn.isEmpty() || malnr.isEmpty() || beskrivning.isEmpty() || prioritet.isEmpty() ||
-            id.equals("[HID]") || namn.equals("[Namn]") || malnr.equals("[Malnummer]")) {
-            
-            JOptionPane.showMessageDialog(this, "Vänligen fyll i alla fält innan du lägger till");
-            return; // Avbryter metoden om något saknas
-        }
-        try {
-            // Sqlfråga
-            String sqlFråga = "INSERT INTO hallbarhetsmal (hid, namn, malnummer, beskrivning, prioritet) " +
-                  "VALUES (" + id + ", '" + namn + "', '" + malnr + "', '" + beskrivning + "', '" + prioritet + "')";
-
-            //  Skickar frågan till databasen
-            idb.insert(sqlFråga);
-
-            //  Meddelar användaren att hållbarhetsmålet har lagts till
-            JOptionPane.showMessageDialog(this, "Hållbarhetsmålet har lagts till!");
-
-            //  Uppdaterar tabellen på skärmen så att det nya målet syns
-            laddaHållbarhetsmål();
-
-            // 
-            JTxtFieldHID.setText("");
-            JTxtFieldNamn.setText("");
-            JTxtFieldMalNr.setText("");
-            JTxtFieldBeskrivning.setText("");
-            JTxtFieldPrioritet.setText("");
-
-        } catch (InfException e) {
-            JOptionPane.showMessageDialog(this, "Kunde inte lägga till målet. Kontrollera att HID inte redan finns.\nFelmeddelande: " + e.getMessage());
-        }
+        //anropar laggTillMal
+        laggTillMal();
     }//GEN-LAST:event_JBtnLaggTillHallbarhetsmalActionPerformed
 
     private void JBtnAndraHallbarhetsmalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnAndraHallbarhetsmalActionPerformed
-        String id = JTxtFieldHID.getText().trim();
-        String namn = JTxtFieldNamn.getText().trim();
-        String malnr = JTxtFieldMalNr.getText().trim();
-        String beskrivning = JTxtFieldBeskrivning.getText().trim();
-        String prioritet = JTxtFieldPrioritet.getText().trim();
-
-        // Kontrollerar att ett hid är ifyllt
-        if (id.isEmpty() || id.equals("[HID]")) {
-            JOptionPane.showMessageDialog(this, "Välj ett hållbarhetsmål i tabellen att ändra.");
-            return;
-        }
-
-        try {
-            // SQLfråga för att uppdatera alla fält baserat på hid
-            String sqlFråga = "UPDATE hallbarhetsmal SET " +
-                              "namn = '" + namn + "', " +
-                              "malnummer = '" + malnr + "', " +
-                              "beskrivning = '" + beskrivning + "', " +
-                              "prioritet = '" + prioritet + "' " +
-                              "WHERE hid = " + id +"";
-
-            idb.update(sqlFråga);
-            JOptionPane.showMessageDialog(this, "Hållbarhetsmålet har uppdateras!");
-            
-            laddaHållbarhetsmål(); // Laddar om tabellen
-        } catch (InfException e) {
-            JOptionPane.showMessageDialog(this, "Kunde inte uppdatera hållbarhetsmålet: " + e.getMessage());
-        }
+        //anropar andraMal
+        andraMal();
     }//GEN-LAST:event_JBtnAndraHallbarhetsmalActionPerformed
 
     private void JBtnTaBortHallbarhetsmalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnTaBortHallbarhetsmalActionPerformed
-        
-        String id = JTxtFieldHID.getText().trim();
-
-        if (id.isEmpty() || id.equals("[HID]")) {
-            JOptionPane.showMessageDialog(this, "Välj ett hållbarhetsmål i tabellen att ta bort.");
-            return;
-        }
-
-        // En kontroll så användaren inte råkar ta bort fel hållbarhetsmål
-        int svar = JOptionPane.showConfirmDialog(this, "Är du säker på att du vill ta bort hållbarhetsmål med hid " + id + "?", "Bekräfta borttagning", JOptionPane.YES_NO_OPTION);
-        
-        if (svar == JOptionPane.YES_OPTION) {
-            try {
-                String sqlFråga = "DELETE FROM hallbarhetsmal WHERE hid = " + id + "";
-                idb.delete(sqlFråga);
-                
-                JOptionPane.showMessageDialog(this, "Hållbarhetsmålet har tagits bort.");
-                
-                // Rensar fälten efter borttagning
-                JTxtFieldHID.setText("");
-                JTxtFieldNamn.setText("");
-                JTxtFieldMalNr.setText("");
-                JTxtFieldBeskrivning.setText("");
-                JTxtFieldPrioritet.setText("");
-                
-                laddaHållbarhetsmål(); // Laddar om tabellen
-            } catch (InfException e) {
-                JOptionPane.showMessageDialog(this, "Kunde inte ta bort målet: " + e.getMessage());
-            }
-        }
-        
+        //anropar taBortMal
+        taBortMal();
     }//GEN-LAST:event_JBtnTaBortHallbarhetsmalActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         Navigering.tillbakaTillMeny(anvandare);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton JBtnAndraHallbarhetsmal;
@@ -434,6 +490,7 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
     private javax.swing.JPanel JPanelHållbarhetsmål;
     private javax.swing.JPanel JPanelProjektMotMal;
     private javax.swing.JTable JTableHallbarhetsmal;
+    private javax.swing.JTable JTableProjekt;
     private javax.swing.JTextField JTxtFieldBeskrivning;
     private javax.swing.JTextField JTxtFieldHID;
     private javax.swing.JTextField JTxtFieldMalNr;
@@ -441,6 +498,7 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
     private javax.swing.JTextField JTxtFieldPrioritet;
     private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
 
     //Tillfällig main metod för att kunna provköra klassen
