@@ -52,7 +52,7 @@ public class ProjektSokHandlaggare extends javax.swing.JFrame {
 
     private void laddaAllaProjektPaAvdelningenForHandlaggare() {
         try {
-            String sqlfraga
+            String sqlfragaAvdelning
                     = "SELECT DISTINCT p.pid, p.projektnamn, p.beskrivning, "
                     + "p.startdatum, p.slutdatum, p.kostnad, p.status, p.prioritet, "
                     + "CONCAT(pc.fornamn, ' ', pc.efternamn) AS projektchef_namn, "
@@ -66,8 +66,20 @@ public class ProjektSokHandlaggare extends javax.swing.JFrame {
                     + "AND a.avdelning = (SELECT avdelning FROM anstalld WHERE aid = "
                     + anvandare.getAid() + ") "
                     + "ORDER BY p.pid";
+            
+            String sqlfragaProjektchef 
+                    = "SELECT p.pid, p.projektnamn, p.beskrivning, "
+                    + "p.startdatum, p.slutdatum, p.kostnad, p.status, p.prioritet, "
+                    + "CONCAT(pc.fornamn, ' ', pc.efternamn) AS projektchef_namn "
+                    + "FROM Projekt "
+                    + "JOIN Anstalld ON projektchef = aid "
+                    + "WHERE projektchef = " + anvandare.getAid();
+            
 
-            ArrayList<HashMap<String, String>> projektLista = anvandare.getIdb().fetchRows(sqlfraga);
+            ArrayList<HashMap<String, String>> projektLista = new ArrayList<>();
+            projektLista.addAll(anvandare.getIdb().fetchRows(sqlfragaAvdelning));
+            projektLista.addAll(anvandare.getIdb().fetchRows(sqlfragaProjektchef));
+            
 
             DefaultTableModel model = new DefaultTableModel();
 
