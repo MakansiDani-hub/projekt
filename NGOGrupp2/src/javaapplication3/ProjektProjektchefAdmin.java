@@ -34,7 +34,7 @@ public class ProjektProjektchefAdmin extends javax.swing.JFrame {
     private final JFrame dennaFrame = this;
 
     //Bakgrundsfärgen som används av vårt valda "tema" i NetBeans
-    private static final Color bakgrundsfarg = new Color(212, 217, 223);
+    private static final Color bakgrundsfarg = new Color(238, 238, 238);
 
     //Session
     private Anvandare anv;
@@ -84,9 +84,15 @@ public class ProjektProjektchefAdmin extends javax.swing.JFrame {
         ADMIN
     }
 
-    public ProjektProjektchefAdmin(Anvandare anv, int pid, AnvandareRoll roll) {
-        //Den som öppnat detta fönster är projektchef för det, vid nuläget innebär det att kontroll behöver
-
+    public ProjektProjektchefAdmin(Anvandare anv, Integer pid, AnvandareRoll roll) {
+        if(anv == null) {
+            throw new NullPointerException("Användaren var null. Kan inte öppna projektfönstret");
+        }
+        if(pid == null) {
+            System.out.println("Argument pid var null: inget projekt valt, projekt öppnas ej.");
+            return;
+        }
+        
         this.anv = anv;
         idb = anv.getIdb();
         this.pid = pid;
@@ -115,8 +121,6 @@ public class ProjektProjektchefAdmin extends javax.swing.JFrame {
         projektPartnersNya = new HashSet<>();
         projektPartnersBorttagna = new HashSet<>();
 
-        //anstalldListener = skapaAnstalldListener();
-        //landListener = skapaLandListener();
         initComponents();
         laddaInfo();
         startlageUI();
