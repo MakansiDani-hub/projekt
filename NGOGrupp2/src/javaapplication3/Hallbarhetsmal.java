@@ -43,7 +43,7 @@ public class Hallbarhetsmal extends javax.swing.JFrame {
      */
     private void visaAllaHallbarhetsmal() {
 
-        // Tömmer eventuella testrader
+        // Tömmer tabellen
         bordsModell.setRowCount(0);
 
         // SQLfråga för att hämta kolumnerna från tabellen hallbarhetsmal
