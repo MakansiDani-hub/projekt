@@ -398,7 +398,7 @@ public class ProjektProjektchefAdmin extends javax.swing.JFrame {
         pnlBeskrivning.setLayout(new java.awt.BorderLayout());
 
         txarBeskrivning.setEditable(false);
-        txarBeskrivning.setBackground(new java.awt.Color(212, 217, 223));
+        txarBeskrivning.setBackground(new java.awt.Color(238, 238, 238));
         txarBeskrivning.setColumns(5);
         txarBeskrivning.setLineWrap(true);
         txarBeskrivning.setRows(5);
@@ -462,7 +462,7 @@ public class ProjektProjektchefAdmin extends javax.swing.JFrame {
         lblStatus.setText("Status");
 
         txtfStatus.setEditable(false);
-        txtfStatus.setBackground(new java.awt.Color(212, 217, 223));
+        txtfStatus.setBackground(new java.awt.Color(238, 238, 238));
         txtfStatus.setText("[Status]");
         txtfStatus.setFocusable(false);
         txtfStatus.setMaximumSize(new java.awt.Dimension(160, 30));
@@ -501,7 +501,7 @@ public class ProjektProjektchefAdmin extends javax.swing.JFrame {
         lblPrioritet.setText("Prioritet");
 
         txtfPrioritet.setEditable(false);
-        txtfPrioritet.setBackground(new java.awt.Color(212, 217, 223));
+        txtfPrioritet.setBackground(new java.awt.Color(238, 238, 238));
         txtfPrioritet.setText("[Prioritet]");
         txtfPrioritet.setFocusable(false);
         txtfPrioritet.setMaximumSize(new java.awt.Dimension(185, 30));
@@ -568,7 +568,7 @@ public class ProjektProjektchefAdmin extends javax.swing.JFrame {
         lblKostnad.setText("Kostnad");
 
         txtfKostnad.setEditable(false);
-        txtfKostnad.setBackground(new java.awt.Color(212, 217, 223));
+        txtfKostnad.setBackground(new java.awt.Color(238, 238, 238));
         txtfKostnad.setText("[Kostnad]");
         txtfKostnad.setFocusable(false);
         txtfKostnad.setMaximumSize(new java.awt.Dimension(200, 30));
@@ -788,7 +788,7 @@ public class ProjektProjektchefAdmin extends javax.swing.JFrame {
 
         pnlPartners.setMaximumSize(null);
         pnlPartners.setMinimumSize(new java.awt.Dimension(350, 60));
-        pnlPartners.setPreferredSize(new java.awt.Dimension(350, 60));
+        pnlPartners.setPreferredSize(new java.awt.Dimension(350, 400));
         pnlPartners.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
         pnlTaBortPartners.setMaximumSize(new java.awt.Dimension(360, 24));
@@ -839,7 +839,7 @@ public class ProjektProjektchefAdmin extends javax.swing.JFrame {
         pnlStartDatum.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtfStartDatum.setEditable(false);
-        txtfStartDatum.setBackground(new java.awt.Color(212, 217, 223));
+        txtfStartDatum.setBackground(new java.awt.Color(238, 238, 238));
         txtfStartDatum.setText("ÅÅÅÅ-MM-DD");
         txtfStartDatum.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 3, 0, 0));
         txtfStartDatum.setMargin(new java.awt.Insets(0, 0, 0, 0));
@@ -855,7 +855,7 @@ public class ProjektProjektchefAdmin extends javax.swing.JFrame {
         pnlSlutDatum.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtfSlutDatum.setEditable(false);
-        txtfSlutDatum.setBackground(new java.awt.Color(212, 217, 223));
+        txtfSlutDatum.setBackground(new java.awt.Color(238, 238, 238));
         txtfSlutDatum.setText("ÅÅÅÅ-MM-DD");
         txtfSlutDatum.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 3, 0, 0));
         txtfSlutDatum.setMargin(new java.awt.Insets(0, 0, 0, 0));
@@ -872,7 +872,7 @@ public class ProjektProjektchefAdmin extends javax.swing.JFrame {
         pnlProjektnamnYttre.add(pnlProjektnamnInre, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 10, -1, -1));
 
         txtfProjektnamn.setEditable(false);
-        txtfProjektnamn.setBackground(new java.awt.Color(212, 217, 223));
+        txtfProjektnamn.setBackground(new java.awt.Color(238, 238, 238));
         txtfProjektnamn.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         txtfProjektnamn.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtfProjektnamn.setText("[Projektnamn]");
@@ -969,14 +969,15 @@ public class ProjektProjektchefAdmin extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(239, 239, 239)
-                .addComponent(btnAndra, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(56, 56, 56)
-                .addComponent(btnSpara, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(257, 257, 257))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(spnlTop, javax.swing.GroupLayout.PREFERRED_SIZE, 751, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(239, 239, 239)
+                        .addComponent(btnAndra, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(56, 56, 56)
+                        .addComponent(btnSpara, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(spnlTop, javax.swing.GroupLayout.PREFERRED_SIZE, 751, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -1082,7 +1083,7 @@ public class ProjektProjektchefAdmin extends javax.swing.JFrame {
             String prioritet = hamtadProjektinfoEnskilda.get("prioritet");
 
             //---Lagrar hämtad projektInfo i fält---
-            this.projektinfoEnskilda.putAll(hamtadProjektinfoEnskilda);
+            projektinfoEnskilda.putAll(hamtadProjektinfoEnskilda);
             for (HashMap<String, String> mal : projektinfoMal) {
                 this.projektMal.add(mal.get("hid")); //Alias fungera inte igen i SQL-frågan
             }
@@ -1093,7 +1094,7 @@ public class ProjektProjektchefAdmin extends javax.swing.JFrame {
                 this.projektHandlaggare.add(handlaggare.get("aid"));
             }
             for (HashMap<String, String> partner : projektinfoPartners) {
-                this.projektPartners.add(partner.get("aid"));
+                this.projektPartners.add(partner.get("pid"));
             }
 
             //---Visar hämtad projektInfo---
@@ -1952,7 +1953,7 @@ public class ProjektProjektchefAdmin extends javax.swing.JFrame {
      * Returnerar true om Partnern redan visas (--> tillägg gjordes ej)
      * returnerar false om Partnern inte redan visades (--> tillägget lyckades)
      */
-    private boolean forsokRegistreraTillaggPartner(String id, String namn) {        
+    private boolean forsokRegistreraTillaggPartner(String id, String namn) {  
         boolean finnsIProjekt = projektPartners.contains(id) || projektPartnersNya.contains(id);
         boolean arBorttagen = projektPartnersBorttagna.contains(id);
         boolean partnerVisasRedan = finnsIProjekt && !arBorttagen;

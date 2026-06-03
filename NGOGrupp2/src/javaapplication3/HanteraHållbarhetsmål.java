@@ -61,7 +61,7 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
             }
         });
 
-        if (!anvandare.getRoll().equals("admin")) {
+        if (ValideringInput.arHandlaggare(anvandare.getRoll())) {
             //Användaren är ej admin och ska ej få tillgång till knapparna lägg till, ändra och ta bort
             JBtnLaggTillHallbarhetsmal.setVisible(false);
             JBtnAndraHallbarhetsmal.setVisible(false);

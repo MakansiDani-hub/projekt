@@ -31,12 +31,13 @@ public class HanteraAnstalld extends javax.swing.JFrame {
         fyllAvdelningComboBox();
         fyllRollComboBox();
 
-        if (!anvandare.getRoll().equals("admin")) {
+        if (ValideringInput.arHandlaggare(anvandare.getRoll())) {
             //Användaren är ej admin och ska ej få tillgång till knapparna ta bort, uppdatera, lägg till och rensa
             JBtnLaggTillAnstalld.setVisible(false);
             JBtnUppdateraAnstalld.setVisible(false);
             JBtnTaBortAnstalld.setVisible(false);
             JBtnRensaUppgifteranstalld.setVisible(false);
+            btnGenereraLösenord.setVisible(false);
         }
 
         JTxtFieldAnstalldID.setEditable(false);

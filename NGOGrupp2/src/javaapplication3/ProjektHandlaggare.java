@@ -505,7 +505,7 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
 
         pnlPartners.setMaximumSize(null);
         pnlPartners.setMinimumSize(new java.awt.Dimension(350, 60));
-        pnlPartners.setPreferredSize(new java.awt.Dimension(350, 60));
+        pnlPartners.setPreferredSize(new java.awt.Dimension(350, 400));
         pnlPartners.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
         spnlPartnersDropdown.setViewportView(pnlPartners);
 
@@ -780,9 +780,7 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
                 btnInstans.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        PartnerAdmin partnerFonster = new PartnerAdmin(anv);
-                        partnerFonster.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-                        partnerFonster.setVisible(true);
+                        oppnaPopupVisaPartnerMedId(id);
                     }
                 });
                 pnlPartners.add(btnInstans);

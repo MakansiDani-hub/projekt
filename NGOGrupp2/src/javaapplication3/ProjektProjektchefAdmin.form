@@ -524,7 +524,7 @@
                           <Properties>
                             <Property name="editable" type="boolean" value="false"/>
                             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                              <Color blue="df" green="d9" red="d4" type="rgb"/>
+                              <Color blue="ee" green="ee" red="ee" type="rgb"/>
                             </Property>
                             <Property name="columns" type="int" value="5"/>
                             <Property name="lineWrap" type="boolean" value="true"/>
@@ -717,7 +717,7 @@
                       <Properties>
                         <Property name="editable" type="boolean" value="false"/>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                          <Color blue="df" green="d9" red="d4" type="rgb"/>
+                          <Color blue="ee" green="ee" red="ee" type="rgb"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="[Status]"/>
                         <Property name="focusable" type="boolean" value="false"/>
@@ -804,7 +804,7 @@
                       <Properties>
                         <Property name="editable" type="boolean" value="false"/>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                          <Color blue="df" green="d9" red="d4" type="rgb"/>
+                          <Color blue="ee" green="ee" red="ee" type="rgb"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="[Prioritet]"/>
                         <Property name="focusable" type="boolean" value="false"/>
@@ -922,7 +922,7 @@
                       <Properties>
                         <Property name="editable" type="boolean" value="false"/>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                          <Color blue="df" green="d9" red="d4" type="rgb"/>
+                          <Color blue="ee" green="ee" red="ee" type="rgb"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="[Kostnad]"/>
                         <Property name="focusable" type="boolean" value="false"/>
@@ -1338,7 +1338,7 @@
                           <Dimension value="[350, 60]"/>
                         </Property>
                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[350, 60]"/>
+                          <Dimension value="[350, 400]"/>
                         </Property>
                       </Properties>
 
@@ -1444,7 +1444,7 @@
                   <Properties>
                     <Property name="editable" type="boolean" value="false"/>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="df" green="d9" red="d4" type="rgb"/>
+                      <Color blue="ee" green="ee" red="ee" type="rgb"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="&#xc5;&#xc5;&#xc5;&#xc5;-MM-DD"/>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -1496,7 +1496,7 @@
                   <Properties>
                     <Property name="editable" type="boolean" value="false"/>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="df" green="d9" red="d4" type="rgb"/>
+                      <Color blue="ee" green="ee" red="ee" type="rgb"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="&#xc5;&#xc5;&#xc5;&#xc5;-MM-DD"/>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -1554,7 +1554,7 @@
                   <Properties>
                     <Property name="editable" type="boolean" value="false"/>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="df" green="d9" red="d4" type="rgb"/>
+                      <Color blue="ee" green="ee" red="ee" type="rgb"/>
                     </Property>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Segoe UI" size="18" style="1"/>

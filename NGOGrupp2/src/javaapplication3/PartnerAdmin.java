@@ -46,6 +46,13 @@ public class PartnerAdmin extends javax.swing.JFrame {
                 laddaProjektForValdPartner(valdRad);
             }
         });
+        
+        if(ValideringInput.arHandlaggare(anvandare.getRoll())){
+            //Om användaren är handläggare, göm knapparna som endast admin ska ha tillgång till
+            JPanelPartners.remove(JBtnLaggTillPartner);
+            JPanelPartners.remove(JBtnTaBortPartner);
+            JPanelPartners.remove(JBtnÄndraPartner);
+        }
     }
     
     public void addPartnerListener(PartnerListener partnerListener){
@@ -105,8 +112,10 @@ public class PartnerAdmin extends javax.swing.JFrame {
             JTxtFieldAdress.setText(JTablePartners.getValueAt(valdRad, 5).toString());
             JTxtFieldBranch.setText(JTablePartners.getValueAt(valdRad, 6).toString());
             JTxtStad.setText(JTablePartners.getValueAt(valdRad, 7) != null ? JTablePartners.getValueAt(valdRad, 7).toString() : "");
-            
-        partnerListener.valPartner(JTablePartners.getValueAt(valdRad, 0).toString(), JTablePartners.getValueAt(valdRad, 1).toString()); //Skickar in PID och Namn
+          
+        }
+        if(partnerListener != null) {
+            partnerListener.valPartner(JTablePartners.getValueAt(valdRad, 0).toString(), JTablePartners.getValueAt(valdRad, 1).toString()); //Skickar in PID och Namn    
         }
     }
 
