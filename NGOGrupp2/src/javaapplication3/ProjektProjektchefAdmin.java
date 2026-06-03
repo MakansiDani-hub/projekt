@@ -1952,7 +1952,7 @@ public class ProjektProjektchefAdmin extends javax.swing.JFrame {
      * Returnerar true om Partnern redan visas (--> tillägg gjordes ej)
      * returnerar false om Partnern inte redan visades (--> tillägget lyckades)
      */
-    private boolean forsokRegistreraTillaggPartner(String id, String namn) {
+    private boolean forsokRegistreraTillaggPartner(String id, String namn) {        
         boolean finnsIProjekt = projektPartners.contains(id) || projektPartnersNya.contains(id);
         boolean arBorttagen = projektPartnersBorttagna.contains(id);
         boolean partnerVisasRedan = finnsIProjekt && !arBorttagen;
@@ -2028,7 +2028,7 @@ public class ProjektProjektchefAdmin extends javax.swing.JFrame {
         PartnerAdmin partnerFonster = new PartnerAdmin(anv);
         partnerFonster.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         partnerFonster.setVisible(true);
-        //partnerFonster.valjRad(id); IMPLEMENTERA DENNA METOD
+        partnerFonster.valjRad(id);
     }
 
     private void oppnaPopupValjMal() {
@@ -2223,29 +2223,29 @@ public class ProjektProjektchefAdmin extends javax.swing.JFrame {
     private void oppnaPopupValjPartner() {
         //Isntansierar popup och skickar vidare min PartnerListener
         PartnerAdmin partnerFonster = new PartnerAdmin(anv);
-//        partnerFonster.addPartnerListener(new PartnerListener() { 
-//            @Override
-//            public void valPartner(String partnerId, String partnerNamn) {
-//                //Då ett val gjorts i en pop-up (metoden kallas i pop-up fönstret):
-//                //...göm felmeddelanden
-//                gomFelmeddelanden();
-//                if (forsokRegistreraTillaggPartner(partnerId, partnerNamn)){
-//                    //Om partnern redan visades
-//                    lblFelmeddelandePartners.setText("Partner finns redan");
-//                    lblFelmeddelandePartners.setVisible(true);
-//                }
-//                //...stänger pop-up fönstret
-//                partnerFonster.dispose();
-//                //...aktivera vår originalruta igen
-//                dennaFrame.setEnabled(true);
-//                dennaFrame.toFront();
-//                //växlar av alla borttagningslägen
-//                aterstallBorttagningslagen();
-//                
-//                pnlPartners.revalidate();
-//                pnlPartners.repaint();
-//            }
-//        });
+        partnerFonster.addPartnerListener(new PartnerListener() { 
+            @Override
+            public void valPartner(String partnerId, String partnerNamn) {
+                //Då ett val gjorts i en pop-up (metoden kallas i pop-up fönstret):
+                //...göm felmeddelanden
+                gomFelmeddelanden();
+                if (forsokRegistreraTillaggPartner(partnerId, partnerNamn)){
+                    //Om partnern redan visades
+                    lblFelmeddelandePartners.setText("Partner finns redan");
+                    lblFelmeddelandePartners.setVisible(true);
+                }
+                //...stänger pop-up fönstret
+                partnerFonster.dispose();
+                //...aktivera vår originalruta igen
+                dennaFrame.setEnabled(true);
+                dennaFrame.toFront();
+                //växlar av alla borttagningslägen
+                aterstallBorttagningslagen();
+                
+                pnlPartners.revalidate();
+                pnlPartners.repaint();
+            }
+        });
         //Gör att om partnerfönstret stängs ned så tas det bort, men andra fönster finns kvar,
         //vilket passar bra till funktionen av ett popup-fönster.
         partnerFonster.setDefaultCloseOperation(DISPOSE_ON_CLOSE);

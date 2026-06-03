@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JOptionPane;
+import projListeners.PartnerListener;
 
 /**
  * Hantering av partners (Lägga till, ändra, ta bort).
@@ -17,6 +18,8 @@ public class PartnerAdmin extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(PartnerAdmin.class.getName());
 
     private Anvandare anvandare;
+    
+    private PartnerListener partnerListener;
 
     /**
      * Tom konstruktor.
@@ -38,10 +41,15 @@ public class PartnerAdmin extends javax.swing.JFrame {
         // Gör så att textfälten fylls i automatiskt när man klickar på en rad i översta tabellen
         JTablePartners.getSelectionModel().addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting() && JTablePartners.getSelectedRow() != -1) {
-                fyllTextfaltFranTabell();
-                laddaProjektForValdPartner();
+                int valdRad = JTablePartners.getSelectedRow();
+                fyllTextfaltFranTabell(valdRad);
+                laddaProjektForValdPartner(valdRad);
             }
         });
+    }
+    
+    public void addPartnerListener(PartnerListener partnerListener){
+        this.partnerListener = partnerListener;
     }
 
     /**
@@ -87,8 +95,7 @@ public class PartnerAdmin extends javax.swing.JFrame {
     /**
      * Fyller textfälten med information från den valda partnern i tabellen.
      */
-    private void fyllTextfaltFranTabell() {
-        int valdRad = JTablePartners.getSelectedRow();
+    private void fyllTextfaltFranTabell(int valdRad) {
         if (valdRad != -1) {
             JTxtFieldPID.setText(JTablePartners.getValueAt(valdRad, 0).toString());
             JTxtFieldNamn.setText(JTablePartners.getValueAt(valdRad, 1).toString());
@@ -98,6 +105,8 @@ public class PartnerAdmin extends javax.swing.JFrame {
             JTxtFieldAdress.setText(JTablePartners.getValueAt(valdRad, 5).toString());
             JTxtFieldBranch.setText(JTablePartners.getValueAt(valdRad, 6).toString());
             JTxtStad.setText(JTablePartners.getValueAt(valdRad, 7) != null ? JTablePartners.getValueAt(valdRad, 7).toString() : "");
+            
+        partnerListener.valPartner(JTablePartners.getValueAt(valdRad, 0).toString(), JTablePartners.getValueAt(valdRad, 1).toString()); //Skickar in PID och Namn
         }
     }
 
@@ -105,8 +114,7 @@ public class PartnerAdmin extends javax.swing.JFrame {
      * Fyller den undre tabellen med projekt som den valda partnern är kopplad
      * till.
      */
-    private void laddaProjektForValdPartner() {
-        int valdRad = JTablePartners.getSelectedRow();
+    private void laddaProjektForValdPartner(int valdRad) {
         if (valdRad != -1) {
             // Lokal genväg till databasen här med!
             InfDB idb = anvandare.getIdb();
@@ -134,11 +142,17 @@ public class PartnerAdmin extends javax.swing.JFrame {
                     }
                 }
                 JTableAktivaProjektMedPartner.setModel(model);
+                
             } catch (InfException e) {
                 JOptionPane.showMessageDialog(null, "Fel vid hämtning av projekt: " + e.getMessage());
             }
         } else {
         }
+    }
+    
+    public void valjRad(String partnerId) {
+        int valdRad = SwingUtils.valjRadIJTableMedId(JTablePartners, partnerId, 0);
+        fyllTextfaltFranTabell(valdRad);
     }
 
     @SuppressWarnings("unchecked")
