@@ -279,6 +279,7 @@ public class ProjektSokHandlaggare extends javax.swing.JFrame {
         tblProjektlista = new javax.swing.JTable();
         lblAnvändaresNamn = new javax.swing.JLabel();
         cbStatus = new javax.swing.JComboBox<>();
+        chbxMinaProjekt = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -313,6 +314,9 @@ public class ProjektSokHandlaggare extends javax.swing.JFrame {
         cbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Alla", "Pågående", "Avslutat", "Planerat" }));
         cbStatus.addActionListener(this::cbStatusActionPerformed);
 
+        chbxMinaProjekt.setText("Mina projekt");
+        chbxMinaProjekt.addActionListener(this::chbxMinaProjektActionPerformed);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -320,17 +324,14 @@ public class ProjektSokHandlaggare extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(209, 209, 209)
+                        .addComponent(jLabel5)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(lblTillbakaTillMeny)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblAnvändaresNamn))
-                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblTillbakaTillMeny)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(209, 209, 209)
-                                .addComponent(jLabel5))
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel3)
                                     .addComponent(jLabel4))
@@ -340,13 +341,16 @@ public class ProjektSokHandlaggare extends javax.swing.JFrame {
                                     .addComponent(dateSlutdatum, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(29, 29, 29)
                                 .addComponent(cbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(26, 26, 26)
-                                .addComponent(jButton1)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addGap(18, 18, 18)
+                                .addComponent(chbxMinaProjekt)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton1)
+                            .addComponent(lblAnvändaresNamn))))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(ScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 583, Short.MAX_VALUE)
+                .addComponent(ScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 594, Short.MAX_VALUE)
                 .addGap(17, 17, 17))
         );
         layout.setVerticalGroup(
@@ -369,7 +373,8 @@ public class ProjektSokHandlaggare extends javax.swing.JFrame {
                         .addComponent(jLabel4))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jButton1)
-                        .addComponent(cbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(cbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(chbxMinaProjekt)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(ScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 583, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -390,6 +395,12 @@ public class ProjektSokHandlaggare extends javax.swing.JFrame {
     private void cbStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbStatusActionPerformed
         filtreraTabellPaStatus();
     }//GEN-LAST:event_cbStatusActionPerformed
+
+    private void chbxMinaProjektActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chbxMinaProjektActionPerformed
+        if(chbxMinaProjekt.isSelected()){
+            //IMPLEMMENTERA
+        }
+    }//GEN-LAST:event_chbxMinaProjektActionPerformed
 
     /**
      * @param args the command line arguments
@@ -419,6 +430,7 @@ public class ProjektSokHandlaggare extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane ScrollPane;
     private javax.swing.JComboBox<String> cbStatus;
+    private javax.swing.JCheckBox chbxMinaProjekt;
     private com.toedter.calendar.JDateChooser dateSlutdatum;
     private com.toedter.calendar.JDateChooser dateStartdatum;
     private javax.swing.JButton jButton1;
