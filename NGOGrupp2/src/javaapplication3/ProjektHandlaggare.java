@@ -34,7 +34,15 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
     private Anvandare anv; //databas + anvandare
     private int pid; //det valda projektet vars uppgifter visas
 
-    public ProjektHandlaggare(Anvandare anv, int pid) {
+    public ProjektHandlaggare(Anvandare anv, Integer pid) {
+         if(anv == null) {
+            throw new NullPointerException("Användaren var null. Kan inte öppna projektfönstret");
+        }
+        if(pid == null) {
+            System.out.println("Argument pid var null: inget projekt valt, projekt öppnas ej.");
+            return;
+        }
+        
         this.anv = anv;
         this.pid = pid;
 
@@ -864,31 +872,31 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
         vaxlaDropdownLage(spnlBeskrivningDropdown, btnBeskrivningDropdown);
     }//GEN-LAST:event_btnBeskrivningDropdownActionPerformed
 
-    public static void main(String args[]) { //TA BORT MAIN METODEN TILLSLUT. NI SKA ENDAST ANVÄNDA MAIN METODEN I Startklassen
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-        }
-        //</editor-fold>
-
-        try {
-            InfDB idb = new InfDB("sdgsweden", "3306", "root", "masterkey");
-            new ProjektHandlaggare(new Anvandare(idb, null, null, null, 3, null, null, null, "handlaggare"), 3).setVisible(true);
-            System.out.println("Databaskoppling skapad");
-        } catch (InfException e) {
-            System.out.println(e.getMessage());
-        }
-    }
+//    public static void main(String args[]) { //TA BORT MAIN METODEN TILLSLUT. NI SKA ENDAST ANVÄNDA MAIN METODEN I Startklassen
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
+//        }
+//        //</editor-fold>
+//
+//        try {
+//            InfDB idb = new InfDB("sdgsweden", "3306", "root", "masterkey");
+//            new ProjektHandlaggare(new Anvandare(idb, null, null, null, 3, null, null, null, "handlaggare"), 3).setVisible(true);
+//            System.out.println("Databaskoppling skapad");
+//        } catch (InfException e) {
+//            System.out.println(e.getMessage());
+//        }
+//    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
