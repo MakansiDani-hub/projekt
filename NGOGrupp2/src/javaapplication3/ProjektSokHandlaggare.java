@@ -162,7 +162,7 @@ public class ProjektSokHandlaggare extends javax.swing.JFrame {
             String start = sdf.format(startdatum);
             String slut = sdf.format(slutdatum);
 
-            String sqlfraga = "SELECT p.pid, p.projektnamn, p.beskrivning, p.startdatum, p.slutdatum, "
+            String sqlfragaAvdelning = "SELECT p.pid, p.projektnamn, p.beskrivning, p.startdatum, p.slutdatum, "
                     + "p.kostnad, p.status, p.prioritet, "
                     + "(SELECT CONCAT(a.fornamn, ' ', a.efternamn) FROM anstalld a WHERE a.aid = p.projektchef) AS projektchef_namn, "
                     + "(SELECT l.namn FROM land l WHERE l.lid = p.land) AS land_namn "
@@ -177,7 +177,17 @@ public class ProjektSokHandlaggare extends javax.swing.JFrame {
                     + "))) "
                     + "ORDER BY p.pid";
 
-            ArrayList<HashMap<String, String>> projektLista = anvandare.getIdb().fetchRows(sqlfraga);
+            String sqlfragaProjektchef
+                    = "SELECT pid, projektnamn, beskrivning, "
+                    + "startdatum, slutdatum, kostnad, status, prioritet, "
+                    + "CONCAT(fornamn, ' ', efternamn) AS projektchef_namn "
+                    + "FROM Projekt "
+                    + "JOIN Anstalld ON projektchef = aid "
+                    + "WHERE projektchef = " + anvandare.getAid();
+
+            ArrayList<HashMap<String, String>> projektLista = new ArrayList<>();
+            projektLista.addAll(anvandare.getIdb().fetchRows(sqlfragaAvdelning));
+            projektLista.addAll(anvandare.getIdb().fetchRows(sqlfragaProjektchef));
 
             DefaultTableModel model = new DefaultTableModel();
 
