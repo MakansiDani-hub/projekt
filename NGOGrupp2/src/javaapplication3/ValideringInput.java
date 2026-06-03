@@ -1,5 +1,9 @@
 package javaapplication3;
 
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
+
 public final class ValideringInput {
 
     private ValideringInput() {
@@ -306,7 +310,7 @@ public final class ValideringInput {
         }
 
         return ArGiltigSokning.JA;
-
+    }
 
     // kontroll om ett fält är tomt
     public static boolean harVarde(JTextField fält, String fältNamn) {
