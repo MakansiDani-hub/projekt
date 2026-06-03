@@ -61,18 +61,7 @@ public class ProjektSokAdmin extends javax.swing.JFrame {
         }
     }
 
-    private void setStartdatum(Date datum) {
-        valStartdatum = datum;
-        //uppdatera GUI för vald-datum
-        System.out.println(dateStartdatum);
-        dateStartdatum.setDate(datum);
-    }
-
-    private void setSlutdatum(Date datum) {
-        valSlutdatum = datum;
-        //uppdatera UI för vald-datum
-        dateSlutdatum.setDate(datum);
-    }
+ 
 
     private void laddaAllaProjekt() {
         try {
