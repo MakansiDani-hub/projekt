@@ -22,7 +22,6 @@ public class ProjektSokHandlaggare extends javax.swing.JFrame {
     private Anvandare anvandare;
     private String valStatus;
     private String namn;
-    private String roll;
 
     /**
      * Creates new form ProjektSokHandlaggare
@@ -31,28 +30,24 @@ public class ProjektSokHandlaggare extends javax.swing.JFrame {
         initComponents();
         this.anvandare = anvandare;
         this.namn = anvandare.getDbNamn();
-        this.roll = anvandare.getRoll();
-        if ("handlaggare_projektchef".equals(roll)) {
-            laddaAllaProjektPaAvdelningenForProjektchef();
-        } else {
-            laddaAllaProjektPaAvdelningenForHandlaggare();
-        }
 
-        lblAnvändaresNamn.setText(namn);
+        laddaAllaProjekt();
         
+        lblAnvändaresNamn.setText(namn);
+
         tblProjektlista.getSelectionModel().addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             @Override
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                if(!evt.getValueIsAdjusting()){
-                        oppnaProjektFonster();
+                if (!evt.getValueIsAdjusting()) {
+                    oppnaProjektFonster();
                 }
             }
         });
     }
 
-    private void laddaAllaProjektPaAvdelningenForHandlaggare() {
+    private void laddaAllaProjekt() {
         try {
-            String sqlfraga
+            String sqlfragaAvdelning
                     = "SELECT DISTINCT p.pid, p.projektnamn, p.beskrivning, "
                     + "p.startdatum, p.slutdatum, p.kostnad, p.status, p.prioritet, "
                     + "CONCAT(pc.fornamn, ' ', pc.efternamn) AS projektchef_namn, "
@@ -67,7 +62,17 @@ public class ProjektSokHandlaggare extends javax.swing.JFrame {
                     + anvandare.getAid() + ") "
                     + "ORDER BY p.pid";
 
-            ArrayList<HashMap<String, String>> projektLista = anvandare.getIdb().fetchRows(sqlfraga);
+            String sqlfragaProjektchef
+                    = "SELECT pid, projektnamn, beskrivning, "
+                    + "startdatum, slutdatum, kostnad, status, prioritet, "
+                    + "CONCAT(fornamn, ' ', efternamn) AS projektchef_namn "
+                    + "FROM Projekt "
+                    + "JOIN Anstalld ON projektchef = aid "
+                    + "WHERE projektchef = " + anvandare.getAid();
+            
+            ArrayList<HashMap<String, String>> projektLista = new ArrayList<>();
+            projektLista.addAll(anvandare.getIdb().fetchRows(sqlfragaAvdelning));
+            projektLista.addAll(anvandare.getIdb().fetchRows(sqlfragaProjektchef));
 
             DefaultTableModel model = new DefaultTableModel();
 
@@ -136,6 +141,7 @@ public class ProjektSokHandlaggare extends javax.swing.JFrame {
                     + "ORDER BY p.pid";
 
             ArrayList<HashMap<String, String>> projektLista = anvandare.getIdb().fetchRows(sqlfraga);
+
 
             DefaultTableModel model = new DefaultTableModel();
 
@@ -258,37 +264,36 @@ public class ProjektSokHandlaggare extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Kunde inte filtrera projekt: " + ex.getMessage());
         }
     }
-    
-    private void oppnaProjektFonster(){
+
+    private void oppnaProjektFonster() {
         int valdRad = tblProjektlista.getSelectedRow();
-        if(valdRad < 0){
+        if (valdRad < 0) {
             System.out.println("oppnaProjektFonster: Ett val registrerades, men ingen rad var vald");
             return;
-        }      
+        }
         Integer valtProjektPid = Integer.valueOf(tblProjektlista.getValueAt(valdRad, 0).toString());  //kolumn 0 är PID
-        
+
         //Kollar om användaren är projektchef i valt projekt
         String arProjektchef = null;
-        try{
+        try {
             int anvandareId = anvandare.getAid();
             arProjektchef = anvandare.getIdb().fetchSingle(
-                    "SELECT projektchef " +
-                    "FROM Projekt " +
-                    "WHERE pid = " + valtProjektPid + " " +
-                    "AND projektchef = " + anvandareId);
-        }catch(InfException e){
+                    "SELECT projektchef "
+                    + "FROM Projekt "
+                    + "WHERE pid = " + valtProjektPid + " "
+                    + "AND projektchef = " + anvandareId);
+        } catch (InfException e) {
             System.out.println(e.getMessage());
         }
-        if(arProjektchef != null){
+        if (arProjektchef != null) {
             //Om användaren är projektchef
             ProjektProjektchefAdmin projektProjektchef = new ProjektProjektchefAdmin(
-                anvandare, valtProjektPid, ProjektProjektchefAdmin.AnvandareRoll.CHEF_FOR_PROJEKT);
+                    anvandare, valtProjektPid, ProjektProjektchefAdmin.AnvandareRoll.CHEF_FOR_PROJEKT);
             projektProjektchef.setVisible(true);
-            projektProjektchef.setDefaultCloseOperation(DISPOSE_ON_CLOSE);                         
-        }
-        else{
+            projektProjektchef.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        } else {
             //Om användaren inte är projektchef:
-            ProjektHandlaggare projektHandlaggare = new ProjektHandlaggare(anvandare, valtProjektPid); 
+            ProjektHandlaggare projektHandlaggare = new ProjektHandlaggare(anvandare, valtProjektPid);
             projektHandlaggare.setVisible(true);
             projektHandlaggare.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         }
