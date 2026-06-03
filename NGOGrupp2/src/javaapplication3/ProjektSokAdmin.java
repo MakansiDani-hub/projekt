@@ -30,10 +30,14 @@ public class ProjektSokAdmin extends javax.swing.JFrame {
     private boolean laggerTillNyttProjekt = false;
     private String namn;
 
+    //Det nuvarande valda projektet
+    private Integer valtProjektPid;
+    
     public ProjektSokAdmin(Anvandare anvandare) {
         initComponents();
         this.anvandare = anvandare;
         this.namn = anvandare.getDbNamn();
+        valtProjektPid = null;
         fyllProjektchefComboBox();
         fyllLandComboBox();
         laddaAllaProjekt();
@@ -140,6 +144,9 @@ public class ProjektSokAdmin extends javax.swing.JFrame {
         if (rad == -1) {
             return;
         }
+        
+        //Uppdaterar fältet för vad det valda projektet är:
+        valtProjektPid = Integer.parseInt(tblProjektlista.getValueAt(rad, 0).toString()); //PID
 
         jTextField2.setText(tblProjektlista.getValueAt(rad, 0).toString()); // PID
         jTextField3.setText(tblProjektlista.getValueAt(rad, 1).toString()); // Projektnamn
@@ -510,6 +517,12 @@ public class ProjektSokAdmin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Kunde inte lägga till projekt: " + ex.getMessage());
         }
     }
+    
+    private void oppnaProjektFonster(){
+        ProjektProjektchefAdmin projektAdmin = new ProjektProjektchefAdmin(anvandare, valtProjektPid, ProjektProjektchefAdmin.AnvandareRoll.ADMIN);
+        projektAdmin.setVisible(true);
+        projektAdmin.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -557,6 +570,7 @@ public class ProjektSokAdmin extends javax.swing.JFrame {
         cbProjektchef = new javax.swing.JComboBox<>();
         cbLand = new javax.swing.JComboBox<>();
         lblAnvändaresNamn = new javax.swing.JLabel();
+        btnOppnaProjekt = new javax.swing.JButton();
 
         jDialog1.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         jDialog1.setTitle("Hitta personal");
@@ -685,6 +699,10 @@ public class ProjektSokAdmin extends javax.swing.JFrame {
 
         lblAnvändaresNamn.setText("användares namn");
 
+        btnOppnaProjekt.setForeground(new java.awt.Color(0, 0, 204));
+        btnOppnaProjekt.setText("Öppna projekt");
+        btnOppnaProjekt.addActionListener(this::btnOppnaProjektActionPerformed);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -724,7 +742,9 @@ public class ProjektSokAdmin extends javax.swing.JFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 587, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 190, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                        .addComponent(btnOppnaProjekt, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnLäggTill, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnRensa, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -834,15 +854,21 @@ public class ProjektSokAdmin extends javax.swing.JFrame {
                             .addComponent(cbLand, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(29, 29, 29)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jButton2)
-                                    .addComponent(btnRensa)))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(btnLäggTill)
-                                .addComponent(btnÄndra))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(25, 25, 25)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(jButton2)
+                                            .addComponent(btnRensa)))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(btnLäggTill)
+                                        .addComponent(btnÄndra))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addComponent(btnOppnaProjekt, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         btnLäggTill.getAccessibleContext().setAccessibleName("");
@@ -910,6 +936,10 @@ public class ProjektSokAdmin extends javax.swing.JFrame {
         jTextField2.setBackground(java.awt.Color.LIGHT_GRAY);
     }//GEN-LAST:event_btnLäggTillActionPerformed
 
+    private void btnOppnaProjektActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOppnaProjektActionPerformed
+        oppnaProjektFonster();
+    }//GEN-LAST:event_btnOppnaProjektActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -935,6 +965,7 @@ public class ProjektSokAdmin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLäggTill;
+    private javax.swing.JButton btnOppnaProjekt;
     private javax.swing.JButton btnRensa;
     private javax.swing.JButton btnÄndra;
     private javax.swing.JComboBox<String> cbLand;
