@@ -12,17 +12,16 @@ import oru.inf.InfException;
  * @author WDM
  */
 public class inloggningsfonster extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(inloggningsfonster.class.getName());
     private InfDB idb;
     private Anvandare anvandare;
+
     /**
      * Creates new form inloggningsfonster
      */
     public inloggningsfonster(InfDB idb) {
         this.idb = idb;
-
-        
 
         initComponents();
         lblFelmeddelande.setVisible(false);
@@ -123,99 +122,105 @@ public class inloggningsfonster extends javax.swing.JFrame {
         String ePost = tfEPost.getText();
         String losen = tfLösenord.getText();
 
-        try{
-            String sqlFråga = "SELECT losenord FROM anstalld where epost = '" + ePost+"'";
-            String dblosen = idb.fetchSingle(sqlFråga);
-            if (losen.equals(dblosen)){
-                String anvandaresNamn = "SELECT fornamn FROM anstalld where epost = '" + ePost+"'";
-                String dbNamn = idb.fetchSingle(anvandaresNamn);
-                
-                String anvandaresEfternamn = "SELECT efternamn FROM anstalld where epost = '" + ePost+"'";
-                String dbEfternamn = idb.fetchSingle(anvandaresEfternamn);
-                
-                String anvandaresAnstallningsdatum = "SELECT anstallningsdatum FROM anstalld where epost = '" + ePost+"'";
-                String dbAnstallningsdatum = idb.fetchSingle (anvandaresAnstallningsdatum);
-                
-                String anvandaresID = "SELECT aid FROM anstalld where epost = '" + ePost+"'";
-                String dbAnvandaresID = idb.fetchSingle (anvandaresID);
-                
-                String anvandaresAdress = "SELECT adress FROM anstalld where epost = '" + ePost+"'";
-                String dbAnvandaresAdress = idb.fetchSingle (anvandaresAdress);
-                
-                String anvandaresTelefon = "SELECT telefon FROM anstalld where epost = '" + ePost+"'";
-                String dbAnvandaresTelefon = idb.fetchSingle (anvandaresTelefon);
-                
-                String anvandareslosenord = "SELECT losenord FROM anstalld where epost = '" + ePost+"'";
-                String dbAnvandareslosenord = idb.fetchSingle (anvandareslosenord);
-                
-                
+        ValideringInput.ArGiltigEpost epostResultat = ValideringInput.valideraEpost(ePost);
 
-                
-                
+        if (epostResultat == ValideringInput.ArGiltigEpost.TOM) {
+            lblFelmeddelande.setText("Du måste skriva e-post.");
+            lblFelmeddelande.setVisible(true);
+            return;
+        }
+
+        if (epostResultat == ValideringInput.ArGiltigEpost.OGILTIGT_FORMAT) {
+            lblFelmeddelande.setText("E-postadressen har fel format.");
+            lblFelmeddelande.setVisible(true);
+            return;
+        }
+
+        ValideringInput.ArGiltigtLosenord losenResultat = ValideringInput.valideraLosenord(losen);
+
+        if (losenResultat == ValideringInput.ArGiltigtLosenord.TOM) {
+            lblFelmeddelande.setText("Du måste skriva lösenord.");
+            lblFelmeddelande.setVisible(true);
+            return;
+        }
+
+        try {
+            String sqlFråga = "SELECT losenord FROM anstalld where epost = '" + ePost + "'";
+            String dblosen = idb.fetchSingle(sqlFråga);
+            if (losen.equals(dblosen)) {
+                String anvandaresNamn = "SELECT fornamn FROM anstalld where epost = '" + ePost + "'";
+                String dbNamn = idb.fetchSingle(anvandaresNamn);
+
+                String anvandaresEfternamn = "SELECT efternamn FROM anstalld where epost = '" + ePost + "'";
+                String dbEfternamn = idb.fetchSingle(anvandaresEfternamn);
+
+                String anvandaresAnstallningsdatum = "SELECT anstallningsdatum FROM anstalld where epost = '" + ePost + "'";
+                String dbAnstallningsdatum = idb.fetchSingle(anvandaresAnstallningsdatum);
+
+                String anvandaresID = "SELECT aid FROM anstalld where epost = '" + ePost + "'";
+                String dbAnvandaresID = idb.fetchSingle(anvandaresID);
+
+                String anvandaresAdress = "SELECT adress FROM anstalld where epost = '" + ePost + "'";
+                String dbAnvandaresAdress = idb.fetchSingle(anvandaresAdress);
+
+                String anvandaresTelefon = "SELECT telefon FROM anstalld where epost = '" + ePost + "'";
+                String dbAnvandaresTelefon = idb.fetchSingle(anvandaresTelefon);
+
+                String anvandareslosenord = "SELECT losenord FROM anstalld where epost = '" + ePost + "'";
+                String dbAnvandareslosenord = idb.fetchSingle(anvandareslosenord);
+
                 //här kollar man om en sådan ID finns i en tabell 
                 String adminCheck = idb.fetchSingle("SELECT COUNT(*) FROM admin WHERE aid = " + dbAnvandaresID); //admin tabellen har inga upprepningar så en admin kan vara en gång(0-1)
                 String handlaggareCheck = idb.fetchSingle("SELECT COUNT(*) FROM handlaggare WHERE aid = " + dbAnvandaresID);// en handläggare kan vara en handläggare(0-1)
                 String projektchefCheck = idb.fetchSingle("SELECT COUNT(*) FROM projekt WHERE projektchef = " + dbAnvandaresID);//projektchef kan vara chef för flera projekt(0-INF)
 
-
                 boolean arAdmin = !adminCheck.equals("0");
                 boolean arHandlaggare = !handlaggareCheck.equals("0");
                 boolean arProjektchef = !projektchefCheck.equals("0");
-                
+
                 String roll = "";
                 if (arAdmin) {
                     roll = "admin";
-                }
-                else if (arHandlaggare && arProjektchef) {
+                } else if (arHandlaggare && arProjektchef) {
                     roll = "handlaggare_projektchef";
-                }
-                else if (arHandlaggare) {
+                } else if (arHandlaggare) {
                     roll = "handlaggare";
                 }
-                
+
                 Anvandare anvandare = new Anvandare(
-                idb,
-                
-                dbNamn,
-                dbEfternamn,
-                dbAnstallningsdatum,
-                Integer.parseInt(dbAnvandaresID),
-                dbAnvandaresAdress,
-                dbAnvandaresTelefon,
-                dbAnvandareslosenord,
-                roll
+                        idb,
+                        dbNamn,
+                        dbEfternamn,
+                        dbAnstallningsdatum,
+                        Integer.parseInt(dbAnvandaresID),
+                        dbAnvandaresAdress,
+                        dbAnvandaresTelefon,
+                        dbAnvandareslosenord,
+                        roll
                 );
-                
+
                 if (arAdmin) {
 
                     new AdministratörMeny(anvandare).setVisible(true);
-                }
-                else if (arHandlaggare && arProjektchef) {
+                } else if (arHandlaggare && arProjektchef) {
                     new MenyHandlaggareProjektchef(anvandare).setVisible(true);
-                }
-                
-                else if (arHandlaggare) {
+                } else if (arHandlaggare) {
                     new MenyHandlaggare(anvandare).setVisible(true);
-                }
-
-                else {
+                } else {
                     lblFelmeddelande.setVisible(true);
-                }               
+                }
                 this.setVisible(false);
-            }
-            else{
+            } else {
                 lblFelmeddelande.setVisible(true);
             }
-        }
-        catch(Exception ex){
+        } catch (Exception ex) {
         }
 
     }//GEN-LAST:event_btnLoggainActionPerformed
 
-    
-    private void tfEPostActionPerformed(java.awt.event.ActionEvent evt) {                                        
-    // TODO add your handling code here:
-}
+    private void tfEPostActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+    }
     private void tfLösenordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfLösenordActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tfLösenordActionPerformed
@@ -224,20 +229,20 @@ public class inloggningsfonster extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-       try {
+        try {
 
-        InfDB idb = new InfDB("sdgsweden","3306","root","masterkey");
+            InfDB idb = new InfDB("sdgsweden", "3306", "root", "masterkey");
 
-        java.awt.EventQueue.invokeLater(() -> {
-            new inloggningsfonster(idb).setVisible(true);
-        });
+            java.awt.EventQueue.invokeLater(() -> {
+                new inloggningsfonster(idb).setVisible(true);
+            });
 
-    } catch (InfException ex) {
+        } catch (InfException ex) {
 
-        System.out.println(ex.getMessage());
+            System.out.println(ex.getMessage());
+        }
     }
-    }
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLoggain;

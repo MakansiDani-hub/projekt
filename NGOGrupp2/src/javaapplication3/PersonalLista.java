@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package javaapplication3;
+
 import oru.inf.InfDB;
 import java.util.ArrayList;
 import javax.swing.JLabel;
@@ -14,7 +15,7 @@ import java.awt.BorderLayout;
  * @author alexander.willen
  */
 public class PersonalLista extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(PersonalLista.class.getName());
     private Anvandare anvandare;
     private InfDB idb;
@@ -24,7 +25,7 @@ public class PersonalLista extends javax.swing.JFrame {
      * Creates new form Personer
      */
     public PersonalLista(Anvandare anvandare) {
-        
+
         initComponents();
         this.anvandare = anvandare;
         this.idb = anvandare.getIdb();
@@ -33,16 +34,16 @@ public class PersonalLista extends javax.swing.JFrame {
 
         visaAllPersonalIAvdelning();
     }
-      
+
     private void visaAllPersonalIAvdelning() {
         try {
             jPanel6.removeAll();
             jPanel6.add(jPanel10);
 
-            String sqlFraga =
-                    "SELECT CONCAT(fornamn, ' ', efternamn), epost, telefon " +
-                    "FROM anstalld " +
-                    "WHERE avdelning = (SELECT avdelning FROM anstalld WHERE aid = " + aid + ")";
+            String sqlFraga
+                    = "SELECT CONCAT(fornamn, ' ', efternamn), epost, telefon "
+                    + "FROM anstalld "
+                    + "WHERE avdelning = (SELECT avdelning FROM anstalld WHERE aid = " + aid + ")";
 
             ArrayList<java.util.HashMap<String, String>> personalLista = idb.fetchRows(sqlFraga);
 
@@ -251,58 +252,81 @@ public class PersonalLista extends javax.swing.JFrame {
 
     private void btnSökActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSökActionPerformed
         try {
-                String sokning = SökningsFält.getText();
+            String sokning = SökningsFält.getText();
+            ValideringInput.ArGiltigSokning resultatSokning
+                    = ValideringInput.valideraSokning(sokning);
 
-                String sqlFraga =
-                        "SELECT CONCAT(fornamn, ' ', efternamn) AS namn, epost, telefon " +
-                        "FROM anstalld " +
-                        "WHERE avdelning = (SELECT avdelning FROM anstalld WHERE aid = " + aid + ") " +
-                        "AND (fornamn LIKE '%" + sokning + "%' " +
-                        "OR efternamn LIKE '%" + sokning + "%' " +
-                        "OR epost LIKE '%" + sokning + "%')";
+            if (resultatSokning == ValideringInput.ArGiltigSokning.TOM) {
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Du måste skriva något att söka efter.");
+                return;
+            }
 
-                ArrayList<java.util.HashMap<String, String>> resultat = idb.fetchRows(sqlFraga);
+            if (resultatSokning == ValideringInput.ArGiltigSokning.FOR_LANG) {
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Sökningen är för lång.");
+                return;
+            }
 
-                if (resultat == null || resultat.isEmpty()) {
-                    javax.swing.JOptionPane.showMessageDialog(
-                            this,
-                            "Ingen anställd hittades i din avdelning.",
-                            "Sökresultat",
-                            javax.swing.JOptionPane.INFORMATION_MESSAGE
-                    );
-                    return;
-                }
+            if (resultatSokning == ValideringInput.ArGiltigSokning.OGILTIGT_TECKEN) {
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Sökningen innehåller ogiltiga tecken.");
+                return;
+            }
 
-                StringBuilder meddelande = new StringBuilder();
+            String sqlFraga
+                    = "SELECT CONCAT(fornamn, ' ', efternamn) AS namn, epost, telefon "
+                    + "FROM anstalld "
+                    + "WHERE avdelning = (SELECT avdelning FROM anstalld WHERE aid = " + aid + ") "
+                    + "AND (fornamn LIKE '%" + sokning + "%' "
+                    + "OR efternamn LIKE '%" + sokning + "%' "
+                    + "OR epost LIKE '%" + sokning + "%')";
 
-                for (java.util.HashMap<String, String> rad : resultat) {
-                    meddelande.append("Namn: ").append(rad.get("namn")).append("\n");
-                    meddelande.append("Epost: ").append(rad.get("epost")).append("\n");
-                    meddelande.append("Telefon: ").append(rad.get("telefon")).append("\n");
-                    meddelande.append("----------------------\n");
-                }
+            ArrayList<java.util.HashMap<String, String>> resultat = idb.fetchRows(sqlFraga);
 
+            if (resultat == null || resultat.isEmpty()) {
                 javax.swing.JOptionPane.showMessageDialog(
                         this,
-                        meddelande.toString(),
-                        "Personal i din avdelning",
+                        "Ingen anställd hittades i din avdelning.",
+                        "Sökresultat",
                         javax.swing.JOptionPane.INFORMATION_MESSAGE
                 );
-
-            } catch (Exception ex) {
-                javax.swing.JOptionPane.showMessageDialog(
-                        this,
-                        "Fel vid sökning.",
-                        "Fel",
-                        javax.swing.JOptionPane.ERROR_MESSAGE
-                );
+                return;
             }
+
+            StringBuilder meddelande = new StringBuilder();
+
+            for (java.util.HashMap<String, String> rad : resultat) {
+                meddelande.append("Namn: ").append(rad.get("namn")).append("\n");
+                meddelande.append("Epost: ").append(rad.get("epost")).append("\n");
+                meddelande.append("Telefon: ").append(rad.get("telefon")).append("\n");
+                meddelande.append("----------------------\n");
+            }
+
+            javax.swing.JOptionPane.showMessageDialog(
+                    this,
+                    meddelande.toString(),
+                    "Personal i din avdelning",
+                    javax.swing.JOptionPane.INFORMATION_MESSAGE
+            );
+
+        } catch (Exception ex) {
+            javax.swing.JOptionPane.showMessageDialog(
+                    this,
+                    "Fel vid sökning.",
+                    "Fel",
+                    javax.swing.JOptionPane.ERROR_MESSAGE
+            );
+        }
     }//GEN-LAST:event_btnSökActionPerformed
-    
+
 
     private void lblTillbakaTillMenyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblTillbakaTillMenyActionPerformed
         //new MenyHandlaggareProjektchef().setVisible(true);
-       // this.setVisible(false);
+        // this.setVisible(false);
     }//GEN-LAST:event_lblTillbakaTillMenyActionPerformed
 
     private void SökningsFältActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SökningsFältActionPerformed

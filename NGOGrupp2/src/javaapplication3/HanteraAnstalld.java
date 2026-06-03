@@ -221,7 +221,7 @@ public class HanteraAnstalld extends javax.swing.JFrame {
                         .addComponent(JTxtFieldSökruta, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnSök))
-                    .addComponent(JScrollPaneListaAnställda, javax.swing.GroupLayout.DEFAULT_SIZE, 851, Short.MAX_VALUE))
+                    .addComponent(JScrollPaneListaAnställda, javax.swing.GroupLayout.DEFAULT_SIZE, 608, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -301,7 +301,7 @@ public class HanteraAnstalld extends javax.swing.JFrame {
                             .addComponent(JLblSokAnställd)
                             .addComponent(btnSök))
                         .addGap(18, 18, 18)
-                        .addComponent(JScrollPaneListaAnställda, javax.swing.GroupLayout.DEFAULT_SIZE, 824, Short.MAX_VALUE)
+                        .addComponent(JScrollPaneListaAnställda)
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addGap(27, 27, 27)
@@ -579,6 +579,30 @@ public class HanteraAnstalld extends javax.swing.JFrame {
     }//GEN-LAST:event_JBtnRensaUppgifteranstalldActionPerformed
 
     private void JBtnLaggTillAnstalldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnLaggTillAnstalldActionPerformed
+        if (ValideringInput.valideraNamn(JTxtFieldFNamn.getText()) != ValideringInput.ArGiltigtNamn.JA) {
+            JOptionPane.showMessageDialog(this, "Du måste skriva ett giltigt förnamn.");
+            return;
+        }
+
+        if (ValideringInput.valideraNamn(JTxtFieldENamn.getText()) != ValideringInput.ArGiltigtNamn.JA) {
+            JOptionPane.showMessageDialog(this, "Du måste skriva ett giltigt efternamn.");
+            return;
+        }
+
+        if (ValideringInput.valideraEpost(JTxtFieldEpost.getText()) != ValideringInput.ArGiltigEpost.JA) {
+            JOptionPane.showMessageDialog(this, "Du måste skriva en giltig e-postadress.");
+            return;
+        }
+
+        if (ValideringInput.valideraLosenord(jTextField5.getText()) != ValideringInput.ArGiltigtLosenord.JA) {
+            JOptionPane.showMessageDialog(this, "Du måste skriva ett lösenord.");
+            return;
+        }
+
+        if (ValideringInput.valideraTelefon(JTxtFieldTeleNr.getText()) != ValideringInput.ArGiltigTelefon.JA) {
+            JOptionPane.showMessageDialog(this, "Du måste skriva ett giltigt telefonnummer.");
+            return;
+        }
         try {
             String aid = idb.getAutoIncrement("anstalld", "aid");
 
@@ -628,6 +652,30 @@ public class HanteraAnstalld extends javax.swing.JFrame {
     }//GEN-LAST:event_JBtnLaggTillAnstalldActionPerformed
 
     private void JBtnUppdateraAnstalldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnUppdateraAnstalldActionPerformed
+        if (ValideringInput.valideraNamn(JTxtFieldFNamn.getText()) != ValideringInput.ArGiltigtNamn.JA) {
+            JOptionPane.showMessageDialog(this, "Du måste skriva ett giltigt förnamn.");
+            return;
+        }
+
+        if (ValideringInput.valideraNamn(JTxtFieldENamn.getText()) != ValideringInput.ArGiltigtNamn.JA) {
+            JOptionPane.showMessageDialog(this, "Du måste skriva ett giltigt efternamn.");
+            return;
+        }
+
+        if (ValideringInput.valideraEpost(JTxtFieldEpost.getText()) != ValideringInput.ArGiltigEpost.JA) {
+            JOptionPane.showMessageDialog(this, "Du måste skriva en giltig e-postadress.");
+            return;
+        }
+
+        if (ValideringInput.valideraLosenord(jTextField5.getText()) != ValideringInput.ArGiltigtLosenord.JA) {
+            JOptionPane.showMessageDialog(this, "Du måste skriva ett lösenord.");
+            return;
+        }
+
+        if (ValideringInput.valideraTelefon(JTxtFieldTeleNr.getText()) != ValideringInput.ArGiltigTelefon.JA) {
+            JOptionPane.showMessageDialog(this, "Du måste skriva ett giltigt telefonnummer.");
+            return;
+        }
         try {
             String aid = JTxtFieldAnstalldID.getText();
             String avdID = cbAvdelning.getSelectedItem().toString().split(" - ")[0];

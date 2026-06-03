@@ -14,11 +14,52 @@ public final class ValideringInput {
         FOR_LANG_INTEGER,
         NEJ
     }
+
     public enum ArGiltigProjektnamn {
         JA,
         FOR_LANG,
         OGILTIGT_TECKEN,
         NEJ
+    }
+
+    public enum ArGiltigEpost {
+        JA,
+        TOM,
+        OGILTIGT_FORMAT
+    }
+
+    public enum ArGiltigtLosenord {
+        JA,
+        TOM
+    }
+
+    public enum ArGiltigtNamn {
+        JA,
+        TOM,
+        FOR_LANG,
+        OGILTIGT_TECKEN
+    }
+
+    public enum ArGiltigTelefon {
+        JA,
+        TOM,
+        OGILTIGT_TECKEN,
+        FOR_KORT,
+        FOR_LANG
+    }
+
+    public enum ArGiltigAdress {
+        JA,
+        TOM,
+        FOR_LANG,
+        OGILTIGT_TECKEN
+    }
+
+    public enum ArGiltigSokning {
+        JA,
+        TOM,
+        FOR_LANG,
+        OGILTIGT_TECKEN
     }
 
     /**
@@ -40,12 +81,11 @@ public final class ValideringInput {
     }
 
     /**
-     * Returnerar true om kostnaden är giltig, false om inte.
-     * Giltiga värden:
+     * Returnerar true om kostnaden är giltig, false om inte. Giltiga värden:
      * 000000000000.00 I databasen: Decimal(12, 2)
      *
-     * ArGiltigKostnad returnerar olika enums från "ArGiltigKostnad".
-     * Dessa berättar resultatet av valideringen. ArGiltigKostnad.JA betyder att
+     * ArGiltigKostnad returnerar olika enums från "ArGiltigKostnad". Dessa
+     * berättar resultatet av valideringen. ArGiltigKostnad.JA betyder att
      * kostnaden var korrekt.
      *
      * Hur det returnerade värdet av typ ArGiltigKostnad används i fönstren:
@@ -56,7 +96,7 @@ public final class ValideringInput {
         //...trim: Mellanslag på sidorna räkans som giltigt
         kostnad = kostnad.trim();
         boolean tomKostnad = kostnad == null || kostnad.matches(" *");
-        
+
         //Kollar om kostnaden är giltig
         if (kostnad.matches("^[0-9]{1,12}([.,][0-9]{1,2})?$") || tomKostnad) {
             //Regex förklaring:
@@ -66,72 +106,166 @@ public final class ValideringInput {
             //$ betyder "slutar med det innan"
             return ArGiltigKostnad.JA; //TESTA
         }
-        
+
         //Vid ogiltiga värden:
-        if (kostnad.matches(".*[^0-9.,].*")) { 
+        if (kostnad.matches(".*[^0-9.,].*")) {
             return ArGiltigKostnad.HAR_OGILTIGA_TECKEN;
-        }
-        else if (kostnad.matches("^[.,].*")) {
+        } else if (kostnad.matches("^[.,].*")) {
             return ArGiltigKostnad.DECIMAL_UTAN_SIFFROR_INNAN;
-        }
-        else if (kostnad.matches(".*[.,]$")) {
+        } else if (kostnad.matches(".*[.,]$")) {
             return ArGiltigKostnad.DECIMAL_UTAN_SIFFROR_EFTER;
-        }
-        else if (kostnad.matches(".*[.,][0-9]{3,}.*")) {
+        } else if (kostnad.matches(".*[.,][0-9]{3,}.*")) {
             return ArGiltigKostnad.FOR_LANG_DECIMAL;
-        }
-        else if (kostnad.matches("^[0-9]{13,}.*")) {
+        } else if (kostnad.matches("^[0-9]{13,}.*")) {
             return ArGiltigKostnad.FOR_LANG_INTEGER;
-        }
-        else{
+        } else {
             return ArGiltigKostnad.NEJ;
         }
     }
 
     /**
-     * Validera innan normalisering.
-     * in: en kostnad
-     * ut: en kostnad med: 1. borttagna leading zeroes,  
-     * 2. punkt istället för komma för decimal och 3. 
+     * Validera innan normalisering. in: en kostnad ut: en kostnad med: 1.
+     * borttagna leading zeroes, 2. punkt istället för komma för decimal och 3.
      * bortagna whitespace karaktärer i början och slut
      */
     public static String normaliseraKostnad(String kostnad) {
-        if(kostnad == null || kostnad.matches(" *")) return null; //Om kostnad är null eller bara är whitespace characters
-
+        if (kostnad == null || kostnad.matches(" *")) {
+            return null; //Om kostnad är null eller bara är whitespace characters
+        }
         //Regex förklaring:
         //^0+  alla från början i rad med "greedy matching" - så många som möjligt
         //(?!\\.)  som INTE följs av en punkt precis efter
         //Detta ersätts av "" (tas bort)
         String normaliseradKostnad = kostnad.replaceFirst("^0+(?!\\.)", "")
-            .replace(",", ".") //Ersätter "," med "."
-            .trim();           //Tar bort mellanslag i början och slut
+                .replace(",", ".") //Ersätter "," med "."
+                .trim();           //Tar bort mellanslag i början och slut
         return normaliseradKostnad;
     }
-    
-    
-    public static ArGiltigProjektnamn valideraProjektnamn(String projektnamn){
+
+    public static ArGiltigProjektnamn valideraProjektnamn(String projektnamn) {
         projektnamn = projektnamn.trim();
         //Begränsar till vissa normala tecken och till max 100 tecken (efter trim)
-        if(projektnamn.matches("^[A-Za-zÅÄÖåäö0-9 _().,!?/><&-]{1,100}$")){
+        if (projektnamn.matches("^[A-Za-zÅÄÖåäö0-9 _().,!?/><&-]{1,100}$")) {
             return ArGiltigProjektnamn.JA;
         }
 
         //Vid ogiltiga värden
-        if(projektnamn.length() > 100){
+        if (projektnamn.length() > 100) {
             return ArGiltigProjektnamn.FOR_LANG;
-        }
-        else if(projektnamn.matches("[^A-Za-zÅÄÖåäö0-9 _().,!?/><&-]")){
+        } else if (projektnamn.matches("[^A-Za-zÅÄÖåäö0-9 _().,!?/><&-]")) {
             return ArGiltigProjektnamn.OGILTIGT_TECKEN;
-        }
-        else{
+        } else {
             return ArGiltigProjektnamn.NEJ;
         }
     }
+
     /*
     * Validera innan normalisering.
-    */
-    public static String normaliseraProjektnamn(String projektnamn){
+     */
+    public static String normaliseraProjektnamn(String projektnamn) {
         //Trimma mellanslag på kanterna
         return projektnamn.trim();
+    }
+
+    public static ArGiltigEpost valideraEpost(String epost) {
+        if (epost == null || epost.trim().isEmpty()) {
+            return ArGiltigEpost.TOM;
+        }
+
+        epost = epost.trim();
+
+        if (epost.matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
+            return ArGiltigEpost.JA;
+        }
+
+        return ArGiltigEpost.OGILTIGT_FORMAT;
+    }
+
+    public static ArGiltigtLosenord valideraLosenord(String losenord) {
+        if (losenord == null || losenord.trim().isEmpty()) {
+            return ArGiltigtLosenord.TOM;
+        }
+
+        return ArGiltigtLosenord.JA;
+    }
+
+    public static ArGiltigtNamn valideraNamn(String namn) {
+        if (namn == null || namn.trim().isEmpty()) {
+            return ArGiltigtNamn.TOM;
+        }
+
+        namn = namn.trim();
+
+        if (namn.length() > 100) {
+            return ArGiltigtNamn.FOR_LANG;
+        }
+
+        if (!namn.matches("^[A-Za-zÅÄÖåäöÉéÜü\\- ]+$")) {
+            return ArGiltigtNamn.OGILTIGT_TECKEN;
+        }
+
+        return ArGiltigtNamn.JA;
+    }
+
+    public static ArGiltigTelefon valideraTelefon(String telefon) {
+        if (telefon == null || telefon.trim().isEmpty()) {
+            return ArGiltigTelefon.TOM;
+        }
+
+        telefon = telefon.trim();
+
+        if (!telefon.matches("^[0-9+\\- ]+$")) {
+            return ArGiltigTelefon.OGILTIGT_TECKEN;
+        }
+
+        String endastSiffror = telefon.replaceAll("[^0-9]", "");
+
+        if (endastSiffror.length() < 7) {
+            return ArGiltigTelefon.FOR_KORT;
+        }
+
+        if (endastSiffror.length() > 15) {
+            return ArGiltigTelefon.FOR_LANG;
+        }
+
+        return ArGiltigTelefon.JA;
+    }
+
+    public static ArGiltigAdress valideraAdress(String adress) {
+
+        if (adress == null || adress.trim().isEmpty()) {
+            return ArGiltigAdress.TOM;
+        }
+
+        adress = adress.trim();
+
+        if (adress.length() > 100) {
+            return ArGiltigAdress.FOR_LANG;
+        }
+
+        if (!adress.matches("^[A-Za-zÅÄÖåäö0-9 ,.-]+$")) {
+            return ArGiltigAdress.OGILTIGT_TECKEN;
+        }
+
+        return ArGiltigAdress.JA;
+    }
+
+    public static ArGiltigSokning valideraSokning(String sokning) {
+
+        if (sokning == null || sokning.trim().isEmpty()) {
+            return ArGiltigSokning.TOM;
+        }
+
+        sokning = sokning.trim();
+
+        if (sokning.length() > 100) {
+            return ArGiltigSokning.FOR_LANG;
+        }
+
+        if (!sokning.matches("^[A-Za-zÅÄÖåäö0-9 @._-]+$")) {
+            return ArGiltigSokning.OGILTIGT_TECKEN;
+        }
+
+        return ArGiltigSokning.JA;
     }
 }
