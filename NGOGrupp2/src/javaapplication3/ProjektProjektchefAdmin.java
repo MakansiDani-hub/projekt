@@ -14,9 +14,8 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.HashSet;
 import javaapplication3.ProjektHandlaggare.Instanstyp;
-import static javaapplication3.ProjektHandlaggare.Instanstyp.*;
 import javaapplication3.ValideringInput.ArGiltigKostnad;
-import javaapplication3.ValideringInput.ArGiltigProjektnamn;
+import javaapplication3.ValideringInput.ArGiltigText;
 import javax.swing.*;
 import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 import oru.inf.InfDB;
@@ -30,7 +29,7 @@ import projListeners.PartnerListener;
  *
  * @author alexander.willen
  */
-public class ProjektProjektchef extends javax.swing.JFrame {
+public class ProjektProjektchefAdmin extends javax.swing.JFrame {
 
     private final JFrame dennaFrame = this;
 
@@ -38,7 +37,8 @@ public class ProjektProjektchef extends javax.swing.JFrame {
     private static final Color bakgrundsfarg = new Color(212, 217, 223);
 
     //Session
-    private Anvandare anv; //användaren (Session)
+    private Anvandare anv;
+    private AnvandareRoll roll;
     private InfDB idb;
     private int pid; //det valda projektet vars uppgifter visas
 
@@ -78,13 +78,19 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         ANSTALLD,
         PARTNER
     }
+    
+    enum AnvandareRoll {
+        CHEF_FOR_PROJEKT,
+        ADMIN
+    }
 
-    public ProjektProjektchef(Anvandare anv, int pid) {
+    public ProjektProjektchefAdmin(Anvandare anv, int pid, AnvandareRoll roll) {
         //Den som öppnat detta fönster är projektchef för det, vid nuläget innebär det att kontroll behöver
 
         this.anv = anv;
         idb = anv.getIdb();
         this.pid = pid;
+        this.roll = roll;
         redigerar = false;
         borttagningslageMal = false;
         borttagningslageLand = false;
@@ -113,7 +119,7 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         //landListener = skapaLandListener();
         initComponents();
         laddaInfo();
-        startlageGUI();
+        startlageUI();
     }
 
     /**
@@ -140,8 +146,10 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         btnTaBortMal = new javax.swing.JButton();
         lblFelmeddelandeMal = new javax.swing.JLabel();
         btnAddMal = new javax.swing.JButton();
-        pnlBeskrivningDropdown = new javax.swing.JPanel();
+        pnlBeskrivningDropdownKnapp = new javax.swing.JPanel();
         btnBeskrivningDropdown = new javax.swing.JButton();
+        pnlFelmeddelandeBeskrivning = new javax.swing.JPanel();
+        lblFelmeddelandeBeskrivning = new javax.swing.JLabel();
         spnlBeskrivningDropdown = new javax.swing.JScrollPane();
         pnlBeskrivning = new javax.swing.JPanel();
         txarBeskrivning = new javax.swing.JTextArea();
@@ -199,7 +207,8 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         pnlSlutDatum = new javax.swing.JPanel();
         txtfSlutDatum = new javax.swing.JTextField();
         dateSlutDatum = new com.toedter.calendar.JDateChooser();
-        pnlProjektnamn = new javax.swing.JPanel();
+        pnlProjektnamnYttre = new javax.swing.JPanel();
+        pnlProjektnamnInre = new javax.swing.JPanel();
         txtfProjektnamn = new javax.swing.JTextField();
         lblFelmeddelandeProjektnamn = new javax.swing.JLabel();
         btnAndra = new javax.swing.JButton();
@@ -315,11 +324,11 @@ public class ProjektProjektchef extends javax.swing.JFrame {
 
         pnlVanster.add(spnlMalDropdown);
 
-        pnlBeskrivningDropdown.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
-        pnlBeskrivningDropdown.setMaximumSize(new java.awt.Dimension(500, 38));
-        pnlBeskrivningDropdown.setMinimumSize(new java.awt.Dimension(139, 38));
-        pnlBeskrivningDropdown.setName(""); // NOI18N
-        pnlBeskrivningDropdown.setPreferredSize(new java.awt.Dimension(250, 38));
+        pnlBeskrivningDropdownKnapp.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        pnlBeskrivningDropdownKnapp.setMaximumSize(new java.awt.Dimension(500, 38));
+        pnlBeskrivningDropdownKnapp.setMinimumSize(new java.awt.Dimension(139, 38));
+        pnlBeskrivningDropdownKnapp.setName(""); // NOI18N
+        pnlBeskrivningDropdownKnapp.setPreferredSize(new java.awt.Dimension(250, 38));
 
         btnBeskrivningDropdown.setText("▶ Beskrivning");
         btnBeskrivningDropdown.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -330,23 +339,48 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         btnBeskrivningDropdown.setVerifyInputWhenFocusTarget(false);
         btnBeskrivningDropdown.addActionListener(this::btnBeskrivningDropdownActionPerformed);
 
-        javax.swing.GroupLayout pnlBeskrivningDropdownLayout = new javax.swing.GroupLayout(pnlBeskrivningDropdown);
-        pnlBeskrivningDropdown.setLayout(pnlBeskrivningDropdownLayout);
-        pnlBeskrivningDropdownLayout.setHorizontalGroup(
-            pnlBeskrivningDropdownLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlBeskrivningDropdownLayout.createSequentialGroup()
+        javax.swing.GroupLayout pnlBeskrivningDropdownKnappLayout = new javax.swing.GroupLayout(pnlBeskrivningDropdownKnapp);
+        pnlBeskrivningDropdownKnapp.setLayout(pnlBeskrivningDropdownKnappLayout);
+        pnlBeskrivningDropdownKnappLayout.setHorizontalGroup(
+            pnlBeskrivningDropdownKnappLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlBeskrivningDropdownKnappLayout.createSequentialGroup()
                 .addComponent(btnBeskrivningDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 199, Short.MAX_VALUE))
         );
-        pnlBeskrivningDropdownLayout.setVerticalGroup(
-            pnlBeskrivningDropdownLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlBeskrivningDropdownLayout.createSequentialGroup()
+        pnlBeskrivningDropdownKnappLayout.setVerticalGroup(
+            pnlBeskrivningDropdownKnappLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlBeskrivningDropdownKnappLayout.createSequentialGroup()
                 .addGap(8, 8, 8)
                 .addComponent(btnBeskrivningDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        pnlVanster.add(pnlBeskrivningDropdown);
+        pnlVanster.add(pnlBeskrivningDropdownKnapp);
+
+        pnlFelmeddelandeBeskrivning.setPreferredSize(new java.awt.Dimension(324, 24));
+
+        lblFelmeddelandeBeskrivning.setForeground(new java.awt.Color(255, 51, 0));
+        lblFelmeddelandeBeskrivning.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblFelmeddelandeBeskrivning.setText("[felmeddelande]");
+
+        javax.swing.GroupLayout pnlFelmeddelandeBeskrivningLayout = new javax.swing.GroupLayout(pnlFelmeddelandeBeskrivning);
+        pnlFelmeddelandeBeskrivning.setLayout(pnlFelmeddelandeBeskrivningLayout);
+        pnlFelmeddelandeBeskrivningLayout.setHorizontalGroup(
+            pnlFelmeddelandeBeskrivningLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlFelmeddelandeBeskrivningLayout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addComponent(lblFelmeddelandeBeskrivning)
+                .addContainerGap(237, Short.MAX_VALUE))
+        );
+        pnlFelmeddelandeBeskrivningLayout.setVerticalGroup(
+            pnlFelmeddelandeBeskrivningLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlFelmeddelandeBeskrivningLayout.createSequentialGroup()
+                .addGap(3, 3, 3)
+                .addComponent(lblFelmeddelandeBeskrivning)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        pnlVanster.add(pnlFelmeddelandeBeskrivning);
 
         spnlBeskrivningDropdown.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         spnlBeskrivningDropdown.setToolTipText("");
@@ -359,11 +393,14 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         pnlBeskrivning.setName(""); // NOI18N
         pnlBeskrivning.setLayout(new java.awt.BorderLayout());
 
+        txarBeskrivning.setEditable(false);
+        txarBeskrivning.setBackground(new java.awt.Color(212, 217, 223));
         txarBeskrivning.setColumns(5);
         txarBeskrivning.setLineWrap(true);
         txarBeskrivning.setRows(5);
         txarBeskrivning.setWrapStyleWord(true);
         txarBeskrivning.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        txarBeskrivning.setFocusable(false);
         txarBeskrivning.setMaximumSize(new java.awt.Dimension(200, 84));
         txarBeskrivning.setMinimumSize(new java.awt.Dimension(200, 20));
         pnlBeskrivning.add(txarBeskrivning, java.awt.BorderLayout.PAGE_START);
@@ -426,7 +463,7 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         txtfStatus.setFocusable(false);
         txtfStatus.setMaximumSize(new java.awt.Dimension(160, 30));
         txtfStatus.setMinimumSize(new java.awt.Dimension(45, 30));
-        txtfStatus.setPreferredSize(new java.awt.Dimension(60, 30));
+        txtfStatus.setPreferredSize(new java.awt.Dimension(85, 30));
 
         cbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Planerat", "Pågående", "Avslutat", "Ingen" }));
 
@@ -495,6 +532,7 @@ public class ProjektProjektchef extends javax.swing.JFrame {
 
         pnlVanster.add(pnlPrioritet);
 
+        pnlFelmeddelandeKostnad.setMaximumSize(new java.awt.Dimension(32767, 24));
         pnlFelmeddelandeKostnad.setPreferredSize(new java.awt.Dimension(324, 24));
 
         lblFelmeddelandeKostnad.setForeground(new java.awt.Color(255, 51, 0));
@@ -512,10 +550,9 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         );
         pnlFelmeddelandeKostnadLayout.setVerticalGroup(
             pnlFelmeddelandeKostnadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlFelmeddelandeKostnadLayout.createSequentialGroup()
-                .addGap(3, 3, 3)
-                .addComponent(lblFelmeddelandeKostnad)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFelmeddelandeKostnadLayout.createSequentialGroup()
+                .addGap(0, 8, Short.MAX_VALUE)
+                .addComponent(lblFelmeddelandeKostnad))
         );
 
         pnlVanster.add(pnlFelmeddelandeKostnad);
@@ -532,7 +569,7 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         txtfKostnad.setFocusable(false);
         txtfKostnad.setMaximumSize(new java.awt.Dimension(200, 30));
         txtfKostnad.setMinimumSize(new java.awt.Dimension(64, 30));
-        txtfKostnad.setPreferredSize(new java.awt.Dimension(70, 30));
+        txtfKostnad.setPreferredSize(new java.awt.Dimension(100, 30));
 
         javax.swing.GroupLayout pnlKostnadLayout = new javax.swing.GroupLayout(pnlKostnad);
         pnlKostnad.setLayout(pnlKostnadLayout);
@@ -806,6 +843,7 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         pnlStartDatum.add(txtfStartDatum, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 30));
 
         dateStartDatum.setDateFormatString("y MMM d");
+        dateStartDatum.setFocusable(false);
         pnlStartDatum.add(dateStartDatum, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 130, 30));
 
         pnlSlutDatum.setMinimumSize(new java.awt.Dimension(20, 30));
@@ -821,7 +859,13 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         pnlSlutDatum.add(txtfSlutDatum, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 30));
 
         dateSlutDatum.setDateFormatString("y MMM d");
+        dateSlutDatum.setFocusable(false);
         pnlSlutDatum.add(dateSlutDatum, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 130, 30));
+
+        pnlProjektnamnYttre.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        pnlProjektnamnInre.setPreferredSize(new java.awt.Dimension(0, 0));
+        pnlProjektnamnYttre.add(pnlProjektnamnInre, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 10, -1, -1));
 
         txtfProjektnamn.setEditable(false);
         txtfProjektnamn.setBackground(new java.awt.Color(212, 217, 223));
@@ -833,12 +877,13 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         txtfProjektnamn.setMaximumSize(new java.awt.Dimension(500, 25));
         txtfProjektnamn.setMinimumSize(new java.awt.Dimension(80, 25));
         txtfProjektnamn.setOpaque(true);
-        txtfProjektnamn.setPreferredSize(new java.awt.Dimension(150, 25));
-        pnlProjektnamn.add(txtfProjektnamn);
+        txtfProjektnamn.setPreferredSize(new java.awt.Dimension(250, 25));
+        pnlProjektnamnYttre.add(txtfProjektnamn, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 10, -1, -1));
 
         lblFelmeddelandeProjektnamn.setForeground(new java.awt.Color(255, 51, 0));
         lblFelmeddelandeProjektnamn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblFelmeddelandeProjektnamn.setText("[felmeddelande]");
+        lblFelmeddelandeProjektnamn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout pnlTopLayout = new javax.swing.GroupLayout(pnlTop);
         pnlTop.setLayout(pnlTopLayout);
@@ -873,7 +918,7 @@ public class ProjektProjektchef extends javax.swing.JFrame {
                 .addGap(280, 280, 280))
             .addGroup(pnlTopLayout.createSequentialGroup()
                 .addGap(51, 51, 51)
-                .addComponent(pnlProjektnamn, javax.swing.GroupLayout.PREFERRED_SIZE, 623, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnlProjektnamnYttre, javax.swing.GroupLayout.PREFERRED_SIZE, 623, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlTopLayout.setVerticalGroup(
@@ -887,7 +932,7 @@ public class ProjektProjektchef extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlTopLayout.createSequentialGroup()
                         .addComponent(lblFelmeddelandeProjektnamn)
                         .addGap(2, 2, 2)))
-                .addComponent(pnlProjektnamn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnlProjektnamnYttre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(pnlTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(pnlTopLayout.createSequentialGroup()
                         .addGap(12, 12, 12)
@@ -920,7 +965,7 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(239, 239, 239)
                 .addComponent(btnAndra, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(56, 56, 56)
                 .addComponent(btnSpara, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -944,7 +989,7 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void startlageGUI() {
+    private void startlageUI() {
         //Gömmer pop-up paneler
         spnlMalDropdown.setVisible(false);
         spnlBeskrivningDropdown.setVisible(false);
@@ -961,13 +1006,21 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         btnAddAdmin.setVisible(false);
         btnAddHandlaggare.setVisible(false);
         btnAddPartner.setVisible(false);
-        //...Felmeddelande
-        gomFelmeddelanden();
         //...Comboboxes
         cbStatus.setVisible(false);
         cbPrioritet.setVisible(false);
-        //Edit-UI
+        //...Edit-UI
         uppdateraEditUI();
+        
+        //...Felmeddelanden
+        gomFelmeddelanden();
+        
+        //---Knappar endast för admin---
+        if(roll == AnvandareRoll.CHEF_FOR_PROJEKT){
+            //Om användarens roll är projektchef:
+            //Tar bort knappen som gör att man kan byta projektchef:
+            pnlProjektchef.remove(btnBytProjektchef);
+        }
 
         revalidate();
         repaint();
@@ -1111,8 +1164,8 @@ public class ProjektProjektchef extends javax.swing.JFrame {
     }
 
     private void uppdateraBorttagningslageUI(Boolean bortagningslage, JButton taBortKnapp) {
-        //Sätter texten som antingen [ Avbryt borttagning ] eller [ Ta bort ]
-        String knappText = bortagningslage ? "[ Avbryt borttagning ]" : "[ Ta bort ]";
+        //Sätter texten som antingen [ Avsluta borttagning ] eller [ Ta bort ]
+        String knappText = bortagningslage ? "[ Avsluta borttagning ]" : "[ Ta bort ]";
         //Sätter färgen som antingen röd eller vit utifrån bortagningsläget
         Color knappFarg = bortagningslage ? new Color(160, 50, 50) : bakgrundsfarg;
         taBortKnapp.setText(knappText);
@@ -1164,6 +1217,10 @@ public class ProjektProjektchef extends javax.swing.JFrame {
     }
 
     private void uppdateraEditUIProjektchef() {
+        if(roll == AnvandareRoll.CHEF_FOR_PROJEKT){
+            return; //Chefer kan inte lägga till chefer
+        }
+        
         String projektchefText = btnProjektchef.getText();
         if ("".equals(projektchefText) || projektchefText == null || "[ + ]".equals(projektchefText)) {
             String knappText = redigerar ? "[ + ]" : null;
@@ -1251,7 +1308,7 @@ public class ProjektProjektchef extends javax.swing.JFrame {
      * var giltigt
      */
     private boolean kontrolleraProjektnamn(String projektnamn) {
-        ArGiltigProjektnamn giltighet = ValideringInput.valideraProjektnamn(projektnamn);
+        ArGiltigText giltighet = ValideringInput.valideraProjektnamn(projektnamn);
         String felmeddelande = "";
         switch (giltighet) {
             case JA -> {
@@ -1269,24 +1326,70 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         }
         //Felmeddelande
         lblFelmeddelandeProjektnamn.setVisible(true);
-        lblFelmeddelandeKostnad.setText(felmeddelande);
+        lblFelmeddelandeProjektnamn.setText(felmeddelande);
         pnlTop.revalidate();
         pnlTop.repaint();
         return false;
     }
 
+    /**
+     * Returnerar true om beskrivningenvar giltigt Returnerar false om det inte
+     * var giltigt
+     */
+    private boolean kontrolleraBeskrivning(String beskrivning) {
+        ArGiltigText giltighet = ValideringInput.valideraProjektbeskrivning(beskrivning);
+        String felmeddelande = "";
+        switch (giltighet) {
+            case JA -> {
+                return true;
+            }
+            case FOR_LANG -> {
+                felmeddelande = "Beskrivning för stor: över 250 tecken";
+            }
+            case OGILTIGT_TECKEN -> {
+                felmeddelande = "Ogiltigt tecken i beskrivningen";
+            }
+            case NEJ -> {
+                felmeddelande = "Ogiltig beskrivning";
+            }
+        }
+        //Felmeddelande
+        pnlFelmeddelandeBeskrivning.setVisible(true);
+        lblFelmeddelandeBeskrivning.setText(felmeddelande);
+        pnlVanster.revalidate();
+        pnlVanster.repaint();
+        return false;
+    }
+
     private void runUpdateSats(HashMap<String, String> projektinfoAndrat) {
         try {
+            String pn = projektinfoAndrat.get("projektnamn");
+            String bes = projektinfoAndrat.get("beskrivning");
+            String stda = projektinfoAndrat.get("startdatum");
+            String slda = projektinfoAndrat.get("slutdatum");
+            String sts = projektinfoAndrat.get("status");
+            String pri = projektinfoAndrat.get("prioritet");
+            
+            String pnSQL = (pn == null) ? null : "'" + pn + "'";
+            String stdaSQL = (stda == null) ? null : "'" + stda + "'";
+            String sldaSQL = (slda == null) ? null : "'" + slda + "'";
+            String besSQL = (bes == null) ? null : "'" + bes + "'";
+            String stsSQL = (sts == null) ? null : "'" + sts + "'";
+            String priSQL = (pri == null) ? null : "'" + pri + "'";
+            String kstSQL = projektinfoAndrat.get("kostnad");
+            String lidSQL = projektinfoAndrat.get("lid");
+            String pchSQL = projektinfoAndrat.get("projektchef");
+            
             String updateSats = "UPDATE Projekt "
-                    + "SET projektnamn = '" + projektinfoAndrat.get("projektnamn") + "', "
-                    + "startdatum = '" + projektinfoAndrat.get("startdatum") + "', "
-                    + "slutdatum = '" + projektinfoAndrat.get("slutdatum") + "', "
-                    + "beskrivning = '" + projektinfoAndrat.get("beskrivning") + "', "
-                    + "status = '" + projektinfoAndrat.get("status") + "', "
-                    + "prioritet = '" + projektinfoAndrat.get("prioritet") + "', "
-                    + "kostnad = " + projektinfoAndrat.get("kostnad") + ", "
-                    + "land = " + projektinfoAndrat.get("land") + ", "
-                    + "projektchef = " + projektinfoAndrat.get("projektchef") + " "
+                    + "SET projektnamn = " + pnSQL + ", "
+                    + "startdatum = " + stdaSQL + ", "
+                    + "slutdatum = " + sldaSQL + ", "
+                    + "beskrivning = " + besSQL + ", "
+                    + "status = " + stsSQL + ", "
+                    + "prioritet = " + priSQL + ", "
+                    + "kostnad = " + kstSQL + ", "
+                    + "land = " + lidSQL + ", "
+                    + "projektchef = " + pchSQL + " "
                     + "WHERE pid = " + pid;
             //Kör UPDATE-satsen
             idb.update(updateSats);
@@ -1294,7 +1397,7 @@ public class ProjektProjektchef extends javax.swing.JFrame {
             System.out.println("Updatesats: " + e.getMessage());
         }
     }
-    
+
     /**
      * Skicka tex in hid, aid eller partner-id som nycklar. Ange typen av
      * instanser du ska ta bort: HALLBARHETSMAL, ANSTALLD eller PARTNER.
@@ -1343,6 +1446,7 @@ public class ProjektProjektchef extends javax.swing.JFrame {
                 }
                 deletesats.append(")");
                 //Kör DELETE-satsen
+                System.out.println(deletesats.toString());
                 idb.delete(deletesats.toString());
             }
         } catch (InfException e) {
@@ -1400,19 +1504,23 @@ public class ProjektProjektchef extends javax.swing.JFrame {
                     forstaIteration = false;
                 }
                 //Kör INSERT-satsen:
+                System.out.println(insertsats.toString());
                 idb.insert(insertsats.toString());
             }
-        } catch(InfException e){
-            System.out.println("Insertsats: "+e.getMessage());
+        } catch (InfException e) {
+            System.out.println("Insertsats: " + e.getMessage());
         }
     }
 
     private void sparaAndringarTillDatabas() {
-        //Validerar input för kostnad och projektnamn
+        //Validerar input 
         String kostnadInput = txtfKostnad.getText();
         String projektnamnInput = txtfProjektnamn.getText();
+        String beskrivningInput = txarBeskrivning.getText();
 
-        boolean valideringLyckades = kontrolleraKostnad(kostnadInput) || kontrolleraProjektnamn(projektnamnInput);
+        boolean valideringLyckades = kontrolleraKostnad(kostnadInput)
+                && kontrolleraProjektnamn(projektnamnInput)
+                && kontrolleraBeskrivning(beskrivningInput);
         if (!valideringLyckades) {
             //Om något misslyckades i valideringen:
             //Return, avbryt sparningen
@@ -1420,9 +1528,10 @@ public class ProjektProjektchef extends javax.swing.JFrame {
             return;
         }
 
-        //Om giltig kostnad och projektnamn (eftersom return inte gjordes!):
+        //Om giltiga (eftersom return inte gjordes!):
         String kostnadNormaliserad = ValideringInput.normaliseraKostnad(kostnadInput);
-        String projektnamnNormaliserad = ValideringInput.normaliseraKostnad(kostnadInput);
+        String projektnamnNormaliserad = ValideringInput.normaliseraProjektnamn(projektnamnInput);
+        String beskrivningNormaliserad = ValideringInput.normaliseraProjektbeskrivning(beskrivningInput);
 
         String startdatum = null;
         String slutdatum = null;
@@ -1433,15 +1542,23 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         if (dateSlutDatum.getDate() != null) {
             slutdatum = new java.sql.Date(dateSlutDatum.getDate().getTime()).toString();
         }
+        String status = (String) cbStatus.getSelectedItem();
+        String prioritet = (String) cbPrioritet.getSelectedItem();
+        if ("Ingen".equals(status)) {
+            status = null;
+        }
+        if ("Ingen".equals(prioritet)) {
+            prioritet = null;
+        }
 
         //Sätter in all information från våra olika textrutor i andradProjektinfo
-        projektinfoAndringar.put("projektnamn", txtfProjektnamn.getText());
+        projektinfoAndringar.put("projektnamn", projektnamnNormaliserad);
         projektinfoAndringar.put("startdatum", startdatum);
         projektinfoAndringar.put("slutdatum", slutdatum);
-        projektinfoAndringar.put("beskrivning", txarBeskrivning.getText());
-        projektinfoAndringar.put("status", (String) cbStatus.getSelectedItem()); //Downcast pga att getSelectedItem är generisk --> kan vara vad som helst för subtyp, vi behöver bara specifiera den.
-        projektinfoAndringar.put("prioritet", (String) cbPrioritet.getSelectedItem());
-        projektinfoAndringar.put("kostnad", txtfKostnad.getText());
+        projektinfoAndringar.put("beskrivning", beskrivningNormaliserad);
+        projektinfoAndringar.put("status", status);
+        projektinfoAndringar.put("prioritet", prioritet);
+        projektinfoAndringar.put("kostnad", kostnadNormaliserad);
 
         //---------------------ÄNDRAR I DATABASEN------------------------
         //----Uppdaterar befintliga projektuppgifter----
@@ -1460,17 +1577,24 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         //...Tar bort partners
         runDeleteSats(DBInstanstyp.PARTNER, projektPartnersBorttagna);
 
-        //----Lägger till mål, administratörer, handläggare och partners som var valda för att bli tillagda----
-        
-        //För instansknapparna behöver vi också spara ID på något snyggt sätt
-        //Spara "Ingen" i comboboxes som null
+        //----Lägger till kopplingar till mål, administratörer, handläggare och partners som var valda att bli tillagda----
+        //...Lägger till mål
+        runInsertSats(DBInstanstyp.HALLBARHETSMAL, projektMalNya);
+
+        //...Lägger till anställda
+        HashSet<String> allaNyaAnstallda = new HashSet<>();
+        allaNyaAnstallda.addAll(projektAdminsNya);
+        allaNyaAnstallda.addAll(projektHandlaggareNya);
+        runInsertSats(DBInstanstyp.ANSTALLD, allaNyaAnstallda);
+
+        //...Lägger till partners
+        runInsertSats(DBInstanstyp.PARTNER, projektPartnersNya);
+
         stangAvRedigeringslage();
+        gomFelmeddelanden();
+        laddaInfo();
     }
 
-    /**
-     * @return returnerar det nya redigergingsläget
-     *
-     */
     private void vaxlaDropdownLage(JScrollPane dropdownRuta, JButton dropdownKnapp) {
         Boolean rutaNySynlighet = !dropdownRuta.isVisible();
 
@@ -1487,6 +1611,9 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * @return returnerar det nya redigergingsläget
+     */
     private boolean vaxlaRedigeringslage() {
         //Växla mellan redigeringslägen
         redigerar = !redigerar;
@@ -1497,12 +1624,14 @@ public class ProjektProjektchef extends javax.swing.JFrame {
             btnSpara.setBackground(new Color(0, 255, 0)); //grön            
             txtfKostnad.setBackground(Color.WHITE);
             txtfProjektnamn.setBackground(Color.WHITE);
+            txarBeskrivning.setBackground(Color.WHITE);
         } else {
             btnAndra.setText("Ändra");
             btnAndra.setBackground(bakgrundsfarg);
             btnSpara.setBackground(bakgrundsfarg);
             txtfKostnad.setBackground(bakgrundsfarg);
             txtfProjektnamn.setBackground(bakgrundsfarg);
+            txarBeskrivning.setBackground(bakgrundsfarg);
             aterstallBorttagningslagen();
             tomAndringar();
 
@@ -1536,6 +1665,8 @@ public class ProjektProjektchef extends javax.swing.JFrame {
         txtfKostnad.setFocusable(redigerar);
         txtfProjektnamn.setEditable(redigerar);
         txtfProjektnamn.setFocusable(redigerar);
+        txarBeskrivning.setEditable(redigerar);
+        txarBeskrivning.setFocusable(redigerar);
 
         //Uppdatera layout
         pnlTop.revalidate();
@@ -1550,11 +1681,9 @@ public class ProjektProjektchef extends javax.swing.JFrame {
             Component c = pnl.getComponent(i);
             if (c instanceof JButton knapp) {
                 String knappNamn = knapp.getName();
-                System.out.println("ProjektProjektchef: TaBortInstansknapparI(JPanel pnl): namnet av knappen: " + knappNamn);
                 if (knappNamn == null || !knappNamn.startsWith("btnAdd")) {
                     //tar bara bort om knappens namn inte börjar med btnAdd
                     pnl.remove(knapp); //pga baklänges loop ändras inte ordningen om i containern och borttagnings sker som det ska
-                    System.out.println("    --> Den togs bort.");
                 }
             }
         }
@@ -1582,6 +1711,7 @@ public class ProjektProjektchef extends javax.swing.JFrame {
     private void gomFelmeddelanden() {
         lblFelmeddelandeProjektnamn.setVisible(false);
         lblFelmeddelandeMal.setVisible(false);
+        pnlFelmeddelandeBeskrivning.setVisible(false);
         pnlFelmeddelandeKostnad.setVisible(false);
         lblFelmeddelandeProjektchef.setVisible(false);
         lblFelmeddelandeAdmin.setVisible(false);
@@ -2206,14 +2336,20 @@ public class ProjektProjektchef extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTaBortLandActionPerformed
 
     private void btnProjektchefActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProjektchefActionPerformed
-        if (redigerar && arTom("projektchef")) { //"projektchef" är aid för projektchef
-            oppnaPopupValjProjektchef();
-        } else if (borttagningslageDeltagare) {
-            registreraBorttagningEnstaka("projektchef", btnProjektchef);
-            //Uppdaterar för att se till att EditUI göms och att knappen visar [ + ]
-            uppdateraEditUIProjektchef();
-        } else {//Om bortagningsläget ej är på:
+        if(!borttagningslageDeltagare && !arTom("projektchef")) {
+            //Om borttagningsläget ej är på och det faktiskt finns en projektchef
             oppnaPopupVisaAnstalldMedId(projektinfoEnskilda.get("projektchef"));//skickar in projektchefens id som argument
+        }
+        else if (roll == AnvandareRoll.ADMIN) {
+            //Admin har tillgång till väljandet av nya projektchefer och bortagning av dem
+            //Projektchef kan bara se popup för visning
+            if (redigerar && arTom("projektchef")) { //"projektchef" är identifierare för aid för projektchef
+                oppnaPopupValjProjektchef();
+            } else if (borttagningslageDeltagare) {
+                registreraBorttagningEnstaka("projektchef", btnProjektchef);
+                //Uppdaterar för att se till att EditUI göms och att knappen visar [ + ]
+                uppdateraEditUIProjektchef();
+            }
         }
     }//GEN-LAST:event_btnProjektchefActionPerformed
 
@@ -2224,7 +2360,6 @@ public class ProjektProjektchef extends javax.swing.JFrame {
     private void btnSparaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSparaActionPerformed
         if (redigerar) {
             sparaAndringarTillDatabas();
-            gomFelmeddelanden();
         }
     }//GEN-LAST:event_btnSparaActionPerformed
 
@@ -2248,7 +2383,7 @@ public class ProjektProjektchef extends javax.swing.JFrame {
 
         try {
             InfDB idb = new InfDB("sdgsweden", "3306", "root", "masterkey");
-            new ProjektProjektchef(new Anvandare(idb, null, null, null, 3, null, null, null, "admin"), 3).setVisible(true);
+            new ProjektProjektchefAdmin(new Anvandare(idb, null, null, null, 3, null, null, null, "admin"), 3, AnvandareRoll.ADMIN).setVisible(true);
             System.out.println("Databaskoppling skapad");
         } catch (InfException e) {
             System.out.println(e.getMessage());
@@ -2286,6 +2421,7 @@ public class ProjektProjektchef extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel lblAvslutad;
     private javax.swing.JLabel lblFelmeddelandeAdmin;
+    private javax.swing.JLabel lblFelmeddelandeBeskrivning;
     private javax.swing.JLabel lblFelmeddelandeHandlaggare;
     private javax.swing.JLabel lblFelmeddelandeKostnad;
     private javax.swing.JLabel lblFelmeddelandeMal;
@@ -2301,9 +2437,10 @@ public class ProjektProjektchef extends javax.swing.JFrame {
     private javax.swing.JPanel pblPartnerDropdownknapp;
     private javax.swing.JPanel pnlAdmin;
     private javax.swing.JPanel pnlBeskrivning;
-    private javax.swing.JPanel pnlBeskrivningDropdown;
+    private javax.swing.JPanel pnlBeskrivningDropdownKnapp;
     private javax.swing.JPanel pnlDeltagare;
     private javax.swing.JPanel pnlDeltagareDropdownknapp;
+    private javax.swing.JPanel pnlFelmeddelandeBeskrivning;
     private javax.swing.JPanel pnlFelmeddelandeKostnad;
     private javax.swing.JPanel pnlHandlaggare;
     private javax.swing.JPanel pnlHoger;
@@ -2315,7 +2452,8 @@ public class ProjektProjektchef extends javax.swing.JFrame {
     private javax.swing.JPanel pnlPartners;
     private javax.swing.JPanel pnlPrioritet;
     private javax.swing.JPanel pnlProjektchef;
-    private javax.swing.JPanel pnlProjektnamn;
+    private javax.swing.JPanel pnlProjektnamnInre;
+    private javax.swing.JPanel pnlProjektnamnYttre;
     private javax.swing.JPanel pnlSlutDatum;
     private javax.swing.JPanel pnlStartDatum;
     private javax.swing.JPanel pnlStatus;

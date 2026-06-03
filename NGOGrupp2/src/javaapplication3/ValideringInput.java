@@ -15,7 +15,7 @@ public final class ValideringInput {
         NEJ
     }
 
-    public enum ArGiltigProjektnamn {
+    public enum ArGiltigText {
         JA,
         FOR_LANG,
         OGILTIGT_TECKEN,
@@ -70,6 +70,10 @@ public final class ValideringInput {
      */
     public static boolean arHandlaggare(String roll) {
         return "handlaggare".equals(roll) || "handlaggare_projektchef".equals(roll);
+    }
+
+    public static boolean arProjektchef(String roll) {
+        return "handlaggare_projektchef".equals(roll);
     }
 
     /**
@@ -142,20 +146,20 @@ public final class ValideringInput {
         return normaliseradKostnad;
     }
 
-    public static ArGiltigProjektnamn valideraProjektnamn(String projektnamn) {
+    public static ArGiltigText valideraProjektnamn(String projektnamn) {
         projektnamn = projektnamn.trim();
         //Begränsar till vissa normala tecken och till max 100 tecken (efter trim)
-        if (projektnamn.matches("^[A-Za-zÅÄÖåäö0-9 _().,!?/><&-]{1,100}$")) {
-            return ArGiltigProjektnamn.JA;
+        if (projektnamn.matches("^[A-Za-zÅÄÖåäö0-9 _().,\"'!?/><&-]{0,100}$")) {
+            return ArGiltigText.JA;
         }
 
         //Vid ogiltiga värden
         if (projektnamn.length() > 100) {
-            return ArGiltigProjektnamn.FOR_LANG;
-        } else if (projektnamn.matches("[^A-Za-zÅÄÖåäö0-9 _().,!?/><&-]")) {
-            return ArGiltigProjektnamn.OGILTIGT_TECKEN;
+            return ArGiltigText.FOR_LANG;
+        } else if (projektnamn.matches(".*[^A-Za-zÅÄÖåäö0-9 _().,\"'!?/><&-].*")) {
+            return ArGiltigText.OGILTIGT_TECKEN;
         } else {
-            return ArGiltigProjektnamn.NEJ;
+            return ArGiltigText.NEJ;
         }
     }
 
@@ -163,8 +167,43 @@ public final class ValideringInput {
     * Validera innan normalisering.
      */
     public static String normaliseraProjektnamn(String projektnamn) {
-        //Trimma mellanslag på kanterna
-        return projektnamn.trim();
+        boolean tomProjektnamn = projektnamn == null || projektnamn.matches(" *");
+        if (tomProjektnamn) {
+            return null;
+        }
+
+        //Trimma mellanslag på kanterna och anpassar "'" tecken för SQL-inmatning
+        projektnamn = projektnamn.trim().replace("'", "''");
+
+        return projektnamn;
+    }
+
+    public static ArGiltigText valideraProjektbeskrivning(String beskrivning) {
+        beskrivning = beskrivning.trim();
+        //Begränsar till vissa normala tecken och till max 250 tecken (efter trim)
+        if (beskrivning.matches("^[A-Za-zÅÄÖåäö0-9 _().,\"'!?/><&@#¤%-]{0,250}$")) {
+            return ArGiltigText.JA;
+        }
+
+        //Vid ogiltiga värden
+        if (beskrivning.length() > 250) {
+            return ArGiltigText.FOR_LANG;
+        } else if (beskrivning.matches(".*[^A-Za-zÅÄÖåäö0-9 _().,\"'!?/><&@#¤%-].*")) {
+            return ArGiltigText.OGILTIGT_TECKEN;
+        } else {
+            return ArGiltigText.NEJ;
+        }
+    }
+
+    public static String normaliseraProjektbeskrivning(String beskrivning) {
+        boolean tomBeskrivning = beskrivning == null || beskrivning.matches(" *");
+        if (tomBeskrivning) {
+            return null;
+        }
+        //Trimma mellanslag på kanterna och anpassar "'" tecken för SQL-inmatning
+        beskrivning = beskrivning.trim().replace("'", "''");
+
+        return beskrivning;
     }
 
     public static ArGiltigEpost valideraEpost(String epost) {
