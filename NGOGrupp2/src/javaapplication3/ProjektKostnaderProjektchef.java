@@ -46,7 +46,7 @@ public class ProjektKostnaderProjektchef extends javax.swing.JFrame {
                 return;
             }
 
-            // Genväg till databasen via ditt objekt
+            // Genväg till databasen via objekt
             InfDB idb = anvandare.getIdb();
 
             // SÄKERHETSSPÄRR 2: Avbryt tyst om databasen saknas vid en fristående testkörning

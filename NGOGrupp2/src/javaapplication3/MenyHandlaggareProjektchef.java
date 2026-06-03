@@ -47,7 +47,6 @@ public class MenyHandlaggareProjektchef extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         btnMinaUppgifter = new javax.swing.JButton();
-        btnMinaProjekt = new javax.swing.JButton();
         btnHållbarhetsmålen = new javax.swing.JButton();
         btnSökPersonal = new javax.swing.JButton();
         btnSökProjekt = new javax.swing.JButton();
@@ -61,9 +60,6 @@ public class MenyHandlaggareProjektchef extends javax.swing.JFrame {
 
         btnMinaUppgifter.setText("Mina uppgifter");
         btnMinaUppgifter.addActionListener(this::btnMinaUppgifterActionPerformed);
-
-        btnMinaProjekt.setText("Mina projekt");
-        btnMinaProjekt.addActionListener(this::btnMinaProjektActionPerformed);
 
         btnHållbarhetsmålen.setText("Hållbarhetsmålen");
         btnHållbarhetsmålen.addActionListener(this::btnHållbarhetsmålenActionPerformed);
@@ -83,7 +79,6 @@ public class MenyHandlaggareProjektchef extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btnMinaProjekt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnMinaUppgifter, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnHållbarhetsmålen, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnSökPersonal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -106,8 +101,6 @@ public class MenyHandlaggareProjektchef extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
                 .addComponent(btnMinaUppgifter)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnMinaProjekt)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnHållbarhetsmålen)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnSökPersonal)
@@ -115,16 +108,11 @@ public class MenyHandlaggareProjektchef extends javax.swing.JFrame {
                 .addComponent(btnSökProjekt)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnVisaProjektKostnader)
-                .addGap(95, 95, 95))
+                .addGap(124, 124, 124))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnMinaProjektActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMinaProjektActionPerformed
-        new ProjektSokAdmin(anvandare).setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnMinaProjektActionPerformed
 
     private void btnHållbarhetsmålenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHållbarhetsmålenActionPerformed
         new Hallbarhetsmal(anvandare).setVisible(true);
@@ -179,7 +167,6 @@ public class MenyHandlaggareProjektchef extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnHållbarhetsmålen;
-    private javax.swing.JButton btnMinaProjekt;
     private javax.swing.JButton btnMinaUppgifter;
     private javax.swing.JButton btnSökPersonal;
     private javax.swing.JButton btnSökProjekt;

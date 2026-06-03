@@ -9,7 +9,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import oru.inf.InfException;
 
 /**
@@ -32,7 +34,7 @@ public class ProjektSokHandlaggare extends javax.swing.JFrame {
         this.namn = anvandare.getDbNamn();
 
         laddaAllaProjekt();
-        
+
         lblAnvändaresNamn.setText(namn);
 
         tblProjektlista.getSelectionModel().addListSelectionListener(new javax.swing.event.ListSelectionListener() {
@@ -69,7 +71,7 @@ public class ProjektSokHandlaggare extends javax.swing.JFrame {
                     + "FROM Projekt "
                     + "JOIN Anstalld ON projektchef = aid "
                     + "WHERE projektchef = " + anvandare.getAid();
-            
+
             ArrayList<HashMap<String, String>> projektLista = new ArrayList<>();
             projektLista.addAll(anvandare.getIdb().fetchRows(sqlfragaAvdelning));
             projektLista.addAll(anvandare.getIdb().fetchRows(sqlfragaProjektchef));
@@ -121,74 +123,22 @@ public class ProjektSokHandlaggare extends javax.swing.JFrame {
         } catch (InfException ex) {
             JOptionPane.showMessageDialog(this, "Kunde inte ladda projektlistan: " + ex.getMessage());
         }
-    }
+    
+    }   
+         
 
-    private void laddaAllaProjektPaAvdelningenForProjektchef() {
-        try {
-            String sqlfraga
-                    = "SELECT DISTINCT p.pid, p.projektnamn, p.beskrivning, "
-                    + "p.startdatum, p.slutdatum, p.kostnad, p.status, p.prioritet, "
-                    + "CONCAT(pc.fornamn, ' ', pc.efternamn) AS projektchef_namn, "
-                    + "l.namn AS land_namn "
-                    + "FROM projekt p "
-                    + "JOIN ans_proj ap ON p.pid = ap.pid "
-                    + "JOIN anstalld a ON ap.aid = a.aid "
-                    + "LEFT JOIN anstalld pc ON p.projektchef = pc.aid "
-                    + "LEFT JOIN land l ON p.land = l.lid "
-                    + "WHERE p.status = 'Pågående' "
-                    + "AND a.avdelning = (SELECT avdelning FROM anstalld WHERE aid = "
-                    + anvandare.getAid() + ") "
-                    + "ORDER BY p.pid";
+    private void filtreraTabellPaStatus() {
+        String valdStatus = cbStatus.getSelectedItem().toString();
 
-            ArrayList<HashMap<String, String>> projektLista = anvandare.getIdb().fetchRows(sqlfraga);
+        DefaultTableModel model = (DefaultTableModel) tblProjektlista.getModel();
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<DefaultTableModel>(model);
 
+        tblProjektlista.setRowSorter(sorter);
 
-            DefaultTableModel model = new DefaultTableModel();
-
-            model.addColumn("PID");
-            model.addColumn("Projektnamn");
-            model.addColumn("Beskrivning");
-            model.addColumn("Startdatum");
-            model.addColumn("Slutdatum");
-            model.addColumn("Kostnad");
-            model.addColumn("Status");
-            model.addColumn("Prioritet");
-            model.addColumn("Projektchef");
-            model.addColumn("Land");
-
-            for (HashMap<String, String> projekt : projektLista) {
-                //System.out.println(projekt);
-                model.addRow(new Object[]{
-                    projekt.get("pid"),
-                    projekt.get("projektnamn"),
-                    projekt.get("beskrivning"),
-                    projekt.get("startdatum"),
-                    projekt.get("slutdatum"),
-                    projekt.get("kostnad"),
-                    projekt.get("status"),
-                    projekt.get("prioritet"),
-                    projekt.get("projektchef_namn"),
-                    projekt.get("land_namn")
-                });
-            }
-
-            tblProjektlista.setModel(model);
-
-            tblProjektlista.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
-
-            tblProjektlista.getColumnModel().getColumn(0).setPreferredWidth(50);
-            tblProjektlista.getColumnModel().getColumn(1).setPreferredWidth(120);
-            tblProjektlista.getColumnModel().getColumn(2).setPreferredWidth(220);
-            tblProjektlista.getColumnModel().getColumn(3).setPreferredWidth(100);
-            tblProjektlista.getColumnModel().getColumn(4).setPreferredWidth(100);
-            tblProjektlista.getColumnModel().getColumn(5).setPreferredWidth(90);
-            tblProjektlista.getColumnModel().getColumn(6).setPreferredWidth(100);
-            tblProjektlista.getColumnModel().getColumn(7).setPreferredWidth(80);
-            tblProjektlista.getColumnModel().getColumn(8).setPreferredWidth(180);
-            tblProjektlista.getColumnModel().getColumn(9).setPreferredWidth(120);
-
-        } catch (InfException ex) {
-            JOptionPane.showMessageDialog(this, "Kunde inte ladda projektlistan: " + ex.getMessage());
+        if (valdStatus.equals("Alla")) {
+            sorter.setRowFilter(null);
+        } else {
+            sorter.setRowFilter(RowFilter.regexFilter("^" + valdStatus + "$", 6));
         }
     }
 
@@ -318,6 +268,7 @@ public class ProjektSokHandlaggare extends javax.swing.JFrame {
         ScrollPane = new javax.swing.JScrollPane();
         tblProjektlista = new javax.swing.JTable();
         lblAnvändaresNamn = new javax.swing.JLabel();
+        cbStatus = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -349,13 +300,20 @@ public class ProjektSokHandlaggare extends javax.swing.JFrame {
 
         lblAnvändaresNamn.setText("användares namn");
 
+        cbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Alla", "Pågående", "Avslutat", "Planerat" }));
+        cbStatus.addActionListener(this::cbStatusActionPerformed);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(ScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblTillbakaTillMeny)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblAnvändaresNamn))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -370,15 +328,16 @@ public class ProjektSokHandlaggare extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(dateStartdatum, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(dateSlutdatum, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
+                                .addGap(29, 29, 29)
+                                .addComponent(cbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(26, 26, 26)
                                 .addComponent(jButton1)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lblTillbakaTillMeny)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblAnvändaresNamn)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(ScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 583, Short.MAX_VALUE)
+                .addGap(17, 17, 17))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -398,9 +357,11 @@ public class ProjektSokHandlaggare extends javax.swing.JFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(dateSlutdatum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel4))
-                    .addComponent(jButton1))
-                .addGap(30, 30, 30)
-                .addComponent(ScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 458, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton1)
+                        .addComponent(cbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(ScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 583, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -415,6 +376,10 @@ public class ProjektSokHandlaggare extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         filtreraProjektPaDatum();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void cbStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbStatusActionPerformed
+        filtreraTabellPaStatus();
+    }//GEN-LAST:event_cbStatusActionPerformed
 
     /**
      * @param args the command line arguments
@@ -443,6 +408,7 @@ public class ProjektSokHandlaggare extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane ScrollPane;
+    private javax.swing.JComboBox<String> cbStatus;
     private com.toedter.calendar.JDateChooser dateSlutdatum;
     private com.toedter.calendar.JDateChooser dateStartdatum;
     private javax.swing.JButton jButton1;
