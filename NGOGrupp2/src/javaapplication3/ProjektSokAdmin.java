@@ -53,13 +53,6 @@ public class ProjektSokAdmin extends javax.swing.JFrame {
         });
     }
 
-    private void setStatus(String status) {
-        valStatus = status;
-        //uppdatera GUI för vald-status
-        if (SwingUtils.finnsIComboBox(cbStatus, status)) {
-            cbStatus.setSelectedItem(status);
-        }
-    }
 
  
 
