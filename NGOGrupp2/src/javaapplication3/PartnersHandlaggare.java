@@ -332,7 +332,7 @@ public class PartnersHandlaggare extends javax.swing.JFrame {
                 InfDB idb = anvandare.getIdb();
                 if (idb == null) return;
                 
-                String fraga = "SELECT pid, kontaktperson, kontaktepost, telephone, adress, branch, stad FROM partner WHERE namn = '" + valtNamn + "'";
+                String fraga = "SELECT pid, kontaktperson, kontaktepost, telefon, adress, branch, stad FROM partner WHERE namn = '" + valtNamn + "'";
                 HashMap<String, String> partnerData = idb.fetchRow(fraga);
                 
                 if (partnerData != null) {
@@ -340,7 +340,7 @@ public class PartnersHandlaggare extends javax.swing.JFrame {
                     jLabel2.setText("partnerID: " + partnerData.get("pid"));
                     jTextField1.setText(partnerData.get("kontaktperson"));
                     jTextField2.setText(partnerData.get("kontaktepost"));
-                    jTextField3.setText(partnerData.get("telephone")); 
+                    jTextField3.setText(partnerData.get("telefon")); 
                     jTextField5.setText(partnerData.get("adress"));
                     jTextField4.setText(partnerData.get("branch"));
                     jTextField7.setText(partnerData.get("stad"));
