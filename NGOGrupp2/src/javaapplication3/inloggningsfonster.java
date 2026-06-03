@@ -52,10 +52,8 @@ public class inloggningsfonster extends javax.swing.JFrame {
 
         lblLösenord.setText("Lösenord");
 
-        tfEPost.setText("maria.g@example.com");
         tfEPost.addActionListener(this::tfEPostActionPerformed);
 
-        tfLösenord.setText("password123");
         tfLösenord.addActionListener(this::tfLösenordActionPerformed);
 
         lblFelmeddelande.setForeground(new java.awt.Color(255, 0, 0));

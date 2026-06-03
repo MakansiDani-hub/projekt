@@ -102,17 +102,11 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="tfEPost">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="chen.wei@example.com"/>
-      </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfEPostActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="tfL&#xf6;senord">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="passwordabc"/>
-      </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfL&#xf6;senordActionPerformed"/>
       </Events>
