@@ -8,13 +8,15 @@ import javax.swing.JOptionPane;
 
 /**
  * Detaljvy för partners - Handläggarversion.
+ * Gränssnitt för detaljvy över partners anpassat för handläggare.
+ * Klassen hanterar sökning, visning samt filtrering av projektkopplingar.
  * @author alexander.willen
  */
 public class PartnersHandlaggare extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(PartnersHandlaggare.class.getName());
     
-    // Vi sparar enbart ditt Anvandare-objekt i klassen nu!
+    // Vi sparar enbart Anvandare-objekt i klassen nu!
     private Anvandare anvandare; 
 
     public PartnersHandlaggare() {
@@ -240,17 +242,22 @@ public class PartnersHandlaggare extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        /**
+     * Hämtar och visar ALLA projekt som den valda partnern är bunden till.
+     */
         try {
             if (anvandare == null) return;
             InfDB idb = anvandare.getIdb();
             if (idb == null) return;
-
+            
+        // Extraherar ut ID-siffran ur rubriktexten och städar bort tomrum
             String pidText = jLabel2.getText().replace("partnerID: ", "").trim();
             if (pidText.equals("[pid]") || pidText.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Välj en partner i listan först!");
                 return;
             }
             
+            // Relationsfråga med JOIN för att länka samman projekt via bryttabellen
             String fraga = "SELECT projekt.projektnamn FROM projekt " +
                            "JOIN projekt_partner ON projekt.pid = projekt_partner.pid " +
                            "WHERE projekt_partner.partner_pid = " + pidText;
@@ -269,10 +276,14 @@ public class PartnersHandlaggare extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        /**
+     * Hämtar och filtrerar ut ENDAST de projekt där partnern ingår OCH inloggad användare är chef.
+     */
         try {
             if (anvandare == null) return;
             InfDB idb = anvandare.getIdb();
             if (idb == null) return;
+            // Hämtar det unika anställnings-ID:t (aid) från den aktiva sessionen
             int aid = anvandare.getAid(); 
 
             String pidText = jLabel2.getText().replace("partnerID: ", "").trim();
@@ -281,6 +292,7 @@ public class PartnersHandlaggare extends javax.swing.JFrame {
                 return;
             }
             
+            // SQL-sträng som filtrerar korsreferensen mot inloggade chefens unika 'aid'
             String fraga = "SELECT projekt.projektnamn FROM projekt " +
                            "JOIN projekt_partner ON projekt.pid = projekt_partner.pid " +
                            "WHERE projekt_partner.partner_pid = " + pidText + " AND projekt.projektchef = " + aid;
@@ -327,6 +339,8 @@ public class PartnersHandlaggare extends javax.swing.JFrame {
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
         String valtNamn = (String) jComboBox1.getSelectedItem();
+        
+        // Exekveras endast om ett giltigt partnernamn valts ut
         if (valtNamn != null && !valtNamn.equals("Välj partner") && anvandare != null) {
             try {
                 InfDB idb = anvandare.getIdb();
@@ -336,6 +350,7 @@ public class PartnersHandlaggare extends javax.swing.JFrame {
                 HashMap<String, String> partnerData = idb.fetchRow(fraga);
                 
                 if (partnerData != null) {
+            // Sätter texterna i gränssnittet utifrån databasens hashtabell
                     jLabel1.setText(valtNamn);
                     jLabel2.setText("partnerID: " + partnerData.get("pid"));
                     jTextField1.setText(partnerData.get("kontaktperson"));
@@ -345,6 +360,7 @@ public class PartnersHandlaggare extends javax.swing.JFrame {
                     jTextField4.setText(partnerData.get("branch"));
                     jTextField7.setText(partnerData.get("stad"));
                     
+            // Hämtar tillhörande land baserat på partnerns stads-ID
                     String stadId = partnerData.get("stad");
                     if (stadId != null) {
                         String landsFraga = "SELECT land.namn FROM land JOIN stad ON land.lid = stad.land WHERE stad.sid = " + stadId;
