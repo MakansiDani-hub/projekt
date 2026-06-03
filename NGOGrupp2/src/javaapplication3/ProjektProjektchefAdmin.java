@@ -2387,7 +2387,7 @@ public class ProjektProjektchefAdmin extends javax.swing.JFrame {
 
         try {
             InfDB idb = new InfDB("sdgsweden", "3306", "root", "masterkey");
-            new ProjektProjektchefAdmin(new Anvandare(idb, null, null, null, 3, null, null, null, "admin"), 3, AnvandareRoll.ADMIN).setVisible(true);
+            new ProjektProjektchefAdmin(new Anvandare(idb, null, null, null, 3, null, null, null, "admin"), 10, AnvandareRoll.ADMIN).setVisible(true);
             System.out.println("Databaskoppling skapad");
         } catch (InfException e) {
             System.out.println(e.getMessage());
