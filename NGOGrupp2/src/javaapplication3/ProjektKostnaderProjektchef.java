@@ -322,7 +322,7 @@ public class ProjektKostnaderProjektchef extends javax.swing.JFrame {
             @Override
             public void run() {
                 try {
-                    oru.inf.InfDB testIdb = new oru.inf.InfDB("sdgsweden", "3306", "root", "password");
+                    oru.inf.InfDB testIdb = new oru.inf.InfDB("sdgsweden", "3306", "root", "masterkey");
                     Anvandare testAnv = new Anvandare(testIdb, "Test", "Testsson", "2026-01-01", 1, "Gata 1", "123", "pw", "Projektchef");
                     new ProjektKostnaderProjektchef(testAnv).setVisible(true);
                 } catch (Exception e) {
