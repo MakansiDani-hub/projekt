@@ -389,7 +389,7 @@ public class PartnerAdmin extends javax.swing.JFrame {
                 return;
             }
             
-            String fraga = "INSERT INTO partner (pid, namn, kontaktperson, kontaktepost, telephone, adress, branch, stad) " +
+            String fraga = "INSERT INTO partner (pid, namn, kontaktperson, kontaktepost, telefon, adress, branch, stad) " +
                            "VALUES (" + pid + ", '" + namn + "', '" + kontakt + "', '" + epost + "', '" + tel + "', '" + adress + "', '" + branch + "', '" + stad + "')";
             
             idb.insert(fraga);
@@ -422,7 +422,7 @@ public class PartnerAdmin extends javax.swing.JFrame {
             }
             
             String fraga = "UPDATE partner SET namn='" + namn + "', kontaktperson='" + kontakt + 
-                           "', kontaktepost='" + epost + "', telephone='" + tel + "', adress='" + adress + 
+                           "', kontaktepost='" + epost + "', telefon='" + tel + "', adress='" + adress + 
                            "', branch='" + branch + "', stad='" + stad + "' WHERE pid=" + pid;
             
             idb.update(fraga);
