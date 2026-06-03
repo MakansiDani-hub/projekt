@@ -1,5 +1,9 @@
 package javaapplication3;
 
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
+
 public final class ValideringInput {
 
     private ValideringInput() {
@@ -306,5 +310,38 @@ public final class ValideringInput {
         }
 
         return ArGiltigSokning.JA;
+    }
+
+    // kontroll om ett fält är tomt
+    public static boolean harVarde(JTextField fält, String fältNamn) {
+        if (fält.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, fältNamn + " måste fyllas i!");
+            fält.requestFocus(); // Sätter markören i det tomma fältet
+            return false;
+        }
+        return true;
+    }
+
+    // Kontroll så fältet innehåller ett heltal
+    public static boolean arHeltal(JTextField fält, String fältNamn) {
+        try {
+            Integer.parseInt(fält.getText().trim());
+            return true;
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, fältNamn + " måste vara ett heltal!");
+            fält.requestFocus();
+            return false;
+        }
+    }
+
+    //e-postvalidering för epost fönster.
+    public static boolean isGiltigEpost(JTextField fält) {
+        String epost = fält.getText().trim();
+        if (!epost.contains("@") || !epost.contains(".")) {
+            JOptionPane.showMessageDialog(null, "Ange en giltig e-postadress!");
+            fält.requestFocus();
+            return false;
+        }
+        return true;
     }
 }

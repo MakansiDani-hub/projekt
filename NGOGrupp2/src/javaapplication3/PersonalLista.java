@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -257,23 +258,17 @@ public class PersonalLista extends javax.swing.JFrame {
                     = ValideringInput.valideraSokning(sokning);
 
             if (resultatSokning == ValideringInput.ArGiltigSokning.TOM) {
-                JOptionPane.showMessageDialog(
-                        this,
-                        "Du måste skriva något att söka efter.");
+                JOptionPane.showMessageDialog(this,"Du måste skriva något att söka efter.");
                 return;
             }
 
             if (resultatSokning == ValideringInput.ArGiltigSokning.FOR_LANG) {
-                JOptionPane.showMessageDialog(
-                        this,
-                        "Sökningen är för lång.");
+                JOptionPane.showMessageDialog(this, "Sökningen är för lång.");
                 return;
             }
 
             if (resultatSokning == ValideringInput.ArGiltigSokning.OGILTIGT_TECKEN) {
-                JOptionPane.showMessageDialog(
-                        this,
-                        "Sökningen innehåller ogiltiga tecken.");
+                JOptionPane.showMessageDialog(this,"Sökningen innehåller ogiltiga tecken.");
                 return;
             }
 
