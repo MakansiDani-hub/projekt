@@ -117,7 +117,10 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
             System.out.println("Kunde inte hämta projekt: " + e.getMessage());
         }
     }
-
+    
+    //Letar upp och markerar en specifik rad i tabellen baserat på ett ID.
+    //Synkroniserar även gränssnittet så att textfälten fylls med 
+    // informationen från den valda raden via visaRadInfo.
     public void valjRad(String malId) {
         int valdRad = SwingUtils.valjRadIJTableMedId(JTableHallbarhetsmal, malId, 0);
         System.out.println("rad: " + valdRad);
@@ -150,7 +153,7 @@ public class HanteraHållbarhetsmål extends javax.swing.JFrame {
             malListener.valMal(id, namn, malnr);
         }
     }
-
+    //metod för att tömma TxtFieldsen
     private void rensaFalt() {
         JTxtFieldHID.setText("");
         JTxtFieldNamn.setText("");

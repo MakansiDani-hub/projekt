@@ -58,11 +58,10 @@ public class HanteraAvdelning extends javax.swing.JFrame {
             }
         });
     }
-        /**
-    * hämtar länder från databasen och uppdaterar tabellen i gränssnittet.
-    * Tömmer befintliga rader, ställer en SQL-fråga till databasen och 
-    * loopar igenom resultatet för att fylla tabellmodellen
-    */
+
+    //hämtar länder från databasen och uppdaterar tabellen i gränssnittet.
+    //Tömmer befintliga rader, ställer en SQL-fråga till databasen och 
+    //loopar igenom resultatet för att fylla tabellmodellen
     private void fyllTabell() {
         bordsModell.setRowCount(0);
         try {
