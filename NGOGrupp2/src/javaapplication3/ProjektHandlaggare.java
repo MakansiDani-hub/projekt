@@ -853,7 +853,7 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
         PartnerAdmin partnerFonster = new PartnerAdmin(anv);
         partnerFonster.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         partnerFonster.setVisible(true);
-        //partnerFonster.valjRad(id); IMPLEMENTERA DENNA METOD
+        partnerFonster.valjRad(id);
     }
 
     private void btnDeltagareDropdownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeltagareDropdownActionPerformed
