@@ -12,7 +12,7 @@ import oru.inf.InfDB;
 import java.awt.Color;
 
 public class UppgifterHandlaggare extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(UppgifterHandlaggare.class.getName());
     private Anvandare anvandare;
     private InfDB idb;
@@ -46,48 +46,45 @@ public class UppgifterHandlaggare extends javax.swing.JFrame {
         this.dbAnvandaresTelefon = anvandare.getDbAnvandaresTelefon();
 
         this.dbAnvandareslosenord = anvandare.getDbAnvandareslosenord();
-        
+
         lblAid.setText("AnställningsID: " + aid);
         lblAnställdSedan.setText("Anställd sedan: " + dbAnstallningsdatum);
-        try{
-        lblAvdelningsNamnOchID.setText(idb.fetchSingle("SELECT namn,avdid FROM avdelning where chef = '"+ aid+"'"));
-        txtHandläggaresEfternamn.setText(idb.fetchSingle("SELECT efternamn FROM anstalld where aid = '"+ aid+"'"));
-        txtHandläggaresNamn.setText(idb.fetchSingle("SELECT fornamn FROM anstalld where aid = '"+ aid+"'"));
-        txtHandläggaresTelefon.setText(idb.fetchSingle("SELECT telefon FROM anstalld where aid = '"+ aid+"'"));
-        txtHandläggaresAdress.setText(idb.fetchSingle("SELECT adress FROM anstalld where aid = '"+ aid+"'"));
-        txtHandläggaresEpost.setText(idb.fetchSingle("SELECT epost FROM anstalld where aid = '"+ aid+"'"));
-        
-        txtAnsvarsområde.setText(idb.fetchSingle("SELECT ansvarighetsomrade FROM handlaggare where aid = '"+ aid+"'"));
-        txtMentor.setText(idb.fetchSingle("SELECT CONCAT(fornamn, ' ', efternamn) FROM anstalld " + "WHERE aid = (SELECT mentor FROM handlaggare " + "WHERE aid = '" + aid + "')"));
-        txtMentorFör.setText(idb.fetchSingle("SELECT GROUP_CONCAT(CONCAT(fornamn, ' ', efternamn) SEPARATOR ', ') " + "FROM anstalld " + "WHERE aid IN (SELECT aid FROM handlaggare " + "WHERE mentor = '" + aid + "')"));
+        try {
+            lblAvdelningsNamnOchID.setText(idb.fetchSingle("SELECT namn,avdid FROM avdelning where chef = '" + aid + "'"));
+            txtHandläggaresEfternamn.setText(idb.fetchSingle("SELECT efternamn FROM anstalld where aid = '" + aid + "'"));
+            txtHandläggaresNamn.setText(idb.fetchSingle("SELECT fornamn FROM anstalld where aid = '" + aid + "'"));
+            txtHandläggaresTelefon.setText(idb.fetchSingle("SELECT telefon FROM anstalld where aid = '" + aid + "'"));
+            txtHandläggaresAdress.setText(idb.fetchSingle("SELECT adress FROM anstalld where aid = '" + aid + "'"));
+            txtHandläggaresEpost.setText(idb.fetchSingle("SELECT epost FROM anstalld where aid = '" + aid + "'"));
 
-        
-        
-        
-        txtHandläggaresNamn.setEditable(false);
-        txtHandläggaresEfternamn.setEditable(false);
-        txtHandläggaresTelefon.setEditable(false);
-        txtHandläggaresAdress.setEditable(false);
-        txtHandläggaresEpost.setEditable(false);
-        
-        txtAnsvarsområde.setEditable(false);
-        txtMentor.setEditable(false);
-        txtMentorFör.setEditable(false);
+            txtAnsvarsområde.setText(idb.fetchSingle("SELECT ansvarighetsomrade FROM handlaggare where aid = '" + aid + "'"));
+            txtMentor.setText(idb.fetchSingle("SELECT CONCAT(fornamn, ' ', efternamn) FROM anstalld " + "WHERE aid = (SELECT mentor FROM handlaggare " + "WHERE aid = '" + aid + "')"));
+            txtMentorFör.setText(idb.fetchSingle("SELECT GROUP_CONCAT(CONCAT(fornamn, ' ', efternamn) SEPARATOR ', ') " + "FROM anstalld " + "WHERE aid IN (SELECT aid FROM handlaggare " + "WHERE mentor = '" + aid + "')"));
 
-        txtHandläggaresNamn.setBackground(Color.LIGHT_GRAY);
-        txtHandläggaresEfternamn.setBackground(Color.LIGHT_GRAY);
-        txtHandläggaresTelefon.setBackground(Color.LIGHT_GRAY);
-        txtHandläggaresAdress.setBackground(Color.LIGHT_GRAY);
-        txtHandläggaresEpost.setBackground(Color.LIGHT_GRAY);
-        
-        txtAnsvarsområde.setBackground(Color.LIGHT_GRAY);
-        txtMentor.setBackground(Color.LIGHT_GRAY);
-        txtMentorFör.setBackground(Color.LIGHT_GRAY);
-        
-        }catch(Exception ex){
-            
+            txtHandläggaresNamn.setEditable(false);
+            txtHandläggaresEfternamn.setEditable(false);
+            txtHandläggaresTelefon.setEditable(false);
+            txtHandläggaresAdress.setEditable(false);
+            txtHandläggaresEpost.setEditable(false);
+
+            txtAnsvarsområde.setEditable(false);
+            txtMentor.setEditable(false);
+            txtMentorFör.setEditable(false);
+
+            txtHandläggaresNamn.setBackground(Color.LIGHT_GRAY);
+            txtHandläggaresEfternamn.setBackground(Color.LIGHT_GRAY);
+            txtHandläggaresTelefon.setBackground(Color.LIGHT_GRAY);
+            txtHandläggaresAdress.setBackground(Color.LIGHT_GRAY);
+            txtHandläggaresEpost.setBackground(Color.LIGHT_GRAY);
+
+            txtAnsvarsområde.setBackground(Color.LIGHT_GRAY);
+            txtMentor.setBackground(Color.LIGHT_GRAY);
+            txtMentorFör.setBackground(Color.LIGHT_GRAY);
+
+        } catch (Exception ex) {
+
         }
-        
+
     }
 
     /**
@@ -311,13 +308,13 @@ public class UppgifterHandlaggare extends javax.swing.JFrame {
 
     private void btnÄndraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnÄndraActionPerformed
         // Jag tycker att bara admin kan ändra namn och efternamn på anställda.
-        
+
         //txtHandläggaresNamn.setEditable(true);
         //txtHandläggaresEfternamn.setEditable(true);
         txtHandläggaresTelefon.setEditable(true);
         txtHandläggaresAdress.setEditable(true);
         txtHandläggaresEpost.setEditable(true);
-        
+
         txtAnsvarsområde.setEditable(true);
         txtMentor.setEditable(true);
         // aid ändring RISK!!!!
@@ -328,66 +325,91 @@ public class UppgifterHandlaggare extends javax.swing.JFrame {
         txtHandläggaresTelefon.setBackground(Color.WHITE);
         txtHandläggaresAdress.setBackground(Color.WHITE);
         txtHandläggaresEpost.setBackground(Color.WHITE);
-        
+
         txtAnsvarsområde.setBackground(Color.WHITE);
         txtMentor.setBackground(Color.WHITE);
-       // txtMentorFör.setBackground(Color.WHITE);
+        // txtMentorFör.setBackground(Color.WHITE);
     }//GEN-LAST:event_btnÄndraActionPerformed
 
     private void btnSparaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSparaActionPerformed
-        try{
-            
-        String nyttTelefonnummer = txtHandläggaresTelefon.getText();
-        String nyAdress = txtHandläggaresAdress.getText();
-        String nyEpost = txtHandläggaresEpost.getText();
-        
-        String nyAnsvarsområde = txtAnsvarsområde.getText();
-        String nyMentor = txtMentor.getText();
-        
-        String nyMentorFör = txtMentorFör.getText();
-        
-        String sqlFråga1 = "UPDATE anstalld SET "
-                + "telefon = '" + nyttTelefonnummer + "', "
-                + "adress = '" + nyAdress + "', "
-                + "epost = '" + nyEpost + "' "
-                + "WHERE aid = '" + aid + "'";
-        idb.update(sqlFråga1);
-        
-        String sqlFråga2 ="UPDATE handlaggare SET "
-                + "ansvarighetsomrade = '" + nyAnsvarsområde + "'"
-                + "WHERE aid = '" + aid + "'";
-        
-        idb.update(sqlFråga2);
-        
-        String sqlFråga3 ="UPDATE handlaggare SET "
-                + "mentor = '" + nyMentor + "'"
-                + "WHERE aid = '" + aid + "'";
-        
-        idb.update(sqlFråga3);
-        // tycker inte att en handläggare eller projektchef ska kunna ändra vem de är mentorer för då riskerar vi ändra aid i hela projektet
-       // String sqlFråga4 ="UPDATE handlaggare SET "
-              //  + "aid = '" + nyMentorFör + "'";
-        
-        //idb.update(sqlFråga4);
-        
-        txtHandläggaresTelefon.setEditable(false);
-        txtHandläggaresAdress.setEditable(false);
-        txtHandläggaresEpost.setEditable(false);
-        
-        txtAnsvarsområde.setEditable(false);
-        txtMentor.setEditable(false);
-        txtMentorFör.setEditable(false);
-        
-        txtHandläggaresTelefon.setBackground(Color.LIGHT_GRAY);
-        txtHandläggaresAdress.setBackground(Color.LIGHT_GRAY);
-        txtHandläggaresEpost.setBackground(Color.LIGHT_GRAY);
-        
-        txtAnsvarsområde.setBackground(Color.LIGHT_GRAY);
-        txtMentor.setBackground(Color.LIGHT_GRAY);
-        txtMentorFör.setBackground(Color.LIGHT_GRAY);
-        }
-        catch(Exception ex){
-            
+        try {
+
+            String nyttTelefonnummer = txtHandläggaresTelefon.getText();
+            String nyAdress = txtHandläggaresAdress.getText();
+            String nyEpost = txtHandläggaresEpost.getText();
+
+            if (ValideringInput.valideraTelefon(nyttTelefonnummer)
+                    != ValideringInput.ArGiltigTelefon.JA) {
+
+                javax.swing.JOptionPane.showMessageDialog(
+                        this,
+                        "Ogiltigt telefonnummer");
+                return;
+            }
+
+            if (ValideringInput.valideraAdress(nyAdress)
+                    != ValideringInput.ArGiltigAdress.JA) {
+
+                javax.swing.JOptionPane.showMessageDialog(
+                        this,
+                        "Ogiltig adress");
+                return;
+            }
+
+            if (ValideringInput.valideraEpost(nyEpost)
+                    != ValideringInput.ArGiltigEpost.JA) {
+
+                javax.swing.JOptionPane.showMessageDialog(
+                        this,
+                        "Ogiltig e-postadress");
+                return;
+            }
+
+            String nyAnsvarsområde = txtAnsvarsområde.getText();
+            String nyMentor = txtMentor.getText();
+
+            String nyMentorFör = txtMentorFör.getText();
+
+            String sqlFråga1 = "UPDATE anstalld SET "
+                    + "telefon = '" + nyttTelefonnummer + "', "
+                    + "adress = '" + nyAdress + "', "
+                    + "epost = '" + nyEpost + "' "
+                    + "WHERE aid = '" + aid + "'";
+            idb.update(sqlFråga1);
+
+            String sqlFråga2 = "UPDATE handlaggare SET "
+                    + "ansvarighetsomrade = '" + nyAnsvarsområde + "'"
+                    + "WHERE aid = '" + aid + "'";
+
+            idb.update(sqlFråga2);
+
+            String sqlFråga3 = "UPDATE handlaggare SET "
+                    + "mentor = '" + nyMentor + "'"
+                    + "WHERE aid = '" + aid + "'";
+
+            idb.update(sqlFråga3);
+            // tycker inte att en handläggare eller projektchef ska kunna ändra vem de är mentorer för då riskerar vi ändra aid i hela projektet
+            // String sqlFråga4 ="UPDATE handlaggare SET "
+            //  + "aid = '" + nyMentorFör + "'";
+
+            //idb.update(sqlFråga4);
+            txtHandläggaresTelefon.setEditable(false);
+            txtHandläggaresAdress.setEditable(false);
+            txtHandläggaresEpost.setEditable(false);
+
+            txtAnsvarsområde.setEditable(false);
+            txtMentor.setEditable(false);
+            txtMentorFör.setEditable(false);
+
+            txtHandläggaresTelefon.setBackground(Color.LIGHT_GRAY);
+            txtHandläggaresAdress.setBackground(Color.LIGHT_GRAY);
+            txtHandläggaresEpost.setBackground(Color.LIGHT_GRAY);
+
+            txtAnsvarsområde.setBackground(Color.LIGHT_GRAY);
+            txtMentor.setBackground(Color.LIGHT_GRAY);
+            txtMentorFör.setBackground(Color.LIGHT_GRAY);
+        } catch (Exception ex) {
+
         }
     }//GEN-LAST:event_btnSparaActionPerformed
 

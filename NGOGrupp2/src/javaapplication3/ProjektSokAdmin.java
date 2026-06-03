@@ -462,8 +462,7 @@ public class ProjektSokAdmin extends javax.swing.JFrame {
         String land = cbLand.getSelectedItem().toString();
         String landId = land.substring(0, land.indexOf(" - "));
 
-        if (pid.isEmpty() || projektnamn.isEmpty() || beskrivning.isEmpty()
-                || startdatum.isEmpty() || slutdatum.isEmpty() || kostnad.isEmpty()) {
+        if (pid.isEmpty() || projektnamn.isEmpty() || beskrivning.isEmpty()|| startdatum.isEmpty() || slutdatum.isEmpty() || kostnad.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Alla fält måste vara ifyllda.");
             return;
         }

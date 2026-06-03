@@ -3,30 +3,33 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package javaapplication3;
+
 import oru.inf.InfDB;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import oru.inf.InfException;
 import projListeners.AnstalldListener;
-
 
 /**
  *
  * @author Krist
  */
 public class HanteraAnstalld extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(HanteraAnstalld.class.getName());
     private Anvandare anvandare;
-    private InfDB idb; 
+    private InfDB idb;
     private AnstalldListener anstalldListener;
-    
+
     public HanteraAnstalld(Anvandare anvandare) {
         initComponents();
 
-    this.anvandare = anvandare;
-    this.idb = anvandare.getIdb();
+        this.anvandare = anvandare;
+        this.idb = anvandare.getIdb();
+        fyllAvdelningComboBox();
+        fyllRollComboBox();
 
         if (!anvandare.getRoll().equals("admin")) {
             //Användaren är ej admin och ska ej få tillgång till knapparna ta bort, uppdatera, lägg till och rensa
@@ -48,6 +51,34 @@ public class HanteraAnstalld extends javax.swing.JFrame {
                 }
             }
         });
+    }
+
+    private void fyllAvdelningComboBox() {
+        try {
+            cbAvdelning.removeAllItems();
+
+            ArrayList<HashMap<String, String>> avdelningsLista = anvandare.getIdb().fetchRows(
+                    "SELECT avdid, namn FROM avdelning ORDER BY namn"
+            );
+
+            for (HashMap<String, String> avdelning : avdelningsLista) {
+                String avdid = avdelning.get("avdid");
+                String namn = avdelning.get("namn");
+
+                cbAvdelning.addItem(avdid + " - " + namn);
+            }
+
+        } catch (InfException ex) {
+            JOptionPane.showMessageDialog(this, "Kunde inte ladda länder.");
+        }
+    }
+
+    private void fyllRollComboBox() {
+        cbRoll.removeAllItems();
+
+        cbRoll.addItem("admin");
+        cbRoll.addItem("handlaggare");
+        cbRoll.addItem("handlaggare_projektchef");
     }
 
     /**
@@ -74,7 +105,6 @@ public class HanteraAnstalld extends javax.swing.JFrame {
         JLblFNamn = new javax.swing.JLabel();
         JTxtFieldFNamn = new javax.swing.JTextField();
         JLblRoll = new javax.swing.JLabel();
-        JTxtFieldRoll = new javax.swing.JTextField();
         JLblENamn = new javax.swing.JLabel();
         JTxtFieldENamn = new javax.swing.JTextField();
         JLblTeleNr = new javax.swing.JLabel();
@@ -86,12 +116,13 @@ public class HanteraAnstalld extends javax.swing.JFrame {
         JLblLösen = new javax.swing.JLabel();
         jTextField5 = new javax.swing.JTextField();
         JLblAvdelning = new javax.swing.JLabel();
-        JTxtFieldAvdelning = new javax.swing.JTextField();
         JLblAnstDatum = new javax.swing.JLabel();
-        JTxtFieldAnstDatum = new javax.swing.JTextField();
         btnSök = new javax.swing.JButton();
         btnGenereraLösenord = new javax.swing.JButton();
         btnTillbakatillmeny = new javax.swing.JButton();
+        cbAvdelning = new javax.swing.JComboBox<>();
+        cbRoll = new javax.swing.JComboBox<>();
+        dAnställningsDatum = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -138,9 +169,6 @@ public class HanteraAnstalld extends javax.swing.JFrame {
 
         JLblRoll.setText("Roll");
 
-        JTxtFieldRoll.setText("admin/handlaggare_projektchef/handlaggare");
-        JTxtFieldRoll.addActionListener(this::JTxtFieldRollActionPerformed);
-
         JLblENamn.setText("Efternamn");
 
         JLblTeleNr.setText("Telefonnummer");
@@ -161,11 +189,7 @@ public class HanteraAnstalld extends javax.swing.JFrame {
 
         JLblAvdelning.setText("Avdelning");
 
-        JTxtFieldAvdelning.setText("[AvdID]");
-
         JLblAnstDatum.setText("Anställningsdatum");
-
-        JTxtFieldAnstDatum.setText("ÅÅÅÅ-MM-DD");
 
         btnSök.setText("Sök");
         btnSök.addActionListener(this::btnSökActionPerformed);
@@ -175,6 +199,10 @@ public class HanteraAnstalld extends javax.swing.JFrame {
 
         btnTillbakatillmeny.setText("Tillbaka till meny");
         btnTillbakatillmeny.addActionListener(this::btnTillbakatillmenyActionPerformed);
+
+        cbAvdelning.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        cbRoll.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -193,42 +221,10 @@ public class HanteraAnstalld extends javax.swing.JFrame {
                         .addComponent(JTxtFieldSökruta, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnSök))
-                    .addComponent(JScrollPaneListaAnställda, javax.swing.GroupLayout.PREFERRED_SIZE, 765, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(JScrollPaneListaAnställda, javax.swing.GroupLayout.DEFAULT_SIZE, 608, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(JBtnLaggTillAnstalld, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(JBtnUppdateraAnstalld, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(JBtnTaBortAnstalld, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(JBtnRensaUppgifteranstalld, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(JLblFNamn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGap(18, 18, 18)
-                            .addComponent(JTxtFieldFNamn, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(JLblAnstalldUppgifter)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(JLblAnstalldID, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(JLblAvdelning, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(JLblRoll, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(JLblENamn, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)))
-                            .addGap(14, 14, 14)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(JTxtFieldAvdelning, javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(JTxtFieldRoll)
-                                .addComponent(JTxtFieldAnstalldID)))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(JLblTeleNr, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(JTxtFieldENamn)
-                                .addComponent(JTxtFieldTeleNr)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(JLblPostAdress, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(18, 18, 18)
@@ -240,11 +236,51 @@ public class HanteraAnstalld extends javax.swing.JFrame {
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(JLblAnstDatum, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(18, 18, 18)
-                            .addComponent(JTxtFieldAnstDatum))
+                            .addComponent(dAnställningsDatum, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(0, 0, Short.MAX_VALUE))
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(JLblLösen, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(18, 18, 18)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jTextField5))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(JBtnTaBortAnstalld, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                                .addComponent(JBtnLaggTillAnstalld, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(JBtnUppdateraAnstalld, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(JBtnRensaUppgifteranstalld, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(JLblAnstalldUppgifter)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(JLblAnstalldID, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(JLblAvdelning, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addComponent(JLblRoll, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(JLblENamn, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)))
+                                    .addGap(14, 14, 14))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(JLblFNamn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(JTxtFieldFNamn)
+                                .addComponent(cbAvdelning, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addGap(0, 0, Short.MAX_VALUE)
+                                    .addComponent(JTxtFieldAnstalldID, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(cbRoll, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(JLblTeleNr, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(JTxtFieldENamn, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(18, 18, 18)
+                                    .addComponent(JTxtFieldTeleNr)))))
                     .addComponent(btnGenereraLösenord, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
@@ -265,7 +301,7 @@ public class HanteraAnstalld extends javax.swing.JFrame {
                             .addComponent(JLblSokAnställd)
                             .addComponent(btnSök))
                         .addGap(18, 18, 18)
-                        .addComponent(JScrollPaneListaAnställda, javax.swing.GroupLayout.DEFAULT_SIZE, 824, Short.MAX_VALUE)
+                        .addComponent(JScrollPaneListaAnställda)
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addGap(27, 27, 27)
@@ -277,11 +313,11 @@ public class HanteraAnstalld extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(JLblAvdelning)
-                            .addComponent(JTxtFieldAvdelning, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cbAvdelning, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(JLblRoll)
-                            .addComponent(JTxtFieldRoll, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cbRoll, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(JLblFNamn, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -303,205 +339,217 @@ public class HanteraAnstalld extends javax.swing.JFrame {
                             .addComponent(JLblEpost)
                             .addComponent(JTxtFieldEpost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(JLblAnstDatum)
-                            .addComponent(JTxtFieldAnstDatum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(JLblLösen)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnGenereraLösenord)
-                        .addGap(20, 20, 20)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(JBtnLaggTillAnstalld, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(JBtnUppdateraAnstalld, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(JBtnTaBortAnstalld, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(JBtnRensaUppgifteranstalld, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(JLblAnstDatum)
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(JLblLösen)
+                                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnGenereraLösenord)
+                                .addGap(20, 20, 20)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(JBtnUppdateraAnstalld, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(JBtnTaBortAnstalld, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(JBtnRensaUppgifteranstalld, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(JBtnLaggTillAnstalld, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(dAnställningsDatum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void addAnstalldListener(AnstalldListener anstalldListener){
+    public void addAnstalldListener(AnstalldListener anstalldListener) {
         this.anstalldListener = anstalldListener;
     }
-    
-    
-    
-    
-    
-    
-private void hamtaAllaAnstallda() {
-    try {
-        String sqlFraga =
-                "SELECT aid, fornamn, efternamn, telefon, adress, epost, anstallningsdatum, avdelning, losenord " +
-                "FROM anstalld";
 
-        ArrayList<HashMap<String, String>> lista = idb.fetchRows(sqlFraga);
+    private void hamtaAllaAnstallda() {
+        try {
+            String sqlFraga
+                    = "SELECT aid, fornamn, efternamn, telefon, adress, epost, anstallningsdatum, avdelning, losenord "
+                    + "FROM anstalld";
 
-        DefaultTableModel model = new DefaultTableModel();
-        model.addColumn("AID");
-        model.addColumn("Förnamn");
-        model.addColumn("Efternamn");
-        model.addColumn("Telefon");
-        model.addColumn("Adress");
-        model.addColumn("Epost");
-        model.addColumn("Anställningsdatum");
-        model.addColumn("Avdelning");
-        model.addColumn("Lösenord");
+            ArrayList<HashMap<String, String>> lista = idb.fetchRows(sqlFraga);
 
-        if (lista != null) {
-            for (HashMap<String, String> rad : lista) {
-                model.addRow(new Object[]{
-                    rad.get("aid"),
-                    rad.get("fornamn"),
-                    rad.get("efternamn"),
-                    rad.get("telefon"),
-                    rad.get("adress"),
-                    rad.get("epost"),
-                    rad.get("anstallningsdatum"),
-                    rad.get("avdelning"),
-                    rad.get("losenord")
-                });
+            DefaultTableModel model = new DefaultTableModel();
+            model.addColumn("AID");
+            model.addColumn("Förnamn");
+            model.addColumn("Efternamn");
+            model.addColumn("Telefon");
+            model.addColumn("Adress");
+            model.addColumn("Epost");
+            model.addColumn("Anställningsdatum");
+            model.addColumn("Avdelning");
+            model.addColumn("Lösenord");
+
+            if (lista != null) {
+                for (HashMap<String, String> rad : lista) {
+                    model.addRow(new Object[]{
+                        rad.get("aid"),
+                        rad.get("fornamn"),
+                        rad.get("efternamn"),
+                        rad.get("telefon"),
+                        rad.get("adress"),
+                        rad.get("epost"),
+                        rad.get("anstallningsdatum"),
+                        rad.get("avdelning"),
+                        rad.get("losenord")
+                    });
+                }
+            }
+
+            jTable1.setModel(model);
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Kunde inte hämta anställda.");
+        }
+    }
+
+    private void fyllFaltFranMarkeradRad(int valdRad) {
+        if (valdRad == -1) {
+            return;
+        }
+        JTxtFieldAnstalldID.setText(jTable1.getValueAt(valdRad, 0).toString());
+        JTxtFieldFNamn.setText(jTable1.getValueAt(valdRad, 1).toString());
+        JTxtFieldENamn.setText(jTable1.getValueAt(valdRad, 2).toString());
+        JTxtFieldTeleNr.setText(jTable1.getValueAt(valdRad, 3).toString());
+        JTxtFieldPostadress.setText(jTable1.getValueAt(valdRad, 4).toString());
+        JTxtFieldEpost.setText(jTable1.getValueAt(valdRad, 5).toString());
+        try {
+            java.util.Date datum = new java.text.SimpleDateFormat("yyyy-MM-dd").parse(jTable1.getValueAt(valdRad, 6).toString());
+            dAnställningsDatum.setDate(datum);
+        } catch (Exception e) {
+            dAnställningsDatum.setDate(null);
+        }
+        String avdelningsId = jTable1.getValueAt(valdRad, 7).toString();
+
+        for (int i = 0; i < cbAvdelning.getItemCount(); i++) {
+            String item = cbAvdelning.getItemAt(i);
+
+            if (item.startsWith(avdelningsId + " - ")) {
+                cbAvdelning.setSelectedIndex(i);
+                break;
             }
         }
 
-        jTable1.setModel(model);
+        jTextField5.setText(jTable1.getValueAt(valdRad, 8).toString());
 
-    } catch (Exception ex) {
-        JOptionPane.showMessageDialog(this, "Kunde inte hämta anställda.");
+        String roll = visaRollForAnstalld();
+        cbRoll.setSelectedItem(roll);
+
+        if (anstalldListener != null) {
+            String fulltNamn = jTable1.getValueAt(valdRad, 1) + " " + jTable1.getValueAt(valdRad, 2);
+            //Anropar valAnstalld på anstalldListener objektet och skickar in  id, namn och roll då en rad valts
+            anstalldListener.valAnstalld(jTable1.getValueAt(valdRad, 0).toString(), fulltNamn, roll);
+        }
     }
-}
 
-
-
-
-
-private void fyllFaltFranMarkeradRad(int valdRad) {
-    if (valdRad == -1) {
-        return;
-    }
-    JTxtFieldAnstalldID.setText(jTable1.getValueAt(valdRad, 0).toString());
-    JTxtFieldFNamn.setText(jTable1.getValueAt(valdRad, 1).toString());
-    JTxtFieldENamn.setText(jTable1.getValueAt(valdRad, 2).toString());
-    JTxtFieldTeleNr.setText(jTable1.getValueAt(valdRad, 3).toString());
-    JTxtFieldPostadress.setText(jTable1.getValueAt(valdRad, 4).toString());
-    JTxtFieldEpost.setText(jTable1.getValueAt(valdRad, 5).toString());
-    JTxtFieldAnstDatum.setText(jTable1.getValueAt(valdRad, 6).toString());
-    JTxtFieldAvdelning.setText(jTable1.getValueAt(valdRad, 7).toString());
-    jTextField5.setText(jTable1.getValueAt(valdRad, 8).toString());
-
-    String roll = visaRollForAnstalld();
-    
-    if(anstalldListener != null){
-        String fulltNamn = jTable1.getValueAt(valdRad, 1) + " " + jTable1.getValueAt(valdRad, 2);
-        //Anropar valAnstalld på anstalldListener objektet och skickar in  id, namn och roll då en rad valts
-        anstalldListener.valAnstalld(jTable1.getValueAt(valdRad, 0).toString(), fulltNamn, roll);
-    }
-}
-
-    public void valjRad(String anstalldId)
-    {
+    public void valjRad(String anstalldId) {
         int valdRad = SwingUtils.valjRadIJTableMedId(jTable1, anstalldId, 0);
         fyllFaltFranMarkeradRad(valdRad);
     }
 
 //Returnerar rollen
-private String visaRollForAnstalld() {
-    try {
-        String aid = JTxtFieldAnstalldID.getText();
+    private String visaRollForAnstalld() {
+        try {
+            String aid = JTxtFieldAnstalldID.getText();
 
-        String adminCheck = idb.fetchSingle("SELECT COUNT(*) FROM admin WHERE aid = " + aid);
-        String handlaggareCheck = idb.fetchSingle("SELECT COUNT(*) FROM handlaggare WHERE aid = " + aid);
-        String projektchefCheck = idb.fetchSingle("SELECT COUNT(*) FROM projekt WHERE projektchef = " + aid);
+            String adminCheck = idb.fetchSingle("SELECT COUNT(*) FROM admin WHERE aid = " + aid);
+            String handlaggareCheck = idb.fetchSingle("SELECT COUNT(*) FROM handlaggare WHERE aid = " + aid);
+            String projektchefCheck = idb.fetchSingle("SELECT COUNT(*) FROM projekt WHERE projektchef = " + aid);
 
-        boolean arAdmin = !adminCheck.equals("0");
-        boolean arHandlaggare = !handlaggareCheck.equals("0");
-        boolean arProjektchef = !projektchefCheck.equals("0");
-        
-        String roll;
+            boolean arAdmin = !adminCheck.equals("0");
+            boolean arHandlaggare = !handlaggareCheck.equals("0");
+            boolean arProjektchef = !projektchefCheck.equals("0");
 
-        if(arAdmin) roll = "admin";
-        else if(arHandlaggare && arProjektchef) roll = "handlaggare_projektchef";
-        else if(arHandlaggare) roll = "handlaggare";
-        else roll = "";
+            String roll;
 
-        JTxtFieldRoll.setText(roll);
-        return roll;
-        
-    } catch (Exception ex) {
-        JTxtFieldRoll.setText("");
-        return "";
-    }
-}
-
-private void rensaFalt() {
-    JTxtFieldAnstalldID.setText("");
-    JTxtFieldFNamn.setText("");
-    JTxtFieldENamn.setText("");
-    JTxtFieldTeleNr.setText("");
-    JTxtFieldPostadress.setText("");
-    JTxtFieldEpost.setText("");
-    JTxtFieldAnstDatum.setText("");
-    JTxtFieldAvdelning.setText("");
-    JTxtFieldRoll.setText("");
-    jTextField5.setText("");
-}    
-    
-private void sokAnstalld() {
-    try {
-        String sokning = JTxtFieldSökruta.getText();
-
-        String sqlFraga =
-                "SELECT aid, fornamn, efternamn, telefon, adress, epost, anstallningsdatum, avdelning, losenord " +
-                "FROM anstalld " +
-                "WHERE fornamn LIKE '%" + sokning + "%' " +
-                "OR efternamn LIKE '%" + sokning + "%' " +
-                "OR epost LIKE '%" + sokning + "%' " +
-                "OR telefon LIKE '%" + sokning + "%'";
-
-        ArrayList<HashMap<String, String>> lista = idb.fetchRows(sqlFraga);
-
-        DefaultTableModel model = new DefaultTableModel();
-        model.addColumn("AID");
-        model.addColumn("Förnamn");
-        model.addColumn("Efternamn");
-        model.addColumn("Telefon");
-        model.addColumn("Adress");
-        model.addColumn("Epost");
-        model.addColumn("Anställningsdatum");
-        model.addColumn("Avdelning");
-        model.addColumn("Lösenord");
-
-        if (lista != null) {
-            for (HashMap<String, String> rad : lista) {
-                model.addRow(new Object[]{
-                    rad.get("aid"),
-                    rad.get("fornamn"),
-                    rad.get("efternamn"),
-                    rad.get("telefon"),
-                    rad.get("adress"),
-                    rad.get("epost"),
-                    rad.get("anstallningsdatum"),
-                    rad.get("avdelning"),
-                    rad.get("losenord")
-                });
+            if (arAdmin) {
+                roll = "admin";
+            } else if (arHandlaggare && arProjektchef) {
+                roll = "handlaggare_projektchef";
+            } else if (arHandlaggare) {
+                roll = "handlaggare";
+            } else {
+                roll = "";
             }
+
+            cbRoll.setSelectedItem(roll);
+            return roll;
+
+        } catch (Exception ex) {
+            cbRoll.setSelectedItem(-1);
+            return "";
         }
-
-        jTable1.setModel(model);
-
-    } catch (Exception ex) {
-        JOptionPane.showMessageDialog(this, "Kunde inte söka anställd.");
     }
-}    
-    
-    
-  
+
+    private void rensaFalt() {
+        JTxtFieldAnstalldID.setText("");
+        JTxtFieldFNamn.setText("");
+        JTxtFieldENamn.setText("");
+        JTxtFieldTeleNr.setText("");
+        JTxtFieldPostadress.setText("");
+        JTxtFieldEpost.setText("");
+        dAnställningsDatum.setDate(null);
+        cbAvdelning.setSelectedIndex(-1);
+        cbRoll.setSelectedIndex(-1);
+        jTextField5.setText("");
+    }
+
+    private void sokAnstalld() {
+        try {
+            String sokning = JTxtFieldSökruta.getText();
+
+            String sqlFraga
+                    = "SELECT aid, fornamn, efternamn, telefon, adress, epost, anstallningsdatum, avdelning, losenord "
+                    + "FROM anstalld "
+                    + "WHERE fornamn LIKE '%" + sokning + "%' "
+                    + "OR efternamn LIKE '%" + sokning + "%' "
+                    + "OR epost LIKE '%" + sokning + "%' "
+                    + "OR telefon LIKE '%" + sokning + "%'";
+
+            ArrayList<HashMap<String, String>> lista = idb.fetchRows(sqlFraga);
+
+            DefaultTableModel model = new DefaultTableModel();
+            model.addColumn("AID");
+            model.addColumn("Förnamn");
+            model.addColumn("Efternamn");
+            model.addColumn("Telefon");
+            model.addColumn("Adress");
+            model.addColumn("Epost");
+            model.addColumn("Anställningsdatum");
+            model.addColumn("Avdelning");
+            model.addColumn("Lösenord");
+
+            if (lista != null) {
+                for (HashMap<String, String> rad : lista) {
+                    model.addRow(new Object[]{
+                        rad.get("aid"),
+                        rad.get("fornamn"),
+                        rad.get("efternamn"),
+                        rad.get("telefon"),
+                        rad.get("adress"),
+                        rad.get("epost"),
+                        rad.get("anstallningsdatum"),
+                        rad.get("avdelning"),
+                        rad.get("losenord")
+                    });
+                }
+            }
+
+            jTable1.setModel(model);
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Kunde inte söka anställd.");
+        }
+    }
+
+
     private void JTxtFieldEpostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTxtFieldEpostActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_JTxtFieldEpostActionPerformed
@@ -513,10 +561,6 @@ private void sokAnstalld() {
     private void JTxtFieldTeleNrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTxtFieldTeleNrActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_JTxtFieldTeleNrActionPerformed
-
-    private void JTxtFieldRollActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTxtFieldRollActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_JTxtFieldRollActionPerformed
 
     private void JTxtFieldPostadressActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTxtFieldPostadressActionPerformed
         // TODO add your handling code here:
@@ -535,67 +579,113 @@ private void sokAnstalld() {
     }//GEN-LAST:event_JBtnRensaUppgifteranstalldActionPerformed
 
     private void JBtnLaggTillAnstalldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnLaggTillAnstalldActionPerformed
+        if (ValideringInput.valideraNamn(JTxtFieldFNamn.getText()) != ValideringInput.ArGiltigtNamn.JA) {
+            JOptionPane.showMessageDialog(this, "Du måste skriva ett giltigt förnamn.");
+            return;
+        }
+
+        if (ValideringInput.valideraNamn(JTxtFieldENamn.getText()) != ValideringInput.ArGiltigtNamn.JA) {
+            JOptionPane.showMessageDialog(this, "Du måste skriva ett giltigt efternamn.");
+            return;
+        }
+
+        if (ValideringInput.valideraEpost(JTxtFieldEpost.getText()) != ValideringInput.ArGiltigEpost.JA) {
+            JOptionPane.showMessageDialog(this, "Du måste skriva en giltig e-postadress.");
+            return;
+        }
+
+        if (ValideringInput.valideraLosenord(jTextField5.getText()) != ValideringInput.ArGiltigtLosenord.JA) {
+            JOptionPane.showMessageDialog(this, "Du måste skriva ett lösenord.");
+            return;
+        }
+
+        if (ValideringInput.valideraTelefon(JTxtFieldTeleNr.getText()) != ValideringInput.ArGiltigTelefon.JA) {
+            JOptionPane.showMessageDialog(this, "Du måste skriva ett giltigt telefonnummer.");
+            return;
+        }
         try {
-                String aid = idb.getAutoIncrement("anstalld", "aid");
+            String aid = idb.getAutoIncrement("anstalld", "aid");
 
-                String avdID = JTxtFieldAvdelning.getText();
-                String roll = JTxtFieldRoll.getText();
-                String fornamn = JTxtFieldFNamn.getText();
-                String efternamn = JTxtFieldENamn.getText();
-                String telefon = JTxtFieldTeleNr.getText();
-                String adress = JTxtFieldPostadress.getText();
-                String epost = JTxtFieldEpost.getText();
-                String anstallningsdatum = JTxtFieldAnstDatum.getText();
-                String losenord = jTextField5.getText();
-
-                String sqlAnstalld =
-                        "INSERT INTO anstalld " +
-                        "(aid, fornamn, efternamn, adress, epost, telefon, anstallningsdatum, losenord, avdelning) " +
-                        "VALUES ('" + aid + "', '" + fornamn + "', '" + efternamn + "', '" +
-                        adress + "', '" + epost + "', '" + telefon + "', '" +
-                        anstallningsdatum + "', '" + losenord + "', '" + avdID + "')";
-
-                idb.insert(sqlAnstalld);
-
-                if (roll.equalsIgnoreCase("admin")) {
-                    idb.insert("INSERT INTO admin (aid, behorighetsniva) VALUES ('" + aid + "', '1')");
-                } 
-                else if (roll.equalsIgnoreCase("handlaggare")) {
-                    idb.insert("INSERT INTO handlaggare (aid) VALUES ('" + aid + "')");
-                } 
-                else if (roll.equalsIgnoreCase("handlaggare_projektchef")) {
-                    idb.insert("INSERT INTO handlaggare (aid) VALUES ('" + aid + "')");
-
-                    String pid = JOptionPane.showInputDialog(this, "Ange projekt-ID där personen ska vara projektchef:");
-
-                    if (pid != null && !pid.trim().isEmpty()) {
-                        idb.update("UPDATE projekt SET projektchef = '" + aid + "' WHERE pid = '" + pid + "'");
-                    }
-                }
-
-                JTxtFieldAnstalldID.setText(aid);
-
-                javax.swing.JOptionPane.showMessageDialog(this, "Anställd har lagts till!");
-                
-                hamtaAllaAnstallda();
-
-            } catch (Exception e) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Kunde inte lägga till anställd: " + e.getMessage());
-            }
-        
-    }//GEN-LAST:event_JBtnLaggTillAnstalldActionPerformed
-
-    private void JBtnUppdateraAnstalldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnUppdateraAnstalldActionPerformed
-        try {
-            String aid = JTxtFieldAnstalldID.getText();
-            String avdID = JTxtFieldAvdelning.getText();
-            String roll = JTxtFieldRoll.getText();
+            String avdID = cbAvdelning.getSelectedItem().toString().split(" - ")[0];
+            String roll = cbRoll.getSelectedItem().toString();
             String fornamn = JTxtFieldFNamn.getText();
             String efternamn = JTxtFieldENamn.getText();
             String telefon = JTxtFieldTeleNr.getText();
             String adress = JTxtFieldPostadress.getText();
             String epost = JTxtFieldEpost.getText();
-            String anstallningsdatum = JTxtFieldAnstDatum.getText();
+            String anstallningsdatum = new java.text.SimpleDateFormat("yyyy-MM-dd").format(dAnställningsDatum.getDate());
+            String losenord = jTextField5.getText();
+
+            String sqlAnstalld
+                    = "INSERT INTO anstalld "
+                    + "(aid, fornamn, efternamn, adress, epost, telefon, anstallningsdatum, losenord, avdelning) "
+                    + "VALUES ('" + aid + "', '" + fornamn + "', '" + efternamn + "', '"
+                    + adress + "', '" + epost + "', '" + telefon + "', '"
+                    + anstallningsdatum + "', '" + losenord + "', '" + avdID + "')";
+
+            idb.insert(sqlAnstalld);
+
+            if (roll.equalsIgnoreCase("admin")) {
+                idb.insert("INSERT INTO admin (aid, behorighetsniva) VALUES ('" + aid + "', '1')");
+            } else if (roll.equalsIgnoreCase("handlaggare")) {
+                idb.insert("INSERT INTO handlaggare (aid) VALUES ('" + aid + "')");
+            } else if (roll.equalsIgnoreCase("handlaggare_projektchef")) {
+                idb.insert("INSERT INTO handlaggare (aid) VALUES ('" + aid + "')");
+
+                String pid = JOptionPane.showInputDialog(this, "Ange projekt-ID där personen ska vara projektchef:");
+
+                if (pid != null && !pid.trim().isEmpty()) {
+                    idb.update("UPDATE projekt SET projektchef = '" + aid + "' WHERE pid = '" + pid + "'");
+                }
+            }
+
+            JTxtFieldAnstalldID.setText(aid);
+
+            javax.swing.JOptionPane.showMessageDialog(this, "Anställd har lagts till!");
+
+            hamtaAllaAnstallda();
+
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Kunde inte lägga till anställd: " + e.getMessage());
+        }
+
+    }//GEN-LAST:event_JBtnLaggTillAnstalldActionPerformed
+
+    private void JBtnUppdateraAnstalldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnUppdateraAnstalldActionPerformed
+        if (ValideringInput.valideraNamn(JTxtFieldFNamn.getText()) != ValideringInput.ArGiltigtNamn.JA) {
+            JOptionPane.showMessageDialog(this, "Du måste skriva ett giltigt förnamn.");
+            return;
+        }
+
+        if (ValideringInput.valideraNamn(JTxtFieldENamn.getText()) != ValideringInput.ArGiltigtNamn.JA) {
+            JOptionPane.showMessageDialog(this, "Du måste skriva ett giltigt efternamn.");
+            return;
+        }
+
+        if (ValideringInput.valideraEpost(JTxtFieldEpost.getText()) != ValideringInput.ArGiltigEpost.JA) {
+            JOptionPane.showMessageDialog(this, "Du måste skriva en giltig e-postadress.");
+            return;
+        }
+
+        if (ValideringInput.valideraLosenord(jTextField5.getText()) != ValideringInput.ArGiltigtLosenord.JA) {
+            JOptionPane.showMessageDialog(this, "Du måste skriva ett lösenord.");
+            return;
+        }
+
+        if (ValideringInput.valideraTelefon(JTxtFieldTeleNr.getText()) != ValideringInput.ArGiltigTelefon.JA) {
+            JOptionPane.showMessageDialog(this, "Du måste skriva ett giltigt telefonnummer.");
+            return;
+        }
+        try {
+            String aid = JTxtFieldAnstalldID.getText();
+            String avdID = cbAvdelning.getSelectedItem().toString().split(" - ")[0];
+            String roll = cbRoll.getSelectedItem().toString();
+            String fornamn = JTxtFieldFNamn.getText();
+            String efternamn = JTxtFieldENamn.getText();
+            String telefon = JTxtFieldTeleNr.getText();
+            String adress = JTxtFieldPostadress.getText();
+            String epost = JTxtFieldEpost.getText();
+            String anstallningsdatum = new java.text.SimpleDateFormat("yyyy-MM-dd").format(dAnställningsDatum.getDate());
             String losenord = jTextField5.getText();
 
             if (aid.isEmpty()) {
@@ -603,17 +693,17 @@ private void sokAnstalld() {
                 return;
             }
 
-            String sql =
-                    "UPDATE anstalld SET " +
-                    "fornamn = '" + fornamn + "', " +
-                    "efternamn = '" + efternamn + "', " +
-                    "telefon = '" + telefon + "', " +
-                    "adress = '" + adress + "', " +
-                    "epost = '" + epost + "', " +
-                    "anstallningsdatum = '" + anstallningsdatum + "', " +
-                    "losenord = '" + losenord + "', " +
-                    "avdelning = '" + avdID + "' " +
-                    "WHERE aid = '" + aid + "'";
+            String sql
+                    = "UPDATE anstalld SET "
+                    + "fornamn = '" + fornamn + "', "
+                    + "efternamn = '" + efternamn + "', "
+                    + "telefon = '" + telefon + "', "
+                    + "adress = '" + adress + "', "
+                    + "epost = '" + epost + "', "
+                    + "anstallningsdatum = '" + anstallningsdatum + "', "
+                    + "losenord = '" + losenord + "', "
+                    + "avdelning = '" + avdID + "' "
+                    + "WHERE aid = '" + aid + "'";
 
             idb.update(sql);
 
@@ -637,9 +727,7 @@ private void sokAnstalld() {
         }
     }//GEN-LAST:event_JBtnUppdateraAnstalldActionPerformed
 
-    
-    
-    
+
     private void JBtnTaBortAnstalldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnTaBortAnstalldActionPerformed
         try {
             String aid = JTxtFieldAnstalldID.getText().trim();
@@ -705,9 +793,9 @@ private void sokAnstalld() {
 
     private void btnGenereraLösenordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenereraLösenordActionPerformed
         String tecken = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890!@#$%^&*()_+?><";
-        String genereradLosenord ="";
-        for (int i = 0; i < 3 ; i++){
-            double siffra =  Math.random() * 77; // 77 är hur många tecken man har i String tecken
+        String genereradLosenord = "";
+        for (int i = 0; i < 3; i++) {
+            double siffra = Math.random() * 77; // 77 är hur många tecken man har i String tecken
             int heltalSiffra = (int) siffra; // förvandra till int
             genereradLosenord += tecken.charAt(heltalSiffra);// lägga till till String genereradLosenord
         }
@@ -719,9 +807,6 @@ private void sokAnstalld() {
         this.dispose();
     }//GEN-LAST:event_btnTillbakatillmenyActionPerformed
 
-    
-    
-    
     /**
      * @param args the command line arguments
      */
@@ -744,7 +829,8 @@ private void sokAnstalld() {
         //</editor-fold>
 
         /* Create and display the form */
-        ///java.awt.EventQueue.invokeLater(() -> new HanteraAnstalld().setVisible(true));
+    
+    ///java.awt.EventQueue.invokeLater(() -> new HanteraAnstalld().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -766,19 +852,19 @@ private void sokAnstalld() {
     private javax.swing.JLabel JLblSokAnställd;
     private javax.swing.JLabel JLblTeleNr;
     private javax.swing.JScrollPane JScrollPaneListaAnställda;
-    private javax.swing.JTextField JTxtFieldAnstDatum;
     private javax.swing.JTextField JTxtFieldAnstalldID;
-    private javax.swing.JTextField JTxtFieldAvdelning;
     private javax.swing.JTextField JTxtFieldENamn;
     private javax.swing.JTextField JTxtFieldEpost;
     private javax.swing.JTextField JTxtFieldFNamn;
     private javax.swing.JTextField JTxtFieldPostadress;
-    private javax.swing.JTextField JTxtFieldRoll;
     private javax.swing.JTextField JTxtFieldSökruta;
     private javax.swing.JTextField JTxtFieldTeleNr;
     private javax.swing.JButton btnGenereraLösenord;
     private javax.swing.JButton btnSök;
     private javax.swing.JButton btnTillbakatillmeny;
+    private javax.swing.JComboBox<String> cbAvdelning;
+    private javax.swing.JComboBox<String> cbRoll;
+    private com.toedter.calendar.JDateChooser dAnställningsDatum;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField5;
     // End of variables declaration//GEN-END:variables
