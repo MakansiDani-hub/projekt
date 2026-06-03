@@ -41,6 +41,8 @@ public class HanteraAvdelning extends javax.swing.JFrame {
         // Lägger till MouseListener för att kunna klicka i tabellen
         JTableAvdelningar.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
+            //kollar om man har valt en rad och hämtar ut värden från den rad i tabellen man klickar på
+            //Skulle helt klart kunnat flytta den här valideringen till valideringsklassen men tiden räckte inte till
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 int rad = JTableAvdelningar.getSelectedRow();
                 if (rad >= 0) {
@@ -56,7 +58,11 @@ public class HanteraAvdelning extends javax.swing.JFrame {
             }
         });
     }
-
+        /**
+    * hämtar länder från databasen och uppdaterar tabellen i gränssnittet.
+    * Tömmer befintliga rader, ställer en SQL-fråga till databasen och 
+    * loopar igenom resultatet för att fylla tabellmodellen
+    */
     private void fyllTabell() {
         bordsModell.setRowCount(0);
         try {

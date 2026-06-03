@@ -62,7 +62,7 @@ public class HanteraLand extends javax.swing.JFrame {
     public void addLandListener(LandListener landListener) {
         this.landListener = landListener;
     }
-
+    //metod för att tömma TxtFields
     private void rensaFalt() {
         JTxtLID.setText("");
         JTxtFieldNamn.setText("");
@@ -84,6 +84,7 @@ public class HanteraLand extends javax.swing.JFrame {
         }
 
         try {
+            //hämtar värdena och ger dem variabelnamn
             String id = JTxtLID.getText();
             String namn = JTxtFieldNamn.getText();
             String sprak = JTxtFieldSprak.getText();
@@ -111,7 +112,7 @@ public class HanteraLand extends javax.swing.JFrame {
         }
 
         try {
-            //hämtar värdena och ger de variabelnamn
+            //hämtar värdena och ger dem variabelnamn
             String id = JTxtLID.getText();
             String namn = JTxtFieldNamn.getText();
             String sprak = JTxtFieldSprak.getText();
@@ -160,7 +161,9 @@ public class HanteraLand extends javax.swing.JFrame {
         }
     }
 
-    // Metod som hämtar all data om länderna och lägger de i tabellen
+    //hämtar länder från databasen och uppdaterar tabellen i gränssnittet.
+    //Tömmer befintliga rader, ställer en SQL-fråga till databasen och 
+    //loopar igenom resultatet för att fylla tabellmodellen
     private void fyllTabell() {
         bordsModell.setRowCount(0);// Tömmer tabellen först
         try {
@@ -186,7 +189,7 @@ public class HanteraLand extends javax.swing.JFrame {
         }
 
     }
-
+    //metod för att hämta ut data och skriva ut den i mina TxtFields
     private void visaRadInfo(int rad) {
         JTxtLID.setText(bordsModell.getValueAt(rad, 0).toString());
         JTxtFieldNamn.setText(bordsModell.getValueAt(rad, 1).toString());
