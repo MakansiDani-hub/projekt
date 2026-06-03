@@ -39,6 +39,15 @@ public class ProjektSokHandlaggare extends javax.swing.JFrame {
         }
 
         lblAnvändaresNamn.setText(namn);
+        
+        tblProjektlista.getSelectionModel().addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            @Override
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                if(!evt.getValueIsAdjusting()){
+                        oppnaProjektFonster();
+                }
+            }
+        });
     }
 
     private void laddaAllaProjektPaAvdelningenForHandlaggare() {
@@ -247,6 +256,41 @@ public class ProjektSokHandlaggare extends javax.swing.JFrame {
 
         } catch (InfException ex) {
             JOptionPane.showMessageDialog(this, "Kunde inte filtrera projekt: " + ex.getMessage());
+        }
+    }
+    
+    private void oppnaProjektFonster(){
+        int valdRad = tblProjektlista.getSelectedRow();
+        if(valdRad < 0){
+            System.out.println("oppnaProjektFonster: Ett val registrerades, men ingen rad var vald");
+            return;
+        }      
+        Integer valtProjektPid = Integer.valueOf(tblProjektlista.getValueAt(valdRad, 0).toString());  //kolumn 0 är PID
+        
+        //Kollar om användaren är projektchef i valt projekt
+        String arProjektchef = null;
+        try{
+            int anvandareId = anvandare.getAid();
+            arProjektchef = anvandare.getIdb().fetchSingle(
+                    "SELECT projektchef " +
+                    "FROM Projekt " +
+                    "WHERE pid = " + valtProjektPid + " " +
+                    "AND projektchef = " + anvandareId);
+        }catch(InfException e){
+            System.out.println(e.getMessage());
+        }
+        if(arProjektchef != null){
+            //Om användaren är projektchef
+            ProjektProjektchefAdmin projektProjektchef = new ProjektProjektchefAdmin(
+                anvandare, valtProjektPid, ProjektProjektchefAdmin.AnvandareRoll.CHEF_FOR_PROJEKT);
+            projektProjektchef.setVisible(true);
+            projektProjektchef.setDefaultCloseOperation(DISPOSE_ON_CLOSE);                         
+        }
+        else{
+            //Om användaren inte är projektchef:
+            ProjektHandlaggare projektHandlaggare = new ProjektHandlaggare(anvandare, valtProjektPid); 
+            projektHandlaggare.setVisible(true);
+            projektHandlaggare.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         }
     }
 
