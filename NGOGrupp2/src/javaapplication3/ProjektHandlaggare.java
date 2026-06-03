@@ -269,7 +269,7 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
         jLabel13.setText("Status");
 
         txtfStatus.setEditable(false);
-        txtfStatus.setBackground(new java.awt.Color(212, 217, 223));
+        txtfStatus.setBackground(new java.awt.Color(238, 238, 238));
         txtfStatus.setText("[Status]");
         txtfStatus.setFocusable(false);
         txtfStatus.setMaximumSize(new java.awt.Dimension(160, 30));
@@ -302,7 +302,7 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
         jLabel15.setText("Prioritet");
 
         txtfPrioritet.setEditable(false);
-        txtfPrioritet.setBackground(new java.awt.Color(212, 217, 223));
+        txtfPrioritet.setBackground(new java.awt.Color(238, 238, 238));
         txtfPrioritet.setText("[Prioritet]");
         txtfPrioritet.setFocusable(false);
         txtfPrioritet.setMaximumSize(new java.awt.Dimension(185, 30));
@@ -335,7 +335,7 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
         jLabel17.setText("Kostnad");
 
         txtfKostnad.setEditable(false);
-        txtfKostnad.setBackground(new java.awt.Color(212, 217, 223));
+        txtfKostnad.setBackground(new java.awt.Color(238, 238, 238));
         txtfKostnad.setText("[Kostnad]");
         txtfKostnad.setFocusable(false);
         txtfKostnad.setMaximumSize(new java.awt.Dimension(200, 30));
@@ -516,7 +516,7 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
         pnlStartDatum.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtfStartDatum.setEditable(false);
-        txtfStartDatum.setBackground(new java.awt.Color(212, 217, 223));
+        txtfStartDatum.setBackground(new java.awt.Color(238, 238, 238));
         txtfStartDatum.setText("ÅÅÅÅ-MM-DD");
         txtfStartDatum.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 3, 0, 0));
         txtfStartDatum.setFocusable(false);
@@ -529,7 +529,7 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
         pnlSlutDatum.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtfSlutDatum.setEditable(false);
-        txtfSlutDatum.setBackground(new java.awt.Color(212, 217, 223));
+        txtfSlutDatum.setBackground(new java.awt.Color(238, 238, 238));
         txtfSlutDatum.setText("ÅÅÅÅ-MM-DD");
         txtfSlutDatum.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 3, 0, 0));
         txtfSlutDatum.setFocusable(false);
@@ -538,7 +538,7 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
         pnlSlutDatum.add(txtfSlutDatum, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 30));
 
         txtfProjektnamn.setEditable(false);
-        txtfProjektnamn.setBackground(new java.awt.Color(212, 217, 223));
+        txtfProjektnamn.setBackground(new java.awt.Color(238, 238, 238));
         txtfProjektnamn.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         txtfProjektnamn.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtfProjektnamn.setText("[Projektnamn]");
