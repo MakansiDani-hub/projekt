@@ -25,8 +25,10 @@ public class ProjektKostnaderProjektchef extends javax.swing.JFrame {
         initComponents();
         this.anvandare = anvandare;
 
-        // Fyll tabellen med all data direkt när fönstret laddas
-        uppdateraStatistik("SELECT projektnamn, status, startdatum, slutdatum, kostnad FROM projekt");
+        // HÄMTA PROJEKTCHEFENS ID FRÅN SESSIONEN
+        int aid = (anvandare != null) ? anvandare.getAid() : 0;
+
+        uppdateraStatistik("SELECT projektnamn, status, startdatum, slutdatum, kostnad FROM projekt WHERE projektchef = " + aid);
 
         // Lägger till en lyssnare på ComboBoxen
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
@@ -96,16 +98,20 @@ public class ProjektKostnaderProjektchef extends javax.swing.JFrame {
      */
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {
         String valtVal = jComboBox1.getSelectedItem().toString();
-        String fraga = "SELECT projektnamn, status, startdatum, slutdatum, kostnad FROM projekt";
+        
+        // HÄMTAR CHEFENS ID
+        int aid = (anvandare != null) ? anvandare.getAid() : 0;
+        
+        String fraga = "SELECT projektnamn, status, startdatum, slutdatum, kostnad FROM projekt WHERE projektchef = " + aid;
 
         if (valtVal.equals("Endast planerade projekt")) {
-            fraga += " WHERE status = 'Planerat'";
+            fraga += " AND status = 'Planerat'";
         } else if (valtVal.equals("Endast pågående projekt")) {
-            fraga += " WHERE status = 'Pågående'";
+            fraga += " AND status = 'Pågående'";
         } else if (valtVal.equals("Endast pausade projekt")) {
-            fraga += " WHERE status = 'Pausat'";
+            fraga += " AND status = 'Pausat'";
         } else if (valtVal.equals("Endast avslutade projekt")) {
-            fraga += " WHERE status = 'Avslutat'";
+            fraga += " AND status = 'Avslutat'";
         }
 
         uppdateraStatistik(fraga);
@@ -290,7 +296,7 @@ public class ProjektKostnaderProjektchef extends javax.swing.JFrame {
     }//GEN-LAST:event_txtSlutDatumActionPerformed
 
     private void btnSökDatumActionPerformedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSökDatumActionPerformedActionPerformed
-        // TODO add your handling code here:
+        // TODO add your handling code here:                                                        
         String start = txtStartDatum.getText().trim();
         String slut = txtSlutDatum.getText().trim();
 
@@ -299,9 +305,13 @@ public class ProjektKostnaderProjektchef extends javax.swing.JFrame {
             return;
         }
 
+        // Hämtar CHEFENS ID
+        int aid = (anvandare != null) ? anvandare.getAid() : 0;
+
         // Hämtar alla 5 värden för det valda datumsintervallet
         String fraga = "SELECT projektnamn, status, startdatum, slutdatum, kostnad FROM projekt "
-                + "WHERE startdatum >= '" + start + "' AND slutdatum <= '" + slut + "'";
+                + "WHERE startdatum >= '" + start + "' AND slutdatum <= '" + slut + "' AND projektchef = " + aid;
+        
         uppdateraStatistik(fraga);
     }//GEN-LAST:event_btnSökDatumActionPerformedActionPerformed
     public static void main(String args[]) {
